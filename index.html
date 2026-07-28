@@ -224,10 +224,13 @@ section.tela.on{display:block}
 /* ---------- ASSOCIAÇÃO ---------- */
 .assoc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .assoc button{
+  display:flex;align-items:center;justify-content:center;width:100%;margin-bottom:10px;
   background:var(--card2);border:2.5px solid var(--line);color:var(--txt);border-radius:16px;
-  padding:13px 9px;font-size:.85rem;min-height:70px;line-height:1.3;font-weight:600;
+  padding:12px 9px;font-size:.85rem;min-height:82px;line-height:1.3;font-weight:600;
   box-shadow:0 3px 0 var(--line);
 }
+.assoc > div{display:flex;flex-direction:column}
+.assoc button:last-child{margin-bottom:0}
 .assoc button .emo{font-size:2rem;display:block}
 .assoc button.sel{border-color:var(--lav);background:var(--lav-cl)}
 .assoc button.ok{border-color:var(--salvia);background:var(--salvia-cl);opacity:.6}
@@ -265,6 +268,44 @@ label{font-size:.85rem;color:var(--dim);display:block;margin:11px 0 4px;font-wei
 .escolha button:active{transform:translateY(2px);box-shadow:none}
 .aviso{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:16px;padding:14px;font-size:.86rem}
 
+
+/* ===== v2: figuras, níveis, resultados, áudio ===== */
+.fig{display:block;margin:0 auto}
+.cartatxt{display:block;padding:2px;font-size:.82rem;line-height:1.3}
+.carta{padding:4px}
+.carta .fig{width:84%;height:auto}
+.carta.virada,.carta.par{padding:4px}
+.niveis{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.82rem;color:var(--dim)}
+.niveis .nv{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:inline-flex;
+  align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:var(--dim)}
+.niveis .nv.feito{background:var(--salvia);border-color:var(--salvia);color:#fff}
+.niveis .nv.atual{background:var(--bordo);border-color:var(--bordo);color:#fff}
+.niveis b{color:var(--txt);font-size:.84rem}
+.placar{display:flex;gap:9px;margin:12px 0}
+.placar .pl{flex:1;text-align:center;border-radius:16px;padding:11px 6px;border:2px solid var(--line);background:var(--card2)}
+.placar .pl b{display:block;font-size:1.7rem;line-height:1.1}
+.placar .pl span{font-size:.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.placar .ok{border-color:var(--salvia);background:var(--salvia-cl)}
+.placar .no{border-color:var(--ouro);background:var(--ouro-cl)}
+.motiva{background:var(--bordo-cl);border:2px solid var(--bordo);border-radius:16px;padding:13px;
+  text-align:center;font-weight:700;font-size:1.02rem;color:var(--txt);margin:4px 0 10px}
+.gitem .mk{float:right;font-weight:900;color:var(--ouro);margin-left:8px}
+.gitem .mk.ok{color:var(--salvia)}
+.gitem.falhou{border-left-color:var(--ouro)}
+.czdica{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:14px;padding:11px 13px;
+  font-size:.9rem;line-height:1.45;margin-bottom:10px;min-height:44px}
+.czdica b{color:var(--couro)}
+.ouvirbox{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.btnaudio{background:var(--lav);color:#fff;border-radius:18px;padding:14px 20px;font-size:1.5rem;
+  font-weight:800;box-shadow:0 4px 0 rgba(0,0,0,.16);display:flex;flex-direction:column;align-items:center;gap:2px;min-width:104px}
+.btnaudio span{font-size:.78rem;letter-spacing:.03em}
+.btnaudio.lento{background:var(--salvia)}
+.btnaudio:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.16)}
+.btn.gravando{background:var(--bordo);animation:pulsa 1s ease-in-out infinite}
+@keyframes pulsa{0%,100%{opacity:1}50%{opacity:.6}}
+.falarbox{text-align:center;background:var(--card2);border:2px dashed var(--line);border-radius:18px;padding:16px;margin:6px 0}
+.falatxt{font-size:1.5rem;font-weight:800;margin-top:8px;color:var(--bordo)}
+.card.azul2::before{background:linear-gradient(90deg,var(--lav),var(--salvia))}
 /* ===== CENTRAL DE DÚVIDAS ===== */
 .ajfundo{position:fixed;inset:0;background:rgba(40,25,20,.55);opacity:0;pointer-events:none;transition:opacity .25s;z-index:90}
 .ajfundo.on{opacity:1;pointer-events:auto}
@@ -1035,6 +1076,354 @@ const AJUDA = {
 ]
 };
 
+
+/* ============================================================
+   FIGURAS — desenhos SVG próprios (nada de emoji nas atividades)
+   ============================================================ */
+const ICONES = {
+/* ---- profissões ---- */
+nurse:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#86A98C"/><circle cx="32" cy="30" r="11" fill="#F7E2CB"/><path d="M19 20c0-7 6-11 13-11s13 4 13 11v3H19z" fill="#fff" stroke="#8A6F63" stroke-width="1.6"/><path d="M30 12h4v9h-4z" fill="#D2718A"/><path d="M27.5 14.5h9v4h-9z" fill="#D2718A"/><circle cx="27" cy="30" r="1.8" fill="#43302A"/><circle cx="37" cy="30" r="1.8" fill="#43302A"/>',
+doctor:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#fff"/><path d="M32 40v16" stroke="#CDD8EE" stroke-width="2"/><circle cx="32" cy="26" r="11" fill="#F7E2CB"/><path d="M21 20c0-8 5-12 11-12s11 4 11 12" fill="#5A4034"/><circle cx="27" cy="26" r="1.8" fill="#43302A"/><circle cx="37" cy="26" r="1.8" fill="#43302A"/><path d="M25 42c0 7 5 11 10 11s8-3 8-7" fill="none" stroke="#3F5285" stroke-width="2.6" stroke-linecap="round"/><circle cx="43" cy="48" r="3.4" fill="#3F5285"/>',
+firefighter:'<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#8E2A3C"/><circle cx="32" cy="32" r="10" fill="#F7E2CB"/><path d="M17 24c0-9 7-14 15-14s15 5 15 14v2H17z" fill="#8E2A3C"/><rect x="13" y="24" width="38" height="5" rx="2.5" fill="#6B1B29"/><path d="M30 12h4v8h-4z" fill="#FBEFD6"/><circle cx="27" cy="33" r="1.8" fill="#43302A"/><circle cx="37" cy="33" r="1.8" fill="#43302A"/>',
+teacher:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><rect x="9" y="12" width="46" height="30" rx="3" fill="#4A5D4E" stroke="#8A6F63" stroke-width="2"/><path d="M16 22h10M16 28h16M16 34h8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="42" cy="42" r="7" fill="#F7E2CB"/><path d="M32 58c0-6 5-9 10-9s10 3 10 9z" fill="#3F5285"/>',
+mechanic:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><path d="M42 14a9 9 0 0 0-11 11L15 41a4 4 0 1 0 6 6l16-16a9 9 0 0 0 11-11l-6 6-5-1-1-5z" fill="#8A6F63" stroke="#5A4034" stroke-width="1.6" stroke-linejoin="round"/><circle cx="18" cy="44" r="2" fill="#F6E6D8"/>',
+pilot:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#3F5285"/><circle cx="32" cy="31" r="10" fill="#F7E2CB"/><path d="M18 22c0-8 6-13 14-13s14 5 14 13v2H18z" fill="#2E3A5C"/><rect x="16" y="22" width="32" height="4" rx="2" fill="#1F2942"/><path d="M28 12h8l-4 6z" fill="#D9A441"/><circle cx="27" cy="32" r="1.8" fill="#43302A"/><circle cx="37" cy="32" r="1.8" fill="#43302A"/>',
+chef:'<circle cx="32" cy="32" r="31" fill="#FDF5EE"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#E2879B"/><circle cx="32" cy="33" r="10" fill="#F7E2CB"/><path d="M20 24c-5 0-8-4-8-8s4-7 8-6c1-5 6-8 12-8s11 3 12 8c4-1 8 2 8 6s-3 8-8 8z" fill="#fff" stroke="#CDBCA9" stroke-width="1.6"/><rect x="20" y="22" width="24" height="5" fill="#fff" stroke="#CDBCA9" stroke-width="1.6"/><circle cx="27" cy="34" r="1.8" fill="#43302A"/><circle cx="37" cy="34" r="1.8" fill="#43302A"/>',
+vet:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><ellipse cx="32" cy="40" rx="11" ry="9" fill="#8A6F63"/><ellipse cx="18" cy="27" rx="5" ry="6.5" fill="#8A6F63"/><ellipse cx="46" cy="27" rx="5" ry="6.5" fill="#8A6F63"/><ellipse cx="25" cy="18" rx="5" ry="6.5" fill="#8A6F63"/><ellipse cx="39" cy="18" rx="5" ry="6.5" fill="#8A6F63"/><path d="M30 34h4v10h-4z" fill="#fff"/><path d="M27 37h10v4H27z" fill="#fff"/>',
+driver:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><circle cx="32" cy="32" r="21" fill="none" stroke="#5A4034" stroke-width="6"/><circle cx="32" cy="32" r="6" fill="#5A4034"/><path d="M32 26V11M14 40l12-6M50 40l-12-6" stroke="#5A4034" stroke-width="5" stroke-linecap="round"/>',
+waiter:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M17 54c0-9 7-13 15-13s15 4 15 13z" fill="#43302A"/><path d="M32 41v13" stroke="#fff" stroke-width="2"/><circle cx="32" cy="28" r="9" fill="#F7E2CB"/><path d="M23 22c0-6 4-9 9-9s9 3 9 9" fill="#5A4034"/><ellipse cx="46" cy="24" rx="11" ry="3.4" fill="#D9A441"/><path d="M46 24v-4" stroke="#8A6F63" stroke-width="2"/>',
+farmer:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#7FA86B"/><circle cx="32" cy="31" r="10" fill="#F7E2CB"/><ellipse cx="32" cy="21" rx="21" ry="5" fill="#D9A441"/><path d="M21 21c0-7 5-11 11-11s11 4 11 11z" fill="#E8B84B"/><circle cx="27" cy="32" r="1.8" fill="#43302A"/><circle cx="37" cy="32" r="1.8" fill="#43302A"/>',
+dentist:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M32 14c6 0 10 3 14 3 4 0 6-1 6 3 0 9-3 14-5 21-1 4-3 8-6 8-4 0-4-9-9-9s-5 9-9 9c-3 0-5-4-6-8-2-7-5-12-5-21 0-4 2-3 6-3 4 0 8-3 14-3z" fill="#fff" stroke="#8A6F63" stroke-width="2" stroke-linejoin="round"/>',
+
+/* ---- transporte ---- */
+bus:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><rect x="9" y="16" width="46" height="28" rx="5" fill="#D9A441" stroke="#A8761E" stroke-width="2"/><rect x="14" y="21" width="15" height="10" rx="2" fill="#E4E9F6"/><rect x="35" y="21" width="15" height="10" rx="2" fill="#E4E9F6"/><circle cx="20" cy="47" r="6" fill="#43302A"/><circle cx="44" cy="47" r="6" fill="#43302A"/><circle cx="20" cy="47" r="2.4" fill="#CDD8EE"/><circle cx="44" cy="47" r="2.4" fill="#CDD8EE"/>',
+subway:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="13" y="10" width="38" height="38" rx="8" fill="#3F5285" stroke="#2A3860" stroke-width="2"/><rect x="18" y="16" width="12" height="11" rx="2" fill="#EAF0FB"/><rect x="34" y="16" width="12" height="11" rx="2" fill="#EAF0FB"/><rect x="18" y="32" width="28" height="7" rx="2" fill="#2A3860"/><circle cx="21" cy="52" r="4" fill="#43302A"/><circle cx="43" cy="52" r="4" fill="#43302A"/><path d="M15 48l-5 7M49 48l5 7" stroke="#43302A" stroke-width="2.6" stroke-linecap="round"/>',
+train:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><rect x="10" y="18" width="30" height="26" rx="5" fill="#86A98C" stroke="#5C7F63" stroke-width="2"/><rect x="15" y="23" width="9" height="9" rx="2" fill="#EAF3EE"/><rect x="27" y="23" width="9" height="9" rx="2" fill="#EAF3EE"/><rect x="41" y="26" width="14" height="18" rx="4" fill="#5C7F63"/><circle cx="18" cy="48" r="4.6" fill="#43302A"/><circle cx="34" cy="48" r="4.6" fill="#43302A"/><circle cx="48" cy="48" r="4.6" fill="#43302A"/>',
+plane:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M31 8c3 0 5 5 5 12v8l17 10v6l-17-5v9l6 5v5l-11-3-11 3v-5l6-5v-9l-17 5v-6l17-10v-8c0-7 2-12 5-12z" fill="#3F5285" stroke="#2A3860" stroke-width="1.6" stroke-linejoin="round"/>',
+bike:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><circle cx="17" cy="42" r="11" fill="none" stroke="#43302A" stroke-width="3.4"/><circle cx="47" cy="42" r="11" fill="none" stroke="#43302A" stroke-width="3.4"/><path d="M17 42l10-16h11l9 16M27 26h9M38 26l-5 16" stroke="#8E2A3C" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M24 22h8" stroke="#43302A" stroke-width="3" stroke-linecap="round"/>',
+car:'<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><path d="M8 40v-6l6-3 6-9h24l6 9 6 3v6z" fill="#D2718A" stroke="#9E4459" stroke-width="2" stroke-linejoin="round"/><path d="M22 25h8v6H18zM34 25h8l4 6H34z" fill="#F6E4E9"/><circle cx="20" cy="43" r="5.6" fill="#43302A"/><circle cx="44" cy="43" r="5.6" fill="#43302A"/>',
+flyingcar:'<circle cx="32" cy="32" r="31" fill="#EEE7F8"/><path d="M12 36v-5l6-3 5-8h22l5 8 6 3v5z" fill="#8B6FC0" stroke="#5E4790" stroke-width="2" stroke-linejoin="round"/><path d="M24 23h7v5H21zM34 23h7l4 5H34z" fill="#EFE9FA"/><path d="M4 42h16M44 42h16M8 49h14M42 49h14" stroke="#B49BD4" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="39" r="3" fill="#3B2C5B"/><circle cx="44" cy="39" r="3" fill="#3B2C5B"/>',
+electriccar:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M8 40v-6l6-3 6-9h24l6 9 6 3v6z" fill="#7FA86B" stroke="#4F7040" stroke-width="2" stroke-linejoin="round"/><path d="M22 25h8v6H18zM34 25h8l4 6H34z" fill="#EAF3EE"/><circle cx="20" cy="43" r="5.6" fill="#43302A"/><circle cx="44" cy="43" r="5.6" fill="#43302A"/><path d="M34 8l-9 13h7l-3 10 10-14h-7z" fill="#D9A441" stroke="#A8761E" stroke-width="1.4" stroke-linejoin="round"/>',
+selfdriving:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M8 42v-6l6-3 6-9h24l6 9 6 3v6z" fill="#3F5285" stroke="#2A3860" stroke-width="2" stroke-linejoin="round"/><path d="M22 27h8v6H18zM34 27h8l4 6H34z" fill="#E4E9F6"/><circle cx="20" cy="45" r="5" fill="#43302A"/><circle cx="44" cy="45" r="5" fill="#43302A"/><circle cx="32" cy="14" r="6" fill="none" stroke="#86A98C" stroke-width="2.6"/><path d="M32 14v-8M26 9l-4-4M38 9l4-4" stroke="#86A98C" stroke-width="2.6" stroke-linecap="round"/>',
+skateboard:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M10 34c0-3 4-5 22-5s22 2 22 5-4 5-22 5-22-2-22-5z" fill="#8E2A3C"/><circle cx="20" cy="44" r="4.4" fill="#43302A"/><circle cx="44" cy="44" r="4.4" fill="#43302A"/><path d="M20 39v2M44 39v2" stroke="#8A6F63" stroke-width="3"/>',
+
+/* ---- direções ---- */
+straight:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M32 54V16" stroke="#4F7040" stroke-width="7" stroke-linecap="round"/><path d="M32 8l13 14H19z" fill="#4F7040"/>',
+left:'<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><path d="M40 54V30a6 6 0 0 0-6-6H18" stroke="#9E4459" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M10 24l14-9v18z" fill="#9E4459"/>',
+right:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M24 54V30a6 6 0 0 1 6-6h16" stroke="#2A3860" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M54 24l-14-9v18z" fill="#2A3860"/>',
+nextto:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><rect x="8" y="22" width="20" height="24" rx="3" fill="#D9A441" stroke="#A8761E" stroke-width="2"/><rect x="34" y="22" width="20" height="24" rx="3" fill="#86A98C" stroke="#5C7F63" stroke-width="2"/><path d="M28 34h6" stroke="#43302A" stroke-width="3" stroke-linecap="round"/><path d="M31 18v-4M31 54v-4" stroke="#8A6F63" stroke-width="0"/>',
+between:'<circle cx="32" cy="32" r="31" fill="#EEE7F8"/><rect x="4" y="24" width="16" height="20" rx="3" fill="#D9A441" stroke="#A8761E" stroke-width="2"/><rect x="24" y="18" width="16" height="26" rx="3" fill="#8B6FC0" stroke="#5E4790" stroke-width="2"/><rect x="44" y="24" width="16" height="20" rx="3" fill="#86A98C" stroke="#5C7F63" stroke-width="2"/><path d="M22 52h20" stroke="#5E4790" stroke-width="3" stroke-linecap="round"/><path d="M22 52l4-3M22 52l4 3M42 52l-4-3M42 52l-4 3" stroke="#5E4790" stroke-width="3" stroke-linecap="round"/>',
+acrossfrom:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><rect x="10" y="6" width="44" height="16" rx="3" fill="#D9A441" stroke="#A8761E" stroke-width="2"/><rect x="10" y="42" width="44" height="16" rx="3" fill="#86A98C" stroke="#5C7F63" stroke-width="2"/><path d="M6 32h52" stroke="#8A6F63" stroke-width="3" stroke-dasharray="6 5" stroke-linecap="round"/><path d="M32 26v-3M32 41v-3" stroke="#43302A" stroke-width="3" stroke-linecap="round"/>',
+corner:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><path d="M6 40h26V14" stroke="#8A6F63" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="38" y="34" width="20" height="24" rx="3" fill="#D2718A" stroke="#9E4459" stroke-width="2"/>',
+
+/* ---- ciências ---- */
+fusao:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="12" y="10" width="20" height="20" rx="4" fill="#CFE3F5" stroke="#7EA8CC" stroke-width="2"/><path d="M17 15l10 10M27 15l-10 10" stroke="#fff" stroke-width="2.4"/><path d="M36 22h10M46 22l-5-5M46 22l-5 5" stroke="#8A6F63" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M46 54c-7 0-11-5-11-10s5-9 11-16c6 7 11 11 11 16s-4 10-11 10z" fill="#5E9CC4"/>',
+evaporacao:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M14 56c-6 0-10-5-10-10s5-9 10-15c5 6 10 10 10 15s-4 10-10 10z" fill="#5E9CC4"/><path d="M32 46c3-4 0-7 3-11s0-6 0-6M44 46c3-4 0-7 3-11s0-6 0-6M38 54c3-4 0-7 3-11" stroke="#9BB8CC" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="48" cy="14" r="8" fill="#D9A441"/><path d="M48 2v4M48 22v4M36 14h4M56 14h4M40 6l3 3M56 6l-3 3" stroke="#D9A441" stroke-width="2.6" stroke-linecap="round"/>',
+condensacao:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M18 34c-5 0-9-4-9-9s4-8 9-8c2-6 7-9 13-9s12 4 13 10c5 0 9 3 9 8s-4 8-9 8z" fill="#CFE3F5" stroke="#7EA8CC" stroke-width="2"/><path d="M22 44c-3 0-5-2-5-4s2-4 5-7c3 3 5 5 5 7s-2 4-5 4z" fill="#5E9CC4"/><path d="M42 50c-3 0-5-2-5-4s2-4 5-7c3 3 5 5 5 7s-2 4-5 4z" fill="#5E9CC4"/>',
+chuva:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M18 30c-5 0-9-4-9-9s4-8 9-8c2-6 7-9 13-9s12 4 13 10c5 0 9 3 9 8s-4 8-9 8z" fill="#9BB8CC" stroke="#6E8FA8" stroke-width="2"/><path d="M20 38l-4 12M32 38l-4 12M44 38l-4 12" stroke="#5E9CC4" stroke-width="4" stroke-linecap="round"/>',
+opaco:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><rect x="16" y="14" width="32" height="36" rx="3" fill="#8A6F63" stroke="#5A4034" stroke-width="2"/><path d="M16 24h32M16 34h32M16 44h32" stroke="#5A4034" stroke-width="1.6"/><path d="M4 32h9M51 32h9" stroke="#D9A441" stroke-width="4" stroke-linecap="round"/><path d="M55 32h5" stroke="#EBD7C4" stroke-width="4" stroke-linecap="round"/>',
+transparente:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="16" y="14" width="32" height="36" rx="3" fill="#DBEBF7" stroke="#7EA8CC" stroke-width="2" opacity=".85"/><path d="M20 18l10 10M20 30l14 14" stroke="#fff" stroke-width="3"/><path d="M4 32h56" stroke="#D9A441" stroke-width="4" stroke-linecap="round"/>',
+
+/* ---- geografia / história ---- */
+agricultura:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M32 56V26" stroke="#7FA86B" stroke-width="4" stroke-linecap="round"/><path d="M32 34c-8-2-12-8-12-14 7 0 11 5 12 10 1-5 5-10 12-10 0 6-4 12-12 14z" fill="#8FBB77"/><path d="M14 56h36" stroke="#8A6F63" stroke-width="4" stroke-linecap="round"/><path d="M20 26c-4-2-6-6-6-10 5 0 8 4 8 8M44 26c4-2 6-6 6-10-5 0-8 4-8 8" fill="#8FBB77"/>',
+industria:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><path d="M10 54V30l12 8V30l12 8V18h20v36z" fill="#8A6F63" stroke="#5A4034" stroke-width="2" stroke-linejoin="round"/><rect x="40" y="26" width="6" height="8" fill="#FBEFD6"/><rect x="40" y="40" width="6" height="8" fill="#FBEFD6"/><path d="M50 18c0-6-4-6-4-10" stroke="#CDBCA9" stroke-width="3" stroke-linecap="round"/>',
+comercio:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M10 24h44v30H10z" fill="#FDF5EE" stroke="#8A6F63" stroke-width="2"/><path d="M8 14h48l-4 10H12z" fill="#D2718A" stroke="#9E4459" stroke-width="2" stroke-linejoin="round"/><path d="M20 24v-10M32 24v-10M44 24v-10" stroke="#9E4459" stroke-width="1.6"/><rect x="26" y="36" width="12" height="18" rx="2" fill="#86A98C"/>',
+cidade:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="8" y="26" width="14" height="28" fill="#5A6E9A"/><rect x="25" y="14" width="14" height="40" fill="#3F5285"/><rect x="42" y="32" width="14" height="22" fill="#5A6E9A"/><g fill="#FBEFD6"><rect x="11" y="30" width="4" height="4"/><rect x="17" y="30" width="4" height="4"/><rect x="11" y="38" width="4" height="4"/><rect x="28" y="20" width="4" height="4"/><rect x="34" y="20" width="4" height="4"/><rect x="28" y="30" width="4" height="4"/><rect x="34" y="30" width="4" height="4"/><rect x="45" y="38" width="4" height="4"/><rect x="51" y="38" width="4" height="4"/></g>',
+trator:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M20 38V22h14l4 10h12v6z" fill="#8E2A3C" stroke="#6B1B29" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="44" r="11" fill="none" stroke="#43302A" stroke-width="5"/><circle cx="46" cy="46" r="7" fill="none" stroke="#43302A" stroke-width="4"/>',
+vaca:'<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><ellipse cx="32" cy="34" rx="20" ry="14" fill="#FDF5EE" stroke="#8A6F63" stroke-width="2"/><ellipse cx="24" cy="30" rx="6" ry="5" fill="#5A4034"/><ellipse cx="42" cy="38" rx="5" ry="4" fill="#5A4034"/><path d="M18 46v8M28 48v6M38 48v6M46 46v8" stroke="#8A6F63" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="14" cy="24" rx="7" ry="6" fill="#FDF5EE" stroke="#8A6F63" stroke-width="2"/><circle cx="12" cy="23" r="1.6" fill="#43302A"/>',
+piramide:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M32 10l24 40H8z" fill="#E8C27A" stroke="#B58B3E" stroke-width="2" stroke-linejoin="round"/><path d="M32 10v40M32 10L20 50M32 10l12 40" stroke="#C99C50" stroke-width="1.6"/><circle cx="50" cy="16" r="6" fill="#D9A441"/>',
+hieroglifo:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><rect x="12" y="8" width="40" height="48" rx="3" fill="#F0DFC6" stroke="#B58B3E" stroke-width="2"/><g stroke="#8A6F63" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M20 16h8M24 16v8M20 24h8"/><path d="M36 16c4 0 6 3 6 6s-2 6-6 6"/><circle cx="24" cy="38" r="4"/><path d="M36 34l6 10M42 34l-6 10"/><path d="M20 50h24"/></g>',
+templo:'<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M32 8l26 12H6z" fill="#DCE4F2" stroke="#8A9BC0" stroke-width="2" stroke-linejoin="round"/><g fill="#EAF0FB" stroke="#8A9BC0" stroke-width="2"><rect x="12" y="24" width="7" height="22"/><rect x="24" y="24" width="7" height="22"/><rect x="36" y="24" width="7" height="22"/><rect x="48" y="24" width="7" height="22"/></g><rect x="6" y="46" width="52" height="7" fill="#DCE4F2" stroke="#8A9BC0" stroke-width="2"/>',
+balanca:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M32 12v36M18 52h28" stroke="#8A6F63" stroke-width="4" stroke-linecap="round"/><path d="M10 22h44" stroke="#8A6F63" stroke-width="3.4" stroke-linecap="round"/><path d="M14 22l-6 12h12zM50 22l-6 12h12z" fill="#D9A441" stroke="#A8761E" stroke-width="1.8" stroke-linejoin="round"/><circle cx="32" cy="14" r="4" fill="#D9A441"/>',
+rio:'<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><path d="M4 44c8 0 8-8 16-8s8 8 16 8 8-8 16-8 8 8 12 8" stroke="#5E9CC4" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M4 54c8 0 8-6 16-6s8 6 16 6 8-6 16-6 8 6 12 6" stroke="#9BC7E0" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M14 34c-3-8 0-16 4-20 2 6 6 8 6 14M46 32c3-8 0-14-4-18-2 6-6 8-6 12" fill="#E8C27A"/>',
+farao:'<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M18 26c0-9 6-15 14-15s14 6 14 15v4H18z" fill="#3F5285"/><path d="M18 26h28v20l-6 8H24l-6-8z" fill="#D9A441"/><ellipse cx="32" cy="34" rx="10" ry="12" fill="#E8C27A"/><circle cx="28" cy="33" r="1.8" fill="#43302A"/><circle cx="36" cy="33" r="1.8" fill="#43302A"/><path d="M28 12h8l-4-6z" fill="#8E2A3C"/>'
+};
+
+/* fração desenhada: pizza com fatias pintadas */
+function svgFracao(num, den, cor){
+  cor = cor || "#D2718A";
+  const R=26, cx=32, cy=32; let p="";
+  for(let i=0;i<den;i++){
+    const a1 = (i/den)*2*Math.PI - Math.PI/2, a2 = ((i+1)/den)*2*Math.PI - Math.PI/2;
+    const x1=cx+R*Math.cos(a1), y1=cy+R*Math.sin(a1), x2=cx+R*Math.cos(a2), y2=cy+R*Math.sin(a2);
+    const grande = (a2-a1) > Math.PI ? 1 : 0;
+    p += `<path d="M${cx} ${cy} L${x1.toFixed(1)} ${y1.toFixed(1)} A${R} ${R} 0 ${grande} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z" fill="${i<num?cor:'#FDF5EE'}" stroke="#8A6F63" stroke-width="1.6"/>`;
+  }
+  return `<circle cx="32" cy="32" r="31" fill="#FBEFD6"/>` + p;
+}
+function fig(chave, tam){
+  tam = tam || 64;
+  let interno;
+  if(chave && chave.indexOf("frac:")===0){
+    const partes = chave.slice(5).split("/");
+    interno = svgFracao(parseInt(partes[0],10), parseInt(partes[1],10));
+  } else interno = ICONES[chave];
+  if(!interno) return "";
+  return `<svg class="fig" viewBox="0 0 64 64" width="${tam}" height="${tam}" aria-hidden="true">${interno}</svg>`;
+}
+
+/* ============================================================
+   NÍVEIS, FRASES E CONTEÚDO DAS ATIVIDADES (v2)
+   ============================================================ */
+
+const FRASES = {
+  inicio:["Vamos com calma. Errar aqui é de graça.","Sem pressa e sem cronômetro.","Você só precisa começar. O resto vem."],
+  acerto:["Isso!","Boa!","Certinho.","Você pegou.","Mandou bem."],
+  erro:["Quase. Olha a explicação.","Ainda não — e tudo bem.","Esse é dos difíceis. Lê comigo.","Errou aqui pra acertar na prova."],
+  fimOtimo:["Você foi até o fim e ainda mandou muito bem. 🎀","Isso aí. Sentou, fez e terminou.","Nível dominado. Orgulho."],
+  fimBom:["Terminou tudo. É isso que conta.","Você foi até o fim — essa é a parte difícil.","Boa. Cada volta fica mais fácil."],
+  fimTreino:["Terminar valendo mais que acertar. E você terminou.","Os erros de hoje são as questões certas da prova.","Difícil? Foi. Você fez mesmo assim."],
+  nivel:["🔓 Nível novo liberado!","🔓 Você destravou o próximo nível!","🔓 Subiu de nível!"]
+};
+function frase(k){ const l=FRASES[k]; return l[Math.floor(Math.random()*l.length)]; }
+
+/* quantos itens em cada nível, por atividade */
+const NIVEIS = {
+  quiz:    [6, 10, 99],
+  memoria: [4, 6, 8],
+  cruzada: [4, 6, 8],
+  assoc:   [4, 5, 6],
+  listen:  [4, 6, 8],
+  speak:   [4, 6, 8]
+};
+const NOME_NIVEL = ["Aquecimento","Trote","Galope"];
+
+/* ---------- JOGO DA MEMÓRIA: figura ↔ palavra, com explicação ---------- */
+const MEMORIA2 = {
+"Inglês":[
+ {a:"fig:nurse",       b:"nurse",       ex:"<b>nurse</b> = enfermeiro(a). A nurse takes care of sick people."},
+ {a:"fig:firefighter", b:"firefighter", ex:"<b>firefighter</b> = bombeiro(a). A firefighter puts out fires."},
+ {a:"fig:pilot",       b:"pilot",       ex:"<b>pilot</b> = piloto. A pilot flies planes."},
+ {a:"fig:mechanic",    b:"mechanic",    ex:"<b>mechanic</b> = mecânico(a). A mechanic fixes cars."},
+ {a:"fig:teacher",     b:"teacher",     ex:"<b>teacher</b> = professor(a). A teacher teaches students."},
+ {a:"fig:chef",        b:"chef",        ex:"<b>chef</b> = cozinheiro(a). A chef cooks food."},
+ {a:"fig:doctor",      b:"doctor",      ex:"<b>doctor</b> = médico(a). A doctor helps sick people."},
+ {a:"fig:vet",         b:"vet",         ex:"<b>vet</b> = veterinário(a). A vet takes care of animals."},
+ {a:"fig:waiter",      b:"waiter",      ex:"<b>waiter</b> = garçom. A waiter serves food."},
+ {a:"fig:farmer",      b:"farmer",      ex:"<b>farmer</b> = agricultor(a). A farmer works on a farm."}
+],
+"Matemática":[
+ {a:"frac:1/2", b:"um meio",        ex:"<b>1/2</b> — o inteiro dividido em 2, e você fica com 1. É a metade."},
+ {a:"frac:1/4", b:"um quarto",      ex:"<b>1/4</b> — dividido em 4 partes iguais, você fica com 1."},
+ {a:"frac:3/4", b:"três quartos",   ex:"<b>3/4</b> — dividido em 4, você fica com 3. Falta só 1 para o inteiro."},
+ {a:"frac:1/3", b:"um terço",       ex:"<b>1/3</b> — dividido em 3. Repare: a fatia é MAIOR que a de 1/4."},
+ {a:"frac:2/3", b:"dois terços",    ex:"<b>2/3</b> — dividido em 3, você fica com 2."},
+ {a:"frac:5/8", b:"cinco oitavos",  ex:"<b>5/8</b> — dividido em 8, você fica com 5. Denominador 8 = oitavos."},
+ {a:"frac:4/4", b:"um inteiro",     ex:"<b>4/4</b> — pegou todas as partes, então vale 1 inteiro."},
+ {a:"frac:2/6", b:"dois sextos",    ex:"<b>2/6</b> — dividido em 6, você fica com 2. Simplificando dá 1/3."},
+ {a:"frac:3/6", b:"três sextos",    ex:"<b>3/6</b> — metade também! 3/6 é equivalente a 1/2."},
+ {a:"frac:7/8", b:"sete oitavos",   ex:"<b>7/8</b> — falta só uma fatia para completar o inteiro."}
+],
+"Ciências":[
+ {a:"fig:fusao",        b:"Fusão",          ex:"<b>Fusão</b> — sólido vira líquido. O gelo derrete."},
+ {a:"fig:evaporacao",   b:"Evaporação",     ex:"<b>Evaporação</b> — líquido vira gás devagar. O Sol puxa a água para cima."},
+ {a:"fig:condensacao",  b:"Condensação",    ex:"<b>Condensação</b> — o vapor esfria e vira gotinhas. É assim que a nuvem se forma."},
+ {a:"fig:chuva",        b:"Precipitação",   ex:"<b>Precipitação</b> — as gotinhas ficam pesadas e caem: chuva, neve ou granizo."},
+ {a:"fig:opaco",        b:"Opaco",          ex:"<b>Opaco</b> — não deixa a luz passar. Madeira, metal, papelão."},
+ {a:"fig:transparente", b:"Transparente",   ex:"<b>Transparente</b> — a luz passa e dá para ver nitidamente. Vidro limpo."},
+ {a:"Ductilidade",      b:"Vira fio",       ex:"<b>Ductilidade</b> — o cobre dos fios elétricos é o exemplo clássico."},
+ {a:"Maleabilidade",    b:"Vira lâmina",    ex:"<b>Maleabilidade</b> — o papel alumínio é metal achatado em folha."},
+ {a:"Densidade",        b:"Explica quem boia", ex:"<b>Densidade</b> — o óleo boia porque é menos denso que a água."},
+ {a:"Massa e volume",   b:"Propriedades gerais", ex:"Estão em TUDO que é matéria. Cor e brilho são específicas."}
+],
+"Geografia":[
+ {a:"fig:agricultura", b:"Setor primário",    ex:"<b>Primário</b> — tira da natureza: agricultura, pecuária, extração."},
+ {a:"fig:industria",   b:"Setor secundário",  ex:"<b>Secundário</b> — transforma matéria-prima em produto."},
+ {a:"fig:comercio",    b:"Setor terciário",   ex:"<b>Terciário</b> — vende e presta serviço. É o que mais emprega nas cidades."},
+ {a:"fig:trator",      b:"Mecanização",       ex:"<b>Mecanização</b> — máquina no lugar de gente. Produz mais e emprega menos."},
+ {a:"fig:cidade",      b:"Zona urbana",       ex:"<b>Zona urbana</b> — cidade, adensada, cheia de serviços."},
+ {a:"fig:vaca",        b:"Pecuária",          ex:"<b>Pecuária</b> — criação de animais. Também é setor primário."},
+ {a:"Êxodo rural",     b:"Do campo para a cidade", ex:"<b>Êxodo rural</b> — saída em massa, forte no Brasil dos anos 1950-70."},
+ {a:"Monocultura",     b:"Um só produto",     ex:"<b>Monocultura</b> — um único cultivo em área enorme. Empobrece o solo."},
+ {a:"Trabalho informal", b:"Sem carteira assinada", ex:"Sem carteira não há férias, 13º nem fundo de garantia."},
+ {a:"Matéria-prima",   b:"O que a indústria transforma", ex:"O minério vira aço; o aço vira carro."}
+],
+"História":[
+ {a:"fig:piramide",   b:"Pirâmide",           ex:"<b>Pirâmides</b> eram túmulos monumentais dos faraós."},
+ {a:"fig:hieroglifo", b:"Hieróglifos",        ex:"<b>Hieróglifos</b> — escrita egípcia feita de desenhos e símbolos."},
+ {a:"fig:templo",     b:"Templo grego",       ex:"Os gregos imaginavam os deuses com forma e sentimentos humanos."},
+ {a:"fig:balanca",    b:"Código de Hamurabi", ex:"Um dos primeiros conjuntos de leis escritas. Lei de talião: olho por olho."},
+ {a:"fig:rio",        b:"Rio Nilo",           ex:"As cheias do Nilo fertilizavam as margens. Egito = “dádiva do Nilo”."},
+ {a:"fig:farao",      b:"Faraó",              ex:"O faraó era rei E divindade — religião sustentando o poder."},
+ {a:"Politeísmo",     b:"Vários deuses",      ex:"Poli = muitos. Egípcios, mesopotâmicos e gregos eram politeístas."},
+ {a:"Monoteísmo",     b:"Um só deus",         ex:"Mono = um. Os hebreus são o exemplo do capítulo."},
+ {a:"Cuneiforme",     b:"Escrita da Mesopotâmia", ex:"Feita com estilete em forma de cunha sobre argila."},
+ {a:"Zigurate",       b:"Templo em torre",    ex:"Ficava no centro da cidade-Estado mesopotâmica."}
+],
+"Português":[
+ {a:"Prefixo",   b:"Vem ANTES do radical",   ex:"in-feliz, des-fazer, re-fazer. Muda o sentido da palavra."},
+ {a:"Sufixo",    b:"Vem DEPOIS do radical",  ex:"dent-ista (profissão), livr-aria (lugar), medo-so (cheio de)."},
+ {a:"Primitiva", b:"Não vem de outra",       ex:"pedra, livro, mar. São o começo da família de palavras."},
+ {a:"Derivada",  b:"Nasceu de outra",        ex:"pedreiro veio de pedra; livraria veio de livro."},
+ {a:"Polissemia",b:"Mesma palavra, vários sentidos", ex:"o pé do corpo, o pé da mesa, o pé da montanha."},
+ {a:"Lide",      b:"1º parágrafo da notícia", ex:"Responde o quê, quem, quando, onde, como e por quê."},
+ {a:"Infinitivo",b:"Forma em -AR, -ER, -IR",  ex:"É o verbo como está no dicionário: cantar, correr, partir."},
+ {a:"Pretérito perfeito", b:"Ação que já terminou", ex:"brincaram, estudei, viajou. A pista costuma ser “ontem”."},
+ {a:"Manchete",  b:"Título grande da notícia", ex:"É a primeira coisa que o leitor vê."},
+ {a:"Radical",   b:"O miolo da palavra",     ex:"livr- aparece em livro, livraria, livreiro."}
+]
+};
+
+/* ---------- CRUZADINHA: dicas em forma de charada ---------- */
+const CRUZADA2 = {
+"Português":[
+ ["PREFIXO","Sou um pedacinho que chega ANTES do radical e viro o sentido do avesso: in-, des-, re-"],
+ ["SUFIXO","Chego DEPOIS do radical e digo profissão, lugar ou qualidade: -ista, -aria, -oso"],
+ ["VERBO","Sou a palavra que mostra ação, estado ou fenômeno da natureza"],
+ ["LIDE","Sou o primeiro parágrafo da notícia e entrego o essencial de cara"],
+ ["MANCHETE","Sou o título grande da notícia, feito para você parar e ler"],
+ ["DERIVADA","Palavra que nasceu de outra: pedreiro veio de mim, eu vim de pedra"],
+ ["INFINITIVO","Forma do verbo do jeitinho que aparece no dicionário, terminada em -AR, -ER ou -IR"],
+ ["POLISSEMIA","Sou uma palavra só, mas tenho vários sentidos, e é o contexto que escolhe qual"]
+],
+"Matemática":[
+ ["FRACAO","Represento pedaços de um inteiro, com um número em cima e outro embaixo"],
+ ["NUMERADOR","Fico em cima e digo quantos pedaços você pegou"],
+ ["DENOMINADOR","Fico embaixo e digo em quantas partes iguais o inteiro foi cortado"],
+ ["EQUIVALENTE","Tenho números diferentes, mas valho exatamente o mesmo: 1/2 e 3/6 somos assim"],
+ ["MISTO","Sou um número que anda em dupla: um inteiro de braço dado com uma fração"],
+ ["INTEIRO","Sou o todo, sem cortes. Quando o de cima é igual ao de baixo, você chega em mim"],
+ ["METADE","Corte a pizza em duas partes iguais e pegue uma. Sou eu"],
+ ["QUARTOS","Quando o número de baixo é 4, é assim que a fração se lê"]
+],
+"Ciências":[
+ ["EVAPORACAO","O Sol me chama e a água do rio sobe comigo, virando vapor"],
+ ["CONDENSACAO","Esfrio o vapor lá em cima e viro gotinhas — é assim que a nuvem nasce"],
+ ["PRECIPITACAO","Fico pesada demais para continuar na nuvem e desabo: chuva, neve, granizo"],
+ ["INFILTRACAO","Sou a água que entra pelo solo e vai alimentar os rios de baixo da terra"],
+ ["DENSIDADE","Explico por que o óleo boia e a pedra afunda"],
+ ["OPACO","Nem um raiozinho de luz passa por mim: madeira, metal, papelão"],
+ ["EROSAO","Sem plantas segurando o solo, eu levo a terra boa embora"],
+ ["MATERIA","Sou tudo que tem massa e ocupa espaço — inclusive você"]
+],
+"Geografia":[
+ ["PRIMARIO","Sou o setor que tira direto da natureza: planta, cria e extrai"],
+ ["SECUNDARIO","Recebo a matéria-prima e devolvo produto pronto. Vivo nas fábricas"],
+ ["TERCIARIO","Não planto nem fabrico: eu vendo e atendo gente. Sou a maioria nas cidades"],
+ ["EXODO","Sou a saída em massa do campo para a cidade — meu sobrenome é rural"],
+ ["MONOCULTURA","Planto um produto só, em área enorme, e canso o solo"],
+ ["RURAL","Sou a zona do campo, de pouca gente e muita plantação"],
+ ["URBANA","Sou a zona da cidade, cheia de prédios, lojas e serviços"],
+ ["INFORMAL","Trabalho sem carteira assinada, então férias e 13º não vêm comigo"]
+],
+"História":[
+ ["POLITEISMO","Acredito em vários deuses de uma vez — Egito, Grécia e Mesopotâmia me seguiam"],
+ ["MONOTEISMO","Para mim existe um deus só. Os hebreus são meu exemplo no capítulo"],
+ ["HIEROGLIFOS","Sou escrita feita de desenhos, e a Pedra de Roseta me decifrou"],
+ ["CUNEIFORME","Me escreviam com um estilete em forma de cunha sobre argila molhada"],
+ ["ZIGURATE","Sou um templo em degraus, plantado no meio da cidade-Estado"],
+ ["MUMIFICACAO","Guardo o corpo para a vida depois da morte, do jeito egípcio"],
+ ["NILO","Minhas cheias deixavam a terra fértil. Heródoto disse que o Egito era minha dádiva"],
+ ["HAMURABI","Escrevi leis em pedra e ficaram famosas pelo olho por olho"]
+],
+"Inglês":[
+ ["NURSE","Em inglês: cuida de gente doente no hospital"],
+ ["PILOT","Em inglês: passa o dia voando — é quem pilota o avião"],
+ ["TEACHER","Em inglês: dá aula para os alunos"],
+ ["MECHANIC","Em inglês: quando o carro quebra, é a mim que você chama"],
+ ["SUBWAY","Em inglês: trem que anda por baixo da cidade"],
+ ["STRAIGHT","Go ___ ahead: quando ninguém precisa virar, segue assim"],
+ ["RIGHT","Em inglês: o lado oposto de left"],
+ ["BETWEEN","Em inglês: fico exatamente no meio de dois lugares"]
+]
+};
+
+/* ---------- ASSOCIAÇÃO: figura ↔ palavra ---------- */
+const ASSOC2 = {
+"Inglês":[
+ {f:"bus",         t:"bus",          ex:"<b>bus</b> = ônibus."},
+ {f:"subway",      t:"subway",       ex:"<b>subway</b> = metrô, o trem que anda embaixo da cidade."},
+ {f:"plane",       t:"plane",        ex:"<b>plane</b> = avião. Travel <i>by plane</i>."},
+ {f:"bike",        t:"bike",         ex:"<b>bike</b> = bicicleta."},
+ {f:"flyingcar",   t:"flying car",   ex:"<b>flying car</b> = carro voador. Coisa de <i>transportation in the future</i>."},
+ {f:"selfdriving", t:"self-driving car", ex:"<b>self-driving car</b> = carro que dirige sozinho, sem motorista."},
+ {f:"straight",    t:"go straight ahead", ex:"<b>Go straight ahead</b> = siga em frente."},
+ {f:"left",        t:"turn left",    ex:"<b>Turn left</b> = vire à esquerda."},
+ {f:"right",       t:"turn right",   ex:"<b>Turn right</b> = vire à direita."},
+ {f:"between",     t:"between",      ex:"<b>Between</b> = entre dois lugares."}
+],
+"Matemática":[
+ {f:"frac:1/2", t:"1/2", ex:"Metade do inteiro."},
+ {f:"frac:1/3", t:"1/3", ex:"Uma parte de três."},
+ {f:"frac:1/4", t:"1/4", ex:"Uma parte de quatro. Repare: menor que 1/3."},
+ {f:"frac:3/4", t:"3/4", ex:"Três partes de quatro."},
+ {f:"frac:2/3", t:"2/3", ex:"Duas partes de três."},
+ {f:"frac:5/8", t:"5/8", ex:"Cinco partes de oito."}
+],
+"Ciências":[
+ {f:"fusao",        t:"Fusão",        ex:"Sólido → líquido. O gelo derretendo."},
+ {f:"evaporacao",   t:"Evaporação",   ex:"Líquido → gás, puxado pelo calor do Sol."},
+ {f:"condensacao",  t:"Condensação",  ex:"Gás → líquido. O vapor esfria e vira gotinha."},
+ {f:"chuva",        t:"Precipitação", ex:"A água voltando para o chão."},
+ {f:"opaco",        t:"Opaco",        ex:"A luz não atravessa."},
+ {f:"transparente", t:"Transparente", ex:"A luz atravessa e dá para ver nitidamente."}
+],
+"Geografia":[
+ {f:"agricultura", t:"Setor primário",   ex:"Tirar da natureza."},
+ {f:"industria",   t:"Setor secundário", ex:"Transformar matéria-prima."},
+ {f:"comercio",    t:"Setor terciário",  ex:"Vender e prestar serviço."},
+ {f:"trator",      t:"Mecanização",      ex:"Máquina no lugar de gente no campo."},
+ {f:"cidade",      t:"Zona urbana",      ex:"Onde mora a maioria dos brasileiros."},
+ {f:"vaca",        t:"Pecuária",         ex:"Criação de animais — também é setor primário."}
+],
+"História":[
+ {f:"piramide",   t:"Pirâmide do Egito",  ex:"Túmulo monumental do faraó."},
+ {f:"hieroglifo", t:"Hieróglifos",        ex:"Escrita egípcia de desenhos e símbolos."},
+ {f:"templo",     t:"Templo grego",       ex:"Deuses com forma e sentimentos humanos."},
+ {f:"balanca",    t:"Código de Hamurabi", ex:"Leis escritas na Babilônia."},
+ {f:"rio",        t:"Rio Nilo",           ex:"As cheias fertilizavam as margens."},
+ {f:"farao",      t:"Faraó",              ex:"Rei e divindade ao mesmo tempo."}
+],
+"Português":[
+ {f:null, t:"Prefixo",    d:"in-feliz",      ex:"Pedacinho colado ANTES do radical."},
+ {f:null, t:"Sufixo",     d:"dent-ista",     ex:"Pedacinho colado DEPOIS do radical."},
+ {f:null, t:"Primitiva",  d:"pedra",         ex:"Não vem de nenhuma outra palavra."},
+ {f:null, t:"Derivada",   d:"pedreiro",      ex:"Nasceu de outra palavra."},
+ {f:null, t:"Polissemia", d:"pé do corpo / pé da mesa", ex:"Mesma palavra, sentidos diferentes."},
+ {f:null, t:"Infinitivo", d:"cantar",        ex:"Verbo como está no dicionário."}
+]
+};
+
+/* ---------- LISTENING ---------- */
+const OUVIR = [
+ {n:1, txt:"nurse",       fig:"nurse",       op:["nurse","teacher","farmer"],       ex:"<b>nurse</b> = enfermeiro(a)."},
+ {n:1, txt:"firefighter", fig:"firefighter", op:["firefighter","mechanic","doctor"],ex:"<b>firefighter</b> = bombeiro(a)."},
+ {n:1, txt:"pilot",       fig:"pilot",       op:["pilot","waiter","vet"],           ex:"<b>pilot</b> = piloto."},
+ {n:1, txt:"teacher",     fig:"teacher",     op:["teacher","chef","driver"],        ex:"<b>teacher</b> = professor(a)."},
+ {n:1, txt:"bus",         fig:"bus",         op:["bus","bike","plane"],             ex:"<b>bus</b> = ônibus."},
+ {n:1, txt:"subway",      fig:"subway",      op:["subway","car","train"],           ex:"<b>subway</b> = metrô."},
+ {n:2, txt:"left",        fig:"left",        op:["left","right","straight"],        ex:"<b>left</b> = esquerda. Cuidado para não confundir com <i>right</i>."},
+ {n:2, txt:"right",       fig:"right",       op:["right","left","behind"],          ex:"<b>right</b> = direita."},
+ {n:2, txt:"between",     fig:"between",     op:["between","next to","across from"],ex:"<b>between</b> = entre dois lugares."},
+ {n:2, txt:"won't",       fig:null,          op:["won't","want","went"],            ex:"<b>won't</b> = will not. Som parecido com “ôunt”."},
+ {n:2, txt:"flying car",  fig:"flyingcar",   op:["flying car","electric car","fast car"], ex:"<b>flying car</b> = carro voador."},
+ {n:2, txt:"mechanic",    fig:"mechanic",    op:["mechanic","musician","magician"], ex:"<b>mechanic</b> = mecânico(a)."},
+ {n:3, txt:"A nurse takes care of sick people.", fig:"nurse", op:["A nurse takes care of sick people.","A nurse cooks food for people.","A nurse drives a school bus."], ex:"<i>takes care of</i> = cuida de · <i>sick</i> = doente."},
+ {n:3, txt:"Go straight ahead and turn left.", fig:"straight", op:["Go straight ahead and turn left.","Go straight ahead and turn right.","Turn left and stop here."], ex:"<i>straight ahead</i> = em frente · <i>turn left</i> = vire à esquerda."},
+ {n:3, txt:"In the future, people will travel in flying cars.", fig:"flyingcar", op:["In the future, people will travel in flying cars.","In the past, people traveled in flying cars.","People never travel in flying cars."], ex:"<b>will</b> marca o futuro: <i>will travel</i> = vão viajar."},
+ {n:3, txt:"The bank is between the school and the park.", fig:"between", op:["The bank is between the school and the park.","The bank is next to the school.","The park is across from the bank."], ex:"<i>between</i> = entre · <i>next to</i> = ao lado · <i>across from</i> = em frente."}
+];
+
+/* ---------- SPEAKING ---------- */
+const FALAR = [
+ {n:1, txt:"nurse",   fig:"nurse",   pt:"enfermeiro(a)"},
+ {n:1, txt:"pilot",   fig:"pilot",   pt:"piloto"},
+ {n:1, txt:"teacher", fig:"teacher", pt:"professor(a)"},
+ {n:1, txt:"doctor",  fig:"doctor",  pt:"médico(a)"},
+ {n:1, txt:"bus",     fig:"bus",     pt:"ônibus"},
+ {n:1, txt:"subway",  fig:"subway",  pt:"metrô"},
+ {n:2, txt:"firefighter", fig:"firefighter", pt:"bombeiro(a)"},
+ {n:2, txt:"mechanic",    fig:"mechanic",    pt:"mecânico(a)"},
+ {n:2, txt:"turn right",  fig:"right",       pt:"vire à direita"},
+ {n:2, txt:"turn left",   fig:"left",        pt:"vire à esquerda"},
+ {n:2, txt:"go straight ahead", fig:"straight", pt:"siga em frente"},
+ {n:2, txt:"flying car",  fig:"flyingcar",   pt:"carro voador"},
+ {n:3, txt:"A pilot flies planes.", fig:"pilot", pt:"Um piloto pilota aviões."},
+ {n:3, txt:"A mechanic fixes cars.", fig:"mechanic", pt:"Um mecânico conserta carros."},
+ {n:3, txt:"I will travel by bus tomorrow.", fig:"bus", pt:"Eu vou viajar de ônibus amanhã."},
+ {n:3, txt:"The park is next to the school.", fig:"between", pt:"O parque fica ao lado da escola."}
+];
+
 /* ---------- PLANO DIÁRIO: prática distribuída ----------
    Cada matéria aparece 3x em dias diferentes antes da prova.
    ap = apresentação (ler/organizar) | rec = recuperação (quiz/jogo) | rev = revisão final
@@ -1096,7 +1485,7 @@ const Store = {
   del(k){ try{ this.ok ? localStorage.removeItem(k) : delete MEM[k] }catch(e){ delete MEM[k] } }
 };
 
-const PADRAO = {nome:"", feitos:{}, quiz:{}, notas:[], duvidas:[], se:"", entao:"", blocosDia:2, tema:"dia"};
+const PADRAO = {nome:"", niveis:{}, feitos:{}, quiz:{}, notas:[], duvidas:[], se:"", entao:"", blocosDia:2, tema:"dia"};
 let S = carregar();
 
 function carregar(){
@@ -1283,7 +1672,7 @@ function zerarTimer(){ clearInterval(tick); rodando=false; emPausa=false; resta=
 
 /* ---------- TREINAR ---------- */
 let matAtual="Português", modoAtual="quiz";
-const MODOS=[["quiz","Quiz"],["memoria","Jogo da memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["duvida","🆘 Tirar dúvida"]];
+const MODOS=[["quiz","Quiz"],["memoria","Memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
 function renderEscolhas(){
   document.getElementById("escMateria").innerHTML = Object.keys(MATERIAS).map(m=>
     `<button class="${matAtual===m?'on':''}" onclick="setMat('${m}')">${m}</button>`).join("");
@@ -1298,7 +1687,14 @@ function renderJogo(){
     <p class="sub">${MATERIAS[matAtual].conteudo}</p></div>`;
   const alvo = document.getElementById("areaJogo");
   alvo.innerHTML = cab + '<div id="jogoBox"></div>';
-  ({quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida})[modoAtual]();
+  const mapa = {quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar};
+  if((modoAtual==="listen"||modoAtual==="speak") && matAtual!=="Inglês"){
+    document.getElementById("jogoBox").innerHTML =
+      `<div class="card ouro"><h3>Só em Inglês</h3><p class="sub">Ouvir e Falar existem só na matéria de Inglês. Toque em <b>Inglês</b> acima.</p>
+       <button class="btn" onclick="setMat('Inglês')">Ir para Inglês</button></div>`;
+    return;
+  }
+  (mapa[modoAtual]||iniQuiz)();
 }
 
 function iniDuvida(){
@@ -1316,7 +1712,8 @@ function embaralha(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.f
 function iniQuiz(){ qLista=embaralha(QUIZ[matAtual]); qIdx=0; qAcertos=0; pintaQuiz(); }
 function pintaQuiz(){
   const box=document.getElementById("jogoBox");
-  if(qIdx>=qLista.length){
+  if(qIdx>=qLista.length){ fimQuiz(); return; }
+  if(false){
     const r=S.quiz[matAtual]||{melhor:0,vezes:0};
     r.vezes=(r.vezes||0)+1; r.melhor=Math.max(r.melhor||0,qAcertos); r.total=qLista.length; S.quiz[matAtual]=r; salvar();
     box.innerHTML=`<div class="card destaque"><h2>🏅 Volta completa!</h2>
@@ -1328,6 +1725,7 @@ function pintaQuiz(){
   }
   const q=qLista[qIdx]; qRespondida=false;
   box.innerHTML=`<div class="card">
+    ${barraNivel(matAtual,"quiz")}
     <p class="sub">Pergunta ${qIdx+1} de ${qLista.length} · sem cronômetro, sem pontuação por velocidade</p>
     <div class="barra" style="margin-bottom:12px"><i style="width:${qIdx/qLista.length*100}%"></i></div>
     <h3 style="font-size:1.06rem;line-height:1.5">${q.p}</h3>
@@ -1346,8 +1744,8 @@ function responder(i){
   bts.forEach((b,j)=>{ b.disabled=true; if(j===q.c) b.classList.add("certa"); else if(j===i) b.classList.add("errada"); });
   const ok=i===q.c; if(ok) qAcertos++;
   document.getElementById("fbBox").innerHTML=
-    `<div class="fb ${ok?'ok':'no'}"><b>${ok?"Certo.":"Ainda não."}</b>${q.e}
-       <div style="margin-top:10px"><button class="bsos" onclick="abrirAjuda('${matAtual}', topicoDe('${matAtual}', ${JSON.stringify(q.p)}), 'passos')">${ok?"🗺️ Ver o mapa deste assunto":"🧩 Ver o passo a passo"}</button></div>
+    `<div class="fb ${ok?'ok':'no'}"><b>${ok?frase("acerto"):frase("erro")}</b>${q.e}
+       <div style="margin-top:10px"><button class="bsos" onclick="abrirAjuda('${matAtual}', topicoDe('${matAtual}', ${attr(q.p)}), 'passos')">${ok?"🗺️ Ver o mapa deste assunto":"🧩 Ver o passo a passo"}</button></div>
      </div>
      <button class="btn" onclick="proxQuiz()">${qIdx+1<qLista.length?"Próxima":"Ver resultado"}</button>`;
   marcarPalavras(document.querySelector("#fbBox .fb"), matAtual);
@@ -1915,6 +2313,471 @@ function abrirPalavras(){
   const q = qLista[qIdx]; if(!q) return;
   ajCtx = {q:q, mat:matAtual, lista:palavrasDaPergunta(q, matAtual)};
   abrirAjuda(matAtual, topicoDe(matAtual, q.p), "nesta");
+}
+
+
+/* ============================================================
+   v2 — níveis, resultados, motivação, listening e speaking
+   (redeclarações intencionais: estas versões substituem as anteriores)
+   ============================================================ */
+
+var mErros = 0, mLista = [], aLista = [], aErros = 0;
+var oLista = [], oIdx = 0, oAcertos = 0, oRespondida = false;
+var fLista = [], fIdx = 0, fAcertos = 0, fRec = null;
+
+/* ---------- níveis ---------- */
+function attr(x){ return JSON.stringify(String(x)).replace(/"/g,"&quot;"); }
+function chaveNivel(mat, modo){ return mat + "|" + modo; }
+function nivelDe(mat, modo){
+  S.niveis = S.niveis || {};
+  return S.niveis[chaveNivel(mat, modo)] || 0;
+}
+function subirNivel(mat, modo){
+  S.niveis = S.niveis || {};
+  const k = chaveNivel(mat, modo), atual = S.niveis[k] || 0;
+  if(atual < 2){ S.niveis[k] = atual + 1; salvar(); return true; }
+  return false;
+}
+function barraNivel(mat, modo){
+  const nv = nivelDe(mat, modo);
+  return `<div class="niveis">${[0,1,2].map(i=>
+    `<span class="nv ${i<nv?'feito':''} ${i===nv?'atual':''}">${i+1}</span>`).join("")}
+    <b>Nível ${nv+1} — ${NOME_NIVEL[nv]}</b></div>`;
+}
+
+/* ---------- figura ---------- */
+function celula(v){
+  if(typeof v !== "string") return "";
+  if(v.indexOf("fig:") === 0) return fig(v.slice(4), 76);
+  if(v.indexOf("frac:") === 0) return fig(v, 76);
+  return `<span class="cartatxt">${v}</span>`;
+}
+
+/* ---------- tela de resultado, comum a todas as atividades ---------- */
+function telaFim(o){
+  const total = o.total, acertos = o.acertos;
+  const prop = total ? acertos / total : 0;
+  const msg = prop >= 0.8 ? frase("fimOtimo") : (prop >= 0.5 ? frase("fimBom") : frase("fimTreino"));
+  const nvAntes = nivelDe(matAtual, o.modo);
+  const subiu = (prop >= 0.6) && subirNivel(matAtual, o.modo);
+  return `<div class="card destaque">
+    <h2>${o.titulo}</h2>
+    <div class="placar">
+      <div class="pl ok"><b>${acertos}</b><span>acertos</span></div>
+      <div class="pl no"><b>${total - acertos}</b><span>${o.rotuloErro || "erros"}</span></div>
+      <div class="pl tot"><b>${total}</b><span>no total</span></div>
+    </div>
+    <p class="motiva">${msg}</p>
+    ${subiu ? `<div class="fb ok"><b>${frase("nivel")}</b>Agora o nível ${nvAntes+2} — ${NOME_NIVEL[nvAntes+1]} — está aberto para você.</div>`
+            : (nvAntes < 2 ? `<p class="sub">Acerte pelo menos 60% para abrir o próximo nível. Pode repetir quantas vezes quiser.</p>`
+                           : `<p class="sub">Você já está no último nível desta atividade.</p>`)}
+    ${o.itens && o.itens.length ? `<h3 style="margin-top:16px">Repasse rápido</h3>
+      <div class="glos">${o.itens.map(x=>`<div class="gitem ${x.errou?'falhou':''}">${x.errou?'<span class="mk">✗</span>':'<span class="mk ok">✓</span>'}<b>${x.t}</b><span>${x.ex||""}</span></div>`).join("")}</div>` : ""}
+    <button class="btn" onclick="${o.recomecar}">🔁 Jogar de novo</button>
+    <button class="btn sec" onclick="setModo('${o.proximo||'quiz'}')">Trocar de atividade</button>
+  </div>`;
+}
+
+/* ============================================================
+   JOGO DA MEMÓRIA
+   ============================================================ */
+function iniMemoria(){
+  const nv = nivelDe(matAtual, "memoria");
+  const qtd = NIVEIS.memoria[nv];
+  const fonte = (typeof MEMORIA2 !== "undefined" && MEMORIA2[matAtual]) ? MEMORIA2[matAtual] : [];
+  mLista = embaralha(fonte).slice(0, qtd);
+  mCartas = embaralha(mLista.flatMap(function(p, i){ return [{id:i, v:p.a}, {id:i, v:p.b}]; }));
+  mAberta = null; mPares = 0; mErros = 0; mTrava = false;
+  mLista.forEach(function(p){ p.errou = false; });
+  pintaMemoria();
+}
+function pintaMemoria(){
+  document.getElementById("jogoBox").innerHTML = `<div class="card salvia">
+    ${barraNivel(matAtual,"memoria")}
+    <p class="sub">Vire duas cartas e ache o par. <b>Sem tempo e sem limite de tentativas.</b></p>
+    <div class="gridmem" id="gm">${mCartas.map(function(c,i){
+      return `<button class="carta" id="c${i}" onclick="virar(${i})"><span class="oculto">?</span></button>`;}).join("")}</div>
+    <p class="sub" id="mStatus" style="margin-top:12px">Pares encontrados: 0 de ${mCartas.length/2}</p>
+    <button class="btn sec" onclick="iniMemoria()">🔀 Embaralhar de novo</button></div>`;
+}
+function virar(i){
+  if(mTrava) return;
+  const el = document.getElementById("c" + i);
+  if(!el || el.classList.contains("par") || el.classList.contains("virada")) return;
+  el.classList.add("virada"); el.innerHTML = celula(mCartas[i].v);
+  if(mAberta === null){ mAberta = i; return; }
+  const a = mAberta; mAberta = null;
+  if(mCartas[a].id === mCartas[i].id && a !== i){
+    const ea = document.getElementById("c" + a); if(ea) ea.classList.add("par");
+    el.classList.add("par"); mPares++;
+    const st = document.getElementById("mStatus");
+    if(st) st.innerHTML = `Pares encontrados: ${mPares} de ${mCartas.length/2} · <b style="color:var(--salvia)">${frase("acerto")}</b>`;
+    if(mPares === mCartas.length/2) setTimeout(fimMemoria, 700);
+  } else {
+    mErros++;
+    if(mCartas[a]) mLista[mCartas[a].id].errou = true;
+    if(mCartas[i]) mLista[mCartas[i].id].errou = true;
+    mTrava = true;
+    setTimeout(function(){
+      [a,i].forEach(function(k){ const e = document.getElementById("c"+k);
+        if(!e) return; e.classList.remove("virada"); e.innerHTML = '<span class="oculto">?</span>'; });
+      mTrava = false;
+    }, 950);
+  }
+}
+function fimMemoria(){
+  const certos = mLista.filter(function(p){ return !p.errou; }).length;
+  document.getElementById("jogoBox").innerHTML = telaFim({
+    titulo:"🎴 Todos os pares encontrados!",
+    total: mLista.length, acertos: certos, modo:"memoria",
+    rotuloErro:"erraram antes",
+    itens: mLista.map(function(p){
+      return {t: (typeof p.b === "string" ? p.b : ""), ex: p.ex, errou: p.errou};
+    }),
+    recomecar:"iniMemoria()", proximo:"assoc"
+  }) + `<div class="card"><p class="sub">Você virou carta errada <b>${mErros}</b> vez(es). Isso não é nota — é só a conta de quantas vezes a memória precisou de uma segunda olhada.</p></div>`;
+  renderHoje();
+}
+
+/* ============================================================
+   CRUZADINHA
+   ============================================================ */
+function iniCruzada(){
+  const nv = nivelDe(matAtual, "cruzada");
+  const qtd = NIVEIS.cruzada[nv];
+  const fonte = (typeof CRUZADA2 !== "undefined" && CRUZADA2[matAtual]) ? CRUZADA2[matAtual] : CRUZADA[matAtual];
+  CZ = gerarCruzada(embaralha(fonte).slice(0, qtd));
+  const cols = CZ.maxC - CZ.minC + 1;
+  let cells = "";
+  for(let r = CZ.minR; r <= CZ.maxR; r++) for(let c = CZ.minC; c <= CZ.maxC; c++){
+    const k = r + "," + c;
+    if(CZ.occ[k]){
+      const num = CZ.numMap[k] ? `<span class="num">${CZ.numMap[k]}</span>` : "";
+      cells += `<div class="cel ativa" id="cel${r}_${c}">${num}<input maxlength="1" data-r="${r}" data-c="${c}" oninput="pulaCel(this)" onfocus="dicaDaCelula(${r},${c})"></div>`;
+    } else cells += `<div class="cel"></div>`;
+  }
+  const h = CZ.ents.filter(function(e){ return e.dir === "H"; });
+  const v = CZ.ents.filter(function(e){ return e.dir === "V"; });
+  document.getElementById("jogoBox").innerHTML = `<div class="card ouro">
+    ${barraNivel(matAtual,"cruzada")}
+    <div class="czdica" id="czDica">Toque em uma casinha para ver a charada dela.</div>
+    <div class="cruz" style="grid-template-columns:repeat(${cols},var(--cw,30px))">${cells}</div>
+    <p class="sub" style="text-align:center">Escreva <b>sem acento</b>. Pode conferir quantas vezes quiser.</p>
+    <div class="linha"><button class="btn azulao" onclick="conferirCruz()">Conferir</button>
+      <button class="btn sec" onclick="revelarCruz()">Mostrar as respostas</button></div>
+    <div id="czMsg"></div>
+    <div style="margin-top:16px">
+      <h3>Horizontais →</h3><ul class="dicas">${h.map(function(e){
+        return `<li><b>${e.num}.</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></li>`;}).join("")}</ul>
+      <h3 style="margin-top:12px">Verticais ↓</h3><ul class="dicas">${v.map(function(e){
+        return `<li><b>${e.num}.</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></li>`;}).join("")}</ul>
+    </div></div>`;
+}
+function dicaDaCelula(r, c){
+  if(!CZ) return;
+  const achadas = CZ.ents.filter(function(e){
+    if(e.dir === "H") return e.r === r && c >= e.c && c < e.c + e.w.length;
+    return e.c === c && r >= e.r && r < e.r + e.w.length;
+  });
+  const cx = document.getElementById("czDica");
+  if(!cx) return;
+  cx.innerHTML = achadas.length
+    ? achadas.map(function(e){
+        return `<div><b>${e.num} ${e.dir === "H" ? "→" : "↓"}</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></div>`;
+      }).join("")
+    : "Toque em uma casinha para ver a charada dela.";
+}
+function conferirCruz(){
+  let certas = 0, total = 0;
+  document.querySelectorAll(".cel.ativa input").forEach(function(inp){
+    const r = inp.dataset.r, c = inp.dataset.c, esp = CZ.occ[r + "," + c]; total++;
+    const cel = document.getElementById("cel" + r + "_" + c);
+    if(inp.value.toUpperCase() === esp){ cel.classList.add("ok"); certas++; }
+    else cel.classList.remove("ok");
+  });
+  if(certas === total){ fimCruzada(); return; }
+  document.getElementById("czMsg").innerHTML =
+    `<div class="fb no"><b>${certas} de ${total} letras certas.</b> As verdes já estão corretas.
+     Toque numa casinha vazia para reler a charada dela. ${frase("erro")}</div>`;
+}
+function fimCruzada(){
+  const palavras = CZ.ents.length;
+  document.getElementById("jogoBox").innerHTML = telaFim({
+    titulo:"✏️ Cruzadinha completa!",
+    total: palavras, acertos: palavras, modo:"cruzada", rotuloErro:"faltaram",
+    itens: CZ.ents.map(function(e){ return {t:e.w, ex:e.clue, errou:false}; }),
+    recomecar:"iniCruzada()", proximo:"memoria"
+  }) + `<div class="card"><p class="sub">Agora tente explicar duas dessas palavras em voz alta, sem olhar. Lembrar sozinha é o que fixa.</p></div>`;
+  renderHoje();
+}
+function revelarCruz(){
+  document.querySelectorAll(".cel.ativa input").forEach(function(inp){
+    inp.value = CZ.occ[inp.dataset.r + "," + inp.dataset.c];
+    document.getElementById("cel" + inp.dataset.r + "_" + inp.dataset.c).classList.add("ok");
+  });
+  document.getElementById("czMsg").innerHTML = `<div class="fb no"><b>Respostas à mostra.</b> Leia, feche e tente preencher de novo do zero. Ver a resposta ensina bem menos do que tentar lembrar.</div>`;
+}
+
+/* ============================================================
+   ASSOCIAÇÃO
+   ============================================================ */
+function iniAssoc(){
+  const nv = nivelDe(matAtual, "assoc");
+  const qtd = NIVEIS.assoc[nv];
+  const fonte = (typeof ASSOC2 !== "undefined" && ASSOC2[matAtual]) ? ASSOC2[matAtual] : [];
+  aLista = embaralha(fonte).slice(0, qtd);
+  aLista.forEach(function(x){ x.errou = false; });
+  aEsq = embaralha(aLista.map(function(x,i){ return {i:i, x:x}; }));
+  aDir = embaralha(aLista.map(function(x,i){ return {i:i, x:x}; }));
+  aSel = null; aFeitos = 0; aErros = 0;
+  pintaAssoc();
+}
+function pintaAssoc(){
+  document.getElementById("jogoBox").innerHTML = `<div class="card lav">
+    ${barraNivel(matAtual,"assoc")}
+    <p class="sub">Toque num item da esquerda e depois no par dele à direita.</p>
+    <div class="assoc">
+      <div>${aEsq.map(function(o,k){
+        const conteudo = o.x.f ? fig(o.x.f, 62) : `<span class="cartatxt">${o.x.d || o.x.t}</span>`;
+        return `<button id="ae${k}" onclick="selE(${k})">${conteudo}</button>`; }).join("")}</div>
+      <div>${aDir.map(function(o,k){
+        return `<button id="ad${k}" onclick="selD(${k})"><span class="cartatxt">${o.x.t}</span></button>`; }).join("")}</div>
+    </div>
+    <p class="sub" id="aStatus">Acertos: 0 de ${aEsq.length}</p>
+    <button class="btn sec" onclick="iniAssoc()">🔀 Recomeçar</button></div>`;
+}
+function selE(k){
+  const b = document.getElementById("ae" + k);
+  if(!b || b.classList.contains("ok")) return;
+  document.querySelectorAll('[id^="ae"]').forEach(function(x){ x.classList.remove("sel"); });
+  b.classList.add("sel"); aSel = k;
+}
+function selD(k){
+  if(aSel === null) return;
+  const bd = document.getElementById("ad" + k), be = document.getElementById("ae" + aSel);
+  if(!bd || bd.classList.contains("ok")) return;
+  if(aEsq[aSel].i === aDir[k].i){
+    bd.classList.add("ok"); be.classList.add("ok"); be.classList.remove("sel"); aSel = null; aFeitos++;
+    const st = document.getElementById("aStatus");
+    if(st) st.innerHTML = `Acertos: ${aFeitos} de ${aEsq.length} · <b style="color:var(--salvia)">${frase("acerto")}</b>`;
+    if(aFeitos === aEsq.length) setTimeout(fimAssoc, 650);
+  } else {
+    aErros++; aLista[aDir[k].i].errou = true;
+    bd.classList.add("no"); setTimeout(function(){ bd.classList.remove("no"); }, 650);
+  }
+}
+function fimAssoc(){
+  const certos = aLista.filter(function(x){ return !x.errou; }).length;
+  document.getElementById("jogoBox").innerHTML = telaFim({
+    titulo:"🧩 Tudo associado!",
+    total: aLista.length, acertos: certos, modo:"assoc", rotuloErro:"erraram antes",
+    itens: aLista.map(function(x){ return {t:x.t, ex:x.ex, errou:x.errou}; }),
+    recomecar:"iniAssoc()", proximo:"cruzada"
+  });
+  renderHoje();
+}
+
+/* ============================================================
+   QUIZ — só o começo e o fim mudam
+   ============================================================ */
+function iniQuiz(){
+  const nv = nivelDe(matAtual, "quiz");
+  const qtd = NIVEIS.quiz[nv];
+  qLista = embaralha(QUIZ[matAtual]).slice(0, qtd);
+  qIdx = 0; qAcertos = 0; ajCtx = null;
+  pintaQuiz();
+}
+function fimQuiz(){
+  const r = S.quiz[matAtual] || {melhor:0, vezes:0};
+  r.vezes = (r.vezes || 0) + 1; r.melhor = Math.max(r.melhor || 0, qAcertos); r.total = qLista.length;
+  S.quiz[matAtual] = r; salvar();
+  document.getElementById("jogoBox").innerHTML = telaFim({
+    titulo:"🏅 Volta completa!",
+    total: qLista.length, acertos: qAcertos, modo:"quiz",
+    recomecar:"iniQuiz()", proximo:"memoria"
+  }) + `<div class="card"><p class="sub">Errar aqui é o objetivo: cada erro corrigido agora é uma questão a menos errada na prova. Refazer aumenta o efeito — de uma vez para três, o ganho quase dobra.</p></div>`;
+  renderHoje();
+}
+
+/* ============================================================
+   LISTENING — ouvir e escolher
+   ============================================================ */
+var vozEN = null;
+function carregarVozes(){
+  try{
+    const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+    vozEN = vs.filter(function(v){ return /^en[-_]US/i.test(v.lang); })[0]
+         || vs.filter(function(v){ return /^en/i.test(v.lang); })[0] || null;
+  }catch(e){}
+}
+if(window.speechSynthesis){ carregarVozes(); try{ speechSynthesis.onvoiceschanged = carregarVozes; }catch(e){} }
+function temVoz(){ return !!window.speechSynthesis; }
+function falarEN(txt, lento){
+  if(!temVoz()) return false;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang = "en-US"; if(vozEN) u.voice = vozEN;
+    u.rate = lento ? 0.6 : 0.85;
+    speechSynthesis.speak(u);
+    return true;
+  }catch(e){ return false; }
+}
+function iniListen(){
+  const nv = nivelDe(matAtual, "listen");
+  const pool = OUVIR.filter(function(x){ return x.n <= nv + 1; });
+  oLista = embaralha(pool).slice(0, NIVEIS.listen[nv]);
+  oLista.forEach(function(x){ x.errou = false; });
+  oIdx = 0; oAcertos = 0;
+  pintaListen();
+}
+function pintaListen(){
+  const box = document.getElementById("jogoBox");
+  if(!temVoz()){
+    box.innerHTML = `<div class="card ouro"><h3>🔊 Ouvir</h3>
+      <div class="aviso">Este navegador não tem voz instalada, então a atividade de escuta não funciona aqui.
+      No <b>Safari do iPhone</b> e no <b>Chrome</b> ela funciona normalmente.</div>
+      <button class="btn sec" onclick="setModo('quiz')">Voltar para o quiz</button></div>`;
+    return;
+  }
+  if(oIdx >= oLista.length){
+    box.innerHTML = telaFim({
+      titulo:"🔊 Listening completo!",
+      total: oLista.length, acertos: oAcertos, modo:"listen",
+      itens: oLista.map(function(x){ return {t:x.txt, ex:x.ex, errou:x.errou}; }),
+      recomecar:"iniListen()", proximo:"speak"
+    });
+    renderHoje(); return;
+  }
+  const q = oLista[oIdx];
+  box.innerHTML = `<div class="card azul2">
+    ${barraNivel(matAtual,"listen")}
+    <p class="sub">Item ${oIdx+1} de ${oLista.length} · ouça quantas vezes quiser</p>
+    <div class="ouvirbox">
+      <button class="btnaudio" onclick="falarEN(${attr(q.txt)})">🔊<span>Ouvir</span></button>
+      <button class="btnaudio lento" onclick="falarEN(${attr(q.txt)}, true)">🐢<span>Devagar</span></button>
+    </div>
+    <p class="sub" style="text-align:center">O que você ouviu?</p>
+    <div class="palco" id="oAlts">${embaralha(q.op).map(function(t){
+      return `<button class="alt" onclick="respListen(this, ${attr(t)})">${t}</button>`; }).join("")}</div>
+    <div id="oFb"></div></div>`;
+  setTimeout(function(){ falarEN(q.txt); }, 350);
+}
+function respListen(btn, escolha){
+  const q = oLista[oIdx];
+  if(document.querySelector("#oAlts .alt[disabled]")) return;
+  const certo = escolha === q.txt;
+  document.querySelectorAll("#oAlts .alt").forEach(function(b){
+    b.disabled = true;
+    if(b.textContent === q.txt) b.classList.add("certa");
+    else if(b === btn) b.classList.add("errada");
+  });
+  if(certo) oAcertos++; else q.errou = true;
+  document.getElementById("oFb").innerHTML =
+    `<div class="fb ${certo?'ok':'no'}"><b>${certo ? frase("acerto") : frase("erro")}</b>
+      Era <b>${q.txt}</b>. ${q.ex||""}</div>
+     <button class="btn" onclick="oIdx++;pintaListen()">${oIdx+1 < oLista.length ? "Próximo" : "Ver resultado"}</button>`;
+}
+
+/* ============================================================
+   SPEAKING — repetir em voz alta
+   ============================================================ */
+function temMic(){ return !!(window.SpeechRecognition || window.webkitSpeechRecognition); }
+function normFala(s){
+  return (s||"").toLowerCase().replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
+}
+function iniFalar(){
+  const nv = nivelDe(matAtual, "speak");
+  const pool = FALAR.filter(function(x){ return x.n <= nv + 1; });
+  fLista = embaralha(pool).slice(0, NIVEIS.speak[nv]);
+  fLista.forEach(function(x){ x.errou = false; });
+  fIdx = 0; fAcertos = 0;
+  pintaFalar();
+}
+function pintaFalar(){
+  const box = document.getElementById("jogoBox");
+  if(fIdx >= fLista.length){
+    box.innerHTML = telaFim({
+      titulo:"🎤 Speaking completo!",
+      total: fLista.length, acertos: fAcertos, modo:"speak", rotuloErro:"para treinar",
+      itens: fLista.map(function(x){ return {t:x.txt, ex:x.pt, errou:x.errou}; }),
+      recomecar:"iniFalar()", proximo:"listen"
+    });
+    renderHoje(); return;
+  }
+  const q = fLista[fIdx];
+  box.innerHTML = `<div class="card rosa">
+    ${barraNivel(matAtual,"speak")}
+    <p class="sub">Item ${fIdx+1} de ${fLista.length}</p>
+    <div class="falarbox">
+      ${q.fig ? fig(q.fig, 96) : ""}
+      <div class="falatxt">${q.txt}</div>
+      <div class="sub">${q.pt}</div>
+    </div>
+    <div class="ouvirbox">
+      <button class="btnaudio" onclick="falarEN(${attr(q.txt)})">🔊<span>Ouvir</span></button>
+      <button class="btnaudio lento" onclick="falarEN(${attr(q.txt)}, true)">🐢<span>Devagar</span></button>
+    </div>
+    ${temMic()
+      ? `<button class="btn" id="btnMic" onclick="gravarFala()">🎤 Agora eu falo</button>
+         <p class="dicaw">Toque, fale perto do aparelho e espere. Precisa de internet.</p>`
+      : `<div class="aviso">Este navegador não escuta o microfone. Faça assim: toque em <b>Ouvir</b>, repita em voz alta e marque você mesma.</div>`}
+    <div id="fFb"></div>
+    <div class="linha" style="margin-top:10px">
+      <button class="btn sec" onclick="marcarFala(true)">✓ Consegui falar</button>
+      <button class="btn sec" onclick="marcarFala(false)">↻ Quero treinar mais</button>
+    </div></div>`;
+}
+function gravarFala(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) return;
+  const b = document.getElementById("btnMic");
+  const q = fLista[fIdx];
+  try{ if(fRec) fRec.abort(); }catch(e){}
+  try{
+    fRec = new SR();
+    fRec.lang = "en-US"; fRec.interimResults = false; fRec.maxAlternatives = 4;
+    b.textContent = "🎙️ Ouvindo… pode falar"; b.classList.add("gravando");
+    fRec.onresult = function(ev){
+      const alts = [];
+      for(let i = 0; i < ev.results[0].length; i++) alts.push(normFala(ev.results[0][i].transcript));
+      const alvo = normFala(q.txt);
+      const palavras = alvo.split(" ");
+      let melhor = 0;
+      alts.forEach(function(a){
+        if(a === alvo){ melhor = 1; return; }
+        if(a.indexOf(alvo) >= 0 || alvo.indexOf(a) >= 0){ melhor = Math.max(melhor, 0.9); return; }
+        const acertou = palavras.filter(function(p){ return a.indexOf(p) >= 0; }).length;
+        melhor = Math.max(melhor, acertou / palavras.length);
+      });
+      mostrarResultadoFala(melhor, alts[0] || "");
+    };
+    fRec.onerror = function(ev){
+      b.textContent = "🎤 Agora eu falo"; b.classList.remove("gravando");
+      const motivo = ev.error === "not-allowed" ? "O microfone não foi liberado. Toque no cadeado do endereço e permita o microfone."
+        : (ev.error === "network" ? "Sem internet — o reconhecimento de voz precisa de conexão."
+        : "Não consegui ouvir dessa vez.");
+      document.getElementById("fFb").innerHTML = `<div class="fb no"><b>${motivo}</b>Sem problema: toque em <b>Ouvir</b>, repita em voz alta e use os botões abaixo.</div>`;
+    };
+    fRec.onend = function(){ if(b){ b.textContent = "🎤 Agora eu falo"; b.classList.remove("gravando"); } };
+    fRec.start();
+  }catch(e){}
+}
+function mostrarResultadoFala(nota, ouvido){
+  const q = fLista[fIdx];
+  let cls, txt;
+  if(nota >= 0.85){ cls = "ok"; txt = `<b>${frase("acerto")}</b> Saiu certinho: <b>${q.txt}</b>.`; }
+  else if(nota >= 0.5){ cls = "no"; txt = `<b>Quase!</b> Entendi “${ouvido}”. O alvo é <b>${q.txt}</b>. Ouça de novo e repita mais devagar.`; }
+  else { cls = "no"; txt = `<b>${frase("erro")}</b> Entendi “${ouvido}”. Toque em 🐢 <b>Devagar</b>, escute e tente outra vez.`; }
+  document.getElementById("fFb").innerHTML = `<div class="fb ${cls}">${txt}</div>`;
+  if(nota >= 0.85){ setTimeout(function(){ marcarFala(true); }, 1400); }
+}
+function marcarFala(conseguiu){
+  const q = fLista[fIdx];
+  if(conseguiu) fAcertos++; else q.errou = true;
+  try{ if(fRec) fRec.abort(); }catch(e){}
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  fIdx++; pintaFalar();
 }
 
 /* ---------- INÍCIO ---------- */

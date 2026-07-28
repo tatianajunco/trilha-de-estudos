@@ -11,7 +11,9 @@ Instalável na tela de início do celular e funcional sem internet depois da pri
 
 - **Plano diário** com prática distribuída até a última prova
 - **Quizzes** com explicação obrigatória do erro e tentativas ilimitadas
-- **Jogo da memória**, **cruzadinha** gerada automaticamente e **associação de imagens**
+- **Jogo da memória** com figuras desenhadas, **cruzadinha** com charadas e **associação de imagens**
+- **Listening e Speaking** em inglês, com voz do próprio aparelho e reconhecimento de fala
+- **Três níveis** por atividade, liberados por desempenho, e frases de incentivo ao terminar
 - **Central de dúvidas** por assunto: glossário, passo a passo, mapa mental e busca de vídeo
 - **Tradução no toque**: qualquer palavra sublinhada mostra o significado, offline
 - **Painel de acompanhamento** para o adulto, com registro de onde o estudo travou
@@ -50,7 +52,7 @@ Com o endereço no ar: abra no **Safari** → Compartilhar → **Adicionar à Te
 | `icon-*.png` | Ícones da tela de início |
 | `.nojekyll` | Impede o Jekyll do GitHub Pages de processar os arquivos |
 
-**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v1` → `v2`).
+**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v2` → `v3`).
 Sem isso o service worker continua servindo a versão antiga.
 
 ---
@@ -64,9 +66,12 @@ Tudo fica em constantes JavaScript dentro de `index.html`, na seção `DADOS`:
 | `PROVAS` | Datas e matérias das provas |
 | `MATERIAS` | Cor e resumo do conteúdo cobrado |
 | `QUIZ` | `{p:"pergunta", a:["alt A","alt B","alt C"], c:índiceDaCerta, e:"explicação"}` — `c` começa em 0 |
-| `MEMORIA` | Pares `[conceito, definição]` |
-| `CRUZADA` | Pares `[PALAVRA, dica]`. **Sem acento** — a grade é montada sozinha |
-| `ASSOC` | Pares `[emoji ou texto, resposta]` |
+| `MEMORIA2` | `{a:"fig:nurse", b:"nurse", ex:"explicação"}` — `a` aceita `fig:<ícone>` ou `frac:3/4` |
+| `CRUZADA2` | Pares `[PALAVRA, charada]`. **Sem acento** — a grade é montada sozinha |
+| `ASSOC2` | `{f:"ícone", t:"resposta", ex:"explicação"}` |
+| `OUVIR` / `FALAR` | Itens de listening e speaking, com nível `n` de 1 a 3 |
+| `ICONES` | Desenhos SVG usados nas atividades |
+| `NIVEIS` / `FRASES` | Quantidade de itens por nível e frases de incentivo |
 | `PLANO` | `"AAAA-MM-DD": [["Matéria","tipo"]]`, com tipo `ap`, `rec`, `rev` ou `folga` |
 | `AJUDA` | Central de dúvidas: glossário, passo a passo, mapa mental, busca de vídeo |
 | `DIC` / `DIC_EXTRA` | Dicionário da tradução no toque |
@@ -114,6 +119,10 @@ multinível de 2025 (50 estudos, 177 efeitos).
 **Não prometer que o app melhora atenção ou memória.** Treino cognitivo digital não transfere
 para desempenho escolar: leitura SMD 0,09 e aritmética SMD 0,01, ambos não significativos —
 Cortese et al. (2015). O app treina o conteúdo das provas, nada além disso.
+
+**Progressão de nível deve depender de completar, não de acertar rápido.** O critério é 60% de
+acerto para abrir o próximo nível, sem cronômetro e com repetição ilimitada — é aumento de
+dificuldade, não competição.
 
 **Manter a ajuda de significado imediata e o passo a passo com aviso.** Dúvida de vocabulário
 é bloqueio de compreensão e deve ser resolvida na hora; a resolução pronta antes da tentativa
