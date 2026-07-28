@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#8E2A3C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Trilha de Estudos">
+<meta name="description" content="Trilha de estudos para a semana de provas.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Trilha de Estudos</title>
+<style>
+:root{
+  /* paleta HARAS — dia */
+  --bg:#FBF3EC; --bg2:#F6E6D8; --card:#FFFFFF; --card2:#FDF5EE;
+  --line:#EBD7C4; --txt:#43302A; --dim:#8A6F63;
+  --rosa:#E2879B; --rosa-cl:#FBE4EA; --salvia:#86A98C; --salvia-cl:#E4EFE5;
+  --ouro:#D9A441; --ouro-cl:#FBEFD6; --couro:#8C5A3C; --lav:#3F5285; --lav-cl:#E4E9F6; --bordo:#8E2A3C; --bordo-cl:#F6E3E7;
+  --sombra:0 3px 0 var(--line), 0 10px 22px rgba(140,90,60,.09);
+  --r:22px; --f:"Trebuchet MS","Verdana","Segoe UI",system-ui,sans-serif;
+  --cw:30px;
+}
+/* paleta ESTÁBULO À NOITE */
+body.noite{
+  --bg:#241C26; --bg2:#2E2431; --card:#332839; --card2:#3C2F42;
+  --line:#4C3C53; --txt:#F8EFE9; --dim:#BCA4B6;
+  --rosa:#F2A2B4; --rosa-cl:#4A3040; --salvia:#9CC6A4; --salvia-cl:#2E3F33;
+  --ouro:#EDBE63; --ouro-cl:#463620; --couro:#C08A63; --lav:#8FA6DE; --lav-cl:#2C3856; --bordo:#E08398; --bordo-cl:#472430;
+  --sombra:0 3px 0 var(--line), 0 10px 22px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--txt); font-family:var(--f);
+  font-size:17px; line-height:1.6; padding-bottom:100px;
+  background-image:
+    radial-gradient(circle at 12% 8%, var(--rosa-cl) 0, transparent 34%),
+    radial-gradient(circle at 88% 22%, var(--salvia-cl) 0, transparent 32%),
+    radial-gradient(circle at 50% 96%, var(--ouro-cl) 0, transparent 40%);
+  background-attachment:fixed;
+}
+button{font-family:inherit;font-size:1rem;cursor:pointer;border:none}
+h1,h2,h3{line-height:1.25;margin:0 0 .5rem;letter-spacing:-.01em}
+h1{font-size:1.55rem} h2{font-size:1.22rem} h3{font-size:1.03rem}
+.wrap{max-width:840px;margin:0 auto;padding:14px}
+.sub{color:var(--dim);font-size:.88rem}
+.oculta{display:none!important}
+
+/* ---------- CABEÇALHO ---------- */
+header.top{
+  position:sticky;top:0;z-index:40;
+  background:linear-gradient(180deg,var(--bg2),var(--bg));
+  border-bottom:3px solid var(--line);padding:10px 14px 8px;
+  backdrop-filter:saturate(1.2) blur(6px);
+}
+.topin{max-width:840px;margin:0 auto;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.mascote{width:46px;height:46px;flex:0 0 46px;filter:drop-shadow(0 3px 5px rgba(140,90,60,.22))}
+.logo{font-weight:bold;font-size:1.1rem;line-height:1.15}
+.logo small{display:block;font-size:.68rem;color:var(--dim);font-weight:normal;letter-spacing:.06em;text-transform:uppercase}
+.logo span{color:var(--rosa)}
+.pill{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 13px;font-size:.78rem;color:var(--dim);font-weight:600}
+.mini{margin-left:auto;display:flex;gap:6px}
+.mini button{background:var(--card);border:2px solid var(--line);color:var(--dim);border-radius:12px;padding:6px 11px;font-size:.76rem;font-weight:600}
+.mini button:active{transform:translateY(1px)}
+
+/* cerca decorativa */
+.cerca{height:9px;background:
+  repeating-linear-gradient(90deg,var(--couro) 0 4px,transparent 4px 26px),
+  linear-gradient(var(--line),var(--line));
+  background-size:auto,100% 3px; background-position:0 0,0 3px; background-repeat:repeat-x;
+  opacity:.35;margin:0}
+
+/* ---------- ABAS ---------- */
+nav.abas{display:flex;gap:7px;overflow-x:auto;padding:12px 14px 6px;max-width:840px;margin:0 auto;scrollbar-width:none}
+nav.abas::-webkit-scrollbar{display:none}
+nav.abas button{
+  white-space:nowrap;background:var(--card);border:2px solid var(--line);
+  color:var(--dim);border-radius:999px;padding:9px 16px;font-size:.85rem;font-weight:700;
+  box-shadow:0 2px 0 var(--line);
+}
+nav.abas button.on{background:var(--rosa);color:#fff;border-color:var(--rosa);box-shadow:0 3px 0 #00000018}
+nav.abas button:active{transform:translateY(2px);box-shadow:none}
+
+section.tela{display:none;animation:sobe .3s ease}
+section.tela.on{display:block}
+@keyframes sobe{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- CARTÕES ---------- */
+.card{
+  background:var(--card);border:2px solid var(--line);border-radius:var(--r);
+  padding:18px;margin-bottom:15px;box-shadow:var(--sombra);position:relative;overflow:hidden;
+}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--line)}
+.card.rosa::before{background:linear-gradient(90deg,var(--bordo),var(--rosa))}
+.card.salvia::before{background:linear-gradient(90deg,var(--salvia),var(--ouro))}
+.card.ouro::before{background:linear-gradient(90deg,var(--ouro),var(--bordo))}
+.card.destaque{border-color:var(--bordo)}
+.card.destaque::before{background:linear-gradient(90deg,var(--bordo),var(--ouro),var(--lav))}
+
+/* ---------- BOTÕES ---------- */
+.btn{
+  background:var(--rosa);color:#fff;border-radius:16px;padding:14px 18px;
+  font-weight:800;font-size:1rem;width:100%;margin-top:9px;
+  box-shadow:0 4px 0 rgba(0,0,0,.13);letter-spacing:.01em;
+}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.13)}
+.btn.sec{background:var(--card2);color:var(--txt);border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
+.btn.verde{background:var(--salvia)}
+.btn.ouro{background:var(--ouro);color:#4A3410}
+.btn.lav{background:var(--lav);color:#fff}
+.btn.bordo{background:var(--bordo);color:#fff}
+.btn.pequeno{width:auto;padding:10px 15px;font-size:.85rem;border-radius:13px}
+.linha{display:flex;gap:9px;flex-wrap:wrap}
+.linha .btn{width:auto;flex:1;min-width:132px}
+
+/* ---------- PISTA / PROGRESSO ---------- */
+.barra{
+  height:20px;background:var(--card2);border-radius:99px;border:2px solid var(--line);
+  position:relative;overflow:visible;margin:4px 0 6px;
+  background-image:repeating-linear-gradient(90deg,transparent 0 13px,var(--line) 13px 15px);
+}
+.barra i{
+  display:block;height:100%;border-radius:99px;position:relative;
+  background:linear-gradient(90deg,var(--ouro),var(--rosa));transition:width .6s cubic-bezier(.34,1.4,.64,1);
+}
+.barra i::after{
+  content:"🐴";position:absolute;right:-13px;top:50%;transform:translateY(-52%);
+  font-size:1.32rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));
+}
+
+/* ---------- CONTAGEM DE PROVAS ---------- */
+.contagem{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}
+.contagem::-webkit-scrollbar{display:none}
+.prova{
+  min-width:126px;background:var(--card2);border:2px solid var(--line);
+  border-radius:18px;padding:12px 10px;text-align:center;box-shadow:0 3px 0 var(--line);
+}
+.prova .dia{font-size:.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.prova .mat{font-weight:800;font-size:.98rem;margin:4px 0}
+.prova .falta{font-size:.74rem;font-weight:800;color:var(--couro)}
+.prova.passou{opacity:.42}
+
+/* ---------- BLOCOS DO DIA ---------- */
+.bloco{
+  display:flex;gap:12px;align-items:flex-start;background:var(--card2);
+  border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:11px;
+  box-shadow:0 3px 0 var(--line);transition:transform .15s;
+}
+.bloco:active{transform:translateY(2px)}
+.bloco.feito{border-color:var(--salvia);background:var(--salvia-cl)}
+.bloco .cx{
+  width:38px;height:38px;flex:0 0 38px;border-radius:50%;border:2.5px dashed var(--line);
+  background:var(--card);display:flex;align-items:center;justify-content:center;padding:5px;
+}
+.bloco .cx svg{width:100%;height:100%;color:var(--dim);opacity:.4}
+.bloco.feito .cx{border-style:solid;border-color:var(--salvia);background:var(--salvia)}
+.bloco.feito .cx svg{color:#fff;opacity:1}
+.bloco .txt{flex:1;min-width:0}
+.bloco .tit{font-weight:800;font-size:1rem}
+.bloco .det{font-size:.85rem;color:var(--dim)}
+.tag{
+  display:inline-block;font-size:.71rem;padding:3px 10px;border-radius:99px;
+  background:var(--ouro-cl);border:1.5px solid var(--ouro);color:var(--couro);
+  margin:4px 4px 0 0;font-weight:700;
+}
+
+/* ---------- ROSETAS (selos) ---------- */
+.rosetas{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-start;margin-top:6px}
+.roseta{width:96px;text-align:center;opacity:.36;filter:grayscale(1)}
+.roseta.ganha{opacity:1;filter:none;animation:pop .45s cubic-bezier(.34,1.6,.64,1)}
+@keyframes pop{0%{transform:scale(.5) rotate(-14deg)}100%{transform:none}}
+.roseta svg{width:60px;height:74px}
+.roseta b{display:block;font-size:.76rem;line-height:1.25;margin-top:-4px}
+.roseta span{display:block;font-size:.66rem;color:var(--dim);line-height:1.25}
+
+/* ---------- QUIZ (área limpa de propósito) ---------- */
+.palco{background:var(--card2);border:2px dashed var(--line);border-radius:18px;padding:15px;margin-top:12px}
+.alt{
+  display:block;width:100%;text-align:left;background:var(--card);border:2.5px solid var(--line);
+  color:var(--txt);border-radius:16px;padding:14px 16px;margin-bottom:10px;
+  font-size:.97rem;line-height:1.45;box-shadow:0 3px 0 var(--line);font-weight:600;
+}
+.alt:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
+.alt.certa{border-color:var(--salvia);background:var(--salvia-cl);box-shadow:0 3px 0 var(--salvia)}
+.alt.errada{border-color:var(--rosa);background:var(--rosa-cl);box-shadow:0 3px 0 var(--rosa)}
+.alt[disabled]{cursor:default}
+.fb{border-radius:16px;padding:14px;margin-top:11px;font-size:.92rem;line-height:1.55}
+.fb.ok{background:var(--salvia-cl);border:2px solid var(--salvia)}
+.fb.no{background:var(--ouro-cl);border:2px solid var(--ouro)}
+.fb b{display:block;margin-bottom:5px;font-size:1rem}
+
+/* ---------- MEMÓRIA ---------- */
+.gridmem{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:520px){.gridmem{grid-template-columns:repeat(2,1fr)}}
+.carta{
+  aspect-ratio:1/1.14;border-radius:16px;background:var(--card2);border:2.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;
+  font-size:.79rem;line-height:1.3;color:var(--txt);overflow:hidden;font-weight:600;
+  box-shadow:0 3px 0 var(--line);transition:transform .2s;
+}
+.carta:active{transform:scale(.96)}
+.carta .oculto{font-size:1.6rem;opacity:.4}
+.carta.virada{background:var(--lav-cl);border-color:var(--lav)}
+.carta.par{background:var(--salvia-cl);border-color:var(--salvia);box-shadow:0 3px 0 var(--salvia)}
+
+/* ---------- CRUZADINHA ---------- */
+.cruz{display:grid;gap:3px;justify-content:center;margin:12px auto;overflow-x:auto}
+.cel{width:var(--cw);height:var(--cw);background:transparent}
+.cel.ativa{background:var(--card2);border:2px solid var(--line);border-radius:7px;position:relative}
+.cel.ativa input{width:100%;height:100%;background:transparent;border:none;text-align:center;
+  font-size:.95rem;font-weight:800;color:var(--txt);text-transform:uppercase;font-family:inherit;padding:0}
+.cel.ativa input:focus{outline:2.5px solid var(--lav);border-radius:6px}
+.cel.ok{background:var(--salvia-cl);border-color:var(--salvia)}
+.cel .num{position:absolute;top:0;left:3px;font-size:.5rem;color:var(--dim);line-height:1;font-weight:700}
+.dicas{padding-left:20px}
+.dicas li{margin-bottom:7px;font-size:.88rem}
+.dicas li::marker{color:var(--rosa)}
+@media(max-width:560px){:root{--cw:23px} .cel.ativa input{font-size:.74rem} .cel .num{font-size:.42rem}}
+
+/* ---------- ASSOCIAÇÃO ---------- */
+.assoc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.assoc button{
+  background:var(--card2);border:2.5px solid var(--line);color:var(--txt);border-radius:16px;
+  padding:13px 9px;font-size:.85rem;min-height:70px;line-height:1.3;font-weight:600;
+  box-shadow:0 3px 0 var(--line);
+}
+.assoc button .emo{font-size:2rem;display:block}
+.assoc button.sel{border-color:var(--lav);background:var(--lav-cl)}
+.assoc button.ok{border-color:var(--salvia);background:var(--salvia-cl);opacity:.6}
+.assoc button.no{border-color:var(--rosa);background:var(--rosa-cl)}
+
+/* ---------- TROTE (timer) ---------- */
+.relogio{color:var(--bordo);
+  font-size:3.6rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;
+  margin:8px 0 4px;letter-spacing:.01em;
+}
+.relogio.pausa{color:var(--salvia)}
+.arena{
+  border:3px dashed var(--line);border-radius:50%/22%;padding:14px 10px;margin:6px 0 4px;
+  background:radial-gradient(ellipse at 50% 40%, var(--ouro-cl), transparent 70%);
+}
+
+/* ---------- DIVERSOS ---------- */
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:.85rem;
+  border:2px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{border-bottom:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{background:var(--card2);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:800}
+input[type=text],textarea,select{
+  width:100%;background:var(--card2);border:2px solid var(--line);color:var(--txt);
+  border-radius:14px;padding:12px;font-family:inherit;font-size:.95rem
+}
+input[type=text]:focus,textarea:focus{outline:2.5px solid var(--lav)}
+label{font-size:.85rem;color:var(--dim);display:block;margin:11px 0 4px;font-weight:700}
+.escolha{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.escolha button{
+  background:var(--card2);border:2px solid var(--line);color:var(--dim);
+  border-radius:99px;padding:9px 15px;font-size:.83rem;font-weight:700;box-shadow:0 2px 0 var(--line);
+}
+.escolha button.on{background:var(--lav);color:#fff;border-color:var(--lav)}
+.escolha button:active{transform:translateY(2px);box-shadow:none}
+.aviso{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:16px;padding:14px;font-size:.86rem}
+
+/* ===== CENTRAL DE DÚVIDAS ===== */
+.ajfundo{position:fixed;inset:0;background:rgba(40,25,20,.55);opacity:0;pointer-events:none;transition:opacity .25s;z-index:90}
+.ajfundo.on{opacity:1;pointer-events:auto}
+.ajgaveta{
+  position:fixed;left:0;right:0;bottom:0;z-index:91;background:var(--card);
+  border-top:3px solid var(--bordo);border-radius:26px 26px 0 0;
+  max-height:90vh;display:flex;flex-direction:column;
+  transform:translateY(102%);transition:transform .32s cubic-bezier(.32,1.2,.5,1);
+  box-shadow:0 -10px 34px rgba(0,0,0,.22);
+}
+.ajgaveta.on{transform:none}
+.ajgaveta::before{content:"";display:block;width:46px;height:5px;border-radius:99px;background:var(--line);margin:9px auto 2px;flex:0 0 auto}
+#ajCorpo{overflow-y:auto;padding:8px 16px 22px;-webkit-overflow-scrolling:touch}
+.ajtopo{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.ajtopo h2{font-size:1.15rem}
+.ajx{margin-left:auto;background:var(--card2);border:2px solid var(--line);border-radius:50%;width:38px;height:38px;font-size:1rem;color:var(--dim);flex:0 0 38px}
+.ajtopicos button{font-size:.78rem;padding:7px 12px}
+.ajabas{margin:10px 0 4px}
+.ajabas button{flex:1;min-width:88px;text-align:center}
+.ajconteudo{margin-top:12px;min-height:120px}
+.glos .gitem{background:var(--card2);border:2px solid var(--line);border-left:6px solid var(--lav);
+  border-radius:14px;padding:11px 13px;margin-bottom:9px}
+.glos .gitem b{display:block;color:var(--bordo);font-size:.98rem}
+.glos .gitem span{font-size:.9rem;color:var(--txt)}
+ol.passos{padding-left:22px;margin:14px 0}
+ol.passos li{margin-bottom:10px;font-size:.93rem;line-height:1.5}
+ol.passos li::marker{color:var(--bordo);font-weight:800}
+.exemplo{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:14px;padding:13px;font-size:.93rem;line-height:1.6}
+.exemplo b{display:block;color:var(--couro);margin-bottom:5px}
+.btn.azulao{background:var(--lav);color:#fff;display:block;text-align:center;text-decoration:none}
+.btn.sec[href]{display:block;text-align:center;text-decoration:none;color:var(--txt)}
+/* mapa mental */
+.mm{margin-top:6px}
+.mm-c{background:var(--bordo);color:#fff;font-weight:800;text-align:center;border-radius:16px;padding:12px;font-size:1.02rem;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.mm-rs{margin-top:6px;padding-left:16px;border-left:3px dashed var(--line)}
+.mm-r{position:relative;background:var(--card2);border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:10px}
+.mm-r::before{content:"";position:absolute;left:-19px;top:22px;width:16px;height:3px;background:var(--line);border-radius:2px}
+.mm-r>b{color:var(--lav);font-size:.95rem}
+.mm-r ul{margin:6px 0 0;padding-left:18px}
+.mm-r li{font-size:.87rem;margin-bottom:3px}
+.mm-r li::marker{color:var(--ouro)}
+/* palavra traduzível */
+.w{border-bottom:2px dotted var(--lav);cursor:pointer;padding:0 1px;border-radius:3px}
+.w:active,.w.ativa{background:var(--lav-cl);border-bottom-style:solid}
+#balao{
+  position:fixed;z-index:120;display:none;background:var(--card);border:2.5px solid var(--lav);
+  border-radius:16px;padding:13px 34px 13px 14px;font-size:.94rem;line-height:1.5;
+  box-shadow:0 10px 28px rgba(0,0,0,.24);color:var(--txt);
+}
+#balao b{display:block;color:var(--lav);font-size:1rem;margin-bottom:3px}
+.balaox{position:absolute;top:6px;right:8px;background:transparent;color:var(--dim);font-size:.95rem;padding:2px 5px}
+.dicaw{font-size:.76rem;color:var(--dim);text-align:center;margin:8px 0 0}
+.dicaw i{border-bottom:2px dotted var(--lav);font-style:normal}
+/* botão de socorro */
+.bsos{background:var(--ouro-cl);border:2px solid var(--ouro);color:var(--couro);
+  border-radius:12px;padding:9px 14px;font-size:.84rem;font-weight:800;box-shadow:0 3px 0 var(--ouro)}
+.bsos:active{transform:translateY(2px);box-shadow:none}
+.rodape{text-align:center;color:var(--dim);font-size:.74rem;padding:24px 14px 10px;line-height:1.7}
+.semjs{background:#FFE8C7;color:#5A3A10;border-bottom:3px solid #D9A441;padding:14px 16px;font-size:.9rem;line-height:1.55;text-align:left}
+.semjs b{color:#8E2A3C}
+.rodape svg{width:34px;height:34px;opacity:.5;display:block;margin:0 auto 6px}
+ul.lista{padding-left:20px} ul.lista li{margin-bottom:9px}
+ul.lista li::marker{color:var(--rosa)}
+</style>
+</head>
+<body>
+
+<!-- ===== BIBLIOTECA DE DESENHOS ===== -->
+<svg style="display:none" aria-hidden="true">
+  <!-- pônei -->
+  <symbol id="poni" viewBox="0 0 100 100">
+    <!-- crina preta ao fundo -->
+    <path d="M24 26 C11 33 7 52 13 70 C15 55 18 41 27 32 Z" fill="#241D1F"/>
+    <path d="M76 26 C89 33 93 52 87 70 C85 55 82 41 73 32 Z" fill="#241D1F" opacity=".9"/>
+    <!-- orelhas com touca bordô -->
+    <path d="M28 33 L22 9 C21.4 6.6 23.8 5.2 25.5 6.8 L40 21 Z" fill="#8E2A3C" stroke="#6B1B29" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M72 33 L78 9 C78.6 6.6 76.2 5.2 74.5 6.8 L60 21 Z" fill="#8E2A3C" stroke="#6B1B29" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- cabeça castanha -->
+    <ellipse cx="50" cy="50" rx="27" ry="30" fill="#A85A32" stroke="#7E3E1E" stroke-width="2.4"/>
+    <path d="M27 58 C30 70 38 78 50 80 C62 78 70 70 73 58 C70 72 62 80 50 80 C38 80 30 72 27 58 Z" fill="#8B4522" opacity=".55"/>
+    <!-- faixa branca (blaze) -->
+    <path d="M45.5 24 C43.4 40 42.6 56 43.6 68 L57.4 68 C58.4 55 57.4 39 55 24 Z" fill="#F8F1E8"/>
+    <!-- focinho claro -->
+    <ellipse cx="50" cy="72" rx="17" ry="12.6" fill="#F3DFD4" stroke="#C99B85" stroke-width="1.8"/>
+    <ellipse cx="43.4" cy="70" rx="2.5" ry="3.3" fill="#B87F6C"/>
+    <ellipse cx="56.6" cy="70" rx="2.5" ry="3.3" fill="#B87F6C"/>
+    <path d="M44.5 78 Q50 81.6 55.5 78" stroke="#C08D79" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- touca bordô sobre a cabeça -->
+    <path d="M23.5 41 C25 21 36 11 50 11 C64 11 75 21 76.5 41 C67 32.5 58.5 29.5 50 29.5 C41.5 29.5 33 32.5 23.5 41 Z" fill="#8E2A3C"/>
+    <path d="M23.5 41 C33 32.5 41.5 29.5 50 29.5 C58.5 29.5 67 32.5 76.5 41" fill="none" stroke="#F2D9DF" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M26 34 C34 27.5 42 25 50 25 C58 25 66 27.5 74 34" fill="none" stroke="#6B1B29" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+    <!-- olhos -->
+    <ellipse cx="36.2" cy="50" rx="5" ry="6.1" fill="#2C1C16"/>
+    <ellipse cx="63.8" cy="50" rx="5" ry="6.1" fill="#2C1C16"/>
+    <circle cx="38.1" cy="47.8" r="1.9" fill="#fff"/>
+    <circle cx="65.7" cy="47.8" r="1.9" fill="#fff"/>
+    <circle cx="34.4" cy="52.4" r="1" fill="#fff" opacity=".7"/>
+    <circle cx="62" cy="52.4" r="1" fill="#fff" opacity=".7"/>
+    <g stroke="#2C1C16" stroke-width="1.9" stroke-linecap="round">
+      <path d="M31.6 45.6 L28.6 43.2 M33.8 43.8 L32.2 40.9 M29.9 48.6 L26.4 47.4"/>
+      <path d="M68.4 45.6 L71.4 43.2 M66.2 43.8 L67.8 40.9 M70.1 48.6 L73.6 47.4"/>
+    </g>
+    <!-- blush -->
+    <ellipse cx="29" cy="60.5" rx="5.4" ry="3.6" fill="#D96B7E" opacity=".4"/>
+    <ellipse cx="71" cy="60.5" rx="5.4" ry="3.6" fill="#D96B7E" opacity=".4"/>
+  </symbol>
+
+  <!-- ferradura -->
+  <symbol id="ferradura" viewBox="0 0 100 100">
+    <path d="M26 86 C18 66 16 46 24 32 C31 19 45 13 56 16 C70 20 80 33 80 50 C80 64 76 76 72 86"
+      fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="round"/>
+    <circle cx="27" cy="42" r="3.1" fill="var(--card2, #fff)"/>
+    <circle cx="34" cy="27" r="3.1" fill="var(--card2, #fff)"/>
+    <circle cx="70" cy="42" r="3.1" fill="var(--card2, #fff)"/>
+    <circle cx="65" cy="27" r="3.1" fill="var(--card2, #fff)"/>
+  </symbol>
+
+  <!-- roseta de premiação -->
+  <symbol id="roseta" viewBox="0 0 100 122">
+    <path d="M38 68 L20 118 L41 109 L50 121 L50 70 Z" fill="var(--rp,#E2879B)" stroke="#00000022" stroke-width="1.5"/>
+    <path d="M62 68 L80 118 L59 109 L50 121 L50 70 Z" fill="var(--rp,#E2879B)" stroke="#00000022" stroke-width="1.5" opacity=".78"/>
+    <g fill="var(--rp, #E2879B)">
+      <ellipse cx="50" cy="18" rx="10" ry="17"/><ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(45 50 45)"/>
+      <ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(90 50 45)"/><ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(135 50 45)"/>
+      <ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(180 50 45)"/><ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(225 50 45)"/>
+      <ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(270 50 45)"/><ellipse cx="50" cy="18" rx="10" ry="17" transform="rotate(315 50 45)"/>
+    </g>
+    <circle cx="50" cy="45" r="24" fill="#FBEFD6" stroke="#D9A441" stroke-width="3.5"/>
+    <g transform="translate(28,23) scale(0.44)"><use href="#poni"/></g>
+  </symbol>
+
+  <!-- cenoura -->
+  <symbol id="cenoura" viewBox="0 0 100 100">
+    <path d="M50 30 L68 82 C70 88 64 92 59 88 L32 62 C27 58 30 50 37 49 Z" fill="#EE9A4E" stroke="#C77A33" stroke-width="2.4" stroke-linejoin="round"/>
+    <path d="M50 30 L44 14 M50 30 L62 18 M50 30 L36 22" stroke="#7FA86B" stroke-width="7" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div id="semJS" class="semjs">
+  <b>⚠️ Esta página não está funcionando aqui.</b>
+  O navegador desta janela bloqueou o programa que faz os botões responderem.
+  Abra o endereço no <b>Safari</b> ou no <b>Chrome</b> e, no iPhone, use <b>Compartilhar → Adicionar à Tela de Início</b>.
+</div>
+<noscript><div class="semjs"><b>⚠️ O JavaScript está desligado neste navegador.</b> Ative-o ou abra o arquivo em outro navegador.</div></noscript>
+<header class="top">
+  <div class="topin">
+    <svg class="mascote"><use href="#poni"/></svg>
+    <div class="logo">Trilha de <span>Estudos</span><small>Semana de provas</small></div>
+    <div class="pill" id="pillDia">—</div>
+    <div class="mini">
+      <button onclick="alternarTema()">🌙 Tema</button>
+      <button onclick="irPara('ajustes')">⚙️</button>
+    </div>
+  </div>
+</header>
+<div class="cerca"></div>
+
+<nav class="abas" id="abas"></nav>
+
+<div class="wrap">
+
+<!-- ===== HOJE ===== -->
+<section class="tela on" id="t-hoje">
+  <div class="card destaque">
+    <h1 id="saudacao">Oi! Vamos começar?</h1>
+    <p class="sub" id="fraseDia"></p>
+    <div class="barra"><i id="barraDia" style="width:0%"></i></div>
+    <p class="sub" id="txtProgresso">0 de 0 blocos de hoje</p>
+    <button class="btn" onclick="comecarAgora()">🥕 Começar agora — leva 5 segundos</button>
+  </div>
+
+  <div class="card ouro">
+    <h2>🏁 Provas chegando</h2>
+    <div class="contagem" id="contagem"></div>
+  </div>
+
+  <div class="card salvia">
+    <h2>🐎 A trilha de hoje</h2>
+    <p class="sub" id="dicaOrdem">Você escolhe a ordem. Só não vale pular o dia inteiro.</p>
+    <div id="blocosHoje"></div>
+    <button class="btn sec" onclick="irPara('semana')">Ver o mapa da trilha inteira</button>
+  </div>
+
+  <div class="card rosa">
+    <h2>🤝 Meu combinado</h2>
+    <p class="sub">Combinado funciona melhor no formato <b>SE… ENTÃO…</b> — em crianças, d ≈ 0,43, e o formato contingente vence o "vou fazer às 15h" (0,43 contra 0,29).</p>
+    <label>SE… (o que acontece antes)</label>
+    <input type="text" id="seCampo" placeholder="Ex.: SE eu terminar o lanche da tarde">
+    <label>ENTÃO… (o que eu faço, exato)</label>
+    <input type="text" id="entaoCampo" placeholder="Ex.: ENTÃO abro a Trilha e faço 1 bloco de 12 min">
+    <button class="btn sec" onclick="salvarCombinado()">Guardar combinado</button>
+    <p class="sub" id="combinadoSalvo"></p>
+  </div>
+
+  <div class="card lav">
+    <h2>🎀 Minhas rosetas</h2>
+    <p class="sub">Rosetas se ganham por <b>aparecer e treinar</b> — nunca por acertar rápido. E não se perdem nunca.</p>
+    <div id="selos"></div>
+  </div>
+</section>
+
+<!-- ===== TRILHA (semana) ===== -->
+<section class="tela" id="t-semana">
+  <div class="card rosa">
+    <h1>🗺️ O mapa até 21 de agosto</h1>
+    <p class="sub">Cada matéria aparece em <b>vários dias diferentes</b> antes da prova. Isso é prática distribuída — a técnica com o efeito mais alto já medido (d ≈ 0,85).</p>
+  </div>
+  <div id="mapaSemana"></div>
+</section>
+
+<!-- ===== PICADEIRO (treinar) ===== -->
+<section class="tela" id="t-estudar">
+  <div class="card ouro">
+    <h1>🏇 Picadeiro</h1>
+    <p class="sub">Escolha a matéria e o tipo de treino. Nenhum deles marca tempo contra você.</p>
+    <div class="escolha" id="escMateria"></div>
+    <div class="escolha" id="escModo" style="margin-top:11px"></div>
+  </div>
+  <div id="areaJogo"></div>
+</section>
+
+<!-- ===== TROTE (timer) ===== -->
+<section class="tela" id="t-timer">
+  <div class="card destaque">
+    <h1 id="timerTitulo">🐴 Trote</h1>
+    <p class="sub" id="timerSub">12 minutos de foco, 3 de pausa. Trote é ritmo constante — não é corrida.</p>
+    <div class="arena">
+      <div class="relogio" id="relogio">12:00</div>
+      <div class="barra"><i id="barraTimer" style="width:0%"></i></div>
+    </div>
+    <div class="linha">
+      <button class="btn" id="btnTimer" onclick="toggleTimer()">Começar</button>
+      <button class="btn sec" onclick="zerarTimer()">Zerar</button>
+    </div>
+    <div class="escolha" style="margin-top:13px" id="escDuracao"></div>
+    <p class="sub" style="margin-top:12px">Travou? Faça só <b>2 minutos</b>. Montar é a parte difícil — depois o trote vai sozinho.</p>
+  </div>
+  <div class="card salvia">
+    <h3>🌿 Regra da pausa</h3>
+    <p class="sub">Pausa é levantar, beber água, andar. <b>Não é tela.</b> Trocar uma tela por outra não descansa a atenção.</p>
+  </div>
+</section>
+
+<!-- ===== ADULTO ===== -->
+<section class="tela" id="t-adulto">
+  <div class="card">
+    <h1>👩‍🌾 Painel do adulto</h1>
+    <p class="sub">Para quem acompanha. Quem estuda também pode ver — não há nada escondido aqui.</p>
+  </div>
+  <div class="card salvia"><h2>O que já foi feito</h2><div id="relAdulto"></div></div>
+  <div class="card ouro">
+    <h2>Como acompanhar sem estragar</h2>
+    <ul class="lista sub">
+      <li><b>Elogie o comparecimento, não a nota.</b> Recompensa tangível prometida e condicionada a desempenho reduz motivação intrínseca em crianças (d = −0,52; Deci, Koestner &amp; Ryan 1999). O pior caso é prometer prêmio e ela receber menos que o máximo (d = −0,88).</li>
+      <li><b>As rosetas não são moeda.</b> Nada de "5 rosetas = celular liberado". Isso converte o sistema exatamente no desenho com evidência de dano.</li>
+      <li><b>Presença ajuda a começar, mas não é mágica.</b> Em experimento controlado, a presença de um adulto <i>supervisor</i> melhorou a atenção de meninos hiperativos; a presença da <i>mãe</i>, não (Gomez &amp; Sanson 1994, amostra pequena). Se sentar junto não ajudar, isso é dado — não fracasso seu.</li>
+      <li><b>Feedback corretivo é obrigatório.</b> Quiz com explicação do erro rende g = 0,54; sem explicação, g = 0,37 (Yang et al. 2021).</li>
+    </ul>
+  </div>
+  <div class="card rosa">
+    <h2>Registro rápido do dia</h2>
+    <label>O que funcionou hoje?</label><textarea id="notaOk" rows="2"></textarea>
+    <label>Onde ela travou?</label><textarea id="notaTravou" rows="2"></textarea>
+    <button class="btn sec" onclick="salvarNota()">Guardar registro</button>
+    <div id="listaNotas" style="margin-top:14px"></div>
+  </div>
+</section>
+
+<!-- ===== AJUSTES ===== -->
+<section class="tela" id="t-ajustes">
+  <div class="card lav">
+    <h1>⚙️ Ajustes</h1>
+    <label>Quantos blocos por dia?</label>
+    <div class="escolha" id="escBlocos"></div>
+    <label>Nome de quem estuda</label>
+    <input type="text" id="nomeCampo" placeholder="Opcional — fica só neste aparelho">
+    <p class="sub">O nome não está dentro do arquivo publicado. Ele é digitado aqui e guardado só neste aparelho.</p>
+    <button class="btn sec" onclick="salvarAjustes()">Salvar</button>
+  </div>
+  <div class="card ouro">
+    <h2>💾 Backup do progresso</h2>
+    <p class="sub">O progresso fica salvo neste navegador. Antes de trocar de aparelho ou limpar o histórico, baixe o backup.</p>
+    <div class="linha">
+      <button class="btn sec" onclick="baixarBackup()">Baixar backup</button>
+      <button class="btn sec" onclick="document.getElementById('arqBackup').click()">Carregar backup</button>
+    </div>
+    <input type="file" id="arqBackup" accept=".json" class="oculta" onchange="carregarBackup(event)">
+    <button class="btn sec" style="margin-top:15px" onclick="zerarTudo()">Apagar tudo e recomeçar</button>
+  </div>
+  <div class="card">
+    <h2>O que este app faz e o que não faz</h2>
+    <p class="sub"><b>Faz:</b> força recuperação ativa do conteúdo com correção imediata, distribui as matérias no tempo e reduz o custo de começar. São os três mecanismos com melhor evidência.</p>
+    <p class="sub"><b>Não faz:</b> não ensina conteúdo novo, não substitui o livro nem o caderno, não trata TDAH e não melhora "a memória" em geral. Treino cognitivo digital não transfere para desempenho escolar — leitura SMD 0,09 e aritmética SMD 0,01, ambos não significativos (Cortese et al. 2015).</p>
+    <p class="sub"><b>Sobre a decoração:</b> os desenhos ficam de propósito na moldura — cabeçalho, abas e rosetas — e não dentro das perguntas. Elementos decorativos irrelevantes no meio do conteúdo prejudicam a aprendizagem (efeito de <i>seductive details</i>: g = −0,33 em Sundararajan &amp; Adesope 2020; g = −0,16 na meta-análise multinível de 2025, com 50 estudos e 177 efeitos, mediada por carga cognitiva estranha).</p>
+    <p class="sub"><b>Não é diagnóstico.</b> Nada aqui identifica TDAH ou altas habilidades. Se a suspeita existe, ela precisa de avaliação de profissional habilitado.</p>
+  </div>
+</section>
+
+<div id="balao" role="tooltip"></div>
+<div class="ajfundo" id="ajFundo" onclick="fecharAjuda()"></div>
+<div class="ajgaveta" id="ajGaveta" role="dialog" aria-label="Central de dúvidas"><div id="ajCorpo"></div></div>
+
+<div class="rodape">
+  <svg><use href="#ferradura"/></svg>
+  Feito para a semana de provas do 2º trimestre.<br>
+  Funciona sem internet. Nenhum dado sai deste aparelho.
+</div>
+</div>
+
+<script>
+window.onerror=function(msg,src,lin,col){
+  try{
+    var b=document.getElementById("semJS")||document.createElement("div");
+    b.className="semjs"; b.id="semJS"; b.style.display="block";
+    b.innerHTML="<b>⚠️ Ocorreu um erro nesta página.</b> Mostre esta mensagem para quem montou o arquivo:<br><code style='font-size:.8rem'>"+msg+" (linha "+lin+")</code>";
+    if(!b.parentNode) document.body.insertBefore(b, document.body.firstChild);
+  }catch(e){}
+  return false;
+};
+</script>
+<script>
+/* ============================================================
+   DADOS — conteúdo real do cronograma de provas
+   Semana de provas — 2º trimestre 2026
+   ============================================================ */
+
+const PROVAS = [
+  {mat:"Inglês",     data:"2026-08-10", dia:"Seg 10/08"},
+  {mat:"Geografia",  data:"2026-08-11", dia:"Ter 11/08"},
+  {mat:"Português",  data:"2026-08-13", dia:"Qui 13/08"},
+  {mat:"História",   data:"2026-08-18", dia:"Ter 18/08"},
+  {mat:"Matemática", data:"2026-08-19", dia:"Qua 19/08"},
+  {mat:"Ciências",   data:"2026-08-21", dia:"Sex 21/08"}
+];
+
+const MATERIAS = {
+  "Português":  {cor:"#D2718A", conteudo:"Verbos (p.60-62) · Primitivas e derivadas, sufixos e prefixos (p.80-83, 87, 91) · Notícia (p.109-110) · Polissemia (p.118-119) · Caderno"},
+  "Matemática": {cor:"#5E9CC4", conteudo:"Frações: leitura e escrita (p.98-103) · Equivalentes (p.110-111) · Número misto (p.113, 116) · Retomada (p.120-125) · Fração de quantidade (p.128-129)"},
+  "Ciências":   {cor:"#6F9B78", conteudo:"Materiais e propriedades (p.55-59) · Propriedades físicas da matéria (p.56-69) · Ciclo da água (p.78-79) · Cobertura vegetal (p.90-91)"},
+  "Geografia":  {cor:"#C8901F", conteudo:"Unidade 3 — O trabalho na cidade e no campo (p.58-82)"},
+  "História":   {cor:"#9878C4", conteudo:"Capítulo 3 — Cultura e religião dos povos antigos (p.52-74)"},
+  "Inglês":     {cor:"#C2698E", conteudo:"Unit 3 — Jobs, job responsibilities · Unit 4 — Transportation in the future, Will statements, Directions"}
+};
+
+/* ---------- QUIZ: pergunta, alternativas, índice certo, explicação ---------- */
+const QUIZ = {
+"Português":[
+ {p:"Em <b>“As crianças brincaram no parque ontem”</b>, o verbo <i>brincaram</i> está em que tempo?",a:["Presente","Pretérito perfeito","Futuro do presente"],c:1,e:"Pretérito perfeito: a ação já terminou. A pista é o <i>ontem</i> e a terminação <b>-aram</b>."},
+ {p:"O verbo <b>correr</b> pertence a qual conjugação?",a:["1ª (-AR)","2ª (-ER)","3ª (-IR)"],c:1,e:"A conjugação é dada pela terminação do infinitivo: cant<b>ar</b> = 1ª, corr<b>er</b> = 2ª, part<b>ir</b> = 3ª."},
+ {p:"Qual é a palavra <b>primitiva</b> de “pedreiro”?",a:["Pedreira","Pedra","Pedrada"],c:1,e:"Primitiva é a que não vem de outra. <b>Pedra</b> gerou pedreiro, pedreira e pedrada."},
+ {p:"Em <b>infeliz</b>, o elemento <i>in-</i> é:",a:["Um sufixo","Um prefixo","Um radical"],c:1,e:"Vem <b>antes</b> do radical = prefixo. Aqui o <i>in-</i> nega: infeliz = não feliz."},
+ {p:"Em <b>dentista</b>, o sufixo <i>-ista</i> indica:",a:["Lugar","Profissão","Diminutivo"],c:1,e:"<b>-ista</b> forma nomes de profissão: dentista, jornalista, artista."},
+ {p:"Qual destas é uma palavra <b>derivada</b>?",a:["Mar","Flor","Marinheiro"],c:2,e:"Marinheiro vem de <b>mar</b>. Mar e flor são primitivas."},
+ {p:"O que <b>não</b> faz parte da estrutura de uma notícia?",a:["Manchete","Lide","Moral da história"],c:2,e:"Moral da história é de fábula. Notícia tem manchete, linha fina, lide e corpo."},
+ {p:"O <b>lide</b> (primeiro parágrafo da notícia) responde a:",a:["O que, quem, quando, onde, como e por quê","Só o que aconteceu","A opinião do jornalista"],c:0,e:"São as 6 perguntas do lide. Ele entrega o essencial logo de cara, para quem ler só ele já entender o fato."},
+ {p:"“O <b>pé</b> dele doeu” e “o <b>pé</b> da mesa quebrou”. Isso é exemplo de:",a:["Sinônimo","Polissemia","Antônimo"],c:1,e:"Polissemia = a MESMA palavra com vários sentidos ligados entre si, definidos pelo contexto: pé do corpo, pé da mesa, pé da montanha."},
+ {p:"Complete no <b>futuro do presente</b>: “Nós ______ amanhã.”",a:["viajamos","viajaremos","viajávamos"],c:1,e:"Futuro do presente indica o que ainda vai acontecer: viajar<b>emos</b>."},
+ {p:"Em <b>desfazer</b>, o prefixo <i>des-</i> indica:",a:["Repetição","Ação contrária","Aumento"],c:1,e:"<b>des-</b> = ação contrária ou desfazimento: desfazer, desligar, desarrumar."},
+ {p:"<b>Livraria</b> é formada por:",a:["livro + aria (lugar)","livre + aria","liv + raria"],c:0,e:"Radical <b>livr-</b> + sufixo <b>-aria</b>, que indica lugar: livraria, padaria, sorveteria."},
+ {p:"Qual verbo está no <b>infinitivo</b>?",a:["canta","cantou","cantar"],c:2,e:"Infinitivo é a forma do dicionário, terminada em -AR, -ER ou -IR."},
+ {p:"“O menino <b>estuda</b> todos os dias.” O verbo está no:",a:["Presente","Pretérito imperfeito","Futuro"],c:0,e:"Ação habitual, acontecendo agora = presente do indicativo."}
+],
+"Matemática":[
+ {p:"Como se lê a fração <b>3/4</b>?",a:["Três quatros","Três quartos","Quatro terços"],c:1,e:"Denominador 4 = quartos. Regra: 2 = meios, 3 = terços, 4 = quartos, 5 = quintos, 6 = sextos, 7 = sétimos, 8 = oitavos, 9 = nonos, 10 = décimos. Só de 11 em diante usa-se “avos” (1/11 = um onze avos)."},
+ {p:"Na fração <b>5/8</b>, o número 8 é o:",a:["Numerador","Denominador","Resultado"],c:1,e:"Denominador (embaixo) = em quantas partes iguais o inteiro foi dividido. Numerador (em cima) = quantas partes você pegou."},
+ {p:"Qual fração é <b>equivalente</b> a 1/2?",a:["2/3","3/6","2/5"],c:1,e:"3/6 — multiplique numerador e denominador de 1/2 por 3. Equivalente significa mesmo valor com outros números."},
+ {p:"Escreva <b>7/3</b> como número misto:",a:["2 1/3","3 1/2","1 4/3"],c:0,e:"7 ÷ 3 = 2, sobra 1. O 2 é a parte inteira e o resto 1 vira o numerador: <b>2 1/3</b>."},
+ {p:"Transforme o número misto <b>1 3/4</b> em fração (fração imprópria):",a:["4/7","7/4","3/4"],c:1,e:"Multiplique 1 × 4 = 4, some o 3 → 7. Mantenha o denominador: <b>7/4</b>."},
+ {p:"Quanto é <b>1/3 de 21</b>?",a:["3","7","9"],c:1,e:"Fração de uma quantidade: divide pelo denominador e multiplica pelo numerador. 21 ÷ 3 = 7 × 1 = <b>7</b>."},
+ {p:"Quanto é <b>3/5 de 40</b>?",a:["24","15","20"],c:0,e:"40 ÷ 5 = 8. Depois 8 × 3 = <b>24</b>."},
+ {p:"Qual é <b>maior</b>: 2/5 ou 3/5?",a:["2/5","3/5","São iguais"],c:1,e:"Denominadores iguais: ganha quem tem o numerador maior. 3 partes > 2 partes do mesmo tamanho."},
+ {p:"Qual é <b>maior</b>: 1/4 ou 1/3?",a:["1/4","1/3","São iguais"],c:1,e:"Cuidado com a pegadinha: quanto <b>maior</b> o denominador, <b>menores</b> os pedaços. Dividir uma pizza em 3 dá fatias maiores que em 4."},
+ {p:"Simplifique <b>2/4</b>:",a:["1/2","2/2","1/4"],c:0,e:"Divida os dois por 2: 2÷2=1 e 4÷2=2 → <b>1/2</b>."},
+ {p:"Uma pizza tem 8 fatias. Você comeu 3. Que fração <b>sobrou</b>?",a:["3/8","5/8","8/5"],c:1,e:"8 − 3 = 5 fatias de 8 → <b>5/8</b>. A pegadinha é responder o que foi comido."},
+ {p:"<b>4/4</b> é igual a:",a:["Meio","Um inteiro","Zero"],c:1,e:"Quando numerador = denominador, você pegou todas as partes: 1 inteiro."},
+ {p:"Complete a equivalência: 2/3 = ___/12",a:["6","8","4"],c:1,e:"3 × 4 = 12, então faça o mesmo em cima: 2 × 4 = <b>8</b>. Logo 2/3 = 8/12."},
+ {p:"Numa turma de 30 alunos, <b>2/6</b> foram ao museu. Quantos foram?",a:["10","12","5"],c:0,e:"30 ÷ 6 = 5, depois 5 × 2 = <b>10</b>. (2/6 simplifica para 1/3, e 1/3 de 30 também dá 10.)"}
+],
+"Ciências":[
+ {p:"Quais são as propriedades <b>gerais</b> da matéria, presentes em tudo?",a:["Cor e brilho","Massa e volume","Sabor e cheiro"],c:1,e:"Toda matéria tem massa e ocupa espaço (volume). Cor e brilho são propriedades específicas."},
+ {p:"A passagem de <b>líquido para gasoso</b> chama-se:",a:["Condensação","Vaporização","Fusão"],c:1,e:"Vaporização (evaporação quando é lenta, ebulição quando ferve). O contrário é condensação."},
+ {p:"A passagem de <b>gasoso para líquido</b> chama-se:",a:["Condensação","Solidificação","Sublimação"],c:0,e:"Condensação. É o que forma as gotinhas do lado de fora do copo gelado e as nuvens."},
+ {p:"No ciclo da água, o que faz a água <b>subir</b> para a atmosfera?",a:["A chuva","A evaporação pelo calor do Sol e a transpiração das plantas","A infiltração no solo"],c:1,e:"O Sol aquece rios, lagos e mares → evaporação. As plantas soltam vapor pelas folhas → transpiração."},
+ {p:"As <b>nuvens</b> se formam por qual processo?",a:["Evaporação","Condensação do vapor em gotículas","Solidificação"],c:1,e:"O vapor sobe, esfria em altitude e condensa em gotículas minúsculas — isso é a nuvem."},
+ {p:"<b>Precipitação</b> é:",a:["A água que cai (chuva, granizo, neve)","A água que evapora","A água que infiltra"],c:0,e:"Quando as gotículas ficam pesadas demais, caem. É a etapa que devolve a água à superfície."},
+ {p:"Um material <b>transparente</b> é aquele que:",a:["Deixa a luz passar e permite ver nitidamente","Deixa passar pouca luz","Não deixa a luz passar"],c:0,e:"Transparente (vidro limpo) → translúcido (vidro fosco, passa luz mas não dá para ver bem) → opaco (madeira)."},
+ {p:"A propriedade de ser transformado em <b>fios</b> chama-se:",a:["Maleabilidade","Ductilidade","Dureza"],c:1,e:"Ductilidade = virar fio (cobre nos fios elétricos). Maleabilidade = virar lâmina/folha (papel alumínio)."},
+ {p:"Materiais que conduzem bem calor e eletricidade são principalmente os:",a:["Plásticos","Metais","Vidros"],c:1,e:"Metais são bons condutores. Plástico, borracha e madeira são isolantes — por isso o cabo da panela é de plástico."},
+ {p:"Para que serve a <b>cobertura vegetal</b> do solo?",a:["Só para deixar bonito","Proteger o solo da erosão, segurar a umidade e abrigar animais","Aumentar a temperatura da região"],c:1,e:"Sem vegetação a chuva bate direto no solo e leva a camada fértil embora — isso é erosão."},
+ {p:"<b>Fusão</b> é a passagem de:",a:["Sólido para líquido","Líquido para sólido","Sólido direto para gás"],c:0,e:"Fusão = derreter (gelo virando água). O contrário é solidificação."},
+ {p:"A <b>densidade</b> explica por que:",a:["O óleo fica acima da água","A água ferve a 100 °C","O ferro é duro"],c:0,e:"O óleo é menos denso que a água, por isso flutua. Densidade = quanta massa cabe em certo volume."},
+ {p:"O que acontece com a água da chuva que <b>infiltra</b> no solo?",a:["Evapora imediatamente","Abastece os lençóis freáticos e os rios subterrâneos","Desaparece"],c:1,e:"Infiltração alimenta a água subterrânea. Solo sem cobertura vegetal infiltra menos e alaga mais."},
+ {p:"<b>Maleabilidade</b> é a propriedade de:",a:["Virar lâminas ou folhas finas","Riscar outro material","Voltar à forma original"],c:0,e:"Papel alumínio é o exemplo clássico: o metal foi achatado em folha."}
+],
+"Geografia":[
+ {p:"O <b>setor primário</b> da economia envolve:",a:["Agricultura, pecuária e extração","Fábricas e indústrias","Lojas e serviços"],c:0,e:"Primário = tirar da natureza. Secundário = transformar. Terciário = vender e prestar serviço."},
+ {p:"Transformar matéria-prima em produto é função do setor:",a:["Primário","Secundário","Terciário"],c:1,e:"Secundário = indústria. Ex.: o algodão (primário) vira tecido e camiseta (secundário)."},
+ {p:"Um professor, um médico e um vendedor trabalham no setor:",a:["Primário","Secundário","Terciário"],c:2,e:"Terciário = comércio e serviços. É o setor que mais emprega nas cidades brasileiras."},
+ {p:"A <b>agricultura familiar</b> caracteriza-se por:",a:["Grandes áreas e muitas máquinas","Mão de obra da própria família em propriedades menores","Produção só para exportação"],c:1,e:"Ela é responsável por boa parte dos alimentos que chegam à mesa do brasileiro."},
+ {p:"<b>Êxodo rural</b> é:",a:["A saída de pessoas do campo para a cidade","A ida de moradores da cidade para o campo","A troca de cultivos"],c:0,e:"“Êxodo” = saída em massa. No Brasil foi intenso a partir dos anos 1950-70, com a mecanização do campo."},
+ {p:"<b>Monocultura</b> significa:",a:["Cultivar vários produtos juntos","Cultivar um único produto em grande área","Criar apenas um tipo de animal"],c:1,e:"Mono = um. Ex.: soja, cana-de-açúcar. Empobrece o solo e aumenta a dependência de um só produto."},
+ {p:"A <b>mecanização</b> do campo costuma provocar:",a:["Aumento dos empregos rurais","Redução de postos de trabalho no campo","Fim da produção agrícola"],c:1,e:"Uma colheitadeira faz o trabalho de dezenas de pessoas. Isso aumenta a produção e reduz o emprego."},
+ {p:"<b>Matéria-prima</b> é:",a:["O produto pronto na loja","O recurso natural que a indústria transforma","O dinheiro da venda"],c:1,e:"Ex.: minério de ferro é matéria-prima do aço; o aço é matéria-prima do carro."},
+ {p:"Trabalho <b>informal</b> é aquele em que a pessoa:",a:["Trabalha sem carteira assinada e sem direitos garantidos","Trabalha em casa","Trabalha meio período"],c:0,e:"Sem carteira assinada não há férias, 13º salário, fundo de garantia (um dinheiro guardado em nome do trabalhador) nem aposentadoria garantida pelo empregador."},
+ {p:"O <b>agronegócio</b> se diferencia da agricultura familiar por:",a:["Produzir em grande escala, mecanizado e voltado à exportação","Usar só ferramentas manuais","Não usar terra"],c:0,e:"São dois modelos que convivem no Brasil, com finalidades e escalas diferentes."},
+ {p:"Na <b>zona rural</b> predominam:",a:["Prédios e indústrias","Atividades agropecuárias e menor densidade de moradores","Shoppings e escritórios"],c:1,e:"Zona urbana = cidade, adensada, serviços. Zona rural = campo, atividades primárias."},
+ {p:"O comércio de uma cidade pertence ao setor terciário porque:",a:["Produz alimentos","Fabrica produtos","Vende produtos e presta serviços às pessoas"],c:2,e:"O comerciante não produz nem transforma: ele distribui e atende."}
+],
+"História":[
+ {p:"<b>Politeísmo</b> é a crença em:",a:["Um único deus","Vários deuses","Nenhum deus"],c:1,e:"Poli = muitos. Egípcios, mesopotâmicos, gregos e romanos eram politeístas."},
+ {p:"<b>Monoteísmo</b> é a crença em:",a:["Um único deus","Vários deuses","Espíritos da natureza"],c:0,e:"Mono = um. Os hebreus são o principal exemplo monoteísta da Antiguidade estudado no capítulo."},
+ {p:"As <b>pirâmides</b> do Egito foram construídas principalmente como:",a:["Palácios dos faraós vivos","Túmulos monumentais dos faraós","Depósitos de grãos"],c:1,e:"Eram tumbas. A crença na vida após a morte organizava boa parte da religião egípcia."},
+ {p:"A escrita dos <b>egípcios</b> chamava-se:",a:["Cuneiforme","Hieróglifos","Alfabeto"],c:1,e:"Hieróglifos = escrita por desenhos e símbolos, decifrada graças à Pedra de Roseta."},
+ {p:"A escrita dos povos da <b>Mesopotâmia</b> chamava-se:",a:["Cuneiforme","Hieróglifos","Ideogramas"],c:0,e:"Cuneiforme, feita com um estilete em forma de cunha sobre placas de argila."},
+ {p:"A <b>mumificação</b> tinha como objetivo:",a:["Enfeitar o corpo","Preservar o corpo para a vida após a morte","Curar doenças"],c:1,e:"Para os egípcios, a alma precisava reconhecer e voltar ao corpo — daí a preservação."},
+ {p:"Qual rio era essencial para a civilização <b>egípcia</b>?",a:["Nilo","Tigre","Amazonas"],c:0,e:"As cheias do Nilo fertilizavam as margens. Heródoto chamou o Egito de “dádiva do Nilo”."},
+ {p:"Quais rios banhavam a <b>Mesopotâmia</b>?",a:["Nilo e Congo","Tigre e Eufrates","Ganges e Indo"],c:1,e:"“Mesopotâmia” significa <b>terra entre rios</b> — entre o Tigre e o Eufrates."},
+ {p:"O <b>zigurate</b> era:",a:["Um túmulo egípcio","Um templo em forma de torre escalonada, na Mesopotâmia","Um tipo de escrita"],c:1,e:"Ficava no centro da cidade-Estado e ligava o poder religioso ao político."},
+ {p:"O <b>Código de Hamurabi</b> foi:",a:["Um dos primeiros conjuntos de leis escritas","Um livro de religião","Um mapa da Babilônia"],c:0,e:"Babilônia. Baseava-se na lei de talião — “olho por olho” — com penas diferentes por classe social."},
+ {p:"Os deuses <b>gregos</b> eram representados:",a:["Como animais apenas","Com forma e sentimentos humanos","Sem forma alguma"],c:1,e:"Isso se chama antropomorfismo — deuses com jeito de gente: sentiam ciúme, raiva e amor. Habitavam o Monte Olimpo."},
+ {p:"Por que a religião era tão ligada ao <b>poder</b> nos povos antigos?",a:["Porque os governantes eram vistos como escolhidos ou representantes dos deuses","Porque não havia exércitos","Porque ninguém acreditava em deuses"],c:0,e:"O faraó era considerado um deus vivo; na Mesopotâmia o rei governava em nome dos deuses. Religião legitimava o poder."}
+],
+"Inglês":[
+ {p:"A person who puts out fires is a…",a:["firefighter","farmer","dentist"],c:0,e:"<b>Firefighter</b> = bombeiro. <i>Put out a fire</i> = apagar um incêndio."},
+ {p:"A person who takes care of sick people in a hospital is a…",a:["nurse","waiter","driver"],c:0,e:"<b>Nurse</b> = enfermeiro(a). <i>Doctor</i> = médico(a)."},
+ {p:"“A pilot ______ planes.”",a:["cooks","flies","builds"],c:1,e:"<b>Fly</b> = pilotar/voar. Na 3ª pessoa: he/she <b>flies</b>."},
+ {p:"“A mechanic ______ cars.”",a:["fixes","teaches","sells"],c:0,e:"<b>Fix / repair</b> = consertar. Repare no -es de fix<b>es</b> na 3ª pessoa."},
+ {p:"The negative short form of <b>will not</b> is:",a:["willn't","won't","don't"],c:1,e:"<b>Won't</b>. Forma irregular — decore, não tente deduzir."},
+ {p:"“In the future, people ______ travel in flying cars.”",a:["will","was","are"],c:0,e:"<b>Will + verbo no infinitivo sem to</b> para falar do futuro: will travel."},
+ {p:"How do you ask about the future? “______ you help me tomorrow?”",a:["Do","Will","Are"],c:1,e:"Pergunta com will: <b>Will + sujeito + verbo</b>. Resposta curta: Yes, I will / No, I won't."},
+ {p:"“Go ______ ahead and then turn left.”",a:["straight","between","across"],c:0,e:"<b>Go straight ahead</b> = siga em frente."},
+ {p:"<b>Next to</b> the bank means:",a:["em frente ao banco","ao lado do banco","dentro do banco"],c:1,e:"<b>Next to</b> = ao lado de. <i>Across from</i> = em frente a."},
+ {p:"<b>Between</b> the school and the park means:",a:["entre a escola e o parque","atrás da escola","perto do parque"],c:0,e:"<b>Between</b> = entre dois pontos. <i>Among</i> = entre vários."},
+ {p:"“A ______ teaches students at school.”",a:["teacher","driver","chef"],c:0,e:"<b>Teacher</b> = professor(a). Do verbo <i>teach</i> + sufixo -er (quem faz a ação)."},
+ {p:"Which one is a means of <b>transportation</b>?",a:["subway","kitchen","hospital"],c:0,e:"<b>Subway</b> = metrô. Outros: bus, train, plane, bike, ferry."},
+ {p:"“Turn ______ at the corner.” (à direita)",a:["left","right","back"],c:1,e:"<b>Right</b> = direita. <b>Left</b> = esquerda. <i>At the corner</i> = na esquina."},
+ {p:"Which vehicle doesn’t need a driver?",a:["a self-driving car","a bicycle","a skateboard"],c:0,e:"<b>Self-driving car</b> = carro autônomo, que dirige sozinho. Outros do futuro: <i>flying car</i> (carro voador), <i>electric car</i> (carro elétrico)."}
+]
+};
+
+/* ---------- JOGO DA MEMÓRIA: pares conceito ↔ definição do próprio conteúdo ---------- */
+const MEMORIA = {
+"Português":[["Prefixo","Vem ANTES do radical (in-, des-, re-)"],["Sufixo","Vem DEPOIS do radical (-ista, -aria, -oso)"],["Palavra primitiva","Não vem de outra palavra"],["Palavra derivada","Formada a partir de outra"],["Polissemia","Uma palavra, vários sentidos"],["Lide","1º parágrafo da notícia com o essencial"],["Infinitivo","Forma do verbo em -AR, -ER, -IR"],["Pretérito perfeito","Ação que já terminou"]],
+"Matemática":[["Numerador","Número de cima: partes que peguei"],["Denominador","Número de baixo: partes do inteiro"],["3/6","Equivalente a 1/2"],["7/4","Mesmo valor que 1 3/4"],["1/3 de 21","7"],["3/5 de 40","24"],["4/4","Um inteiro"],["Número misto","Parte inteira + fração"],["Fração imprópria","Numerador maior que o denominador"]],
+"Ciências":[["Vaporização","Nome geral de líquido virando gás"],["Evaporação","Líquido vira gás devagar, sem ferver"],["Condensação","Gás vira líquido"],["Fusão","Sólido vira líquido"],["Solidificação","Líquido vira sólido"],["Ductilidade","Vira fio"],["Maleabilidade","Vira lâmina"],["Opaco","Não deixa a luz passar"],["Cobertura vegetal","Protege o solo da erosão"]],
+"Geografia":[["Setor primário","Agricultura, pecuária, extração"],["Setor secundário","Indústria e transformação"],["Setor terciário","Comércio e serviços"],["Êxodo rural","Saída do campo para a cidade"],["Monocultura","Um único produto em grande área"],["Matéria-prima","Recurso que a indústria transforma"],["Agricultura familiar","Mão de obra da própria família"],["Trabalho informal","Sem carteira assinada"]],
+"História":[["Politeísmo","Vários deuses"],["Monoteísmo","Um único deus"],["Hieróglifos","Escrita dos egípcios"],["Cuneiforme","Escrita da Mesopotâmia"],["Zigurate","Templo em torre escalonada"],["Mumificação","Preservar o corpo após a morte"],["Nilo","Rio do Egito"],["Tigre e Eufrates","Rios da Mesopotâmia"]],
+"Inglês":[["firefighter","bombeiro"],["nurse","enfermeiro(a)"],["mechanic","mecânico"],["won't","will not"],["straight ahead","em frente"],["next to","ao lado de"],["between","entre"],["subway","metrô"],["flying car","carro voador"],["self-driving car","carro que dirige sozinho"]]
+};
+
+/* ---------- CRUZADINHA ---------- */
+const CRUZADA = {
+"Português":[["PREFIXO","Vem antes do radical e muda o sentido"],["SUFIXO","Vem depois do radical"],["VERBO","Palavra que indica ação"],["LIDE","Primeiro parágrafo da notícia"],["MANCHETE","Título principal da notícia"],["DERIVADA","Palavra formada a partir de outra"],["INFINITIVO","Forma do verbo terminada em -AR, -ER ou -IR"],["POLISSEMIA","Uma palavra com vários sentidos"]],
+"Matemática":[["FRACAO","Parte de um inteiro"],["NUMERADOR","Número de cima da fração"],["DENOMINADOR","Número de baixo da fração"],["EQUIVALENTE","Fração de mesmo valor, com outros números"],["MISTO","Número com parte inteira e fração"],["INTEIRO","O todo, sem divisão"],["METADE","O mesmo que 1/2"],["QUARTOS","Como se lê o denominador 4"]],
+"Ciências":[["EVAPORACAO","Água líquida vira vapor"],["CONDENSACAO","Vapor vira gotinhas de água"],["PRECIPITACAO","A água cai como chuva"],["INFILTRACAO","Água entra no solo"],["DENSIDADE","Explica por que o óleo boia na água"],["OPACO","Não deixa a luz passar"],["EROSAO","Desgaste do solo pela chuva e pelo vento"],["MATERIA","Tudo que tem massa e volume"]],
+"Geografia":[["PRIMARIO","Setor da agricultura e da extração"],["SECUNDARIO","Setor da indústria"],["TERCIARIO","Setor do comércio e dos serviços"],["EXODO","___ rural: saída em massa do campo para a cidade"],["MONOCULTURA","Um só produto em grande área"],["RURAL","Zona do campo"],["URBANA","Zona da cidade"],["INFORMAL","Trabalho sem carteira assinada"]],
+"História":[["POLITEISMO","Crença em vários deuses"],["MONOTEISMO","Crença em um único deus"],["HIEROGLIFOS","Escrita dos egípcios"],["CUNEIFORME","Escrita da Mesopotâmia"],["ZIGURATE","Templo mesopotâmico em torre"],["MUMIFICACAO","Preservação do corpo no Egito"],["NILO","Rio que fertilizava o Egito"],["HAMURABI","Autor de um dos primeiros códigos de leis"]],
+"Inglês":[["NURSE","Em inglês: enfermeiro(a)"],["PILOT","Em inglês: quem pilota aviões"],["TEACHER","Em inglês: professor(a)"],["MECHANIC","Em inglês: quem conserta carros"],["SUBWAY","Em inglês: metrô"],["STRAIGHT","Go ___ ahead: em frente"],["RIGHT","Em inglês: direita"],["BETWEEN","Em inglês: entre dois pontos"]]
+};
+
+/* ---------- ASSOCIAÇÃO DE IMAGENS ---------- */
+const ASSOC = {
+"Ciências":[["🧊➡️💧","Fusão"],["💧➡️💨","Evaporação"],["💨➡️☁️","Condensação"],["☁️➡️🌧️","Precipitação"],["🪵","Material opaco"],["🪟","Material transparente"]],
+"Inglês":[["🚒","firefighter"],["👩‍⚕️","nurse"],["✈️","pilot"],["🔧","mechanic"],["🚇","subway"],["🚲","bike"]],
+"Geografia":[["🌾","Agricultura (setor primário)"],["🏭","Indústria (setor secundário)"],["🏪","Comércio (setor terciário)"],["🚜","Mecanização do campo"],["🏙️","Zona urbana"],["🐄","Pecuária (setor primário)"]],
+"História":[["🔺","Pirâmide egípcia"],["📜","Hieróglifos"],["🏛️","Templo grego"],["⚖️","Código de Hamurabi"],["🏜️🌊 rio no deserto","Rio Nilo"],["👑","Faraó"]],
+"Matemática":[["🍕 1 de 4 fatias","1/4"],["🍕 2 de 4 fatias","1/2"],["🍕 3 de 4 fatias","3/4"],["🍕 as 4 fatias","4/4 = 1 inteiro"],["🍫 1 de 3 partes","1/3"],["🍫 2 de 3 partes","2/3"]],
+"Português":[["🔴 in-feliz","Prefixo"],["🔵 dent-ista","Sufixo"],["📰","Notícia"],["🦶🪑 pé","Polissemia"],["🏃 correr","Verbo no infinitivo"],["🪨 pedra","Palavra primitiva"]]
+};
+
+
+/* ============================================================
+   CENTRAL DE DÚVIDAS — glossário, passo a passo, mapa mental, vídeo
+   Tudo offline, menos a busca de vídeo.
+   ============================================================ */
+const AJUDA = {
+"Matemática":[
+ {id:"ler", nome:"Ler e escrever frações",
+  glos:[["Fração","Um jeito de escrever pedaços de um inteiro."],
+        ["Numerador","O número de CIMA. Diz quantos pedaços você pegou."],
+        ["Denominador","O número de BAIXO. Diz em quantos pedaços iguais o inteiro foi cortado."]],
+  passos:["Olhe o número de BAIXO — ele dá o nome: 2 = meios, 3 = terços, 4 = quartos, 5 = quintos, 6 = sextos, 7 = sétimos, 8 = oitavos, 9 = nonos, 10 = décimos.",
+          "Olhe o número de CIMA — ele dá a quantidade.",
+          "Junte os dois, de cima para baixo."],
+  ex:"<b>5/8</b> → o 8 vira “oitavos”, o 5 vira “cinco” → <b>cinco oitavos</b>.",
+  mapa:{c:"Fração",r:[{t:"Numerador (cima)",f:["quantos peguei"]},{t:"Denominador (baixo)",f:["em quantos pedaços cortei","dá o NOME da fração"]},{t:"Leitura",f:["3/4 = três quartos","1/2 = um meio"]}]},
+  busca:"como ler e escrever frações 5 ano"},
+
+ {id:"equiv", nome:"Frações equivalentes",
+  glos:[["Equivalente","Duas frações diferentes que valem a MESMA coisa. 1/2 e 3/6 são o mesmo tanto."],
+        ["Simplificar","Deixar a fração com números menores, sem mudar o valor."]],
+  passos:["Escolha um número (2, 3, 4…).",
+          "Multiplique o de cima E o de baixo por esse mesmo número.",
+          "Para simplificar, faça o contrário: divida os dois pelo mesmo número."],
+  ex:"<b>1/2</b> × 3 em cima e embaixo → <b>3/6</b>. E <b>2/4</b> ÷ 2 nos dois → <b>1/2</b>.",
+  mapa:{c:"Equivalentes",r:[{t:"Regra de ouro",f:["o que faço em cima, faço embaixo"]},{t:"Para aumentar",f:["multiplico os dois"]},{t:"Para simplificar",f:["divido os dois"]}]},
+  busca:"frações equivalentes 5 ano explicação"},
+
+ {id:"misto", nome:"Número misto",
+  glos:[["Número misto","Um número inteiro junto com uma fração. Ex.: 2 1/3."],
+        ["Fração imprópria","Fração em que o de cima é MAIOR que o de baixo. Ex.: 7/3."]],
+  passos:["De imprópria para misto: divida cima ÷ baixo. O resultado é o inteiro, o RESTO vira o novo numerador.",
+          "De misto para imprópria: multiplique o inteiro pelo de baixo, some o de cima, mantenha o de baixo."],
+  ex:"<b>7/3</b> → 7 ÷ 3 = 2, resta 1 → <b>2 1/3</b>.<br><b>1 3/4</b> → 1 × 4 = 4, + 3 = 7 → <b>7/4</b>.",
+  mapa:{c:"Número misto",r:[{t:"Tem duas partes",f:["um inteiro","uma fração"]},{t:"Virar imprópria",f:["inteiro × baixo","+ cima"]},{t:"Virar misto",f:["divide","o resto sobe"]}]},
+  busca:"número misto e fração imprópria 5 ano"},
+
+ {id:"quant", nome:"Fração de uma quantidade",
+  glos:[["Fração de uma quantidade","Pegar só um pedaço de um total. Ex.: 3/5 de 40 balas."]],
+  passos:["DIVIDA o total pelo número de BAIXO.",
+          "MULTIPLIQUE o resultado pelo número de CIMA.",
+          "Ordem: divide primeiro, multiplica depois."],
+  ex:"<b>3/5 de 40</b> → 40 ÷ 5 = 8 → 8 × 3 = <b>24</b>.",
+  mapa:{c:"Fração de quantidade",r:[{t:"Passo 1",f:["divide pelo de BAIXO"]},{t:"Passo 2",f:["multiplica pelo de CIMA"]},{t:"Dica",f:["1/3 de 21 = 21÷3 = 7"]}]},
+  busca:"fração de uma quantidade 5 ano como calcular"},
+
+ {id:"comp", nome:"Comparar frações",
+  glos:[["Comparar","Descobrir qual é maior."]],
+  passos:["Se os de BAIXO forem iguais: ganha quem tem o de CIMA maior.",
+          "Se os de CIMA forem iguais: ganha quem tem o de BAIXO MENOR — porque pedaço grande vem de corte pequeno.",
+          "Se for tudo diferente: deixe as duas com o mesmo de baixo usando equivalentes."],
+  ex:"<b>3/5 &gt; 2/5</b> (mesmo baixo).<br><b>1/3 &gt; 1/4</b> — dividir a pizza em 3 dá fatia maior que em 4.",
+  mapa:{c:"Comparar",r:[{t:"Baixo igual",f:["ganha o cima maior"]},{t:"Cima igual",f:["ganha o baixo MENOR"]},{t:"Pegadinha",f:["baixo grande = pedaço pequeno"]}]},
+  busca:"comparar frações qual é maior 5 ano"}
+],
+
+"Português":[
+ {id:"tempos", nome:"Tempos do verbo",
+  glos:[["Verbo","Palavra que mostra ação, estado ou fenômeno: correr, ser, chover."],
+        ["Presente","Acontece agora ou sempre: eu estudo."],
+        ["Pretérito","Já aconteceu: eu estudei."],
+        ["Futuro","Ainda vai acontecer: eu estudarei."]],
+  passos:["Procure uma pista de tempo na frase: ontem, agora, amanhã.",
+          "Olhe o fim do verbo: -ei, -aram, -ou → passado. -rei, -remos → futuro.",
+          "Sem pista e sem terminação de passado ou futuro, quase sempre é presente."],
+  ex:"“As crianças <b>brincaram</b> <i>ontem</i>” → passado.<br>“Nós <b>viajaremos</b> <i>amanhã</i>” → futuro.",
+  mapa:{c:"Tempos do verbo",r:[{t:"Presente",f:["agora / sempre","estudo"]},{t:"Pretérito",f:["já foi","estudei, brincaram"]},{t:"Futuro",f:["vai ser","estudarei, viajaremos"]}]},
+  busca:"tempos verbais presente passado futuro 5 ano"},
+
+ {id:"conjug", nome:"Conjugações e infinitivo",
+  glos:[["Infinitivo","Forma do verbo do jeito que está no dicionário: cantar, correr, partir."],
+        ["1ª conjugação","Termina em -AR."],["2ª conjugação","Termina em -ER."],["3ª conjugação","Termina em -IR."]],
+  passos:["Coloque o verbo no infinitivo (pergunte: o que é preciso fazer?).",
+          "Olhe as duas últimas letras.",
+          "-AR = 1ª · -ER = 2ª · -IR = 3ª."],
+  ex:"<b>correr</b> termina em -ER → <b>2ª conjugação</b>.",
+  mapa:{c:"Conjugações",r:[{t:"1ª",f:["-AR","cantar, brincar"]},{t:"2ª",f:["-ER","correr, comer"]},{t:"3ª",f:["-IR","partir, sorrir"]}]},
+  busca:"conjugações do verbo ar er ir 5 ano"},
+
+ {id:"formacao", nome:"Primitivas, derivadas, prefixo e sufixo",
+  glos:[["Palavra primitiva","Não vem de nenhuma outra: pedra, livro, mar."],
+        ["Palavra derivada","Nasceu de outra: pedreiro, livraria, marinheiro."],
+        ["Prefixo","Pedacinho colado ANTES: in-feliz, des-fazer, re-fazer."],
+        ["Sufixo","Pedacinho colado DEPOIS: dent-ista, livr-aria, medo-so."],
+        ["Radical","O miolo da palavra, a parte que se repete na família."]],
+  passos:["Ache a família: pedra, pedreiro, pedreira, pedrada.",
+          "A mais curta e simples é a primitiva.",
+          "Veja onde o pedaço extra foi colado: antes = prefixo, depois = sufixo."],
+  ex:"<b>in</b>feliz → “in-” antes, negando = prefixo.<br>dent<b>ista</b> → “-ista” depois, dando profissão = sufixo.",
+  mapa:{c:"Formação de palavras",r:[{t:"Primitiva",f:["não vem de outra","pedra, livro"]},{t:"Derivada",f:["veio de outra","pedreiro, livraria"]},{t:"Prefixo (antes)",f:["in- = não","des- = ao contrário","re- = de novo"]},{t:"Sufixo (depois)",f:["-ista = profissão","-aria = lugar","-oso = cheio de"]}]},
+  busca:"prefixo sufixo palavras primitivas e derivadas 5 ano"},
+
+ {id:"noticia", nome:"Notícia",
+  glos:[["Manchete","O título grande, que chama a atenção."],
+        ["Linha fina","A frase menor embaixo do título, que completa."],
+        ["Lide","O primeiro parágrafo, com o essencial."],
+        ["Corpo","O resto do texto, com os detalhes."]],
+  passos:["Notícia conta um FATO real — não inventa e não tem moral da história.",
+          "O lide responde 6 perguntas: o quê, quem, quando, onde, como e por quê.",
+          "Quem lê só o lide já entende o que aconteceu."],
+  ex:"Se o texto tem “era uma vez” ou moral no fim, <b>não é notícia</b> — é narrativa.",
+  mapa:{c:"Notícia",r:[{t:"Manchete",f:["título grande"]},{t:"Lide",f:["o quê, quem, quando","onde, como, por quê"]},{t:"Corpo",f:["detalhes","falas de pessoas"]},{t:"Não tem",f:["moral da história","personagem inventado"]}]},
+  busca:"estrutura da notícia manchete lide 5 ano"},
+
+ {id:"polis", nome:"Palavras polissêmicas",
+  glos:[["Polissemia","A mesma palavra com vários sentidos, que se descobrem pelo contexto."],
+        ["Contexto","O resto da frase, que mostra qual sentido é."]],
+  passos:["Leia a frase inteira, não só a palavra.",
+          "Pergunte: aqui essa palavra está falando de quê?",
+          "Se a mesma palavra aparece com outro sentido em outra frase, é polissemia."],
+  ex:"“O <b>pé</b> dele doeu” (do corpo) e “o <b>pé</b> da mesa quebrou” (apoio).<br>Também: cabeça, banco, letra, linha.",
+  mapa:{c:"Polissemia",r:[{t:"Pé",f:["do corpo","da mesa","da montanha"]},{t:"Cabeça",f:["do corpo","do prego","da fila"]},{t:"Quem decide",f:["o CONTEXTO da frase"]}]},
+  busca:"palavras polissêmicas exemplos 5 ano"}
+],
+
+"Ciências":[
+ {id:"estados", nome:"Mudanças de estado",
+  glos:[["Fusão","Sólido vira líquido. O gelo derrete."],
+        ["Solidificação","Líquido vira sólido. A água congela."],
+        ["Vaporização","Líquido vira gás. Nome geral."],
+        ["Evaporação","Vaporização devagar, sem ferver."],
+        ["Condensação","Gás vira líquido. As gotinhas no copo gelado."]],
+  passos:["Pergunte: de qual estado para qual estado?",
+          "Ganhando calor: sólido → líquido → gás.",
+          "Perdendo calor: gás → líquido → sólido."],
+  ex:"Gelo no sol = <b>fusão</b>. Roupa secando no varal = <b>evaporação</b>. Espelho embaçado no banho = <b>condensação</b>.",
+  mapa:{c:"Mudanças de estado",r:[{t:"Ganha calor",f:["fusão: sólido→líquido","vaporização: líquido→gás"]},{t:"Perde calor",f:["condensação: gás→líquido","solidificação: líquido→sólido"]}]},
+  busca:"mudanças de estado físico da água 5 ano"},
+
+ {id:"ciclo", nome:"Ciclo da água",
+  glos:[["Evaporação","O sol esquenta a água e ela sobe como vapor."],
+        ["Transpiração","As plantas soltam vapor pelas folhas."],
+        ["Condensação","O vapor esfria lá em cima e vira gotinhas: nuvem."],
+        ["Precipitação","As gotinhas ficam pesadas e caem: chuva, neve, granizo."],
+        ["Infiltração","A água entra no solo e alimenta os rios subterrâneos."]],
+  passos:["Comece pelo Sol: ele é o motor de tudo.",
+          "Água sobe (evaporação + transpiração).",
+          "Esfria e junta (condensação → nuvem).",
+          "Cai (precipitação).",
+          "Escorre ou entra no solo (infiltração) e recomeça."],
+  ex:"Nuvem não é fumaça: é <b>vapor que virou gotinhas</b> por causa do frio da altitude.",
+  mapa:{c:"Ciclo da água",r:[{t:"1. Sobe",f:["evaporação (Sol)","transpiração (plantas)"]},{t:"2. Junta",f:["condensação","forma a nuvem"]},{t:"3. Cai",f:["precipitação","chuva, neve, granizo"]},{t:"4. Volta",f:["infiltração no solo","escoa para os rios"]}]},
+  busca:"ciclo da água evaporação condensação precipitação 5 ano"},
+
+ {id:"props", nome:"Propriedades da matéria",
+  glos:[["Matéria","Tudo que tem massa e ocupa espaço."],
+        ["Propriedades gerais","Estão em TUDO: massa e volume."],
+        ["Ductilidade","Vira FIO. O cobre dos fios elétricos."],
+        ["Maleabilidade","Vira LÂMINA. O papel alumínio."],
+        ["Densidade","Quanta massa cabe num espaço. Explica quem boia."],
+        ["Condutividade","Deixa passar calor ou eletricidade. Metais são bons."]],
+  passos:["Pergunte: essa propriedade está em tudo ou só em alguns materiais?",
+          "Em tudo → geral (massa, volume).",
+          "Só em alguns → específica (cor, brilho, dureza, ductilidade)."],
+  ex:"Óleo boia na água porque é <b>menos denso</b>. O cabo da panela é de plástico porque plástico é <b>isolante</b>.",
+  mapa:{c:"Propriedades",r:[{t:"Gerais (tudo tem)",f:["massa","volume"]},{t:"Específicas",f:["ductilidade: vira fio","maleabilidade: vira lâmina","densidade: boia ou afunda","condutividade: passa calor"]},{t:"Luz",f:["transparente: vê bem","translúcido: vê borrado","opaco: não passa"]}]},
+  busca:"propriedades gerais e específicas da matéria 5 ano"},
+
+ {id:"vegetal", nome:"Cobertura vegetal",
+  glos:[["Cobertura vegetal","As plantas que cobrem o solo."],
+        ["Erosão","O desgaste do solo pela chuva e pelo vento."]],
+  passos:["Sem plantas, a chuva bate direto no chão.",
+          "A camada boa do solo é levada embora — isso é erosão.",
+          "Com plantas: a raiz segura, a folha amortece, a água infiltra."],
+  ex:"Morro sem mato desliza na chuva. Morro com mato segura.",
+  mapa:{c:"Cobertura vegetal",r:[{t:"Protege",f:["contra erosão","segura a umidade"]},{t:"Ajuda",f:["água infiltra melhor","abriga animais"]},{t:"Sem ela",f:["solo empobrece","enchente aumenta"]}]},
+  busca:"cobertura vegetal erosão do solo 5 ano"}
+],
+
+"Geografia":[
+ {id:"setores", nome:"Setores da economia",
+  glos:[["Setor primário","Tira da natureza: agricultura, pecuária, extração."],
+        ["Setor secundário","Transforma: indústria, fábrica."],
+        ["Setor terciário","Vende e atende: comércio e serviços."],
+        ["Matéria-prima","O recurso natural que a indústria transforma."]],
+  passos:["Pergunte: essa pessoa TIRA da natureza? → primário.",
+          "Ela TRANSFORMA alguma coisa? → secundário.",
+          "Ela VENDE ou ATENDE gente? → terciário."],
+  ex:"Algodão na roça (primário) → vira tecido na fábrica (secundário) → é vendido na loja (terciário).",
+  mapa:{c:"Setores",r:[{t:"Primário",f:["agricultura","pecuária","extração"]},{t:"Secundário",f:["indústria","transformação"]},{t:"Terciário",f:["comércio","serviços: professor, médico"]}]},
+  busca:"setores da economia primário secundário terciário 5 ano"},
+
+ {id:"campo", nome:"Trabalho no campo",
+  glos:[["Agricultura familiar","A própria família trabalha, em terreno menor."],
+        ["Agronegócio","Grande escala, muita máquina, muito para exportar."],
+        ["Monocultura","Um único produto em área enorme."],
+        ["Mecanização","Trocar o trabalho das pessoas por máquinas."],
+        ["Êxodo rural","Muita gente saindo do campo para a cidade."]],
+  passos:["Veja o TAMANHO da propriedade e QUEM trabalha nela.",
+          "Família trabalhando, terreno menor → agricultura familiar.",
+          "Máquina, área grande, exportação → agronegócio."],
+  ex:"A colheitadeira faz o trabalho de dezenas de pessoas: produz mais e emprega menos — por isso a mecanização puxa o <b>êxodo rural</b>.",
+  mapa:{c:"Campo",r:[{t:"Agricultura familiar",f:["família trabalha","alimenta o Brasil"]},{t:"Agronegócio",f:["grande escala","máquinas","exportação"]},{t:"Consequências",f:["mecanização","menos empregos","êxodo rural"]}]},
+  busca:"agricultura familiar agronegócio êxodo rural 5 ano"},
+
+ {id:"trabalho", nome:"Trabalho formal e informal",
+  glos:[["Trabalho formal","Com carteira assinada e direitos garantidos."],
+        ["Trabalho informal","Sem carteira assinada, sem direitos garantidos."]],
+  passos:["Pergunte: tem carteira assinada?",
+          "Sim → formal, com férias, 13º e aposentadoria garantida.",
+          "Não → informal, sem essas garantias."],
+  ex:"Vendedor de loja registrado = formal. Vendedor ambulante sem registro = informal.",
+  mapa:{c:"Trabalho",r:[{t:"Formal",f:["carteira assinada","férias, 13º","aposentadoria"]},{t:"Informal",f:["sem registro","sem garantias"]}]},
+  busca:"trabalho formal e informal diferença 5 ano"}
+],
+
+"História":[
+ {id:"religiao", nome:"Religião dos povos antigos",
+  glos:[["Politeísmo","Acreditar em VÁRIOS deuses. Poli = muitos."],
+        ["Monoteísmo","Acreditar em UM só deus. Mono = um."],
+        ["Antropomorfismo","Deuses com jeito de gente: sentem raiva, ciúme, amor."]],
+  passos:["Conte os deuses: vários = politeísmo, um só = monoteísmo.",
+          "Egípcios, mesopotâmicos, gregos e romanos → politeístas.",
+          "Hebreus → monoteístas."],
+  ex:"A religião sustentava o poder: o faraó era tratado como <b>deus vivo</b>, e o rei da Mesopotâmia governava em nome dos deuses.",
+  mapa:{c:"Religião antiga",r:[{t:"Politeísmo",f:["vários deuses","Egito, Grécia, Mesopotâmia"]},{t:"Monoteísmo",f:["um só deus","hebreus"]},{t:"Para que servia",f:["explicar a natureza","justificar o poder do rei"]}]},
+  busca:"politeísmo e monoteísmo povos antigos 5 ano"},
+
+ {id:"egito", nome:"Egito",
+  glos:[["Nilo","O rio que enchia e fertilizava as margens."],
+        ["Hieróglifos","A escrita dos egípcios, feita de desenhos e símbolos."],
+        ["Mumificação","Preservar o corpo para a vida depois da morte."],
+        ["Pirâmide","Túmulo monumental do faraó."]],
+  passos:["Comece pelo rio: sem o Nilo não havia plantação nem cidade.",
+          "O faraó era rei E divindade.",
+          "Tudo gira em torno da crença na vida após a morte."],
+  ex:"Heródoto chamou o Egito de <b>“dádiva do Nilo”</b> — a cheia do rio é que tornava a terra boa de plantar.",
+  mapa:{c:"Egito",r:[{t:"Rio Nilo",f:["cheias fertilizam","permite plantar"]},{t:"Faraó",f:["rei e deus vivo"]},{t:"Crenças",f:["vida após a morte","mumificação","pirâmides = túmulos"]},{t:"Escrita",f:["hieróglifos","Pedra de Roseta"]}]},
+  busca:"antigo Egito faraó nilo hieróglifos 5 ano"},
+
+ {id:"meso", nome:"Mesopotâmia",
+  glos:[["Mesopotâmia","Significa “terra entre rios” — entre o Tigre e o Eufrates."],
+        ["Cuneiforme","Escrita feita com um estilete em cunha sobre argila."],
+        ["Zigurate","Templo em forma de torre com degraus."],
+        ["Código de Hamurabi","Um dos primeiros conjuntos de leis escritas."]],
+  passos:["O nome já entrega: MESO = meio, POTAMOS = rio.",
+          "Cidades-Estado, cada uma com seu templo no centro.",
+          "Hamurabi = leis escritas, com a lei de talião."],
+  ex:"Lei de talião = “olho por olho”. E as penas eram <b>diferentes conforme a classe social</b> da pessoa.",
+  mapa:{c:"Mesopotâmia",r:[{t:"Rios",f:["Tigre","Eufrates"]},{t:"Escrita",f:["cuneiforme","em placa de argila"]},{t:"Religião",f:["zigurate","rei em nome dos deuses"]},{t:"Leis",f:["Código de Hamurabi","olho por olho"]}]},
+  busca:"mesopotâmia tigre eufrates cuneiforme zigurate 5 ano"},
+
+ {id:"grecia", nome:"Grécia",
+  glos:[["Olimpo","A montanha onde os gregos diziam que os deuses moravam."],
+        ["Mito","História que explicava o mundo e os costumes."]],
+  passos:["Deuses gregos têm forma e sentimentos humanos.",
+          "Cada deus cuida de uma área da vida.",
+          "Os mitos explicavam o que a ciência ainda não explicava."],
+  ex:"Zeus, Atena, Poseidon — brigavam, tinham ciúme e se apaixonavam, igual a gente.",
+  mapa:{c:"Grécia",r:[{t:"Deuses",f:["forma humana","sentimentos humanos"]},{t:"Onde moravam",f:["Monte Olimpo"]},{t:"Mitos",f:["explicavam o mundo","ensinavam costumes"]}]},
+  busca:"deuses gregos mitologia Olimpo 5 ano"}
+],
+
+"Inglês":[
+ {id:"jobs", nome:"Jobs — profissões",
+  glos:[["firefighter","bombeiro — puts out fires"],["nurse","enfermeiro(a) — takes care of patients"],
+        ["doctor","médico(a)"],["teacher","professor(a) — teaches students"],
+        ["pilot","piloto — flies planes"],["mechanic","mecânico — fixes cars"],
+        ["chef","cozinheiro(a) — cooks food"],["vet","veterinário(a) — takes care of animals"]],
+  passos:["Muitos nomes de profissão terminam em <b>-er</b> ou <b>-or</b>: teach → teacher.",
+          "Na 3ª pessoa (he / she / it), o verbo ganha -s ou -es: fly → flies, fix → fixes.",
+          "Monte a frase: A + profissão + verbo + o que faz."],
+  ex:"A pilot <b>flies</b> planes. A mechanic <b>fixes</b> cars. A teacher <b>teaches</b> students.",
+  mapa:{c:"Jobs",r:[{t:"Saúde",f:["doctor","nurse","vet"]},{t:"Emergência",f:["firefighter","police officer"]},{t:"Transporte",f:["pilot","driver"]},{t:"Regra",f:["he/she + verbo com -s","fly → flies"]}]},
+  busca:"jobs and responsibilities english for kids professions"},
+
+ {id:"will", nome:"Will — falar do futuro",
+  glos:[["will","vai / irá — usado para o futuro"],["won't","forma curta de will not"],
+        ["in the future","no futuro"]],
+  passos:["Afirmativa: sujeito + <b>will</b> + verbo (sem “to”).",
+          "Negativa: sujeito + <b>won't</b> + verbo.",
+          "Pergunta: <b>Will</b> + sujeito + verbo?",
+          "Resposta curta: Yes, I will. / No, I won't."],
+  ex:"I <b>will</b> travel. · I <b>won't</b> travel. · <b>Will</b> you travel?<br>Cuidado: é <b>won't</b>, nunca “willn't”.",
+  mapa:{c:"Will",r:[{t:"Afirmativa",f:["I will go"]},{t:"Negativa",f:["I won't go"]},{t:"Pergunta",f:["Will you go?"]},{t:"Regra",f:["verbo SEM to","serve para todos os sujeitos"]}]},
+  busca:"will future simple english for kids explanation"},
+
+ {id:"directions", nome:"Directions — dar direções",
+  glos:[["go straight ahead","siga em frente"],["turn right","vire à direita"],["turn left","vire à esquerda"],
+        ["next to","ao lado de"],["across from","em frente a"],["between","entre (dois)"],
+        ["on the corner","na esquina"],["behind","atrás de"]],
+  passos:["Para mandar alguém andar, use o verbo direto: Go… Turn…",
+          "Para dizer ONDE fica, use as preposições: next to, between, across from.",
+          "Junte: Go straight ahead and turn left. It's next to the bank."],
+  ex:"“It's <b>between</b> the school and the park” = fica <b>entre</b> a escola e o parque.",
+  mapa:{c:"Directions",r:[{t:"Movimento",f:["go straight ahead","turn right / left"]},{t:"Posição",f:["next to = ao lado","across from = em frente","between = entre"]}]},
+  busca:"giving directions english for kids left right straight"},
+
+ {id:"transport", nome:"Transportation in the future",
+  glos:[["subway","metrô"],["train","trem"],["plane","avião"],["bike","bicicleta"],
+        ["flying car","carro voador"],["electric car","carro elétrico"],["self-driving car","carro que dirige sozinho"]],
+  passos:["Para falar de transporte no futuro, junte <b>will</b> + meio de transporte.",
+          "Travel <b>by</b> + transporte no singular: by bus, by train, by plane.",
+          "Exceção: <b>on foot</b> = a pé."],
+  ex:"“In the future, people <b>will travel in flying cars</b>.”<br>“Robots <b>will drive</b> the buses.”",
+  mapa:{c:"Transportation",r:[{t:"Hoje",f:["bus, train, subway","bike, plane"]},{t:"Futuro",f:["flying car","electric car","self-driving car"]},{t:"Como falar",f:["will + verbo","travel by bus"]}]},
+  busca:"transportation in the future english for kids vocabulary"}
+]
+};
+
+/* ---------- PLANO DIÁRIO: prática distribuída ----------
+   Cada matéria aparece 3x em dias diferentes antes da prova.
+   ap = apresentação (ler/organizar) | rec = recuperação (quiz/jogo) | rev = revisão final
+------------------------------------------------------------------ */
+const PLANO = {
+"2026-07-27":[["Português","ap"],["Matemática","ap"]],
+"2026-07-28":[["Inglês","ap"],["Geografia","ap"]],
+"2026-07-29":[["Ciências","ap"],["História","ap"]],
+"2026-07-30":[["Português","rec"],["Inglês","rec"]],
+"2026-07-31":[["Matemática","rec"],["Geografia","rec"]],
+"2026-08-01":[["Livre","folga"]],
+"2026-08-02":[["Ciências","rec"],["História","rec"]],
+"2026-08-03":[["Inglês","rec"],["Geografia","rec"]],
+"2026-08-04":[["Português","rec"],["Matemática","rec"]],
+"2026-08-05":[["Inglês","rev"],["Ciências","rec"]],
+"2026-08-06":[["Geografia","rev"],["História","rec"]],
+"2026-08-07":[["Inglês","rev"],["Português","rec"]],
+"2026-08-08":[["Livre","folga"]],
+"2026-08-09":[["Inglês","rev"],["Geografia","rev"]],
+"2026-08-10":[["Geografia","rev"],["Português","rec"]],
+"2026-08-11":[["Português","rev"],["História","rec"]],
+"2026-08-12":[["Português","rev"],["Matemática","rec"]],
+"2026-08-13":[["História","rec"],["Matemática","rec"]],
+"2026-08-14":[["História","rev"],["Matemática","rev"]],
+"2026-08-15":[["Ciências","rec"],["História","rev"]],
+"2026-08-16":[["Livre","folga"]],
+"2026-08-17":[["História","rev"],["Matemática","rev"]],
+"2026-08-18":[["Matemática","rev"],["Ciências","rec"]],
+"2026-08-19":[["Ciências","rev"],["Ciências","rev"]],
+"2026-08-20":[["Ciências","rev"],["Ciências","rev"]],
+"2026-08-21":[["Livre","fim"]]
+};
+
+const TIPO = {
+  ap:{nome:"Primeiro contato",det:"Ler o conteúdo no livro/caderno e anotar 5 palavras-chave. Só depois abrir o quiz.",icone:"🥕"},
+  rec:{nome:"Recuperação ativa",det:"Fechar o livro e tentar lembrar. Quiz + um jogo à sua escolha.",icone:"🐴"},
+  rev:{nome:"Revisão final",det:"Refazer só o que você errou antes. Rápido e sem material aberto.",icone:"✨"},
+  folga:{nome:"Folga de verdade",det:"Dia sem estudo. Descanso faz parte do plano — não é falha.",icone:"🌈"},
+  fim:{nome:"Acabou",det:"Última prova hoje. Depois dela, o combinado é fechar o app.",icone:"🏆"}
+};
+
+const SELOS = [
+  {id:"d1", nome:"Primeira Montaria", req:1,  txt:"1 dia de treino", cor:"#3F5285"},
+  {id:"d3", nome:"Trote Firme",       req:3,  txt:"3 dias de treino", cor:"#86A98C"},
+  {id:"d7", nome:"Semana no Haras",   req:7,  txt:"7 dias de treino", cor:"#8E2A3C"},
+  {id:"d14",nome:"Fita de Ouro",      req:14, txt:"Chegou à 1ª prova", cor:"#D9A441"},
+  {id:"d21",nome:"Campeã da Trilha",  req:21, txt:"Atravessou a semana de provas", cor:"#E2879B"}
+];
+/* ============================================================
+   LÓGICA
+   ============================================================ */
+
+/* ---------- armazenamento seguro (localStorage com fallback em memória) ---------- */
+const MEM = {};
+const Store = {
+  ok:(function(){try{const k="__t";localStorage.setItem(k,"1");localStorage.removeItem(k);return true}catch(e){return false}})(),
+  get(k){ try{ var v = this.ok ? localStorage.getItem(k) : MEM[k]; return (v===undefined?null:v); }catch(e){ var w=MEM[k]; return (w===undefined?null:w); } },
+  set(k,v){ try{ this.ok ? localStorage.setItem(k,v) : (MEM[k]=v) }catch(e){ MEM[k]=v } },
+  del(k){ try{ this.ok ? localStorage.removeItem(k) : delete MEM[k] }catch(e){ delete MEM[k] } }
+};
+
+const PADRAO = {nome:"", feitos:{}, quiz:{}, notas:[], duvidas:[], se:"", entao:"", blocosDia:2, tema:"dia"};
+let S = carregar();
+
+function carregar(){
+  try{ const r = Store.get("trilha_v1"); if(r) return Object.assign({},PADRAO,JSON.parse(r)); }catch(e){}
+  return JSON.parse(JSON.stringify(PADRAO));
+}
+function salvar(){ Store.set("trilha_v1", JSON.stringify(S)); }
+
+/* ---------- datas ---------- */
+function hojeISO(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function iso2date(s){ const [a,m,d]=s.split("-").map(Number); return new Date(a,m-1,d); }
+function diasEntre(a,b){ return Math.round((iso2date(b)-iso2date(a))/86400000); }
+const SEM=["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+function rotuloData(s){ const d=iso2date(s); return SEM[d.getDay()]+", "+String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0"); }
+
+function dataAtiva(){
+  const h=hojeISO();
+  if(PLANO[h]) return h;
+  const ds=Object.keys(PLANO).sort();
+  if(h<ds[0]) return ds[0];
+  if(h>ds[ds.length-1]) return ds[ds.length-1];
+  return ds.find(d=>d>=h)||ds[0];
+}
+
+/* ---------- navegação ---------- */
+const ABAS=[["hoje","🌤️ Hoje"],["semana","🗺️ Trilha"],["estudar","🏇 Picadeiro"],["timer","🐴 Trote"],["adulto","👩‍🌾 Adulto"],["ajustes","⚙️ Ajustes"]];
+function montarAbas(){
+  document.getElementById("abas").innerHTML = ABAS.map(([id,n])=>
+    `<button id="ab-${id}" onclick="irPara('${id}')">${n}</button>`).join("");
+}
+function irPara(id){
+  document.querySelectorAll("section.tela").forEach(s=>s.classList.remove("on"));
+  document.getElementById("t-"+id).classList.add("on");
+  ABAS.forEach(([a])=>document.getElementById("ab-"+a).classList.toggle("on",a===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="semana") renderSemana();
+  if(id==="adulto") renderAdulto();
+  if(id==="ajustes") renderAjustes();
+}
+function alternarTema(){
+  S.tema = S.tema==="dia" ? "noite" : "dia";
+  document.body.classList.toggle("noite", S.tema==="noite");
+  document.querySelector(".mini button").textContent = S.tema==="noite" ? "☀️ Tema" : "🌙 Tema";
+  salvar();
+}
+
+/* ---------- tela HOJE ---------- */
+function blocosDoDia(d){
+  const base = PLANO[d]||[];
+  const lim = S.blocosDia;
+  if(base[0] && (base[0][1]==="folga"||base[0][1]==="fim")) return base;
+  return base.slice(0, Math.max(1,Math.min(lim, base.length)));
+}
+
+function renderHoje(){
+  const d = dataAtiva();
+  document.getElementById("pillDia").innerHTML = rotuloData(d);
+  document.getElementById("saudacao").textContent = S.nome ? ("Oi, "+S.nome) : "Oi! Vamos começar?";
+
+  const prox = PROVAS.find(p=>p.data>=hojeISO());
+  document.getElementById("fraseDia").innerHTML = prox
+    ? `Faltam <b>${diasEntre(hojeISO(),prox.data)} dia(s)</b> para a prova de <b>${prox.mat}</b>.`
+    : "As provas acabaram. Missão cumprida.";
+
+  // contagem regressiva
+  document.getElementById("contagem").innerHTML = PROVAS.map(p=>{
+    const f = diasEntre(hojeISO(), p.data);
+    return `<div class="prova ${f<0?'passou':''}" style="border-color:${MATERIAS[p.mat].cor}55">
+      <div class="dia">${p.dia}</div>
+      <div class="mat" style="color:${MATERIAS[p.mat].cor}">${p.mat}</div>
+      <div class="falta">${f<0?"feita":(f===0?"É HOJE":"faltam "+f+"d")}</div></div>`;
+  }).join("");
+
+  // blocos
+  const bs = blocosDoDia(d);
+  document.getElementById("blocosHoje").innerHTML = bs.map((b,i)=>{
+    const [mat,tp]=b, t=TIPO[tp], k=d+"_"+i, feito=!!S.feitos[k];
+    const acao = (tp==="folga"||tp==="fim") ? "" :
+      `<div style="margin-top:7px;display:flex;gap:7px;flex-wrap:wrap"><button class="btn pequeno azul" onclick="event.stopPropagation();abrirTreino('${mat}')">Treinar ${mat}</button><button class="bsos" onclick="event.stopPropagation();abrirAjuda('${mat}')">🆘 Dúvida</button></div>`;
+    return `<div class="bloco ${feito?'feito':''}" onclick="marcar('${k}')">
+      <button class="cx"><svg><use href="#ferradura"/></svg></button>
+      <div class="txt">
+        <div class="tit">${t.icone} ${mat==="Livre"?t.nome:mat} <span class="sub">— ${mat==="Livre"?"":t.nome}</span></div>
+        <div class="det">${t.det}</div>
+        ${mat!=="Livre"?`<div style="margin-top:5px"><span class="tag">${MATERIAS[mat].conteudo.split("·")[0].trim()}</span></div>`:""}
+        ${acao}
+      </div></div>`;
+  }).join("");
+
+  const feitos = bs.filter((_,i)=>S.feitos[d+"_"+i]).length;
+  const pct = bs.length? Math.round(feitos/bs.length*100):0;
+  document.getElementById("barraDia").style.width = pct+"%";
+  const tp=document.getElementById("txtProgresso");
+  if(bs.length && feitos===bs.length){
+    tp.innerHTML = `<b style="color:var(--salvia)">🎀 Trilha de hoje completa!</b> Nada mais é obrigatório hoje. Se quiser treinar de novo, é bônus — não é dever.`;
+  } else {
+    tp.textContent = `${feitos} de ${bs.length} blocos de hoje concluídos`;
+  }
+
+  document.getElementById("combinadoSalvo").innerHTML = S.se && S.entao
+    ? `Combinado ativo: <b>SE</b> ${S.se} <b>ENTÃO</b> ${S.entao}` : "";
+  document.getElementById("seCampo").value = S.se||"";
+  document.getElementById("entaoCampo").value = S.entao||"";
+
+  renderSelos();
+}
+
+function marcar(k){ S.feitos[k]=!S.feitos[k]; salvar(); renderHoje(); }
+
+function diasAtivos(){
+  const set = new Set();
+  Object.keys(S.feitos).forEach(k=>{ if(S.feitos[k]) set.add(k.split("_")[0]); });
+  return set.size;
+}
+function renderSelos(){
+  const n = diasAtivos();
+  const prox = SELOS.find(s=>n<s.req);
+  document.getElementById("selos").innerHTML =
+    `<div class="rosetas">` + SELOS.map(s=>
+      `<div class="roseta ${n>=s.req?'ganha':''}" style="--rp:${s.cor}">
+         <svg><use href="#roseta"/></svg><b>${s.nome}</b><span>${s.txt}</span></div>`
+    ).join("") + `</div>
+    <p class="sub" style="margin-top:12px">Dias de treino até agora: <b>${n}</b>.
+    ${prox?`Faltam <b>${prox.req-n}</b> para a roseta <b>${prox.nome}</b>.`:"Todas as rosetas conquistadas. 🏆"}</p>`;
+}
+function salvarCombinado(){
+  S.se = document.getElementById("seCampo").value.trim();
+  S.entao = document.getElementById("entaoCampo").value.trim();
+  salvar(); renderHoje();
+}
+function comecarAgora(){ irPara("timer"); if(!rodando) toggleTimer(); }
+
+/* ---------- tela SEMANA ---------- */
+function renderSemana(){
+  const h = hojeISO();
+  const dias = Object.keys(PLANO).sort();
+  let html="";
+  dias.forEach(d=>{
+    const bs = PLANO[d];
+    const prova = PROVAS.find(p=>p.data===d);
+    const passado = d<h, hoje = d===h;
+    html += `<div class="card ${prova?'ouro':'salvia'}" style="" style="${hoje?'border-color:var(--rosa)':''};${passado?'opacity:.45':''}">
+      <h3>${rotuloData(d)} ${hoje?'<span class="tag" style="border-color:var(--rosa);color:var(--rosa);background:var(--rosa-cl)">hoje</span>':''}
+      ${prova?`<span class="tag" style="border-color:${MATERIAS[prova.mat].cor};color:${MATERIAS[prova.mat].cor}">PROVA DE ${prova.mat.toUpperCase()}</span>`:''}</h3>
+      ${bs.map(([m,t])=>`<div class="sub">• ${TIPO[t].icone} <b>${m==="Livre"?TIPO[t].nome:m}</b> — ${TIPO[t].nome}</div>`).join("")}
+    </div>`;
+  });
+  document.getElementById("mapaSemana").innerHTML = html;
+}
+
+/* ---------- TIMER ---------- */
+let dur=12*60, resta=dur, rodando=false, tick=null, emPausa=false;
+function renderDuracao(){
+  document.getElementById("escDuracao").innerHTML = [2,8,12,20].map(m=>
+    `<button class="${dur===m*60?'on':''}" onclick="setDur(${m})">${m} min</button>`).join("");
+}
+function setDur(m){ dur=m*60; zerarTimer(); renderDuracao(); }
+function fmt(s){ return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
+function pinta(){
+  if(!document.getElementById("relogio")) return;
+  document.getElementById("relogio").textContent = fmt(resta);
+  document.getElementById("relogio").classList.toggle("pausa", emPausa);
+  document.getElementById("barraTimer").style.width = (100-(resta/dur*100))+"%";
+  document.getElementById("timerTitulo").textContent = emPausa?"Pausa":"Bloco de foco";
+}
+function toggleTimer(){
+  rodando=!rodando;
+  document.getElementById("btnTimer").textContent = rodando?"Pausar":"Continuar";
+  if(rodando){ tick=setInterval(()=>{ resta--; if(resta<=0){ acabou(); } pinta(); },1000); }
+  else clearInterval(tick);
+}
+function acabou(){
+  clearInterval(tick); rodando=false;
+  document.getElementById("btnTimer").textContent="Começar";
+  if(!emPausa){ emPausa=true; dur=3*60; resta=dur;
+    document.getElementById("timerSub").textContent="Pausa de 3 min. Levante, beba água, ande. Sem tela.";
+  } else { emPausa=false; dur=12*60; resta=dur;
+    document.getElementById("timerSub").textContent="Pausa terminada. Fazer mais um bloco é escolha sua.";
+  }
+  pinta(); renderDuracao();
+}
+function zerarTimer(){ clearInterval(tick); rodando=false; emPausa=false; resta=dur;
+  document.getElementById("btnTimer").textContent="Começar"; pinta(); }
+
+/* ---------- TREINAR ---------- */
+let matAtual="Português", modoAtual="quiz";
+const MODOS=[["quiz","Quiz"],["memoria","Jogo da memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["duvida","🆘 Tirar dúvida"]];
+function renderEscolhas(){
+  document.getElementById("escMateria").innerHTML = Object.keys(MATERIAS).map(m=>
+    `<button class="${matAtual===m?'on':''}" onclick="setMat('${m}')">${m}</button>`).join("");
+  document.getElementById("escModo").innerHTML = MODOS.map(([id,n])=>
+    `<button class="${modoAtual===id?'on':''}" onclick="setModo('${id}')">${n}</button>`).join("");
+}
+function setMat(m){ matAtual=m; renderEscolhas(); renderJogo(); }
+function setModo(m){ modoAtual=m; renderEscolhas(); renderJogo(); }
+function abrirTreino(m){ if(MATERIAS[m]){matAtual=m;} modoAtual="quiz"; irPara("estudar"); renderEscolhas(); renderJogo(); }
+function renderJogo(){
+  const cab = `<div class="card rosa"><h2 style="color:${MATERIAS[matAtual].cor}">🐎 ${matAtual}</h2>
+    <p class="sub">${MATERIAS[matAtual].conteudo}</p></div>`;
+  const alvo = document.getElementById("areaJogo");
+  alvo.innerHTML = cab + '<div id="jogoBox"></div>';
+  ({quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida})[modoAtual]();
+}
+
+function iniDuvida(){
+  const lista = AJUDA[matAtual]||[];
+  document.getElementById("jogoBox").innerHTML=`<div class="card ouro">
+    <h3>Sobre o que é a dúvida?</h3>
+    <p class="sub">Escolha o assunto. Abre com o significado das palavras, o passo a passo, o mapa mental e a opção de vídeo.</p>
+    ${lista.map(t=>`<button class="btn sec" style="text-align:left" onclick="abrirAjuda('${matAtual}','${t.id}')">🆘 ${t.nome}</button>`).join("")}
+  </div>`;
+}
+
+/* ---------- QUIZ ---------- */
+let qLista=[], qIdx=0, qAcertos=0, qRespondida=false;
+function embaralha(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function iniQuiz(){ qLista=embaralha(QUIZ[matAtual]); qIdx=0; qAcertos=0; pintaQuiz(); }
+function pintaQuiz(){
+  const box=document.getElementById("jogoBox");
+  if(qIdx>=qLista.length){
+    const r=S.quiz[matAtual]||{melhor:0,vezes:0};
+    r.vezes=(r.vezes||0)+1; r.melhor=Math.max(r.melhor||0,qAcertos); r.total=qLista.length; S.quiz[matAtual]=r; salvar();
+    box.innerHTML=`<div class="card destaque"><h2>🏅 Volta completa!</h2>
+      <p>Você acertou <b>${qAcertos} de ${qLista.length}</b> nesta rodada.</p>
+      <p class="sub">Errar aqui é o objetivo: cada erro corrigido agora é uma questão a menos errada na prova. Refazer melhora — a evidência mostra ganho crescente com repetições.</p>
+      <button class="btn" onclick="iniQuiz()">🔁 Dar mais uma volta (a ordem muda)</button>
+      <button class="btn sec" onclick="setModo('memoria')">Trocar para o jogo da memória 🎴</button></div>`;
+    renderHoje(); return;
+  }
+  const q=qLista[qIdx]; qRespondida=false;
+  box.innerHTML=`<div class="card">
+    <p class="sub">Pergunta ${qIdx+1} de ${qLista.length} · sem cronômetro, sem pontuação por velocidade</p>
+    <div class="barra" style="margin-bottom:12px"><i style="width:${qIdx/qLista.length*100}%"></i></div>
+    <h3 style="font-size:1.06rem;line-height:1.5">${q.p}</h3>
+    <div id="alts" class="palco">${q.a.map((t,i)=>`<button class="alt" onclick="responder(${i})">${t}</button>`).join("")}</div>
+    <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button class="bsos" onclick="abrirPalavras()">🔤 O que quer dizer?</button>
+      <button class="bsos" onclick="duvidaDoQuiz()">🆘 Não entendi o assunto</button>
+    </div>
+    <p class="dicaw">Palavras com <i>pontinhos</i> podem ser tocadas para ver o significado.</p>
+    <div id="fbBox"></div></div>`;
+  marcarPalavras(box.querySelector("h3"), matAtual);
+}
+function responder(i){
+  if(qRespondida) return; qRespondida=true;
+  const q=qLista[qIdx], bts=document.querySelectorAll("#alts .alt");
+  bts.forEach((b,j)=>{ b.disabled=true; if(j===q.c) b.classList.add("certa"); else if(j===i) b.classList.add("errada"); });
+  const ok=i===q.c; if(ok) qAcertos++;
+  document.getElementById("fbBox").innerHTML=
+    `<div class="fb ${ok?'ok':'no'}"><b>${ok?"Certo.":"Ainda não."}</b>${q.e}
+       <div style="margin-top:10px"><button class="bsos" onclick="abrirAjuda('${matAtual}', topicoDe('${matAtual}', ${JSON.stringify(q.p)}), 'passos')">${ok?"🗺️ Ver o mapa deste assunto":"🧩 Ver o passo a passo"}</button></div>
+     </div>
+     <button class="btn" onclick="proxQuiz()">${qIdx+1<qLista.length?"Próxima":"Ver resultado"}</button>`;
+  marcarPalavras(document.querySelector("#fbBox .fb"), matAtual);
+}
+function proxQuiz(){ qIdx++; ajCtx=null; esconderBalao(); pintaQuiz(); }
+
+/* ---------- JOGO DA MEMÓRIA ---------- */
+let mCartas=[], mAberta=null, mPares=0, mTrava=false;
+function iniMemoria(){
+  const pares=embaralha(MEMORIA[matAtual]).slice(0,6);
+  mCartas=embaralha(pares.flatMap((p,i)=>[{id:i,t:p[0]},{id:i,t:p[1]}]));
+  mAberta=null; mPares=0; mTrava=false; pintaMemoria();
+}
+function pintaMemoria(){
+  document.getElementById("jogoBox").innerHTML=`<div class="card">
+    <p class="sub">Ache o par: <b>conceito ↔ significado</b>. Sem contador de tempo e sem limite de tentativas.</p>
+    <div class="gridmem" id="gm">${mCartas.map((c,i)=>
+      `<button class="carta" id="c${i}" onclick="virar(${i})"><span class="oculto">?</span></button>`).join("")}</div>
+    <p class="sub" id="mStatus" style="margin-top:10px">Pares encontrados: 0 de ${mCartas.length/2}</p>
+    <button class="btn sec" onclick="iniMemoria()">🔀 Embaralhar de novo</button></div>`;
+}
+function virar(i){
+  if(mTrava) return;
+  const el=document.getElementById("c"+i);
+  if(el.classList.contains("par")||el.classList.contains("virada")) return;
+  el.classList.add("virada"); el.innerHTML=mCartas[i].t;
+  if(mAberta===null){ mAberta=i; return; }
+  const a=mAberta; mAberta=null;
+  if(mCartas[a].id===mCartas[i].id && a!==i){
+    const ea=document.getElementById("c"+a); if(ea) ea.classList.add("par");
+    el.classList.add("par"); mPares++;
+    const st=document.getElementById("mStatus");
+    if(st){ st.textContent=`Pares encontrados: ${mPares} de ${mCartas.length/2}`;
+      if(mPares===mCartas.length/2) st.innerHTML="<b>Todos os pares!</b> Agora tente dizer em voz alta cada par sem olhar — isso é o que fixa."; }
+  } else {
+    mTrava=true;
+    setTimeout(()=>{ [a,i].forEach(k=>{const e=document.getElementById("c"+k);
+      if(!e) return; e.classList.remove("virada"); e.innerHTML='<span class="oculto">?</span>';}); mTrava=false; },900);
+  }
+}
+
+/* ---------- CRUZADINHA ---------- */
+function limpa(s){ return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z]/g,""); }
+function gerarCruzada(itens){
+  let melhor=null;
+  for(let tent=0;tent<40;tent++){
+    const r = tentarCruzada(itens, tent);
+    if(!melhor || r.ents.length>melhor.ents.length ||
+       (r.ents.length===melhor.ents.length && (r.maxC-r.minC)<(melhor.maxC-melhor.minC))) melhor=r;
+    if(melhor.ents.length===itens.length && (melhor.maxC-melhor.minC)<16) break;
+  }
+  return melhor;
+}
+function tentarCruzada(itens, semente){
+  let ps = itens.map(([w,c])=>({w:limpa(w), clue:c})).sort((a,b)=>b.w.length-a.w.length);
+  if(semente>0){
+    const a=ps.slice();
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+    a.sort((x,y)=> semente%2 ? y.w.length-x.w.length : 0);
+    ps=a;
+  }
+  const occ={}, ents=[];
+  const key=(r,c)=>r+","+c;
+  function cabe(w,r,c,dir){
+    let cruz=0;
+    const antes = dir==="H"?key(r,c-1):key(r-1,c);
+    const dep   = dir==="H"?key(r,c+w.length):key(r+w.length,c);
+    if(occ[antes]||occ[dep]) return -1;
+    for(let k=0;k<w.length;k++){
+      const rr = dir==="H"?r:r+k, cc = dir==="H"?c+k:c;
+      const cur = occ[key(rr,cc)];
+      if(cur){ if(cur!==w[k]) return -1; cruz++; }
+      else{
+        const n1 = dir==="H"?key(rr-1,cc):key(rr,cc-1);
+        const n2 = dir==="H"?key(rr+1,cc):key(rr,cc+1);
+        if(occ[n1]||occ[n2]) return -1;
+      }
+    }
+    return cruz;
+  }
+  function grava(w,r,c,dir,clue){
+    for(let k=0;k<w.length;k++){ const rr=dir==="H"?r:r+k, cc=dir==="H"?c+k:c; occ[key(rr,cc)]=w[k]; }
+    ents.push({w,r,c,dir,clue});
+  }
+  grava(ps[0].w,0,0,"H",ps[0].clue);
+  for(let n=1;n<ps.length;n++){
+    const w=ps[n].w; let best=null;
+    for(let i=0;i<w.length;i++){
+      for(const e of ents){
+        for(let j=0;j<e.w.length;j++){
+          if(w[i]!==e.w[j]) continue;
+          const dir = e.dir==="H"?"V":"H";
+          const r = e.dir==="H"? e.r-i : e.r+j;
+          const c = e.dir==="H"? e.c+j : e.c-i;
+          const sc = cabe(w,r,c,dir);
+          if(sc>0 && (!best||sc>best.sc)) best={r,c,dir,sc};
+        }
+      }
+    }
+    if(best) grava(w,best.r,best.c,best.dir,ps[n].clue);
+  }
+  const rs=Object.keys(occ).map(k=>+k.split(",")[0]), cs=Object.keys(occ).map(k=>+k.split(",")[1]);
+  const minR=Math.min(...rs), maxR=Math.max(...rs), minC=Math.min(...cs), maxC=Math.max(...cs);
+  ents.sort((a,b)=> a.r-b.r || a.c-b.c);
+  const numMap={}; let n=1;
+  ents.forEach(e=>{ const k=key(e.r,e.c); if(!numMap[k]) numMap[k]=n++; e.num=numMap[k]; });
+  return {occ,ents,minR,maxR,minC,maxC,numMap};
+}
+let CZ=null;
+function iniCruzada(){
+  CZ = gerarCruzada(CRUZADA[matAtual]);
+  const cols=CZ.maxC-CZ.minC+1, rows=CZ.maxR-CZ.minR+1;
+  let cells="";
+  for(let r=CZ.minR;r<=CZ.maxR;r++) for(let c=CZ.minC;c<=CZ.maxC;c++){
+    const k=r+","+c;
+    if(CZ.occ[k]){
+      const num=CZ.numMap[k]?`<span class="num">${CZ.numMap[k]}</span>`:"";
+      cells+=`<div class="cel ativa" id="cel${r}_${c}">${num}<input maxlength="1" data-r="${r}" data-c="${c}" oninput="pulaCel(this)"></div>`;
+    } else cells+=`<div class="cel"></div>`;
+  }
+  const h=CZ.ents.filter(e=>e.dir==="H"), v=CZ.ents.filter(e=>e.dir==="V");
+  document.getElementById("jogoBox").innerHTML=`<div class="card">
+    <p class="sub">Escreva sem acento. Sem tempo, sem penalidade — pode conferir quantas vezes quiser.</p>
+    <div class="cruz" style="grid-template-columns:repeat(${cols},var(--cw,30px))">${cells}</div>
+    <div class="linha"><button class="btn azul" onclick="conferirCruz()">Conferir</button>
+      <button class="btn sec" onclick="revelarCruz()">Mostrar as respostas</button></div>
+    <div id="czMsg"></div>
+    <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px">
+      <div><h3>Horizontais →</h3><ul class="dicas">${h.map(e=>`<li><b>${e.num}.</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></li>`).join("")}</ul></div>
+      <div><h3>Verticais ↓</h3><ul class="dicas">${v.map(e=>`<li><b>${e.num}.</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></li>`).join("")}</ul></div>
+    </div></div>`;
+}
+function pulaCel(inp){
+  inp.value = inp.value.toUpperCase().replace(/[^A-Za-z]/g,"");
+  if(!inp.value) return;
+  const all=[...document.querySelectorAll(".cel.ativa input")];
+  const i=all.indexOf(inp); if(i>-1 && all[i+1]) all[i+1].focus();
+}
+function conferirCruz(){
+  let certas=0,total=0;
+  document.querySelectorAll(".cel.ativa input").forEach(inp=>{
+    const r=inp.dataset.r,c=inp.dataset.c, esp=CZ.occ[r+","+c]; total++;
+    const cel=document.getElementById("cel"+r+"_"+c);
+    if(inp.value.toUpperCase()===esp){ cel.classList.add("ok"); certas++; }
+    else cel.classList.remove("ok");
+  });
+  document.getElementById("czMsg").innerHTML=
+    `<div class="fb ${certas===total?'ok':'no'}">${certas===total?"<b>Completa.</b> Agora tente explicar duas palavras em voz alta.":`<b>${certas} de ${total} letras certas.</b> As verdes estão corretas. Volte na dica das que faltam — o erro corrigido é o que ensina.`}</div>`;
+}
+function revelarCruz(){
+  document.querySelectorAll(".cel.ativa input").forEach(inp=>{
+    inp.value=CZ.occ[inp.dataset.r+","+inp.dataset.c];
+    document.getElementById("cel"+inp.dataset.r+"_"+inp.dataset.c).classList.add("ok");
+  });
+  document.getElementById("czMsg").innerHTML=`<div class="fb no"><b>Respostas à mostra.</b> Leia, feche e tente preencher de novo do zero. Ver a resposta ensina muito menos do que tentar lembrar.</div>`;
+}
+
+/* ---------- ASSOCIAÇÃO ---------- */
+let aEsq=[],aDir=[],aSel=null,aFeitos=0;
+function iniAssoc(){
+  const pares=embaralha(ASSOC[matAtual]);
+  aEsq=embaralha(pares.map((p,i)=>({i,t:p[0],img:true})));
+  aDir=embaralha(pares.map((p,i)=>({i,t:p[1]})));
+  aSel=null; aFeitos=0; pintaAssoc();
+}
+function pintaAssoc(){
+  document.getElementById("jogoBox").innerHTML=`<div class="card">
+    <p class="sub">Toque em um item da esquerda e depois no seu par à direita.</p>
+    <div class="assoc">
+      <div>${aEsq.map((x,k)=>`<button id="ae${k}" onclick="selE(${k})" style="width:100%;margin-bottom:8px"><span class="emo">${x.t}</span></button>`).join("")}</div>
+      <div>${aDir.map((x,k)=>`<button id="ad${k}" onclick="selD(${k})" style="width:100%;margin-bottom:8px">${x.t}</button>`).join("")}</div>
+    </div>
+    <p class="sub" id="aStatus">Acertos: 0 de ${aEsq.length}</p>
+    <button class="btn sec" onclick="iniAssoc()">Recomeçar</button></div>`;
+}
+function selE(k){
+  if(document.getElementById("ae"+k).classList.contains("ok")) return;
+  document.querySelectorAll('[id^="ae"]').forEach(b=>b.classList.remove("sel"));
+  document.getElementById("ae"+k).classList.add("sel"); aSel=k;
+}
+function selD(k){
+  if(aSel===null) return;
+  const bd=document.getElementById("ad"+k), be=document.getElementById("ae"+aSel);
+  if(bd.classList.contains("ok")) return;
+  if(aEsq[aSel].i===aDir[k].i){
+    bd.classList.add("ok"); be.classList.add("ok"); be.classList.remove("sel"); aSel=null; aFeitos++;
+    document.getElementById("aStatus").textContent=`Acertos: ${aFeitos} de ${aEsq.length}`;
+    if(aFeitos===aEsq.length) document.getElementById("aStatus").innerHTML="<b>Tudo associado.</b> Feche o app e tente repetir os pares de cabeça.";
+  } else {
+    bd.classList.add("no"); setTimeout(()=>bd.classList.remove("no"),600);
+  }
+}
+
+/* ---------- PAINEL DO ADULTO ---------- */
+function renderAdulto(){
+  const dias={}; Object.keys(S.feitos).forEach(k=>{ if(S.feitos[k]){ const d=k.split("_")[0]; dias[d]=(dias[d]||0)+1; } });
+  const ds=Object.keys(dias).sort();
+  let t=`<table><tr><th>Dia</th><th>Blocos</th><th>Matérias previstas</th></tr>`;
+  if(!ds.length) t+=`<tr><td colspan="3" class="sub">Nenhum bloco marcado ainda.</td></tr>`;
+  ds.forEach(d=>{ t+=`<tr><td>${rotuloData(d)}</td><td>${dias[d]}</td><td>${(PLANO[d]||[]).map(x=>x[0]).join(", ")}</td></tr>`; });
+  t+=`</table>`;
+  const qz = Object.keys(S.quiz).map(m=>`<tr><td>${m}</td><td>${S.quiz[m].vezes||0}</td><td>${S.quiz[m].melhor||0} de ${S.quiz[m].total||"—"}</td></tr>`).join("");
+  document.getElementById("relAdulto").innerHTML = t +
+    `<h3 style="margin-top:16px">Quizzes</h3><table><tr><th>Matéria</th><th>Rodadas</th><th>Melhor rodada</th></tr>${qz||'<tr><td colspan="3" class="sub">Nenhuma rodada ainda.</td></tr>'}</table>
+     <p class="sub" style="margin-top:10px">Leia "rodadas" como o indicador principal. "Melhor rodada" mede acerto num quiz caseiro, não aprendizagem — e não prevê nota.</p>`;
+  const dv = (S.duvidas||[]);
+  const cx = {}; dv.forEach(x=>{ const k=x.mat+" · "+x.top; cx[k]=(cx[k]||0)+1; });
+  const chaves = Object.keys(cx).sort((a,b)=>cx[b]-cx[a]);
+  document.getElementById("relAdulto").innerHTML +=
+    `<h3 style="margin-top:16px">Dúvidas que ela marcou</h3>` +
+    (chaves.length
+      ? `<table><tr><th>Assunto</th><th>Vezes</th></tr>${chaves.map(k=>`<tr><td>${k}</td><td>${cx[k]}</td></tr>`).join("")}</table>
+         <p class="sub" style="margin-top:8px">Isto é o mais útil desta tela: mostra <b>onde ela trava</b>. Assunto que reaparece merece explicação com você, não mais um quiz.</p>`
+      : `<p class="sub">Nenhuma dúvida marcada ainda.</p>`);
+  document.getElementById("listaNotas").innerHTML = (S.notas||[]).slice().reverse().map(n=>
+    `<div class="bloco"><div class="txt"><div class="tit">${rotuloData(n.d)}</div>
+    <div class="det"><b>Funcionou:</b> ${n.ok||"—"}<br><b>Travou:</b> ${n.tr||"—"}</div></div></div>`).join("");
+}
+function salvarNota(){
+  const ok=document.getElementById("notaOk").value.trim(), tr=document.getElementById("notaTravou").value.trim();
+  if(!ok&&!tr) return;
+  S.notas.push({d:hojeISO(),ok,tr}); salvar();
+  document.getElementById("notaOk").value=""; document.getElementById("notaTravou").value="";
+  renderAdulto();
+}
+
+/* ---------- AJUSTES ---------- */
+function renderAjustes(){
+  document.getElementById("escBlocos").innerHTML=[1,2,3].map(n=>
+    `<button class="${S.blocosDia===n?'on':''}" onclick="setBlocos(${n})">${n} bloco${n>1?'s':''}</button>`).join("");
+  document.getElementById("nomeCampo").value=S.nome;
+}
+function setBlocos(n){ S.blocosDia=n; salvar(); renderAjustes(); renderHoje(); }
+function salvarAjustes(){ S.nome=document.getElementById("nomeCampo").value.trim(); salvar(); renderHoje(); renderAjustes(); }
+function baixarBackup(){
+  const b=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(b);
+  a.download="progresso-"+((S.nome||"trilha").toLowerCase().replace(/[^a-z0-9]+/g,"-"))+"-"+hojeISO()+".json"; a.click();
+}
+function carregarBackup(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const fr=new FileReader();
+  fr.onload=()=>{ try{ S=Object.assign({},PADRAO,JSON.parse(fr.result)); salvar(); iniciar(); }catch(e){ alert("Arquivo inválido."); } };
+  fr.readAsText(f);
+}
+function zerarTudo(){
+  if(!confirm("Apagar todo o progresso? Isso não pode ser desfeito.")) return;
+  Store.del("trilha_v1"); S=JSON.parse(JSON.stringify(PADRAO)); iniciar();
+}
+
+
+/* ---------- roteamento: da pergunta para o tópico de ajuda ---------- */
+const ROTAS = {
+"Matemática":[["misto",/misto|impr[oó]pri/i],["equiv",/equivalent|simplifi/i],["comp",/maior|menor|compar/i],
+              ["quant",/\bde\s+\d+|quantos|quantas|alunos/i],["ler",/./]],
+"Português":[["noticia",/not[ií]cia|lide|manchete/i],["formacao",/prefixo|sufixo|primitiv|derivad|radical|livraria|dentista|pedreiro|desfazer|marinheiro/i],
+             ["polis",/polissem|v[aá]rios sentidos|mesa quebrou|cabe[çc]a do prego|\bp[ée]\b|p[ée]<|p[ée] d/i],["conjug",/conjuga|infinitivo/i],["tempos",/./]],
+"Ciências":[["ciclo",/ciclo|nuvem|precipita|infiltr|chuva|atmosfera/i],["vegetal",/vegeta|eros/i],
+            ["estados",/fus[aã]o|solidifica|vaporiza|condensa|l[ií]quido|gasoso/i],["props",/./]],
+"Geografia":[["trabalho",/informal|carteira/i],["campo",/familiar|agroneg|monocultura|mecaniza|[êe]xodo|rural|campo/i],["setores",/./]],
+"História":[["meso",/mesopot|cuneiforme|zigurate|hamurabi|tigre|eufrates/i],["egito",/eg[íi]|egip|nilo|hier[oó]|pir[aâ]mide|mumific|fara/i],
+            ["grecia",/greg|olimpo/i],["religiao",/./]],
+"Inglês":[["directions",/straight|turn|right|left|next to|between|corner|direction/i],["transport",/subway|vehicle|transport|driving|car\b/i],
+          ["will",/will|won.t|future/i],["jobs",/./]]
+};
+function topicoDe(mat, texto){
+  const rs = ROTAS[mat]||[]; const limpo = (texto||"").replace(/<[^>]+>/g,"");
+  for(const [id,re] of rs){ if(re.test(limpo)) return id; }
+  return (AJUDA[mat]&&AJUDA[mat][0]) ? AJUDA[mat][0].id : null;
+}
+
+/* ---------- abrir / fechar a central de dúvidas ---------- */
+let ajMat="Matemática", ajTop=null, ajAba="glos", ajCtx=null;
+function abrirAjuda(mat, top, aba){
+  ajMat = AJUDA[mat] ? mat : "Matemática";
+  ajTop = top || (AJUDA[ajMat][0] && AJUDA[ajMat][0].id);
+  ajAba = aba || "glos";
+  document.getElementById("ajFundo").classList.add("on");
+  document.getElementById("ajGaveta").classList.add("on");
+  document.body.style.overflow = "hidden";
+  pintaAjuda();
+}
+function fecharAjuda(){
+  document.getElementById("ajFundo").classList.remove("on");
+  document.getElementById("ajGaveta").classList.remove("on");
+  document.body.style.overflow = "";
+}
+function setAjTop(id){ ajTop=id; pintaAjuda(); }
+function setAjAba(a){ ajAba=a; pintaAjuda(); }
+
+function mapaHTML(m){
+  if(!m) return "";
+  return `<div class="mm"><div class="mm-c">${m.c}</div><div class="mm-rs">` +
+    m.r.map(r=>`<div class="mm-r"><b>${r.t}</b>${(r.f&&r.f.length)?`<ul>${r.f.map(f=>`<li>${f}</li>`).join("")}</ul>`:""}</div>`).join("") +
+    `</div></div>`;
+}
+
+function pintaAjuda(){
+  const lista = AJUDA[ajMat]||[];
+  const t = lista.find(x=>x.id===ajTop) || lista[0];
+  if(!t) return;
+  const ABASA = (ajCtx?[["nesta","🔤 Nesta pergunta"]]:[]).concat([["glos","📖 Palavras"],["passos","🧩 Como faz"],["mapa","🗺️ Mapa"],["video","▶️ Vídeo"]]);
+  let corpo = "";
+
+  if(ajAba==="nesta" && ajCtx){
+    const q = ajCtx.q;
+    corpo = (q.tr ? `<div class="exemplo"><b>A pergunta quer dizer</b>${q.tr}</div>` : "") +
+      `<p class="sub" style="margin-top:12px">Palavras desta pergunta e das alternativas:</p>
+       <div class="glos">${ajCtx.lista.map(x=>`<div class="gitem"><b>${x.t}</b><span>${x.d}</span></div>`).join("")||'<p class="sub">Nenhuma palavra catalogada aqui.</p>'}</div>
+       <p class="sub">Dica: no texto da pergunta, as palavras com <i style="border-bottom:2px dotted var(--lav)">pontinhos embaixo</i> podem ser tocadas direto.</p>`;
+  }
+  else if(ajAba==="glos"){
+    corpo = `<p class="sub">O que cada palavra quer dizer:</p>
+      <div class="glos">${t.glos.map(g=>`<div class="gitem"><b>${g[0]}</b><span>${g[1]}</span></div>`).join("")}</div>`;
+  }
+  else if(ajAba==="passos"){
+    corpo = `<div class="fb no" style="margin-top:0"><b>Antes de ler:</b> dê um palpite primeiro, mesmo que erre.
+      Tentar e depois ver a correção ensina bem mais do que ler a resposta pronta.</div>
+      <ol class="passos">${t.passos.map(p=>`<li>${p}</li>`).join("")}</ol>
+      <div class="exemplo"><b>Exemplo</b>${t.ex}</div>`;
+  }
+  else if(ajAba==="mapa"){
+    corpo = mapaHTML(t.mapa) + `<p class="sub" style="margin-top:12px">Tente redesenhar este mapa de cabeça num papel. Lembrar sozinha vale muito mais do que reler.</p>`;
+  }
+  else {
+    const q = encodeURIComponent(t.busca);
+    corpo = `<p class="sub">Isto abre uma busca no YouTube em outra aba. <b>Precisa de internet</b>, e os resultados não são escolhidos por mim — vale ver com um adulto por perto.</p>
+      <a class="btn azulao" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/results?search_query=${q}">▶️ Procurar vídeo sobre “${t.nome}”</a>
+      <a class="btn sec" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/results?search_query=${q}&sp=EgIQAQ%253D%253D">Buscar só vídeos (sem playlists)</a>
+      <p class="sub" style="margin-top:12px">Sem internet agora? As abas <b>Palavras</b>, <b>Como faz</b> e <b>Mapa</b> funcionam offline e cobrem a mesma dúvida.</p>`;
+  }
+
+  document.getElementById("ajCorpo").innerHTML = `
+    <div class="ajtopo">
+      <div><h2 style="margin:0">🆘 Tirar dúvida</h2><p class="sub" style="margin:2px 0 0">${ajMat} · ${t.nome}</p></div>
+      <button class="ajx" onclick="fecharAjuda()">✕</button>
+    </div>
+    <div class="escolha ajtopicos">${lista.map(x=>`<button class="${x.id===t.id?'on':''}" onclick="setAjTop('${x.id}')">${x.nome}</button>`).join("")}</div>
+    <div class="escolha ajabas">${ABASA.map(([a,n])=>`<button class="${ajAba===a?'on':''}" onclick="setAjAba('${a}')">${n}</button>`).join("")}</div>
+    <div class="ajconteudo">${corpo}</div>
+    <button class="btn sec" onclick="anotarDuvida('${ajMat}','${t.id}')">📌 Anotar esta dúvida para falar depois</button>
+    <div class="sub" id="ajAviso" style="text-align:center;margin-top:6px"></div>`;
+  document.getElementById("ajCorpo").scrollTop = 0;
+}
+
+function anotarDuvida(mat,top){
+  const t = (AJUDA[mat]||[]).find(x=>x.id===top);
+  S.duvidas = S.duvidas || [];
+  S.duvidas.push({d:hojeISO(), mat:mat, top:t?t.nome:top});
+  salvar();
+  document.getElementById("ajAviso").innerHTML = "✅ Anotado. Aparece no painel do adulto.";
+}
+
+/* atalho a partir do quiz */
+function duvidaDoQuiz(){
+  const q = qLista[qIdx]; if(!q) return;
+  abrirAjuda(matAtual, topicoDe(matAtual, q.p), "glos");
+}
+
+
+/* ============================================================
+   TRADUÇÃO NO TOQUE
+   Toca na palavra → aparece o significado. Funciona offline.
+   Fonte 1: dicionário inglês→português (matéria de Inglês)
+   Fonte 2: glossários da central de dúvidas (todas as matérias)
+   ============================================================ */
+
+/* expressões primeiro — sempre casam antes das palavras soltas */
+const DIC = {
+"takes care of":"cuida de","take care of":"cuidar de","puts out":"apaga","put out":"apagar",
+"next to":"ao lado de","across from":"em frente a","straight ahead":"em frente","go straight":"siga em frente",
+"in the future":"no futuro","will not":"não vai / não irá","short form":"forma curta",
+"self-driving car":"carro que dirige sozinho","flying car":"carro voador","electric car":"carro elétrico",
+"means of transportation":"meio de transporte","at the corner":"na esquina","turn left":"vire à esquerda",
+"turn right":"vire à direita","how do you":"como você","which one":"qual deles",
+
+"across":"do outro lado / atravessando","care":"cuidado","driving":"dirigindo","flying":"voador / voando",
+"needs":"precisa","next":"próximo(a) / seguinte","not":"não","out":"para fora","puts":"coloca / põe",
+"self":"próprio / a si mesmo","takes":"pega / leva","to":"para","doesn't":"não (com he/she/it)",
+"a":"um / uma","about":"sobre","above":"acima de","ahead":"à frente","and":"e","animals":"animais",
+"are":"são / estão","ask":"perguntar","at":"em / no","back":"para trás / de volta","bank":"banco",
+"behind":"atrás de","between":"entre (dois)","bicycle":"bicicleta","bike":"bicicleta","builds":"constrói",
+"bus":"ônibus","car":"carro","cars":"carros","chef":"cozinheiro(a)","cooks":"cozinha","corner":"esquina",
+"dentist":"dentista","do":"faz / auxiliar de pergunta","doctor":"médico(a)","does":"faz","doesn't":"não",
+"don't":"não","driver":"motorista","drives":"dirige","farmer":"agricultor(a)","fire":"incêndio / fogo",
+"fires":"incêndios","firefighter":"bombeiro(a)","fix":"consertar","fixes":"conserta","flies":"voa / pilota",
+"fly":"voar / pilotar","food":"comida","for":"para","form":"forma","future":"futuro","go":"vá / ir",
+"help":"ajudar","hospital":"hospital","how":"como","in":"em / dentro de","is":"é / está","it":"isso / ele(a)",
+"job":"profissão / emprego","jobs":"profissões","kitchen":"cozinha (o cômodo)","left":"esquerda",
+"means":"significa / meio","me":"me / mim","mechanic":"mecânico(a)","need":"precisar","needs":"precisa",
+"negative":"negativa","nurse":"enfermeiro(a)","of":"de","on":"em cima de / em","one":"um / aquele",
+"park":"parque","patients":"pacientes","people":"pessoas","person":"pessoa","pilot":"piloto",
+"plane":"avião","planes":"aviões","police":"polícia","repair":"consertar","right":"direita",
+"school":"escola","sells":"vende","short":"curto(a)","sick":"doente","skateboard":"skate",
+"straight":"reto / em frente","students":"alunos","subway":"metrô","teacher":"professor(a)",
+"teaches":"ensina","the":"o / a","then":"então / depois","this":"este / esta","tomorrow":"amanhã",
+"train":"trem","transportation":"transporte","travel":"viajar","turn":"vire / virar","vehicle":"veículo",
+"vet":"veterinário(a)","waiter":"garçom","was":"era / estava","were":"eram / estavam","which":"qual",
+"who":"que / quem","will":"vai / irá (futuro)","willn't":"não existe — o certo é won't",
+"won't":"não vai / não irá","you":"você","your":"seu / sua"
+};
+
+/* tradução da frase inteira — mesma ordem do QUIZ["Inglês"] */
+const TRAD_ING = [
+"Uma pessoa que apaga incêndios é um…",
+"Uma pessoa que cuida de gente doente num hospital é um(a)…",
+"Um piloto ______ aviões.",
+"Um mecânico ______ carros.",
+"A forma curta negativa de “will not” é:",
+"“No futuro, as pessoas ______ viajar em carros voadores.”",
+"Como se pergunta sobre o futuro? “______ você me ajudar amanhã?”",
+"“Siga ______ em frente e então vire à esquerda.”",
+"“Next to the bank” quer dizer:",
+"“Between the school and the park” quer dizer:",
+"“Um(a) ______ ensina alunos na escola.”",
+"Qual destes é um meio de transporte?",
+"“Vire ______ na esquina.” (à direita)",
+"Qual veículo não precisa de motorista?"
+];
+
+function nrm(s){ return (s||"").toLowerCase().replace(/[\u2019\u02BC]/g,"'").normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+
+/* índice de termos: dicionário de inglês + glossários da matéria */
+
+/* termos curriculares que aparecem no enunciado e não estão nos glossários */
+const DIC_EXTRA = {
+"Português":{"primitiva":"palavra que não vem de nenhuma outra","derivada":"palavra que nasceu de outra",
+ "polissêmica":"palavra com vários sentidos","conjugação":"grupo do verbo pelo fim do infinitivo: -AR, -ER, -IR",
+ "terminação":"as letras do fim da palavra","notícia":"texto que conta um fato real",
+ "pretérito":"tempo do passado","polissemia":"a mesma palavra com vários sentidos"},
+"Matemática":{"simplifique":"deixe a fração com números menores, dividindo cima e baixo pelo mesmo número",
+ "equivalência":"quando duas frações valem a mesma coisa","quantidade":"o total de que se está falando",
+ "imprópria":"fração com o de cima maior que o de baixo","metade":"o mesmo que 1/2"},
+"Ciências":{"líquido":"estado que escorre e toma a forma do recipiente","sólido":"estado com forma própria",
+ "gasoso":"estado que se espalha e ocupa todo o espaço","vapor":"água em estado de gás",
+ "atmosfera":"a camada de ar em volta da Terra","propriedade":"característica de um material",
+ "propriedades":"características de um material","material":"aquilo de que uma coisa é feita",
+ "materiais":"aquilo de que as coisas são feitas","transparente":"deixa a luz passar e dá para ver bem",
+ "translúcido":"deixa passar luz, mas a imagem fica borrada","opaco":"não deixa a luz passar",
+ "eletricidade":"energia que passa pelos fios","infiltra":"entra no solo","condutor":"deixa passar calor ou eletricidade",
+ "isolante":"não deixa passar calor ou eletricidade"},
+"Geografia":{"informal":"sem carteira assinada e sem direitos garantidos","formal":"com carteira assinada e direitos garantidos",
+ "agropecuária":"agricultura junto com criação de animais","pecuária":"criação de animais",
+ "indústria":"lugar que transforma matéria-prima em produto","serviços":"trabalho de atender pessoas",
+ "urbana":"da cidade","rural":"do campo"},
+"História":{"civilização":"um povo organizado em cidades, com escrita e governo",
+ "egípcios":"povo que viveu no Egito, às margens do Nilo","egípcia":"do Egito",
+ "religião":"conjunto de crenças sobre os deuses","escrita":"jeito de registrar a língua em símbolos",
+ "talião":"lei do “olho por olho”","mito":"história que explicava o mundo"},
+"Inglês":{}
+};
+
+const IDX_CACHE = {};
+function indiceTermos(mat){
+  if(IDX_CACHE[mat]) return IDX_CACHE[mat];
+  const m = {};
+  (AJUDA[mat]||[]).forEach(function(t){
+    (t.glos||[]).forEach(function(g){ m[nrm(g[0])] = {t:g[0], d:g[1]}; });
+  });
+  const ex = DIC_EXTRA[mat]||{};
+  for(const k in ex){ if(!m[nrm(k)]) m[nrm(k)] = {t:k, d:ex[k]}; }
+  if(mat==="Inglês"){
+    for(const k in DIC){ if(!m[nrm(k)]) m[nrm(k)] = {t:k, d:DIC[k]}; }
+  }
+  IDX_CACHE[mat] = m;
+  return m;
+}
+
+/* percorre os textos e envolve os termos conhecidos */
+function marcarPalavras(raiz, mat){
+  if(!raiz || !window.document.createTreeWalker) return;
+  const idx = indiceTermos(mat);
+  const buscar = function(chave){
+    if(idx[chave]) return idx[chave];
+    if(chave.length>4 && chave.slice(-2)==="es" && idx[chave.slice(0,-2)]) return idx[chave.slice(0,-2)];
+    if(chave.length>3 && chave.slice(-1)==="s" && idx[chave.slice(0,-1)]) return idx[chave.slice(0,-1)];
+    return null;
+  };
+  const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, null);
+  const nos = []; while(w.nextNode()) nos.push(w.currentNode);
+  nos.forEach(function(no){
+    if(!no.nodeValue || !no.nodeValue.trim()) return;
+    if(no.parentElement && no.parentElement.classList.contains("w")) return;
+    const txt = no.nodeValue;
+    const toks = []; const re = /[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ'\u2019]*/g; let mm;
+    while((mm = re.exec(txt))!==null) toks.push({s:mm.index, e:re.lastIndex, v:mm[0]});
+    if(!toks.length) return;
+    const frag = document.createDocumentFragment(); let pos = 0, i = 0, achou = false;
+    while(i < toks.length){
+      let casou = null;
+      for(let n = Math.min(4, toks.length - i); n >= 1; n--){
+        const ini = toks[i], fim = toks[i+n-1];
+        const trecho = txt.slice(ini.s, fim.e);
+        const achado = buscar(nrm(trecho));
+        if(achado){ casou = {ini:ini.s, fim:fim.e, txt:trecho, info:achado, n:n}; break; }
+      }
+      if(casou){
+        if(casou.ini > pos) frag.appendChild(document.createTextNode(txt.slice(pos, casou.ini)));
+        const sp = document.createElement("span");
+        sp.className = "w"; sp.textContent = casou.txt;
+        sp.setAttribute("data-t", casou.info.t); sp.setAttribute("data-d", casou.info.d);
+        frag.appendChild(sp);
+        pos = casou.fim; i += casou.n; achou = true;
+      } else i++;
+    }
+    if(!achou) return;
+    if(pos < txt.length) frag.appendChild(document.createTextNode(txt.slice(pos)));
+    no.parentNode.replaceChild(frag, no);
+  });
+}
+
+/* balão com o significado */
+function mostrarBalao(el){
+  const b = document.getElementById("balao");
+  b.innerHTML = '<b>'+el.getAttribute("data-t")+'</b>'+el.getAttribute("data-d")+
+                '<button class="balaox" onclick="esconderBalao()">✕</button>';
+  b.style.display = "block"; b.style.visibility = "hidden";
+  const larg = Math.min(292, window.innerWidth - 24);
+  b.style.width = larg + "px";
+  const r = el.getBoundingClientRect();
+  let esq = r.left + r.width/2 - larg/2;
+  esq = Math.max(12, Math.min(esq, window.innerWidth - larg - 12));
+  let topo = r.bottom + 9;
+  if(topo + b.offsetHeight > window.innerHeight - 12) topo = Math.max(12, r.top - b.offsetHeight - 9);
+  b.style.left = esq + "px"; b.style.top = topo + "px"; b.style.visibility = "visible"; _balaoT = Date.now();
+  document.querySelectorAll(".w.ativa").forEach(function(x){ x.classList.remove("ativa"); });
+  el.classList.add("ativa");
+}
+function esconderBalao(){
+  const b = document.getElementById("balao");
+  if(b) b.style.display = "none";
+  document.querySelectorAll(".w.ativa").forEach(function(x){ x.classList.remove("ativa"); });
+}
+document.addEventListener("click", function(ev){
+  const alvo = ev.target;
+  if(alvo && alvo.classList && alvo.classList.contains("w")){
+    ev.stopPropagation(); mostrarBalao(alvo); return;
+  }
+  if(alvo && alvo.classList && alvo.classList.contains("balaox")) return;
+  if(!alvo.closest || !alvo.closest("#balao")) esconderBalao();
+}, true);
+var _balaoT = 0;
+window.addEventListener("scroll", function(){ if(Date.now()-_balaoT > 500) esconderBalao(); }, true);
+
+/* lista de todas as palavras da pergunta e das alternativas */
+function palavrasDaPergunta(q, mat){
+  const idx = indiceTermos(mat);
+  const bruto = (q.p + " " + q.a.join(" ")).replace(/<[^>]+>/g," ");
+  const toks = bruto.match(/[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ'\u2019]*/g) || [];
+  const achados = [], vistos = {};
+  /* expressões */
+  for(const k in idx){ if(k.indexOf(" ")>0 && nrm(bruto).indexOf(k)>=0 && !vistos[k]){
+    vistos[k]=1; achados.push(idx[k]);
+    k.split(" ").forEach(function(pt){ vistos[pt]=1; });   /* não repetir as partes da expressão */
+  } }
+  toks.forEach(function(t){
+    let k = nrm(t), a = idx[k];
+    if(!a && k.length>4 && k.slice(-2)==="es" && idx[k.slice(0,-2)]){ k=k.slice(0,-2); a=idx[k]; }
+    if(!a && k.length>3 && k.slice(-1)==="s" && idx[k.slice(0,-1)]){ k=k.slice(0,-1); a=idx[k]; }
+    if(a && !vistos[k]){ vistos[k]=1; achados.push(a); }
+  });
+  return achados;
+}
+function abrirPalavras(){
+  const q = qLista[qIdx]; if(!q) return;
+  ajCtx = {q:q, mat:matAtual, lista:palavrasDaPergunta(q, matAtual)};
+  abrirAjuda(matAtual, topicoDe(matAtual, q.p), "nesta");
+}
+
+/* ---------- INÍCIO ---------- */
+function iniciar(){
+  try{ if(typeof TRAD_ING!=="undefined" && QUIZ["Inglês"]) QUIZ["Inglês"].forEach(function(q,i){ q.tr = TRAD_ING[i]; }); }catch(e){}
+  var _b=document.getElementById("semJS"); if(_b) _b.style.display="none";
+  montarAbas(); irPara("hoje");
+  document.body.classList.toggle("noite", S.tema==="noite");
+  document.querySelector(".mini button").textContent = S.tema==="noite" ? "☀️ Tema" : "🌙 Tema";
+  renderHoje(); renderEscolhas(); renderJogo(); renderDuracao(); pinta();
+  if(!Store.ok){
+    const d=document.createElement("div"); d.className="aviso"; d.style.margin="10px 14px";
+    d.innerHTML="<b>Atenção:</b> este navegador não está guardando o progresso. Ao fechar a página, os blocos marcados serão perdidos. Abra o arquivo direto do aparelho ou use o backup em Ajustes.";
+    document.querySelector(".wrap").prepend(d);
+  }
+}
+iniciar();
+</script>
+<script>
+if("serviceWorker" in navigator){ window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }
+</script>
+</body>
+</html>
