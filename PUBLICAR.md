@@ -38,7 +38,7 @@ repositório privado.
 ## Alternativa pelo terminal
 
 Esta pasta já é um repositório git com um commit feito. Dê dois cliques em
-`publicar-no-github.command`, cole o endereço do repositório e siga. Depois faça o passo do
+`PUBLICAR-AUTOMATICO.command`, cole o endereço do repositório e siga. Depois faça o passo do
 Pages acima.
 
 Ou, manualmente, dentro desta pasta:
