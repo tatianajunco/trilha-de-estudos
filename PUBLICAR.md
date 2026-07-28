@@ -64,7 +64,7 @@ Da segunda abertura em diante funciona **sem internet**.
 ## Quando você mexer no conteúdo depois
 
 1. Edite o `index.html`.
-2. **Aumente a versão do cache no `sw.js`** — troque `trilha-estudos-v2` por `v2`.
+2. **Aumente a versão do cache no `sw.js`** — troque `trilha-estudos-v2` por `v3`.
    Sem isso o celular continua mostrando a versão antiga.
 3. Suba a alteração.
 4. No celular, feche e abra o app duas vezes para ele pegar a versão nova.
