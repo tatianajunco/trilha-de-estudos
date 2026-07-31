@@ -9,9 +9,15 @@ Instalável na tela de início do celular e funcional sem internet depois da pri
 
 ## O que tem dentro
 
+- **Menu lateral** agrupado por Provas, Calendário e Acompanhamento — fixo no computador,
+  em gaveta no celular
+- **Aulas** — grade do trimestre por dia e semana, com atalho para treinar a matéria do horário
+- **Tarefas** — calendário mensal com marcação de provas, lista do dia e aviso do que ficou para trás
 - **Plano diário** com prática distribuída até a última prova
 - **Quizzes** com explicação obrigatória do erro e tentativas ilimitadas
 - **Jogo da memória** com figuras desenhadas, **cruzadinha** com charadas e **associação de imagens**
+- **No papel** (Matemática): problemas para resolver escrevendo, com conferência automática
+  da resposta, resolução passo a passo e folha para imprimir
 - **Listening e Speaking** em inglês, com voz do próprio aparelho e reconhecimento de fala
 - **Três níveis** por atividade, liberados por desempenho, e frases de incentivo ao terminar
 - **Central de dúvidas** por assunto: glossário, passo a passo, mapa mental e busca de vídeo
@@ -52,7 +58,7 @@ Com o endereço no ar: abra no **Safari** → Compartilhar → **Adicionar à Te
 | `icon-*.png` | Ícones da tela de início |
 | `.nojekyll` | Impede o Jekyll do GitHub Pages de processar os arquivos |
 
-**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v2` → `v3`).
+**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v7` → `v8`).
 Sem isso o service worker continua servindo a versão antiga.
 
 ---
@@ -69,6 +75,8 @@ Tudo fica em constantes JavaScript dentro de `index.html`, na seção `DADOS`:
 | `MEMORIA2` | `{a:"fig:nurse", b:"nurse", ex:"explicação"}` — `a` aceita `fig:<ícone>` ou `frac:3/4` |
 | `CRUZADA2` | Pares `[PALAVRA, charada]`. **Sem acento** — a grade é montada sozinha |
 | `ASSOC2` | `{f:"ícone", t:"resposta", ex:"explicação"}` |
+| `AULAS` / `HORARIOS` | Grade de aulas: `1` = segunda … `5` = sexta, na ordem dos horários |
+| `PROBLEMAS` | Problemas de “No papel”: enunciado, resposta, dica, passos e sugestão de desenho |
 | `OUVIR` / `FALAR` | Itens de listening e speaking, com nível `n` de 1 a 3 |
 | `ICONES` | Desenhos SVG usados nas atividades |
 | `NIVEIS` / `FRASES` | Quantidade de itens por nível e frases de incentivo |
@@ -119,6 +127,12 @@ multinível de 2025 (50 estudos, 177 efeitos).
 **Não prometer que o app melhora atenção ou memória.** Treino cognitivo digital não transfere
 para desempenho escolar: leitura SMD 0,09 e aritmética SMD 0,01, ambos não significativos —
 Cortese et al. (2015). O app treina o conteúdo das provas, nada além disso.
+
+**Não prometer correção automática de foto.** O app guarda a foto da folha só no aparelho, para
+um adulto ler. Nenhuma imagem é analisada: isso exigiria servidor e chave de API, o que num
+repositório público significa chave exposta e custo aberto. Além disso, o que corrige a
+resolução manuscrita com segurança é uma pessoa — a conferência automática cobre a resposta
+final, não o caminho.
 
 **Progressão de nível deve depender de completar, não de acertar rápido.** O critério é 60% de
 acerto para abrir o próximo nível, sem cronômetro e com repetição ilimitada — é aumento de

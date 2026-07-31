@@ -306,6 +306,140 @@ label{font-size:.85rem;color:var(--dim);display:block;margin:11px 0 4px;font-wei
 .falarbox{text-align:center;background:var(--card2);border:2px dashed var(--line);border-radius:18px;padding:16px;margin:6px 0}
 .falatxt{font-size:1.5rem;font-weight:800;margin-top:8px;color:var(--bordo)}
 .card.azul2::before{background:linear-gradient(90deg,var(--lav),var(--salvia))}
+
+
+
+/* ===== MENU LATERAL ===== */
+.btnmenu{background:var(--card);border:2px solid var(--line);color:var(--txt);border-radius:13px;
+  padding:8px 12px;font-size:1.15rem;font-weight:800;line-height:1;box-shadow:0 2px 0 var(--line)}
+.btnmenu:active{transform:translateY(2px);box-shadow:none}
+#menuFundo{position:fixed;inset:0;background:rgba(40,25,20,.52);opacity:0;pointer-events:none;
+  transition:opacity .25s;z-index:94}
+body.menu-on #menuFundo{opacity:1;pointer-events:auto}
+#lateral{
+  position:fixed;top:0;left:0;bottom:0;width:274px;z-index:95;overflow-y:auto;
+  background:var(--bg2);border-right:3px solid var(--line);padding:16px 13px 26px;
+  transform:translateX(-105%);transition:transform .3s cubic-bezier(.32,1,.5,1);
+  -webkit-overflow-scrolling:touch;
+}
+body.menu-on #lateral{transform:none;box-shadow:8px 0 28px rgba(0,0,0,.18)}
+.mtopo{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.mtopo svg{width:40px;height:40px;flex:0 0 40px}
+.mtopo b{font-size:1rem;line-height:1.15}
+.mtopo small{display:block;font-size:.66rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:normal}
+.mfechar{margin-left:auto;background:var(--card);border:2px solid var(--line);border-radius:50%;
+  width:32px;height:32px;color:var(--dim);font-size:.9rem}
+.mgrupo{margin-top:16px}
+.mgrupo > h4{margin:0 0 7px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);display:flex;align-items:center;gap:6px;padding-left:4px}
+.mgrupo > h4::after{content:"";flex:1;height:2px;background:var(--line);border-radius:2px}
+.mitem{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--card);
+  border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:7px;
+  color:var(--txt);box-shadow:0 2px 0 var(--line);font-weight:700;font-size:.9rem}
+.mitem .mic{font-size:1.15rem;line-height:1}
+.mitem .mtxt{flex:1;min-width:0}
+.mitem .mtxt small{display:block;font-weight:normal;font-size:.7rem;color:var(--dim);line-height:1.3}
+.mitem .mbad{background:var(--ouro);color:#4A3410;border-radius:99px;font-size:.68rem;
+  font-weight:800;padding:2px 8px;white-space:nowrap}
+.mitem.on{background:var(--bordo);border-color:var(--bordo);color:#fff;box-shadow:0 3px 0 #00000020}
+.mitem.on .mtxt small{color:#ffffffcc}
+.mitem.on .mbad{background:#ffffff33;color:#fff}
+.mitem:active{transform:translateY(2px);box-shadow:none}
+@media(min-width:1000px){
+  #lateral{transform:none;box-shadow:none}
+  #menuFundo{display:none}
+  .btnmenu{display:none}
+  .mfechar{display:none}
+  .wrap{margin-left:274px}
+  .topin{padding-left:274px}
+  .cerca{padding-left:274px}
+  #folhaImpressa{margin-left:0}
+}
+@media print{ #lateral,#menuFundo,.btnmenu{display:none!important} .wrap{margin-left:0!important} }
+/* ===== AULAS ===== */
+.aulas{margin-top:6px}
+.aula{display:flex;align-items:center;gap:11px;background:var(--card2);border:2px solid var(--line);
+  border-left-width:6px;border-radius:14px;padding:11px 13px;margin-bottom:8px}
+.aula .ahora{font-weight:800;font-size:.86rem;color:var(--dim);min-width:48px;font-variant-numeric:tabular-nums}
+.aula .amat{font-weight:800;font-size:.98rem;flex:1;min-width:0}
+.aula .bsos{padding:7px 11px;font-size:.76rem}
+.intervalo{text-align:center;font-size:.72rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;
+  margin:2px 0 8px;position:relative}
+.intervalo::before,.intervalo::after{content:"";position:absolute;top:50%;width:28%;height:2px;background:var(--line)}
+.intervalo::before{left:4%} .intervalo::after{right:4%}
+.gradewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.grade{border-collapse:separate;border-spacing:4px;font-size:.7rem;min-width:430px;border:none}
+table.grade th{background:transparent;border:none;text-align:center;font-size:.68rem;padding:2px}
+table.grade th.hj{color:var(--bordo)}
+table.grade td{border:none;border-radius:9px;padding:7px 5px;text-align:center;line-height:1.25;vertical-align:middle}
+table.grade td.hcol{background:transparent;color:var(--dim);font-weight:800;font-size:.68rem;white-space:nowrap}
+table.grade td span{font-weight:700}
+
+/* ===== TAREFAS ===== */
+.calnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.calnav b{font-size:1.05rem}
+.calnav button{background:var(--card2);border:2px solid var(--line);border-radius:12px;
+  width:42px;height:38px;font-size:1.2rem;color:var(--txt);font-weight:800}
+.calsem{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px}
+.calsem span{text-align:center;font-size:.66rem;color:var(--dim);font-weight:800;text-transform:uppercase}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.calgrid .dia{aspect-ratio:1;border-radius:11px;border:2px solid transparent;background:var(--card2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.calgrid .dia.vazio{background:transparent;cursor:default}
+.calgrid .dn{font-size:.82rem;font-weight:700}
+.calgrid .dia.hoje{border-color:var(--bordo)}
+.calgrid .dia.hoje .dn{color:var(--bordo);font-weight:900}
+.calgrid .dia.sel{background:var(--lav);border-color:var(--lav)}
+.calgrid .dia.sel .dn{color:#fff}
+.calgrid .pv{position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%}
+.calgrid .pt{position:absolute;bottom:3px;font-size:.58rem;font-weight:800;background:var(--ouro);
+  color:#4A3410;border-radius:99px;padding:0 5px;line-height:1.5}
+.calgrid .pt.ok{background:var(--salvia);color:#fff}
+.leg{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:2px}
+.leg.pv{background:var(--bordo)} .leg.pt{background:var(--ouro)}
+.tarefa{display:flex;align-items:center;gap:10px;background:var(--card2);border:2px solid var(--line);
+  border-left-width:6px;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.tarefa.feita{opacity:.55}
+.tarefa.feita .tt{text-decoration:line-through}
+.tarefa .tcx{width:30px;height:30px;flex:0 0 30px;border-radius:9px;border:2px solid var(--line);
+  background:var(--card);color:var(--salvia);font-weight:900;font-size:1rem}
+.tarefa.feita .tcx{background:var(--salvia);border-color:var(--salvia);color:#fff}
+.tarefa .ttxt{flex:1;min-width:0}
+.tarefa .tt{font-weight:700;font-size:.94rem;line-height:1.35}
+.tarefa .tdel{background:transparent;color:var(--dim);font-size:.9rem;padding:4px 6px}
+/* ===== NO PAPEL ===== */
+.problema{background:var(--card2);border:2px solid var(--line);border-left:6px solid var(--ouro);
+  border-radius:14px;padding:15px;font-size:1.02rem;line-height:1.6;margin:10px 0}
+.passoapasso{background:var(--salvia-cl);border:2px dashed var(--salvia);border-radius:14px;
+  padding:12px;font-size:.87rem;line-height:1.6;margin-bottom:6px}
+.card2box{background:var(--card2);border:2px solid var(--line);border-radius:16px;padding:14px;margin-top:11px}
+.card2box h3{color:var(--bordo)}
+.autoexp{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:16px;padding:13px;margin-top:11px}
+.autoexp p{margin:0 0 8px}
+.autoexp .btn{font-size:.82rem;padding:10px 12px;min-width:0}
+.fotoadulto{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
+.fotoadulto figure{margin:0;width:calc(50% - 5px)}
+.fotoadulto img{width:100%;border-radius:12px;border:2px solid var(--line);display:block}
+.fotoadulto figcaption{font-size:.72rem;color:var(--dim);text-align:center;margin-top:3px}
+/* folha impressa */
+#folhaImpressa{display:none}
+@media print{
+  body{background:#fff!important;color:#000!important;padding:0}
+  header.top, nav.abas, .cerca, section.tela, .rodape, .ajgaveta, .ajfundo, #balao{display:none!important}
+  #folhaImpressa{display:block!important;font-family:Georgia,"Times New Roman",serif;color:#000;padding:0 4mm}
+  #folhaImpressa h1{font-size:17pt;margin:0 0 2mm;border-bottom:2px solid #000;padding-bottom:2mm}
+  #folhaImpressa .fdata{font-size:11pt;margin:0 0 3mm}
+  #folhaImpressa .finstr{font-size:10pt;background:#f2f2f2;padding:3mm;border-radius:2mm;margin:0 0 5mm}
+  #folhaImpressa .fprob{page-break-inside:avoid;margin-bottom:7mm;border:1.5pt solid #000;border-radius:2mm;padding:3mm;position:relative}
+  #folhaImpressa .fnum{position:absolute;top:-4mm;left:3mm;background:#000;color:#fff;width:8mm;height:8mm;
+    border-radius:50%;text-align:center;line-height:8mm;font-weight:bold;font-size:11pt}
+  #folhaImpressa .ftxt{font-size:12pt;line-height:1.5;margin:4mm 0 2mm}
+  #folhaImpressa .fdesenho{font-size:9.5pt;font-style:italic;color:#444;margin-bottom:2mm}
+  #folhaImpressa .fcaixa{height:34mm;border:1pt dashed #999;border-radius:2mm;
+    background:repeating-linear-gradient(#fff 0 7mm,#e8e8e8 7mm 7.3mm)}
+  #folhaImpressa .fresp{font-size:11pt;font-weight:bold;margin-top:2mm}
+  #folhaImpressa .frodape{font-size:9pt;color:#555;margin-top:5mm;text-align:center}
+}
 /* ===== CENTRAL DE DÚVIDAS ===== */
 .ajfundo{position:fixed;inset:0;background:rgba(40,25,20,.55);opacity:0;pointer-events:none;transition:opacity .25s;z-index:90}
 .ajfundo.on{opacity:1;pointer-events:auto}
@@ -369,6 +503,12 @@ ol.passos li::marker{color:var(--bordo);font-weight:800}
 .rodape svg{width:34px;height:34px;opacity:.5;display:block;margin:0 auto 6px}
 ul.lista{padding-left:20px} ul.lista li{margin-bottom:9px}
 ul.lista li::marker{color:var(--rosa)}
+/* ===== ajustes finais para telas largas (depois de tudo, para prevalecer) ===== */
+@media(min-width:1000px){
+  .ajgaveta{left:274px;border-radius:26px 26px 0 0}
+  .ajfundo{left:274px}
+  #ajCorpo{max-width:860px;margin:0 auto;width:100%}
+}
 </style>
 </head>
 <body>
@@ -377,40 +517,44 @@ ul.lista li::marker{color:var(--rosa)}
 <svg style="display:none" aria-hidden="true">
   <!-- pônei -->
   <symbol id="poni" viewBox="0 0 100 100">
-    <!-- crina preta ao fundo -->
-    <path d="M24 26 C11 33 7 52 13 70 C15 55 18 41 27 32 Z" fill="#241D1F"/>
-    <path d="M76 26 C89 33 93 52 87 70 C85 55 82 41 73 32 Z" fill="#241D1F" opacity=".9"/>
-    <!-- orelhas com touca bordô -->
-    <path d="M28 33 L22 9 C21.4 6.6 23.8 5.2 25.5 6.8 L40 21 Z" fill="#8E2A3C" stroke="#6B1B29" stroke-width="2.2" stroke-linejoin="round"/>
-    <path d="M72 33 L78 9 C78.6 6.6 76.2 5.2 74.5 6.8 L60 21 Z" fill="#8E2A3C" stroke="#6B1B29" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- crina preta atrás -->
+    <path d="M30 26 C20 32 15 45 17 59 C20 48 24 38 33 31 Z" fill="#241D1F"/>
+    <path d="M70 26 C80 32 85 45 83 59 C80 48 76 38 67 31 Z" fill="#241D1F"/>
+    <!-- orelhas na cor da pelagem -->
+    <path d="M30 31 L21.5 11 C20.6 8.7 23 7 24.9 8.6 L41.5 21 Z" fill="#A85A32" stroke="#7E3E1E" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M30.6 26.5 L25.6 14.5 L36.8 22.8 Z" fill="#8B4522"/>
+    <path d="M70 31 L78.5 11 C79.4 8.7 77 7 75.1 8.6 L58.5 21 Z" fill="#A85A32" stroke="#7E3E1E" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M69.4 26.5 L74.4 14.5 L63.2 22.8 Z" fill="#8B4522"/>
     <!-- cabeça castanha -->
-    <ellipse cx="50" cy="50" rx="27" ry="30" fill="#A85A32" stroke="#7E3E1E" stroke-width="2.4"/>
-    <path d="M27 58 C30 70 38 78 50 80 C62 78 70 70 73 58 C70 72 62 80 50 80 C38 80 30 72 27 58 Z" fill="#8B4522" opacity=".55"/>
-    <!-- faixa branca (blaze) -->
-    <path d="M45.5 24 C43.4 40 42.6 56 43.6 68 L57.4 68 C58.4 55 57.4 39 55 24 Z" fill="#F8F1E8"/>
+    <ellipse cx="50" cy="51" rx="27" ry="30" fill="#A85A32" stroke="#7E3E1E" stroke-width="2.4"/>
+    <path d="M27 59 C30 71 38 79 50 81 C62 79 70 71 73 59 C70 73 62 81 50 81 C38 81 30 73 27 59 Z" fill="#8B4522" opacity=".5"/>
+    <!-- faixa branca da testa ao focinho -->
+    <path d="M45.8 19 C43.3 39 42.4 57 43.5 69 L57.5 69 C58.6 56 57.7 38 55.2 19 Z" fill="#F8F1E8"/>
     <!-- focinho claro -->
     <ellipse cx="50" cy="72" rx="17" ry="12.6" fill="#F3DFD4" stroke="#C99B85" stroke-width="1.8"/>
     <ellipse cx="43.4" cy="70" rx="2.5" ry="3.3" fill="#B87F6C"/>
     <ellipse cx="56.6" cy="70" rx="2.5" ry="3.3" fill="#B87F6C"/>
     <path d="M44.5 78 Q50 81.6 55.5 78" stroke="#C08D79" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <!-- touca bordô sobre a cabeça -->
-    <path d="M23.5 41 C25 21 36 11 50 11 C64 11 75 21 76.5 41 C67 32.5 58.5 29.5 50 29.5 C41.5 29.5 33 32.5 23.5 41 Z" fill="#8E2A3C"/>
-    <path d="M23.5 41 C33 32.5 41.5 29.5 50 29.5 C58.5 29.5 67 32.5 76.5 41" fill="none" stroke="#F2D9DF" stroke-width="2.6" stroke-linecap="round"/>
-    <path d="M26 34 C34 27.5 42 25 50 25 C58 25 66 27.5 74 34" fill="none" stroke="#6B1B29" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+    <!-- topete preto caindo na testa -->
+    <path d="M50 13.5 C44.5 14 41 17.5 39.5 24.5 C41.5 21 43.8 19.3 46 18.6
+             C45.2 22 45.3 25.4 46.3 28.6 C47.6 24.6 48.9 22 50 20.4
+             C50.6 24 51.4 26.8 52.8 29.4 C54 25 55.4 21.8 56.6 19.6
+             C58.4 21 59.7 22.8 60.8 25 C60.2 18 56.5 14 50 13.5 Z"
+          fill="#241D1F"/>
     <!-- olhos -->
-    <ellipse cx="36.2" cy="50" rx="5" ry="6.1" fill="#2C1C16"/>
-    <ellipse cx="63.8" cy="50" rx="5" ry="6.1" fill="#2C1C16"/>
-    <circle cx="38.1" cy="47.8" r="1.9" fill="#fff"/>
-    <circle cx="65.7" cy="47.8" r="1.9" fill="#fff"/>
-    <circle cx="34.4" cy="52.4" r="1" fill="#fff" opacity=".7"/>
-    <circle cx="62" cy="52.4" r="1" fill="#fff" opacity=".7"/>
+    <ellipse cx="36.2" cy="51" rx="5" ry="6.1" fill="#2C1C16"/>
+    <ellipse cx="63.8" cy="51" rx="5" ry="6.1" fill="#2C1C16"/>
+    <circle cx="38.1" cy="48.8" r="1.9" fill="#fff"/>
+    <circle cx="65.7" cy="48.8" r="1.9" fill="#fff"/>
+    <circle cx="34.4" cy="53.4" r="1" fill="#fff" opacity=".7"/>
+    <circle cx="62" cy="53.4" r="1" fill="#fff" opacity=".7"/>
     <g stroke="#2C1C16" stroke-width="1.9" stroke-linecap="round">
-      <path d="M31.6 45.6 L28.6 43.2 M33.8 43.8 L32.2 40.9 M29.9 48.6 L26.4 47.4"/>
-      <path d="M68.4 45.6 L71.4 43.2 M66.2 43.8 L67.8 40.9 M70.1 48.6 L73.6 47.4"/>
+      <path d="M31.6 46.6 L28.6 44.2 M33.8 44.8 L32.2 41.9 M29.9 49.6 L26.4 48.4"/>
+      <path d="M68.4 46.6 L71.4 44.2 M66.2 44.8 L67.8 41.9 M70.1 49.6 L73.6 48.4"/>
     </g>
     <!-- blush -->
-    <ellipse cx="29" cy="60.5" rx="5.4" ry="3.6" fill="#D96B7E" opacity=".4"/>
-    <ellipse cx="71" cy="60.5" rx="5.4" ry="3.6" fill="#D96B7E" opacity=".4"/>
+    <ellipse cx="29" cy="61.5" rx="5.4" ry="3.6" fill="#D96B7E" opacity=".4"/>
+    <ellipse cx="71" cy="61.5" rx="5.4" ry="3.6" fill="#D96B7E" opacity=".4"/>
   </symbol>
 
   <!-- ferradura -->
@@ -452,6 +596,7 @@ ul.lista li::marker{color:var(--rosa)}
 <noscript><div class="semjs"><b>⚠️ O JavaScript está desligado neste navegador.</b> Ative-o ou abra o arquivo em outro navegador.</div></noscript>
 <header class="top">
   <div class="topin">
+    <button class="btnmenu" onclick="abrirMenu()" aria-label="Abrir menu">☰</button>
     <svg class="mascote"><use href="#poni"/></svg>
     <div class="logo">Trilha de <span>Estudos</span><small>Semana de provas</small></div>
     <div class="pill" id="pillDia">—</div>
@@ -463,7 +608,8 @@ ul.lista li::marker{color:var(--rosa)}
 </header>
 <div class="cerca"></div>
 
-<nav class="abas" id="abas"></nav>
+<div id="menuFundo" onclick="fecharMenu()"></div>
+<aside id="lateral" aria-label="Menu"></aside>
 
 <div class="wrap">
 
@@ -477,10 +623,14 @@ ul.lista li::marker{color:var(--rosa)}
     <button class="btn" onclick="comecarAgora()">🥕 Começar agora — leva 5 segundos</button>
   </div>
 
+  <div class="card salvia" id="cardAulasHoje"></div>
+
   <div class="card ouro">
     <h2>🏁 Provas chegando</h2>
     <div class="contagem" id="contagem"></div>
   </div>
+
+  <div class="card lav" id="cardTarefasHoje"></div>
 
   <div class="card salvia">
     <h2>🐎 A trilha de hoje</h2>
@@ -506,6 +656,12 @@ ul.lista li::marker{color:var(--rosa)}
     <div id="selos"></div>
   </div>
 </section>
+
+<!-- ===== AULAS ===== -->
+<section class="tela" id="t-aulas"><div id="telaAulas"></div></section>
+
+<!-- ===== TAREFAS ===== -->
+<section class="tela" id="t-tarefas"><div id="telaTarefas"></div></section>
 
 <!-- ===== TRILHA (semana) ===== -->
 <section class="tela" id="t-semana">
@@ -607,6 +763,8 @@ ul.lista li::marker{color:var(--rosa)}
 <div id="balao" role="tooltip"></div>
 <div class="ajfundo" id="ajFundo" onclick="fecharAjuda()"></div>
 <div class="ajgaveta" id="ajGaveta" role="dialog" aria-label="Central de dúvidas"><div id="ajCorpo"></div></div>
+
+<div id="folhaImpressa"></div>
 
 <div class="rodape">
   <svg><use href="#ferradura"/></svg>
@@ -1184,7 +1342,8 @@ const NIVEIS = {
   cruzada: [4, 6, 8],
   assoc:   [4, 5, 6],
   listen:  [4, 6, 8],
-  speak:   [4, 6, 8]
+  speak:   [4, 6, 8],
+  papel:   [3, 4, 5]
 };
 const NOME_NIVEL = ["Aquecimento","Trote","Galope"];
 
@@ -1485,7 +1644,7 @@ const Store = {
   del(k){ try{ this.ok ? localStorage.removeItem(k) : delete MEM[k] }catch(e){ delete MEM[k] } }
 };
 
-const PADRAO = {nome:"", niveis:{}, feitos:{}, quiz:{}, notas:[], duvidas:[], se:"", entao:"", blocosDia:2, tema:"dia"};
+const PADRAO = {nome:"", niveis:{}, fotos:[], papel:[], tarefas:[], feitos:{}, quiz:{}, notas:[], duvidas:[], se:"", entao:"", blocosDia:2, tema:"dia"};
 let S = carregar();
 
 function carregar(){
@@ -1511,16 +1670,64 @@ function dataAtiva(){
 }
 
 /* ---------- navegação ---------- */
-const ABAS=[["hoje","🌤️ Hoje"],["semana","🗺️ Trilha"],["estudar","🏇 Picadeiro"],["timer","🐴 Trote"],["adulto","👩‍🌾 Adulto"],["ajustes","⚙️ Ajustes"]];
-function montarAbas(){
-  document.getElementById("abas").innerHTML = ABAS.map(([id,n])=>
-    `<button id="ab-${id}" onclick="irPara('${id}')">${n}</button>`).join("");
+const ABAS=[["hoje","Hoje"],["aulas","Aulas"],["tarefas","Tarefas"],["semana","Trilha"],["estudar","Picadeiro"],["timer","Trote"],["adulto","Adulto"],["ajustes","Ajustes"]];
+const MENU=[
+ {g:null, itens:[["hoje","🌤️","Hoje","o que fazer agora"]]},
+ {g:"Provas", itens:[
+   ["semana","🗺️","Mapa da trilha","plano dia a dia até a última prova"],
+   ["estudar","🏇","Treinar","quiz, jogos, papel, ouvir e falar"],
+   ["timer","🐴","Trote","blocos de foco de 12 minutos"]]},
+ {g:"Calendário", itens:[
+   ["aulas","📚","Aulas da semana","grade do trimestre"],
+   ["tarefas","✅","Tarefas","o que fazer e quando"]]},
+ {g:"Acompanhamento", itens:[
+   ["adulto","📋","Painel do adulto","registros, dúvidas e fotos"],
+   ["ajustes","⚙️","Ajustes","nome, blocos por dia, backup"]]}
+];
+function selosMenu(id){
+  const h = hojeISO();
+  if(id==="semana" || id==="estudar"){
+    const p = PROVAS.filter(function(x){ return x.data>=h; })[0];
+    if(!p) return "";
+    const f = diasEntre(h,p.data);
+    return id==="semana" ? (f===0?"hoje":f+"d") : "";
+  }
+  if(id==="tarefas"){
+    const n = (S.tarefas||[]).filter(function(t){ return !t.feito && t.data<=h; }).length;
+    return n? String(n) : "";
+  }
+  if(id==="aulas"){
+    const g = aulasDeHoje();
+    return g? g.length+" aulas" : "";
+  }
+  return "";
 }
+function montarAbas(){
+  document.getElementById("lateral").innerHTML =
+    `<div class="mtopo"><svg><use href="#poni"/></svg>
+       <div><b>Trilha de Estudos</b><small>Semana de provas</small></div>
+       <button class="mfechar" onclick="fecharMenu()" aria-label="Fechar menu">✕</button></div>` +
+    MENU.map(function(bloco){
+      return `<div class="mgrupo">${bloco.g?`<h4>${bloco.g}</h4>`:""}` +
+        bloco.itens.map(function(it){
+          const b = selosMenu(it[0]);
+          return `<button class="mitem" id="ab-${it[0]}" onclick="irPara('${it[0]}')">
+            <span class="mic">${it[1]}</span>
+            <span class="mtxt">${it[2]}<small>${it[3]}</small></span>
+            ${b?`<span class="mbad">${b}</span>`:""}</button>`;
+        }).join("") + `</div>`;
+    }).join("");
+}
+function abrirMenu(){ document.body.classList.add("menu-on"); montarAbas(); }
+function fecharMenu(){ document.body.classList.remove("menu-on"); }
 function irPara(id){
   document.querySelectorAll("section.tela").forEach(s=>s.classList.remove("on"));
   document.getElementById("t-"+id).classList.add("on");
-  ABAS.forEach(([a])=>document.getElementById("ab-"+a).classList.toggle("on",a===id));
+  ABAS.forEach(function(x){ const e=document.getElementById("ab-"+x[0]); if(e) e.classList.toggle("on", x[0]===id); });
+  fecharMenu();
   window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="aulas") renderAulas();
+  if(id==="tarefas") renderTarefas();
   if(id==="semana") renderSemana();
   if(id==="adulto") renderAdulto();
   if(id==="ajustes") renderAjustes();
@@ -1591,6 +1798,42 @@ function renderHoje(){
   document.getElementById("entaoCampo").value = S.entao||"";
 
   renderSelos();
+  renderCardsAgenda();
+  montarAbas();
+}
+
+function renderCardsAgenda(){
+  /* aulas de hoje */
+  const ca = document.getElementById("cardAulasHoje");
+  if(ca){
+    const g = aulasDeHoje();
+    ca.innerHTML = g
+      ? `<h2>🗓️ Aulas de hoje</h2>
+         <div class="aulas">${g.map(function(m,i){
+           const cor = corAula(m);
+           return `<div class="aula" style="border-left-color:${cor}">
+             <div class="ahora">${HORARIOS[i]}</div>
+             <div class="amat" style="color:${cor}">${m}</div>
+             ${temAtividade(m)?`<button class="bsos" onclick="abrirTreino('${m}')">Treinar</button>`:'<span class="sub">—</span>'}
+           </div>${i===1?'<div class="intervalo">intervalo</div>':''}`;
+         }).join("")}</div>
+         <button class="btn sec" onclick="irPara('aulas')">Ver a semana toda</button>`
+      : `<h2>🗓️ Aulas</h2><p class="sub">Hoje não tem aula. Bom descanso.</p>
+         <button class="btn sec" onclick="irPara('aulas')">Ver a grade da semana</button>`;
+  }
+  /* tarefas */
+  const ct = document.getElementById("cardTarefasHoje");
+  if(ct){
+    const h = hojeISO();
+    const hj = (S.tarefas||[]).filter(function(t){ return !t.feito && t.data === h; });
+    const at = (S.tarefas||[]).filter(function(t){ return !t.feito && t.data < h; });
+    ct.innerHTML = `<h2>✅ Tarefas</h2>` +
+      (hj.length || at.length
+        ? `${at.length?`<p class="sub"><b style="color:var(--ouro)">${at.length}</b> ficou para trás.</p>`:""}
+           ${hj.length?hj.map(function(t){ return itemTarefa(t,false); }).join(""):`<p class="sub">Nada marcado para hoje.</p>`}`
+        : `<p class="sub">Nenhuma tarefa pendente. 🎀</p>`) +
+      `<button class="btn sec" onclick="irPara('tarefas')">Abrir o calendário de tarefas</button>`;
+  }
 }
 
 function marcar(k){ S.feitos[k]=!S.feitos[k]; salvar(); renderHoje(); }
@@ -1672,7 +1915,7 @@ function zerarTimer(){ clearInterval(tick); rodando=false; emPausa=false; resta=
 
 /* ---------- TREINAR ---------- */
 let matAtual="Português", modoAtual="quiz";
-const MODOS=[["quiz","Quiz"],["memoria","Memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
+const MODOS=[["quiz","Quiz"],["memoria","Memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["papel","✏️ No papel"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
 function renderEscolhas(){
   document.getElementById("escMateria").innerHTML = Object.keys(MATERIAS).map(m=>
     `<button class="${matAtual===m?'on':''}" onclick="setMat('${m}')">${m}</button>`).join("");
@@ -1687,7 +1930,13 @@ function renderJogo(){
     <p class="sub">${MATERIAS[matAtual].conteudo}</p></div>`;
   const alvo = document.getElementById("areaJogo");
   alvo.innerHTML = cab + '<div id="jogoBox"></div>';
-  const mapa = {quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar};
+  const mapa = {quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar, papel:iniPapel};
+  if(modoAtual==="papel" && !(typeof PROBLEMAS!=="undefined" && PROBLEMAS[matAtual])){
+    document.getElementById("jogoBox").innerHTML =
+      `<div class="card ouro"><h3>Só em Matemática</h3><p class="sub">“No papel” existe só na matéria de Matemática, onde resolver escrevendo faz mais diferença.</p>
+       <button class="btn" onclick="setMat('Matemática')">Ir para Matemática</button></div>`;
+    return;
+  }
   if((modoAtual==="listen"||modoAtual==="speak") && matAtual!=="Inglês"){
     document.getElementById("jogoBox").innerHTML =
       `<div class="card ouro"><h3>Só em Inglês</h3><p class="sub">Ouvir e Falar existem só na matéria de Inglês. Toque em <b>Inglês</b> acima.</p>
@@ -1960,6 +2209,24 @@ function renderAdulto(){
       ? `<table><tr><th>Assunto</th><th>Vezes</th></tr>${chaves.map(k=>`<tr><td>${k}</td><td>${cx[k]}</td></tr>`).join("")}</table>
          <p class="sub" style="margin-top:8px">Isto é o mais útil desta tela: mostra <b>onde ela trava</b>. Assunto que reaparece merece explicação com você, não mais um quiz.</p>`
       : `<p class="sub">Nenhuma dúvida marcada ainda.</p>`);
+  const fts = (S.fotos||[]);
+  const pp  = (S.papel||[]);
+  const cp = {}; pp.forEach(function(x){ cp[x.como]=(cp[x.como]||0)+1; });
+  const rot = {conta:"Errou a conta",passo:"Pulou um passo",pergunta:"Entendeu a pergunta errado",travei:"Não soube começar"};
+  document.getElementById("relAdulto").innerHTML +=
+    `<h3 style="margin-top:16px">Problemas no papel</h3>` +
+    (Object.keys(cp).length
+      ? `<table><tr><th>O que aconteceu</th><th>Vezes</th></tr>${Object.keys(cp).sort(function(a,b){return cp[b]-cp[a];}).map(function(k){
+          return `<tr><td>${rot[k]||k}</td><td>${cp[k]}</td></tr>`;}).join("")}</table>
+         <p class="sub" style="margin-top:8px">“Não soube começar” repetido é o sinal mais importante desta tela: indica lacuna de conteúdo, não falta de esforço. Sente junto nesse tópico.</p>`
+      : `<p class="sub">Nenhum problema no papel registrado ainda.</p>`) +
+    `<h3 style="margin-top:16px">Fotos das folhas</h3>` +
+    (fts.length
+      ? `<div class="fotoadulto">${fts.map(function(f){
+          return `<figure><img src="${f.img}" alt="Folha de ${f.mat}"><figcaption>${rotuloData(f.d)} · ${f.mat}</figcaption></figure>`;}).join("")}</div>
+         <p class="sub" style="margin-top:8px">As imagens ficam só neste aparelho e <b>não são corrigidas automaticamente</b> — quem lê é você. Guardo as 6 últimas.</p>
+         <button class="btn sec" onclick="apagarFotos()">Apagar as fotos</button>`
+      : `<p class="sub">Nenhuma foto guardada ainda.</p>`);
   document.getElementById("listaNotas").innerHTML = (S.notas||[]).slice().reverse().map(n=>
     `<div class="bloco"><div class="txt"><div class="tit">${rotuloData(n.d)}</div>
     <div class="det"><b>Funcionou:</b> ${n.ok||"—"}<br><b>Travou:</b> ${n.tr||"—"}</div></div></div>`).join("");
@@ -2778,6 +3045,470 @@ function marcarFala(conseguiu){
   try{ if(fRec) fRec.abort(); }catch(e){}
   try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
   fIdx++; pintaFalar();
+}
+
+
+/* ============================================================
+   NO PAPEL — problemas para resolver escrevendo, conferência
+   automática da resposta e resolução passo a passo
+   ============================================================ */
+const PROBLEMAS = {
+"Matemática":[
+ {n:1, t:"Uma barra de chocolate foi dividida em <b>8 pedaços iguais</b>. Você comeu <b>3 pedaços</b>. Que fração da barra você comeu?",
+  r:"3/8", tipo:"frac",
+  dica:"O número de baixo é em quantos pedaços a barra foi cortada. O de cima é quantos você pegou.",
+  passos:["A barra foi cortada em <b>8</b> partes iguais → esse é o número de <b>baixo</b>.",
+          "Você comeu <b>3</b> partes → esse é o número de <b>cima</b>.",
+          "Junte: <b>3/8</b>. Lê-se “três oitavos”."],
+  desenho:"Desenhe um retângulo, divida em 8 partes iguais e pinte 3."},
+
+ {n:1, t:"Na sala há <b>30 alunos</b>. <b>1/3</b> deles foi ao museu. Quantos alunos foram ao museu?",
+  r:"10", tipo:"num",
+  dica:"Fração de uma quantidade: primeiro divide pelo número de baixo, depois multiplica pelo de cima.",
+  passos:["Divida pelo número de <b>baixo</b>: 30 ÷ 3 = <b>10</b>.",
+          "Multiplique pelo número de <b>cima</b>: 10 × 1 = <b>10</b>.",
+          "Resposta: <b>10 alunos</b>."],
+  desenho:"Desenhe 30 bolinhas e separe em 3 grupos iguais. Conte um grupo."},
+
+ {n:1, t:"Uma pizza foi cortada em <b>4 fatias iguais</b>. Sua família comeu 1 fatia. Que fração da pizza <b>sobrou</b>?",
+  r:"3/4", tipo:"frac",
+  dica:"Cuidado com a pegadinha: a pergunta é sobre o que SOBROU, não sobre o que foi comido.",
+  passos:["A pizza tem <b>4</b> fatias → número de baixo.",
+          "Comeram 1, então sobraram 4 − 1 = <b>3</b> fatias → número de cima.",
+          "Resposta: <b>3/4</b>."],
+  desenho:"Desenhe um círculo, divida em 4 e risque a fatia comida."},
+
+ {n:1, t:"Numa caixa há <b>20 lápis</b>. <b>1/4</b> deles é vermelho. Quantos lápis vermelhos há na caixa?",
+  r:"5", tipo:"num",
+  dica:"Divida pelo número de baixo e multiplique pelo de cima.",
+  passos:["20 ÷ 4 = <b>5</b>.", "5 × 1 = <b>5</b>.", "Resposta: <b>5 lápis vermelhos</b>."],
+  desenho:"Desenhe 20 tracinhos e separe em 4 grupos iguais."},
+
+ {n:2, t:"Um livro tem <b>60 páginas</b>. Você já leu <b>2/5</b> dele. Quantas páginas você leu?",
+  r:"24", tipo:"num",
+  dica:"Divide pelo de baixo, multiplica pelo de cima. Nessa ordem.",
+  passos:["Divida pelo número de baixo: 60 ÷ 5 = <b>12</b>.",
+          "Multiplique pelo número de cima: 12 × 2 = <b>24</b>.",
+          "Resposta: <b>24 páginas</b>."],
+  desenho:"Desenhe uma barra representando as 60 páginas e corte em 5 partes."},
+
+ {n:2, t:"Complete a igualdade: <b>3/4 = ? / 12</b>. Qual número entra no lugar da interrogação?",
+  r:"9", tipo:"num",
+  dica:"O que você faz embaixo, precisa fazer em cima também.",
+  passos:["De 4 para 12 você multiplicou por <b>3</b> (porque 4 × 3 = 12).",
+          "Faça o mesmo em cima: 3 × 3 = <b>9</b>.",
+          "Então <b>3/4 = 9/12</b>."],
+  desenho:"Desenhe duas barras iguais: uma dividida em 4, outra em 12. Pinte a mesma quantidade."},
+
+ {n:2, t:"Escreva <b>9/4</b> como número misto.",
+  r:"2 1/4", tipo:"frac",
+  dica:"Divida o de cima pelo de baixo. O resultado vira o inteiro e o resto vira o novo numerador.",
+  passos:["9 ÷ 4 = <b>2</b>, e sobra <b>1</b>.",
+          "O 2 é a parte inteira; o resto 1 vira o numerador; o 4 continua embaixo.",
+          "Resposta: <b>2 1/4</b>."],
+  desenho:"Desenhe 3 círculos divididos em 4. Pinte 9 fatias e conte quantos círculos inteiros ficaram."},
+
+ {n:2, t:"Uma jarra tinha <b>1 litro</b> de suco. Foram servidos <b>3/8</b> do suco. Que fração do suco <b>ficou</b> na jarra?",
+  r:"5/8", tipo:"frac",
+  dica:"O inteiro vale 8/8. Tire o que foi servido.",
+  passos:["O suco inteiro é <b>8/8</b>.",
+          "Foram servidos 3/8, então: 8/8 − 3/8 = <b>5/8</b>.",
+          "Quando o número de baixo é igual, subtraia só os de cima."],
+  desenho:"Desenhe a jarra e divida a altura dela em 8 partes."},
+
+ {n:2, t:"Qual fração é <b>maior</b>: <b>2/3</b> ou <b>3/5</b>? Escreva a maior.",
+  r:"2/3", tipo:"frac",
+  dica:"Deixe as duas com o mesmo número embaixo antes de comparar.",
+  passos:["Deixe as duas com denominador 15: 2/3 = <b>10/15</b> e 3/5 = <b>9/15</b>.",
+          "Agora dá para comparar: 10 pedaços é mais que 9.",
+          "Resposta: <b>2/3</b> é maior."],
+  desenho:"Desenhe duas barras iguais, uma em 3 partes e outra em 5, e pinte."},
+
+ {n:3, t:"Numa turma de <b>24 alunos</b>, <b>3/8</b> jogam vôlei e <b>1/4</b> joga futebol. Quantos alunos a mais jogam vôlei do que futebol?",
+  r:"3", tipo:"num",
+  dica:"Resolva uma coisa de cada vez: primeiro o vôlei, depois o futebol, e só então compare.",
+  passos:["Vôlei: 24 ÷ 8 = 3, depois 3 × 3 = <b>9 alunos</b>.",
+          "Futebol: 24 ÷ 4 = 6, depois 6 × 1 = <b>6 alunos</b>.",
+          "Diferença: 9 − 6 = <b>3 alunos</b>."],
+  desenho:"Faça duas contas separadas no papel, uma embaixo da outra, e só depois subtraia."},
+
+ {n:3, t:"Uma receita de bolo pede <b>3/4 de xícara</b> de açúcar. Você vai fazer o <b>dobro</b> da receita. Quantas xícaras de açúcar vai usar?",
+  r:"1 1/2", tipo:"frac",
+  dica:"Dobro é multiplicar por 2. Depois, veja se dá para escrever como número misto.",
+  passos:["Dobro de 3/4: 3/4 + 3/4 = <b>6/4</b>.",
+          "6 ÷ 4 = 1 e sobra 2, então <b>1 2/4</b>.",
+          "Simplificando 2/4 → 1/2. Resposta: <b>1 1/2 xícara</b> (também vale 6/4 ou 3/2)."],
+  desenho:"Desenhe duas xícaras divididas em 4 e pinte 3 em cada uma."},
+
+ {n:3, t:"Um filme tem <b>90 minutos</b>. Você assistiu <b>2/3</b> dele e depois mais <b>10 minutos</b>. Quantos minutos <b>faltam</b> para o filme acabar?",
+  r:"20", tipo:"num",
+  dica:"Três etapas: quanto já viu de fração, some os 10 minutos, e só então descubra o que falta.",
+  passos:["2/3 de 90: 90 ÷ 3 = 30, depois 30 × 2 = <b>60 minutos</b>.",
+          "Somando os 10 minutos: 60 + 10 = <b>70 minutos assistidos</b>.",
+          "Faltam: 90 − 70 = <b>20 minutos</b>."],
+  desenho:"Desenhe uma linha do tempo de 90 minutos e marque cada etapa."}
+]
+};
+
+/* ---------- conferência da resposta ---------- */
+function valorResposta(s){
+  if(s === null || s === undefined) return null;
+  let t = String(s).toLowerCase().replace(/,/g, ".").replace(/\s+/g, " ").trim();
+  let m = t.match(/(-?\d+)\s+(\d+)\s*\/\s*(\d+)/);              /* misto: 1 1/2 */
+  if(m) return parseInt(m[1],10) + parseInt(m[2],10)/parseInt(m[3],10);
+  m = t.match(/(-?\d+)\s*\/\s*(\d+)/);                           /* fração: 3/8 */
+  if(m){ const d = parseInt(m[2],10); return d === 0 ? null : parseInt(m[1],10)/d; }
+  m = t.match(/-?\d+(\.\d+)?/);                                  /* número */
+  if(m) return parseFloat(m[0]);
+  return null;
+}
+function conferirResposta(dado, esperado){
+  const a = valorResposta(dado), b = valorResposta(esperado);
+  if(a === null || b === null) return false;
+  return Math.abs(a - b) < 1e-6;
+}
+
+/* ---------- estado ---------- */
+var pLista = [], pIdx = 0, pAcertos = 0, pRespondido = false;
+
+function iniPapel(){
+  const nv = nivelDe(matAtual, "papel");
+  const fonte = (PROBLEMAS[matAtual] || []).filter(function(x){ return x.n <= nv + 1; });
+  pLista = embaralha(fonte).slice(0, NIVEIS.papel[nv]);
+  pLista.forEach(function(x){ x.errou = false; x.como = null; });
+  pIdx = 0; pAcertos = 0;
+  pintaPapel();
+}
+function pintaPapel(){
+  const box = document.getElementById("jogoBox");
+  if(pIdx >= pLista.length){
+    box.innerHTML = telaFim({
+      titulo:"✏️ Folha terminada!",
+      total: pLista.length, acertos: pAcertos, modo:"papel",
+      itens: pLista.map(function(x){
+        return {t: x.r, ex: x.t.replace(/<[^>]+>/g,""), errou: x.errou};
+      }),
+      recomecar:"iniPapel()", proximo:"quiz"
+    }) + caixaFoto();
+    renderHoje(); return;
+  }
+  const q = pLista[pIdx];
+  pRespondido = false;
+  box.innerHTML = `<div class="card ouro">
+    ${barraNivel(matAtual,"papel")}
+    <p class="sub">Problema ${pIdx+1} de ${pLista.length}</p>
+    <div class="problema">${q.t}</div>
+    <div class="passoapasso">
+      <b>1.</b> Pegue papel e lápis. <b>2.</b> ${q.desenho} <b>3.</b> Faça a conta escrevendo. <b>4.</b> Só então volte aqui.
+    </div>
+    <label for="pResp">Qual foi a sua resposta?</label>
+    <input type="text" id="pResp" inputmode="text" placeholder="Ex.: 3/8  ·  10  ·  2 1/4" onkeydown="if(event.key==='Enter')conferirPapel()">
+    <p class="sub">Pode escrever fração com barra (3/8) ou número misto com espaço (2 1/4).</p>
+    <button class="btn" onclick="conferirPapel()">Conferir minha resposta</button>
+    <button class="btn sec" onclick="mostrarDica()">💡 Uma dica antes</button>
+    <div id="pDica"></div>
+    <div id="pFb"></div>
+    <button class="btn sec" onclick="imprimirFolha()">🖨️ Imprimir a folha de problemas</button>
+  </div>`;
+}
+function mostrarDica(){
+  const q = pLista[pIdx];
+  document.getElementById("pDica").innerHTML = `<div class="fb no"><b>Dica</b>${q.dica}</div>`;
+}
+function conferirPapel(){
+  if(pRespondido) return;
+  const q = pLista[pIdx];
+  const campo = document.getElementById("pResp");
+  const dado = campo.value.trim();
+  if(!dado){ campo.focus(); return; }
+  pRespondido = true;
+  const certo = conferirResposta(dado, q.r);
+  if(certo) pAcertos++; else q.errou = true;
+  document.getElementById("pFb").innerHTML = `
+    <div class="fb ${certo?'ok':'no'}">
+      <b>${certo ? frase("acerto") : frase("erro")}</b>
+      ${certo ? `Sua resposta <b>${dado}</b> está certa.` : `Você respondeu <b>${dado}</b>. A resposta certa é <b>${q.r}</b>.`}
+    </div>
+    <div class="card2box">
+      <h3>Como se resolve</h3>
+      <ol class="passos">${q.passos.map(function(p){ return `<li>${p}</li>`; }).join("")}</ol>
+      ${certo ? `<p class="sub">Compare com o que você escreveu no papel. Se o caminho foi outro e deu certo também, ótimo — existe mais de um jeito.</p>` : ""}
+    </div>
+    ${certo ? "" : `<div class="autoexp">
+      <p><b>Olhando o seu papel, o que aconteceu?</b></p>
+      <div class="linha">
+        <button class="btn sec" onclick="marcarComo('conta')">Errei a conta</button>
+        <button class="btn sec" onclick="marcarComo('passo')">Pulei um passo</button>
+        <button class="btn sec" onclick="marcarComo('pergunta')">Entendi a pergunta errado</button>
+        <button class="btn sec" onclick="marcarComo('travei')">Nem soube começar</button>
+      </div></div>`}
+    <button class="btn" onclick="proxPapel()">${pIdx+1 < pLista.length ? "Próximo problema" : "Ver resultado"}</button>`;
+  campo.disabled = true;
+}
+function marcarComo(tipo){
+  const q = pLista[pIdx];
+  q.como = tipo;
+  S.papel = S.papel || [];
+  S.papel.push({d:hojeISO(), p:q.t.replace(/<[^>]+>/g,"").slice(0,70), como:tipo});
+  salvar();
+  document.querySelector(".autoexp").innerHTML =
+    `<div class="fb ok"><b>Anotado.</b> ${
+      tipo==="conta" ? "Conta errada é o erro mais fácil de resolver: refaça devagar."
+      : tipo==="passo" ? "Escrever cada passo numa linha separada resolve quase sempre."
+      : tipo==="pergunta" ? "Antes de calcular, sublinhe no papel o que a pergunta está pedindo."
+      : "Travar no começo é sinal de mostrar esse problema para um adulto. Fica registrado."
+    }</div>`;
+}
+function proxPapel(){ pIdx++; pintaPapel(); }
+
+/* ---------- foto da folha (guardada no aparelho, sem análise automática) ---------- */
+function caixaFoto(){
+  return `<div class="card salvia">
+    <h3>📷 Guardar a folha</h3>
+    <p class="sub">Tire uma foto do papel para um adulto conferir depois. A imagem fica <b>só neste aparelho</b>,
+    aparece no Painel do adulto e não é enviada para lugar nenhum.
+    <b>Ninguém corrige automaticamente</b> — quem lê a folha é a pessoa que estuda com você.</p>
+    <input type="file" id="fotoFolha" accept="image/*" capture="environment" class="oculta" onchange="guardarFoto(event)">
+    <button class="btn sec" onclick="document.getElementById('fotoFolha').click()">📷 Tirar foto da folha</button>
+    <div id="fotoAviso" class="sub"></div>
+  </div>`;
+}
+function guardarFoto(ev){
+  const f = ev.target.files && ev.target.files[0];
+  if(!f) return;
+  const aviso = document.getElementById("fotoAviso");
+  aviso.textContent = "Processando a imagem…";
+  const fr = new FileReader();
+  fr.onload = function(){
+    const img = new Image();
+    img.onload = function(){
+      try{
+        const max = 900;
+        let w = img.width, h = img.height;
+        if(w > h && w > max){ h = Math.round(h * max / w); w = max; }
+        else if(h >= w && h > max){ w = Math.round(w * max / h); h = max; }
+        const cv = document.createElement("canvas");
+        cv.width = w; cv.height = h;
+        cv.getContext("2d").drawImage(img, 0, 0, w, h);
+        const dados = cv.toDataURL("image/jpeg", 0.55);
+        S.fotos = S.fotos || [];
+        S.fotos.push({d:hojeISO(), mat:matAtual, img:dados});
+        while(S.fotos.length > 6) S.fotos.shift();
+        salvar();
+        aviso.innerHTML = "✅ Guardada. Aparece no <b>Painel do adulto</b>. (Guardo as 6 últimas.)";
+      }catch(e){
+        aviso.innerHTML = "Não consegui guardar — a memória do navegador encheu. Apague fotos antigas no Painel do adulto.";
+      }
+    };
+    img.onerror = function(){ aviso.textContent = "Não consegui ler essa imagem."; };
+    img.src = fr.result;
+  };
+  fr.onerror = function(){ aviso.textContent = "Não consegui ler o arquivo."; };
+  fr.readAsDataURL(f);
+}
+function apagarFotos(){
+  if(!confirm("Apagar todas as fotos guardadas?")) return;
+  S.fotos = []; salvar(); renderAdulto();
+}
+
+/* ---------- folha para imprimir ---------- */
+function imprimirFolha(){
+  const nv = nivelDe(matAtual, "papel");
+  const lista = pLista.length ? pLista : (PROBLEMAS[matAtual] || []).slice(0, NIVEIS.papel[nv]);
+  const el = document.getElementById("folhaImpressa");
+  el.innerHTML = `
+    <h1>Folha de problemas — ${matAtual}</h1>
+    <p class="fdata">Nome: ______________________________   Data: ____ / ____ / ______</p>
+    <p class="finstr"><b>Como usar:</b> leia o problema, sublinhe o que ele está pedindo, faça um desenho e
+    resolva escrevendo cada passo numa linha. Depois confira a resposta no aplicativo.</p>
+    ${lista.map(function(q,i){
+      return `<div class="fprob">
+        <div class="fnum">${i+1}</div>
+        <div class="ftxt">${q.t}</div>
+        <div class="fdesenho">Desenho: ${q.desenho}</div>
+        <div class="fcaixa"></div>
+        <div class="fresp">Resposta: ____________________</div>
+      </div>`;
+    }).join("")}
+    <p class="frodape">Confira as respostas no aplicativo, em Picadeiro → Matemática → No papel.</p>`;
+  window.print();
+}
+
+
+/* ============================================================
+   AULAS E TAREFAS
+   Grade do 2º trimestre — colunas lidas como segunda a sexta
+   ============================================================ */
+const HORARIOS = ["13:30","14:20","15:30","16:30","17:20"];
+const AULAS = {
+ 1:["Matemática","Matemática","Ling. Artística","Inglês","Inglês"],
+ 2:["Geografia","História","Inglês","Arte","Ed. Física"],
+ 3:["Ed. Financeira","Ed. Digital","Tutoria","Matemática","Matemática"],
+ 4:["Inglês","Português","Português","In. Científica","Geografia"],
+ 5:["Espanhol","Ciências","Ciências","Português","Redação"]
+};
+const DIAS_CURTO = ["dom","seg","ter","qua","qui","sex","sáb"];
+const DIAS_LONGO = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+
+const CORES_AULA = {
+ "Ed. Financeira":"#4F8A6B", "Ed. Digital":"#6E5AA8", "Tutoria":"#3F8F7A",
+ "Ling. Artística":"#8B6FC0", "Arte":"#7B5BB0", "Ed. Física":"#8E6BB8",
+ "In. Científica":"#9E5A80", "Espanhol":"#C2698E", "Redação":"#B06A3C"
+};
+function corAula(nome){
+  if(MATERIAS[nome]) return MATERIAS[nome].cor;
+  return CORES_AULA[nome] || "#8A6F63";
+}
+function temAtividade(nome){ return !!MATERIAS[nome]; }
+
+/* ---------- tela AULAS ---------- */
+var diaSel = null;
+function renderAulas(){
+  const hoje = new Date();
+  if(diaSel === null){ const d = hoje.getDay(); diaSel = (d >= 1 && d <= 5) ? d : 1; }
+  const grade = AULAS[diaSel] || [];
+  const hojeDia = hoje.getDay();
+
+  let html = `<div class="card rosa">
+    <h1>🗓️ Aulas da semana</h1>
+    <p class="sub">Grade do 2º trimestre. Toque no dia para ver as aulas.</p>
+    <div class="escolha">${[1,2,3,4,5].map(function(d){
+      return `<button class="${d===diaSel?'on':''}" onclick="diaSel=${d};renderAulas()">${DIAS_CURTO[d]}${d===hojeDia?' •':''}</button>`;
+    }).join("")}</div>
+  </div>`;
+
+  html += `<div class="card ${diaSel===hojeDia?'destaque':''}">
+    <h2>${DIAS_LONGO[diaSel]}${diaSel===hojeDia?' <span class="tag" style="border-color:var(--bordo);color:var(--bordo);background:var(--bordo-cl)">hoje</span>':''}</h2>
+    <div class="aulas">${grade.map(function(m,i){
+      const cor = corAula(m);
+      return `<div class="aula" style="border-left-color:${cor}">
+        <div class="ahora">${HORARIOS[i]}</div>
+        <div class="amat" style="color:${cor}">${m}</div>
+        ${temAtividade(m)?`<button class="bsos" onclick="abrirTreino('${m}')">Treinar</button>`:'<span class="sub">—</span>'}
+      </div>${i===1?'<div class="intervalo">intervalo</div>':''}`;
+    }).join("")}</div>
+  </div>`;
+
+  html += `<div class="card salvia">
+    <h3>A semana inteira</h3>
+    <p class="sub">Role para o lado se não couber na tela.</p>
+    <div class="gradewrap"><table class="grade">
+      <tr><th></th>${[1,2,3,4,5].map(function(d){ return `<th${d===hojeDia?' class="hj"':''}>${DIAS_CURTO[d]}</th>`; }).join("")}</tr>
+      ${HORARIOS.map(function(h,i){
+        return `<tr><td class="hcol">${h}</td>${[1,2,3,4,5].map(function(d){
+          const m = AULAS[d][i], c = corAula(m);
+          return `<td style="background:${c}22;border-bottom:3px solid ${c}"><span style="color:${c}">${m}</span></td>`;
+        }).join("")}</tr>`;
+      }).join("")}
+    </table></div>
+    <p class="sub" style="margin-top:10px">As matérias com prova têm atividade no Picadeiro. As outras aparecem aqui só para você se organizar.</p>
+  </div>`;
+  document.getElementById("telaAulas").innerHTML = html;
+}
+function aulasDeHoje(){
+  const d = new Date().getDay();
+  if(d < 1 || d > 5) return null;
+  return AULAS[d];
+}
+
+/* ---------- TAREFAS ---------- */
+var calAno = null, calMes = null, diaTarefa = null;
+function tarefasDe(iso){ return (S.tarefas||[]).filter(function(t){ return t.data === iso; }); }
+function isoDe(a,m,d){ return a + "-" + String(m+1).padStart(2,"0") + "-" + String(d).padStart(2,"0"); }
+
+function renderTarefas(){
+  const hoje = new Date();
+  if(calAno === null){ calAno = hoje.getFullYear(); calMes = hoje.getMonth(); }
+  if(diaTarefa === null) diaTarefa = hojeISO();
+
+  const primeiro = new Date(calAno, calMes, 1).getDay();
+  const nDias = new Date(calAno, calMes + 1, 0).getDate();
+  const hIso = hojeISO();
+
+  let celulas = "";
+  for(let i = 0; i < primeiro; i++) celulas += `<div class="dia vazio"></div>`;
+  for(let d = 1; d <= nDias; d++){
+    const iso = isoDe(calAno, calMes, d);
+    const ts = tarefasDe(iso);
+    const pend = ts.filter(function(t){ return !t.feito; }).length;
+    const prova = PROVAS.find(function(p){ return p.data === iso; });
+    celulas += `<div class="dia${iso===hIso?' hoje':''}${iso===diaTarefa?' sel':''}${prova?' prova':''}" onclick="diaTarefa='${iso}';renderTarefas()">
+      <span class="dn">${d}</span>
+      ${prova?`<span class="pv" style="background:${MATERIAS[prova.mat].cor}"></span>`:""}
+      ${ts.length?`<span class="pt${pend?'':' ok'}">${ts.length}</span>`:""}
+    </div>`;
+  }
+
+  const ts = tarefasDe(diaTarefa);
+  const atrasadas = (S.tarefas||[]).filter(function(t){ return !t.feito && t.data < hIso; });
+  const provaSel = PROVAS.find(function(p){ return p.data === diaTarefa; });
+
+  let html = `<div class="card lav">
+    <h1>✅ Minhas tarefas</h1>
+    <p class="sub">Anote o que precisa fazer e marque quando terminar. Fica salvo neste aparelho.</p>
+  </div>`;
+
+  if(atrasadas.length) html += `<div class="card ouro"><h3>⏰ Ficou para trás</h3>
+    ${atrasadas.map(function(t){ return itemTarefa(t, true); }).join("")}</div>`;
+
+  html += `<div class="card">
+    <div class="calnav">
+      <button onclick="mudarMes(-1)">‹</button>
+      <b>${MESES[calMes].charAt(0).toUpperCase()+MESES[calMes].slice(1)} de ${calAno}</b>
+      <button onclick="mudarMes(1)">›</button>
+    </div>
+    <div class="calsem">${DIAS_CURTO.map(function(x){ return `<span>${x}</span>`; }).join("")}</div>
+    <div class="calgrid">${celulas}</div>
+    <p class="sub" style="margin-top:8px"><span class="leg pv"></span> dia de prova &nbsp; <span class="leg pt"></span> tem tarefa</p>
+  </div>`;
+
+  html += `<div class="card salvia">
+    <h2>${rotuloData(diaTarefa)}</h2>
+    ${provaSel?`<div class="fb no"><b>Tem prova neste dia</b>Prova de <b>${provaSel.mat}</b>.</div>`:""}
+    ${ts.length ? ts.map(function(t){ return itemTarefa(t, false); }).join("")
+                : `<p class="sub">Nenhuma tarefa neste dia ainda.</p>`}
+    <label>O que precisa fazer?</label>
+    <input type="text" id="tfTxt" placeholder="Ex.: terminar a lição de frações" onkeydown="if(event.key==='Enter')addTarefa()">
+    <label>Matéria</label>
+    <select id="tfMat">
+      <option value="">— sem matéria —</option>
+      ${Object.keys(MATERIAS).concat(Object.keys(CORES_AULA)).map(function(m){ return `<option>${m}</option>`; }).join("")}
+    </select>
+    <button class="btn" onclick="addTarefa()">+ Adicionar tarefa</button>
+  </div>`;
+  document.getElementById("telaTarefas").innerHTML = html;
+}
+function itemTarefa(t, mostrarData){
+  const cor = t.mat ? corAula(t.mat) : "var(--line)";
+  return `<div class="tarefa${t.feito?' feita':''}" style="border-left-color:${cor}">
+    <button class="tcx" onclick="toggleTarefa('${t.id}')">${t.feito?"✓":""}</button>
+    <div class="ttxt"><div class="tt">${t.txt}</div>
+      <div class="sub">${[t.mat?`<span style="color:${cor};font-weight:700">${t.mat}</span>`:"", mostrarData?rotuloData(t.data):""].filter(Boolean).join(" · ")}</div></div>
+    <button class="tdel" onclick="apagarTarefa('${t.id}')">✕</button>
+  </div>`;
+}
+function mudarMes(n){
+  calMes += n;
+  if(calMes < 0){ calMes = 11; calAno--; }
+  if(calMes > 11){ calMes = 0; calAno++; }
+  renderTarefas();
+}
+function addTarefa(){
+  const c = document.getElementById("tfTxt"), m = document.getElementById("tfMat");
+  const txt = c.value.trim();
+  if(!txt){ c.focus(); return; }
+  S.tarefas = S.tarefas || [];
+  S.tarefas.push({id:"t" + (S.tarefas.length + 1) + "_" + diaTarefa + "_" + txt.length, txt:txt, mat:m.value, data:diaTarefa, feito:false});
+  salvar(); renderTarefas(); renderHoje();
+}
+function toggleTarefa(id){
+  (S.tarefas||[]).forEach(function(t){ if(t.id === id) t.feito = !t.feito; });
+  salvar(); renderTarefas(); renderHoje();
+}
+function apagarTarefa(id){
+  S.tarefas = (S.tarefas||[]).filter(function(t){ return t.id !== id; });
+  salvar(); renderTarefas(); renderHoje();
 }
 
 /* ---------- INÍCIO ---------- */
