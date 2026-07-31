@@ -58,7 +58,7 @@ Com o endereço no ar: abra no **Safari** → Compartilhar → **Adicionar à Te
 | `icon-*.png` | Ícones da tela de início |
 | `.nojekyll` | Impede o Jekyll do GitHub Pages de processar os arquivos |
 
-**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v7` → `v8`).
+**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v8` → `v9`).
 Sem isso o service worker continua servindo a versão antiga.
 
 ---

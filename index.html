@@ -723,8 +723,8 @@ ul.lista li::marker{color:var(--rosa)}
   </div>
   <div class="card rosa">
     <h2>Registro rápido do dia</h2>
-    <label>O que funcionou hoje?</label><textarea id="notaOk" rows="2"></textarea>
-    <label>Onde ela travou?</label><textarea id="notaTravou" rows="2"></textarea>
+    <label for="notaOk">O que funcionou hoje?</label><textarea id="notaOk" rows="2" placeholder="Ex.: começou sozinha depois do lanche"></textarea>
+    <label for="notaTravou">Onde ela travou?</label><textarea id="notaTravou" rows="2" placeholder="Ex.: fração de uma quantidade"></textarea>
     <button class="btn sec" onclick="salvarNota()">Guardar registro</button>
     <div id="listaNotas" style="margin-top:14px"></div>
   </div>
@@ -1720,7 +1720,13 @@ function montarAbas(){
 }
 function abrirMenu(){ document.body.classList.add("menu-on"); montarAbas(); }
 function fecharMenu(){ document.body.classList.remove("menu-on"); }
+function pararAudio(){
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  try{ if(typeof fRec !== "undefined" && fRec) fRec.abort(); }catch(e){}
+  try{ if(typeof esconderBalao === "function") esconderBalao(); }catch(e){}
+}
 function irPara(id){
+  pararAudio();
   document.querySelectorAll("section.tela").forEach(s=>s.classList.remove("on"));
   document.getElementById("t-"+id).classList.add("on");
   ABAS.forEach(function(x){ const e=document.getElementById("ab-"+x[0]); if(e) e.classList.toggle("on", x[0]===id); });
@@ -1922,8 +1928,8 @@ function renderEscolhas(){
   document.getElementById("escModo").innerHTML = MODOS.map(([id,n])=>
     `<button class="${modoAtual===id?'on':''}" onclick="setModo('${id}')">${n}</button>`).join("");
 }
-function setMat(m){ matAtual=m; renderEscolhas(); renderJogo(); }
-function setModo(m){ modoAtual=m; renderEscolhas(); renderJogo(); }
+function setMat(m){ pararAudio(); matAtual=m; renderEscolhas(); renderJogo(); }
+function setModo(m){ pararAudio(); modoAtual=m; renderEscolhas(); renderJogo(); }
 function abrirTreino(m){ if(MATERIAS[m]){matAtual=m;} modoAtual="quiz"; irPara("estudar"); renderEscolhas(); renderJogo(); }
 function renderJogo(){
   const cab = `<div class="card rosa"><h2 style="color:${MATERIAS[matAtual].cor}">🐎 ${matAtual}</h2>

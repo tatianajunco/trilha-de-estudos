@@ -65,6 +65,6 @@ confirmar. Isso apaga também os registros antigos que continham o nome.
 ## Quando quiser mudar o conteúdo
 
 1. Edite o `index.html`.
-2. Abra o `sw.js` e troque `trilha-estudos-v7` por `trilha-estudos-v8`. **Esse passo é
+2. Abra o `sw.js` e troque `trilha-estudos-v8` por `trilha-estudos-v9`. **Esse passo é
    obrigatório** — sem ele o celular continua mostrando a versão antiga.
 3. Rode o `PUBLICAR-AUTOMATICO.command` de novo, escolhendo a opção `2` desta vez.
