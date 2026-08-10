@@ -16,6 +16,8 @@ Instalável na tela de início do celular e funcional sem internet depois da pri
 - **Plano diário** com prática distribuída até a última prova
 - **Quizzes** com explicação obrigatória do erro e tentativas ilimitadas
 - **Jogo da memória** com figuras desenhadas, **cruzadinha** com charadas e **associação de imagens**
+- **Folhas para imprimir** (Geografia e Inglês): lacunas, ligue as colunas, certo ou errado,
+  tabela comparativa, questões dissertativas e mapa conceitual — com versão gabarito
 - **No papel** (Matemática): problemas para resolver escrevendo, com conferência automática
   da resposta, resolução passo a passo e folha para imprimir
 - **Listening e Speaking** em inglês, com voz do próprio aparelho e reconhecimento de fala
@@ -58,7 +60,7 @@ Com o endereço no ar: abra no **Safari** → Compartilhar → **Adicionar à Te
 | `icon-*.png` | Ícones da tela de início |
 | `.nojekyll` | Impede o Jekyll do GitHub Pages de processar os arquivos |
 
-**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v8` → `v9`).
+**Ao alterar o conteúdo, incremente a versão do cache em `sw.js`** (`trilha-estudos-v9` → `v10`).
 Sem isso o service worker continua servindo a versão antiga.
 
 ---
@@ -76,6 +78,7 @@ Tudo fica em constantes JavaScript dentro de `index.html`, na seção `DADOS`:
 | `CRUZADA2` | Pares `[PALAVRA, charada]`. **Sem acento** — a grade é montada sozinha |
 | `ASSOC2` | `{f:"ícone", t:"resposta", ex:"explicação"}` |
 | `AULAS` / `HORARIOS` | Grade de aulas: `1` = segunda … `5` = sexta, na ordem dos horários |
+| `FOLHAS` | Folhas para imprimir, por tipo: lacunas, ligue, certo, numere, tabela, aberta, mapa |
 | `PROBLEMAS` | Problemas de “No papel”: enunciado, resposta, dica, passos e sugestão de desenho |
 | `OUVIR` / `FALAR` | Itens de listening e speaking, com nível `n` de 1 a 3 |
 | `ICONES` | Desenhos SVG usados nas atividades |

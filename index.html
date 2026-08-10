@@ -220,6 +220,7 @@ section.tela.on{display:block}
 .dicas li{margin-bottom:7px;font-size:.88rem}
 .dicas li::marker{color:var(--rosa)}
 @media(max-width:560px){:root{--cw:23px} .cel.ativa input{font-size:.74rem} .cel .num{font-size:.42rem}}
+@media(max-width:430px){:root{--cw:21px}}
 
 /* ---------- ASSOCIAÇÃO ---------- */
 .assoc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -438,6 +439,27 @@ table.grade td span{font-weight:700}
   #folhaImpressa .fcaixa{height:34mm;border:1pt dashed #999;border-radius:2mm;
     background:repeating-linear-gradient(#fff 0 7mm,#e8e8e8 7mm 7.3mm)}
   #folhaImpressa .fresp{font-size:11pt;font-weight:bold;margin-top:2mm}
+
+  #folhaImpressa .ffolha{page-break-after:always}
+  #folhaImpressa .ffolha:last-child{page-break-after:auto}
+  #folhaImpressa .flista{padding-left:7mm;font-size:11.5pt;line-height:1.6}
+  #folhaImpressa .flista li{margin-bottom:4mm;page-break-inside:avoid}
+  #folhaImpressa .flin{border-bottom:1pt solid #999;height:7mm;margin-top:1.5mm}
+  #folhaImpressa .fcx{border:1.2pt solid #000;padding:0 2mm;margin-right:2mm;font-weight:bold}
+  #folhaImpressa .fgab{background:#eee;border-left:2pt solid #888;padding:1.5mm 2mm;margin-top:1.5mm;font-size:9.5pt;color:#333}
+  #folhaImpressa .fgabin{color:#666;font-size:9.5pt}
+  #folhaImpressa table.fligue,#folhaImpressa table.ftab{width:100%;border-collapse:collapse;font-size:10.5pt;margin-top:3mm}
+  #folhaImpressa table.fligue td,#folhaImpressa table.fligue th,
+  #folhaImpressa table.ftab td,#folhaImpressa table.ftab th{border:1pt solid #000;padding:2.5mm;vertical-align:top}
+  #folhaImpressa table.ftab td{height:14mm}
+  #folhaImpressa .frot{background:#f0f0f0;font-weight:bold;width:28%}
+  #folhaImpressa .fnum2{text-align:center;width:12mm;font-weight:bold}
+  #folhaImpressa .fsoma{margin-top:4mm;font-size:11.5pt;line-height:2}
+  #folhaImpressa .fmapa{margin-top:4mm}
+  #folhaImpressa .fcentro{border:2pt solid #000;border-radius:3mm;padding:3mm;text-align:center;font-weight:bold;font-size:12pt}
+  #folhaImpressa .framo{border:1pt solid #000;border-radius:2mm;padding:3mm;margin-top:4mm;page-break-inside:avoid}
+  #folhaImpressa .framo b{font-size:11pt}
+  #folhaImpressa .framo ul{margin:2mm 0 0;padding-left:6mm;font-size:11pt;line-height:1.9}
   #folhaImpressa .frodape{font-size:9pt;color:#555;margin-top:5mm;text-align:center}
 }
 /* ===== CENTRAL DE DÚVIDAS ===== */
@@ -1921,7 +1943,7 @@ function zerarTimer(){ clearInterval(tick); rodando=false; emPausa=false; resta=
 
 /* ---------- TREINAR ---------- */
 let matAtual="Português", modoAtual="quiz";
-const MODOS=[["quiz","Quiz"],["memoria","Memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["papel","✏️ No papel"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
+const MODOS=[["quiz","Quiz"],["memoria","Memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["papel","✏️ No papel"],["folhas","🖨️ Folhas"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
 function renderEscolhas(){
   document.getElementById("escMateria").innerHTML = Object.keys(MATERIAS).map(m=>
     `<button class="${matAtual===m?'on':''}" onclick="setMat('${m}')">${m}</button>`).join("");
@@ -1936,7 +1958,13 @@ function renderJogo(){
     <p class="sub">${MATERIAS[matAtual].conteudo}</p></div>`;
   const alvo = document.getElementById("areaJogo");
   alvo.innerHTML = cab + '<div id="jogoBox"></div>';
-  const mapa = {quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar, papel:iniPapel};
+  const mapa = {quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar, papel:iniPapel, folhas:iniFolhas};
+  if(modoAtual==="folhas" && !(typeof FOLHAS!=="undefined" && FOLHAS[matAtual])){
+    document.getElementById("jogoBox").innerHTML =
+      `<div class="card ouro"><h3>Ainda não tem folhas desta matéria</h3><p class="sub">As folhas para imprimir existem por enquanto só em <b>Geografia</b>.</p>
+       <button class="btn" onclick="setMat('Geografia')">Ir para Geografia</button></div>`;
+    return;
+  }
   if(modoAtual==="papel" && !(typeof PROBLEMAS!=="undefined" && PROBLEMAS[matAtual])){
     document.getElementById("jogoBox").innerHTML =
       `<div class="card ouro"><h3>Só em Matemática</h3><p class="sub">“No papel” existe só na matéria de Matemática, onde resolver escrevendo faz mais diferença.</p>
@@ -3516,6 +3544,888 @@ function apagarTarefa(id){
   S.tarefas = (S.tarefas||[]).filter(function(t){ return t.id !== id; });
   salvar(); renderTarefas(); renderHoje();
 }
+
+
+/* ============================================================
+   GEOGRAFIA — Unidade 3: O trabalho na cidade e no campo (p.58-82)
+   Conteúdo real do material, substitui as versões genéricas
+   ============================================================ */
+
+/* ---- ícones novos ---- */
+ICONES.satelite='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="26" y="24" width="12" height="16" rx="2" fill="#8A9BC0" stroke="#5A6E9A" stroke-width="2"/><rect x="6" y="26" width="18" height="12" rx="2" fill="#3F5285" stroke="#2A3860" stroke-width="2"/><rect x="40" y="26" width="18" height="12" rx="2" fill="#3F5285" stroke="#2A3860" stroke-width="2"/><path d="M32 40v8" stroke="#5A6E9A" stroke-width="3"/><path d="M24 54c0-6 4-8 8-8s8 2 8 8" fill="none" stroke="#86A98C" stroke-width="3" stroke-linecap="round"/><path d="M18 58c0-10 7-14 14-14s14 4 14 14" fill="none" stroke="#86A98C" stroke-width="2.6" stroke-linecap="round" opacity=".6"/>';
+ICONES.petroleo='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M22 54V22l10-10 10 10v32z" fill="none" stroke="#43302A" stroke-width="3" stroke-linejoin="round"/><path d="M22 32h20M22 42h20M26 22l12 32M38 22L26 54" stroke="#43302A" stroke-width="2"/><rect x="14" y="52" width="36" height="6" rx="2" fill="#5A6E9A"/><path d="M44 18c3-4 2-8 0-10-2 4-6 4-4 10z" fill="#D9A441"/>';
+ICONES.orelhao='<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M14 30c0-11 8-18 18-18s18 7 18 18v12H14z" fill="#D9A441" stroke="#A8761E" stroke-width="2"/><rect x="24" y="26" width="16" height="24" rx="3" fill="#F6E6D8" stroke="#8A6F63" stroke-width="2"/><rect x="28" y="30" width="8" height="6" rx="1" fill="#8A6F63"/><circle cx="30" cy="41" r="1.6" fill="#8A6F63"/><circle cx="34" cy="41" r="1.6" fill="#8A6F63"/><circle cx="30" cy="46" r="1.6" fill="#8A6F63"/><circle cx="34" cy="46" r="1.6" fill="#8A6F63"/>';
+ICONES.ecommerce='<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><rect x="20" y="8" width="24" height="42" rx="4" fill="#43302A"/><rect x="23" y="13" width="18" height="30" rx="2" fill="#FDF5EE"/><path d="M27 22h12l-2 12H29z" fill="none" stroke="#D2718A" stroke-width="2.4" stroke-linejoin="round"/><circle cx="30" cy="38" r="1.8" fill="#D2718A"/><circle cx="36" cy="38" r="1.8" fill="#D2718A"/><path d="M46 20l6-6M50 28h6M46 36l6 6" stroke="#D2718A" stroke-width="2.6" stroke-linecap="round"/>';
+ICONES.chip='<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><rect x="20" y="20" width="24" height="24" rx="3" fill="#5C7F63" stroke="#3F5B45" stroke-width="2"/><rect x="26" y="26" width="12" height="12" rx="2" fill="#EAF3EE"/><g stroke="#3F5B45" stroke-width="2.6" stroke-linecap="round"><path d="M26 20v-7M32 20v-7M38 20v-7M26 44v7M32 44v7M38 44v7M20 26h-7M20 32h-7M20 38h-7M44 26h7M44 32h7M44 38h7"/></g>';
+ICONES.extrativismo='<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M30 56V32" stroke="#8A6F63" stroke-width="5" stroke-linecap="round"/><ellipse cx="30" cy="24" rx="17" ry="14" fill="#7FA86B"/><ellipse cx="22" cy="30" rx="9" ry="7" fill="#8FBB77"/><ellipse cx="38" cy="30" rx="9" ry="7" fill="#6E9A5C"/><path d="M44 44l10-10" stroke="#8A6F63" stroke-width="4" stroke-linecap="round"/><path d="M50 30l8 8-4 4-8-8z" fill="#9BB8CC" stroke="#6E8FA8" stroke-width="1.6"/>';
+ICONES.mao='<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M22 52V30c0-3 4-3 4 0v-8c0-3 4-3 4 0v-4c0-3 4-3 4 0v4c0-3 4-3 4 0v6c3-1 5 1 5 4v10c0 6-4 10-10 10h-4c-4 0-7-3-7-6z" fill="#F7E2CB" stroke="#C79A73" stroke-width="2" stroke-linejoin="round"/>';
+
+/* ---- conteúdo cobrado ---- */
+MATERIAS["Geografia"].conteudo = "Unidade 3 — O trabalho na cidade e no campo (p.58-82): tecnologia no campo e na cidade, agricultura, pecuária, extrativismo, indústria, comércio e serviços";
+
+/* ---- QUIZ ---- */
+QUIZ["Geografia"] = [
+ {p:"A agricultura de <b>subsistência</b> é aquela que:",a:["É praticada por pequenos agricultores e suas famílias, para consumo próprio e comércio local","Usa tratores com GPS e exporta para outros países","Só existe dentro das cidades"],c:0,e:"<b>Subsistência</b> = sustentar a própria família. Usa técnicas e ferramentas manuais, como enxada e equipamentos puxados por animais."},
+ {p:"A agricultura <b>comercial</b>, ou de mercado, caracteriza-se por:",a:["Produzir só o que a família vai comer","Ser praticada para fins econômicos, para os mercados nacional e internacional","Não usar nenhuma máquina"],c:1,e:"Ela usa técnicas avançadas e maquinário moderno para garantir maior produtividade."},
+ {p:"Para que serve o <b>GPS</b> nos tratores e colheitadeiras modernos?",a:["Para tocar música no campo","Para mapear o terreno e toda a área a ser plantada","Para regar as plantas"],c:1,e:"GPS = <i>Global Positioning System</i>. Ajuda a plantar com precisão e a evitar desperdício."},
+ {p:"O que são plantas <b>transgênicas</b>?",a:["Plantas que crescem sem água","Plantas geneticamente modificadas em laboratório","Plantas que só existem na Amazônia"],c:1,e:"As sementes são selecionadas e alteradas em laboratório para ficarem mais nutritivas e resistentes às pragas. Muita gente as considera perigosas para o ambiente e a saúde."},
+ {p:"Os alimentos <b>orgânicos</b> são aqueles que:",a:["Não utilizam insumos químicos no cultivo e costumam ser mais caros","São produzidos apenas em laboratório","Vêm sempre de outro país"],c:0,e:"Como não usam produtos químicos, a produção é menor e o preço fica mais alto."},
+ {p:"A <b>pecuária</b> é a atividade responsável por:",a:["Cultivar plantas para alimentação","Criar animais no campo com finalidade econômica","Extrair minérios do solo"],c:1,e:"Abrange bovinos, suínos, equinos, caprinos, ovinos e também aves, coelhos e abelhas."},
+ {p:"Para que servem os <b>chips eletrônicos</b> implantados nos animais?",a:["Para o animal andar sozinho","Para registrar informações como data de nascimento, vacinas e tratamentos","Para o animal comer menos"],c:1,e:"Com esse registro, os consumidores têm maior garantia da qualidade dos alimentos que serão ingeridos."},
+ {p:"<b>Extrativismo</b> é:",a:["A retirada de recursos naturais diretamente da natureza","O cultivo de plantas em estufas","A venda de produtos em lojas"],c:0,e:"Pode ser de origem <b>vegetal</b>, <b>animal</b> ou <b>mineral</b>."},
+ {p:"Qual foi a primeira atividade extrativista praticada pelos portugueses no Brasil?",a:["A extração de petróleo","A extração do pau-brasil","A criação de gado"],c:1,e:"No período colonial começou com o <b>pau-brasil</b> e, tempos depois, veio a extração de minério, sobretudo do ouro."},
+ {p:"Qual destas atividades extrativistas usa <b>equipamentos sofisticados</b> e profissionais especializados?",a:["A pesca artesanal","A coleta de castanha-do-pará","A exploração do petróleo"],c:2,e:"Nem todo extrativismo é de baixa tecnologia: petróleo e jazidas minerais geram grande produção e altos rendimentos."},
+ {p:"A <b>palmeira-juçara</b>, símbolo da Mata Atlântica, está ameaçada de extinção porque:",a:["O palmito que dela se origina é muito consumido e extraído em larga escala","Ela não produz sementes","Ela só cresce em laboratório"],c:0,e:"O palmito é vendido em conserva e consumido em pizzas, pastéis e tortas."},
+ {p:"O filme <b>Tempos Modernos</b>, de Charlie Chaplin, retrata:",a:["A vida no campo antes da tecnologia","A modernização do trabalho na indústria, do artesão para o operário de máquinas","A invenção do computador"],c:1,e:"O período é marcado pela mudança da forma de trabalho artesanal, ou manual, para o trabalho de operário de máquinas."},
+ {p:"São exemplos de indústrias de <b>tecnologia de ponta</b>:",a:["Informática, biotecnologia e aeroespacial","Padaria, açougue e feira","Pesca artesanal e garimpo"],c:0,e:"Elas usam recursos tecnológicos sofisticados e estão em constante processo de inovação."},
+ {p:"Qual é o modelo de <b>comércio mais tradicional</b> no Brasil?",a:["O comércio eletrônico","O comércio de rua","O drive-thru"],c:1,e:"Os produtos do campo e da indústria chegam à população por supermercados, farmácias, feiras e lojas — e o comércio de rua é o modelo mais antigo."},
+ {p:"O que aconteceu com o <b>comércio eletrônico</b> durante a pandemia de COVID-19, em 2020?",a:["Diminuiu bastante","Teve um salto recorde e dobrou a participação no varejo brasileiro","Ficou exatamente igual"],c:1,e:"Mais empresas decidiram entrar no comércio eletrônico e o consumo pela internet cresceu muito."},
+ {p:"Os <b>orelhões</b> e as <b>bancas de jornal</b> perderam espaço por quê?",a:["Porque ficaram muito caros","Por causa do celular e do acesso à informação pela internet","Porque foram proibidos"],c:1,e:"São exemplos de atividades econômicas que se modificaram com o passar do tempo. Algumas bancas se adaptaram e viraram até cafeteria."},
+ {p:"O setor de <b>serviços</b> inclui:",a:["Atendimento bancário e médico, escolas e transportes","Apenas as fábricas","Apenas a agricultura"],c:0,e:"São atividades que o Estado, as empresas e os profissionais autônomos oferecem para resolver problemas ou facilitar a vida das pessoas."},
+ {p:"Os <b>cabos submarinos</b> são responsáveis por:",a:["99% das comunicações entre os continentes","Levar água potável para as cidades","Transportar petróleo"],c:0,e:"São feitos de fibra óptica e levam voz, imagens e mensagens por milhares de quilômetros no fundo do mar."},
+ {p:"Segundo a reportagem estudada, qual é hoje o <b>principal desafio das cidades</b>?",a:["Construir mais prédios altos","Migrar para um cenário menos dependente de energia fóssil","Aumentar o número de carros"],c:1,e:"A transição energética envolve uso eficiente, fontes renováveis e redução a zero das emissões de gases do efeito estufa."},
+ {p:"A ideia de que o meio rural brasileiro usa <b>pouca tecnologia</b> é:",a:["Correta, o campo é atrasado","Errônea — o campo usa muita tecnologia hoje em dia","Verdadeira apenas no Sul do país"],c:1,e:"O material começa justamente desmontando esse estereótipo: o preparo do solo e o plantio, antes manuais, hoje são feitos com máquinas e equipamentos modernos."}
+];
+
+/* ---- MEMÓRIA ---- */
+MEMORIA2["Geografia"] = [
+ {a:"fig:agricultura", b:"Agricultura",    ex:"<b>Agricultura</b> — cultivo de plantas. Pode ser de subsistência ou comercial."},
+ {a:"fig:vaca",        b:"Pecuária",       ex:"<b>Pecuária</b> — criação de animais com finalidade econômica: bois, porcos, aves, abelhas."},
+ {a:"fig:extrativismo",b:"Extrativismo",   ex:"<b>Extrativismo</b> — retirada de recursos direto da natureza: vegetal, animal ou mineral."},
+ {a:"fig:industria",   b:"Indústria",      ex:"<b>Indústria</b> — transforma matéria-prima em produto pronto."},
+ {a:"fig:comercio",    b:"Comércio",       ex:"<b>Comércio</b> — vende à população os produtos do campo e da indústria."},
+ {a:"fig:satelite",    b:"Imagem de satélite", ex:"Usada para monitorar a área de produção, a pastagem e o desmatamento."},
+ {a:"fig:trator",      b:"Maquinário com GPS", ex:"Tratores, colheitadeiras e semeadoras com GPS mapeiam o terreno a ser plantado."},
+ {a:"fig:chip",        b:"Chip no animal",  ex:"Registra data de nascimento, vacinas e tratamentos — garantia de qualidade."},
+ {a:"fig:petroleo",    b:"Extração de petróleo", ex:"Extrativismo mineral de alta tecnologia, com profissionais especializados."},
+ {a:"fig:orelhao",     b:"Orelhão",        ex:"Telefone público que perdeu a função com a chegada do celular."},
+ {a:"fig:ecommerce",   b:"Comércio eletrônico", ex:"Deu um salto na pandemia de 2020 e dobrou a participação no varejo brasileiro."},
+ {a:"Transgênico",     b:"Alterado em laboratório", ex:"Semente modificada para ser mais nutritiva e resistente às pragas."},
+ {a:"Orgânico",        b:"Sem insumos químicos", ex:"Produção menor, por isso costuma ser mais caro."},
+ {a:"Pau-brasil",      b:"1ª extração dos portugueses", ex:"Depois veio o minério, sobretudo o ouro."},
+ {a:"Cabos submarinos",b:"99% das comunicações", ex:"Fibra óptica no fundo do mar ligando os continentes."}
+];
+
+/* ---- CRUZADINHA ---- */
+CRUZADA2["Geografia"] = [
+ ["SUBSISTENCIA","Agricultura da família pequena, com enxada e ferramenta manual, para comer e vender pertinho"],
+ ["TRANSGENICO","Fui alterado em laboratório para resistir às pragas, e muita gente desconfia de mim"],
+ ["ORGANICO","Cresci sem nenhum insumo químico — por isso sou mais caro na prateleira"],
+ ["PECUARIA","Cuido da criação de bois, porcos, aves e até abelhas, sempre com fim econômico"],
+ ["EXTRATIVISMO","Tiro da natureza o que ela já tem pronto: madeira, peixe ou minério"],
+ ["INDUSTRIA","Recebo a matéria-prima e devolvo produto pronto, com máquinas e trabalhadores"],
+ ["COMERCIO","Não planto nem fabrico: eu levo os produtos até a população"],
+ ["SERVICOS","Sou banco, hospital, escola e transporte — não vendo coisa, resolvo problema"],
+ ["ORELHAO","Fui o telefone da rua e o celular me aposentou"],
+ ["PETROLEO","Saio da plataforma, passo pela refinaria e chego ao posto como gasolina"],
+ ["NUVEM","Guardo documentos e fotos sem ocupar espaço no seu aparelho"],
+ ["PAUBRASIL","Fui a primeira riqueza que os portugueses tiraram desta terra"]
+];
+
+/* ---- ASSOCIAÇÃO ---- */
+ASSOC2["Geografia"] = [
+ {f:"agricultura", t:"Agricultura",  ex:"Cultivo de plantas — de subsistência ou comercial."},
+ {f:"vaca",        t:"Pecuária",     ex:"Criação de animais com fim econômico."},
+ {f:"extrativismo",t:"Extrativismo", ex:"Retirada direta da natureza."},
+ {f:"industria",   t:"Indústria",    ex:"Transforma matéria-prima em produto."},
+ {f:"comercio",    t:"Comércio",     ex:"Leva os produtos até a população."},
+ {f:"trator",      t:"GPS no campo", ex:"Mapeia o terreno a ser plantado."},
+ {f:"satelite",    t:"Monitoramento por satélite", ex:"Acompanha a produção e o desmatamento."},
+ {f:"petroleo",    t:"Extrativismo mineral", ex:"Alta tecnologia e profissionais especializados."},
+ {f:"orelhao",     t:"Objeto que perdeu a função", ex:"O celular aposentou o orelhão."},
+ {f:"ecommerce",   t:"Comércio eletrônico", ex:"Cresceu muito na pandemia de 2020."}
+];
+
+/* ---- CENTRAL DE DÚVIDAS ---- */
+AJUDA["Geografia"] = [
+ {id:"agri", nome:"Agricultura: subsistência x mercado",
+  glos:[["Agricultura de subsistência","Praticada por pequenos agricultores e suas famílias, com ferramentas manuais, para consumo próprio e comércio local."],
+        ["Agricultura comercial","Também chamada de mercado. Produz em grande escala para os mercados nacional e internacional."],
+        ["Maquinário moderno","Tratores, colheitadeiras e semeadoras — muitos com GPS."],
+        ["GPS","Global Positioning System. Mapeia o terreno e a área a ser plantada."]],
+  passos:["Pergunte: <b>quem trabalha?</b> Família pequena → subsistência. Empresa com máquinas → mercado.",
+          "Pergunte: <b>para onde vai a produção?</b> Para a própria casa e a feira da região → subsistência. Para outros estados e países → mercado.",
+          "Pergunte: <b>com que ferramenta?</b> Enxada e animais → subsistência. Trator com GPS → mercado."],
+  ex:"Uma horta que alimenta a família e vende o resto na feira = <b>subsistência</b>.<br>Uma fazenda de soja com colheitadeira e exportação = <b>mercado</b>.",
+  mapa:{c:"Agricultura",r:[{t:"Subsistência",f:["mão de obra familiar","ferramentas manuais","consumo próprio e comércio local"]},{t:"Comercial / de mercado",f:["fins econômicos","técnicas e máquinas modernas","mercado nacional e internacional"]},{t:"Tecnologia",f:["GPS nas máquinas","sementes melhoradas","imagens de satélite"]}]},
+  busca:"agricultura de subsistência e comercial 5 ano geografia"},
+
+ {id:"transg", nome:"Transgênicos e orgânicos",
+  glos:[["Transgênico","Planta geneticamente modificada em laboratório, mais resistente às pragas e mais nutritiva."],
+        ["Orgânico","Alimento produzido sem insumos químicos. Costuma ser mais caro."],
+        ["Insumo químico","Produto artificial usado no cultivo, como agrotóxico e adubo químico."]],
+  passos:["Transgênico = mexeram nos <b>genes</b> da semente, em laboratório.",
+          "Orgânico = <b>não usaram química</b> no cultivo.",
+          "São coisas diferentes: um fala da semente, o outro do jeito de plantar."],
+  ex:"O rótulo com o <b>T</b> dentro de um triângulo indica produto transgênico. Muitas pessoas consideram os transgênicos perigosos para o ambiente e para a saúde — é assunto polêmico.",
+  mapa:{c:"Alimentos",r:[{t:"Transgênico",f:["alterado em laboratório","resiste a pragas","símbolo T no rótulo"]},{t:"Orgânico",f:["sem insumo químico","produção menor","mais caro"]}]},
+  busca:"alimentos transgênicos e orgânicos diferença 5 ano"},
+
+ {id:"pec", nome:"Pecuária e tecnologia no campo",
+  glos:[["Pecuária","Criação de animais no campo com finalidade econômica."],
+        ["Chip eletrônico","Implantado no animal, registra nascimento, vacinas e tratamentos."],
+        ["Imagem de satélite","Usada para monitorar a área de produção, a pastagem e o desmatamento."]],
+  passos:["A pecuária vai muito além do boi: inclui aves, suínos, equinos, caprinos, ovinos, coelhos e abelhas.",
+          "A tecnologia entrou também aqui: chips, aplicativos de alimentação e previsão do tempo.",
+          "O chip serve para rastrear — e isso dá garantia de qualidade a quem vai comer."],
+  ex:"Comparando as imagens de satélite de São Félix do Xingu de <b>1985</b> e <b>2021</b>, dá para ver o avanço do desmatamento e da pastagem.",
+  mapa:{c:"Pecuária",r:[{t:"O que é",f:["criação de animais","finalidade econômica"]},{t:"Quais animais",f:["bovinos, suínos, equinos","caprinos, ovinos","aves, coelhos, abelhas"]},{t:"Tecnologia",f:["chip eletrônico","aplicativos de alimentação","imagem de satélite"]}]},
+  busca:"pecuária tecnologia no campo 5 ano geografia"},
+
+ {id:"extra", nome:"Extrativismo",
+  glos:[["Extrativismo","Retirada de recursos naturais diretamente da natureza."],
+        ["Extrativismo vegetal","Madeira, folhas, frutos, resinas, castanha-do-pará."],
+        ["Extrativismo animal","Pesca, caça."],
+        ["Extrativismo mineral","Minério, ouro, petróleo."],
+        ["Pau-brasil","Primeira riqueza extraída pelos portugueses no período colonial."],
+        ["Garimpo de aluvião","Coleta de ouro no leito dos rios, feita quase toda manualmente."]],
+  passos:["Pergunte: de onde vem? <b>Planta</b> → vegetal. <b>Bicho</b> → animal. <b>Chão</b> → mineral.",
+          "Nem todo extrativismo é simples: pesca artesanal usa pouca tecnologia, mas petróleo usa muita.",
+          "Ordem histórica no Brasil: pau-brasil primeiro, minério e ouro depois."],
+  ex:"O petróleo sai da <b>plataforma</b>, é transformado em gasolina ou diesel na <b>refinaria</b>, vai ao <b>distribuidor</b>, chega ao <b>posto</b> e por fim ao <b>consumidor final</b>.",
+  mapa:{c:"Extrativismo",r:[{t:"Vegetal",f:["madeira, frutos","castanha-do-pará","palmeira-juçara (palmito)"]},{t:"Animal",f:["pesca artesanal"]},{t:"Mineral",f:["ouro de aluvião","minério","petróleo"]},{t:"Histórico",f:["pau-brasil → ouro"]}]},
+  busca:"extrativismo vegetal animal mineral 5 ano geografia"},
+
+ {id:"cidade", nome:"Indústria, comércio e serviços",
+  glos:[["Indústria","Conjunto de máquinas e trabalho humano que transforma matéria-prima em produto."],
+        ["Tecnologia de ponta","Indústrias de informática, biotecnologia e aeroespacial."],
+        ["Comércio","Leva à população os produtos do campo e da indústria."],
+        ["Comércio de rua","O modelo mais tradicional no Brasil."],
+        ["Comércio eletrônico","Compra e venda pela internet. Deu um salto em 2020, na pandemia."],
+        ["Serviços","Atividades que resolvem problemas: banco, saúde, escolas, transporte."]],
+  passos:["Indústria <b>transforma</b>. Comércio <b>vende</b>. Serviço <b>atende</b>.",
+          "Se a pergunta cita fábrica ou máquina → indústria.",
+          "Se cita loja, feira, supermercado ou site de compras → comércio.",
+          "Se cita hospital, escola, banco ou ônibus → serviços."],
+  ex:"<b>Tempos Modernos</b>, de Chaplin (1936), mostra a passagem do trabalho artesanal para o trabalho de operário de máquinas na Revolução Industrial.",
+  mapa:{c:"Cidade",r:[{t:"Indústria",f:["transforma matéria-prima","Tempos Modernos","tecnologia de ponta"]},{t:"Comércio",f:["de rua (tradicional)","supermercado, feira","eletrônico (cresceu em 2020)"]},{t:"Serviços",f:["banco e saúde","escolas","transporte"]}]},
+  busca:"indústria comércio e serviços 5 ano geografia"},
+
+ {id:"mudou", nome:"O que a tecnologia mudou",
+  glos:[["Orelhão","Telefone público, aposentado pelo celular."],
+        ["Banca de jornal","Centralizava a venda de jornais e revistas; perdeu espaço para a internet."],
+        ["Nuvem","Local de armazenamento na internet, acessível de qualquer lugar."],
+        ["Cabos submarinos","Fibra óptica no fundo do mar, responsável por 99% das comunicações entre continentes."],
+        ["Transição energética","Sair da dependência de energia fóssil rumo a fontes renováveis."]],
+  passos:["A tecnologia faz atividades <b>desaparecerem</b>, <b>mudarem</b> ou <b>nascerem</b>.",
+          "Desapareceram ou encolheram: orelhão, banca de jornal, mimeógrafo.",
+          "Mudaram: a banca virou cafeteria; a loja ganhou versão online.",
+          "Nasceram: profissões de informática e biotecnologia."],
+  ex:"O principal desafio das cidades hoje, segundo a reportagem, é a <b>transição energética</b> — reduzir a dependência de combustível fóssil e zerar as emissões de gases do efeito estufa.",
+  mapa:{c:"O que mudou",r:[{t:"Sumiram ou encolheram",f:["orelhão","banca de jornal"]},{t:"Se adaptaram",f:["banca virou cafeteria","loja virou site"]},{t:"Nasceram",f:["informática","biotecnologia","aeroespacial"]},{t:"Desafio atual",f:["transição energética","energia renovável"]}]},
+  busca:"tecnologia mudou atividades econômicas cidade 5 ano"}
+];
+
+/* ---- roteamento das perguntas para a ajuda ---- */
+ROTAS["Geografia"] = [
+ ["transg",/transg[eê]nic|org[aâ]nic|insumo/i],
+ ["pec",/pecu[aá]ri|chip|animais|sat[eé]lite|pastagem/i],
+ ["extra",/extrativ|pau-brasil|petr[oó]leo|garimpo|palmeira|ju[çc]ara|minério/i],
+ ["cidade",/ind[uú]stri|com[eé]rcio|servi[çc]o|chaplin|tempos modernos|tecnologia de ponta|varejo|drive/i],
+ ["mudou",/orelh|banca|nuvem|cabos|energ|desafio|rural.*tecnologia|pouca tecnologia/i],
+ ["agri",/./]
+];
+
+/* ============================================================
+   FOLHAS PARA IMPRIMIR — fixação por escrita
+   ============================================================ */
+const FOLHAS = {
+"Geografia":[
+ {id:"lacunas", nome:"Complete as lacunas", sub:"10 frases · treina vocabulário", tipo:"lacunas",
+  itens:[
+   ["A agricultura de ________________ é praticada por pequenos agricultores e suas famílias, com técnicas e ferramentas manuais.","subsistência"],
+   ["A agricultura ________________, ou de mercado, é praticada para fins econômicos e se destina aos mercados nacional e internacional.","comercial"],
+   ["Tratores, colheitadeiras e semeadoras modernos usam ________________ para mapear o terreno a ser plantado.","GPS"],
+   ["Plantas geneticamente modificadas em laboratório são chamadas de ________________.","transgênicas"],
+   ["Os alimentos ________________ são cultivados sem insumos químicos e costumam ser mais caros.","orgânicos"],
+   ["A ________________ é a atividade responsável pela criação de animais no campo com finalidade econômica.","pecuária"],
+   ["A retirada de recursos naturais diretamente da natureza chama-se ________________.","extrativismo"],
+   ["No período colonial, a primeira atividade extrativista praticada pelos portugueses no Brasil foi a extração do ________________.","pau-brasil"],
+   ["Os ________________ eram telefones públicos muito usados antes da popularização do celular.","orelhões"],
+   ["Cerca de 99% das comunicações entre os continentes passam por ________________ ________________.","cabos submarinos"]]},
+
+ {id:"ligue", nome:"Ligue as colunas", sub:"8 pares · relaciona conceito e definição", tipo:"ligue",
+  itens:[
+   ["Agricultura","cultivo de plantas, para consumo ou para o mercado"],
+   ["Pecuária","criação de animais com finalidade econômica"],
+   ["Extrativismo","retirada de recursos direto da natureza"],
+   ["Indústria","transforma a matéria-prima em produto pronto"],
+   ["Comércio","leva os produtos até a população"],
+   ["Serviços","banco, hospital, escola e transporte"],
+   ["Tecnologia de ponta","informática, biotecnologia e aeroespacial"],
+   ["Comércio de rua","o modelo mais tradicional no Brasil"]]},
+
+ {id:"certo", nome:"Certo ou errado", sub:"10 afirmações · exige justificar", tipo:"certo",
+  itens:[
+   ["O meio rural brasileiro usa pouca tecnologia.", false, "Essa é uma visão errônea. O preparo do solo e o plantio, antes manuais, hoje usam máquinas e equipamentos modernos."],
+   ["A agricultura de subsistência produz principalmente para exportação.", false, "Ela produz para consumo próprio e para o comércio local."],
+   ["O GPS ajuda a mapear o terreno e toda a área a ser plantada.", true, "Está nas colheitadeiras e semeadoras da agricultura moderna."],
+   ["Transgênico e orgânico são a mesma coisa.", false, "Transgênico é alterado em laboratório; orgânico é cultivado sem insumos químicos."],
+   ["A pecuária inclui a criação de abelhas.", true, "Abrange bovinos, suínos, equinos, caprinos, ovinos, aves, coelhos e abelhas."],
+   ["Todo extrativismo é feito com pouca tecnologia.", false, "A exploração do petróleo e das jazidas minerais usa equipamentos sofisticados e profissionais especializados."],
+   ["As bancas de jornal aumentaram as vendas com a chegada da internet.", false, "As vendas de impressos diminuíram; algumas bancas se adaptaram e viraram cafeteria."],
+   ["A pandemia de COVID-19 fez o comércio eletrônico crescer no Brasil.", true, "Em 2020 ele teve salto recorde e dobrou a participação no varejo."],
+   ["As indústrias modernas exigem mão de obra qualificada.", true, "Têm nível tecnológico elevado, como montadoras, petroquímicas e fábricas de papel e celulose."],
+   ["Imagens de satélite ajudam a monitorar a área de produção e o desmatamento.", true, "Foi o que se viu comparando São Félix do Xingu em 1985 e em 2021."]]},
+
+ {id:"numere", nome:"Numere e some", sub:"exercício do livro, p.70", tipo:"numere",
+  enunciado:"Leia as descrições e anote os números correspondentes a cada tipo de agricultura. Depois, some os valores.",
+  lista:["Agricultura praticada para consumo próprio e comércio local.",
+         "Para a produção, utiliza técnicas e máquinas modernas.",
+         "Agricultura voltada para os mercados nacional e internacional.",
+         "Faz uso de GPS nas colheitadeiras e semeadoras.",
+         "Apoia-se na mão de obra familiar de pequenos agricultores.",
+         "Para a produção, utiliza técnicas e ferramentas manuais."],
+  linhas:[["Agricultura de subsistência","1 + 5 + 6 = 12"],["Agricultura de mercado","2 + 3 + 4 = 9"]]},
+
+ {id:"tabela", nome:"Tabela comparativa", sub:"subsistência x mercado", tipo:"tabela",
+  cols:["","Agricultura de subsistência","Agricultura de mercado"],
+  linhas:[["Quem trabalha","a própria família, pequenos agricultores","empresas, trabalhadores contratados"],
+          ["Ferramentas","enxada e equipamentos puxados por animais","tratores, colheitadeiras e semeadoras"],
+          ["Tecnologia","pouca","alta: GPS, sementes melhoradas, satélite"],
+          ["Tamanho da produção","pequena","grande escala"],
+          ["Para onde vai","consumo próprio e comércio local","mercado nacional e internacional"]]},
+
+ {id:"aberta", nome:"Responda com suas palavras", sub:"6 questões dissertativas", tipo:"aberta", linhas:3,
+  itens:[
+   ["Explique a diferença entre agricultura de subsistência e agricultura de mercado.","Subsistência: família, ferramentas manuais, produção pequena, para consumo próprio e comércio local. Mercado: fins econômicos, máquinas modernas, grande escala, para os mercados nacional e internacional."],
+   ["Cite duas tecnologias usadas hoje no campo e explique para que servem.","GPS em colheitadeiras e semeadoras, para mapear o terreno; chips nos animais, para registrar vacinas e tratamentos; imagens de satélite, para monitorar a produção; aplicativos de alimentação e previsão do tempo."],
+   ["O que são alimentos transgênicos e por que eles geram polêmica?","São plantas geneticamente modificadas em laboratório, mais nutritivas e resistentes às pragas. Muitas pessoas os consideram perigosos para o ambiente e para a saúde humana."],
+   ["Dê um exemplo de extrativismo com pouca tecnologia e outro com alta tecnologia.","Pouca: pesca artesanal, coleta de castanha-do-pará, garimpo de ouro de aluvião. Alta: exploração de petróleo e de jazidas minerais."],
+   ["Cite dois objetos ou atividades que perderam espaço por causa da tecnologia e explique o que aconteceu.","Orelhões, substituídos pelo celular; bancas de jornal, que perderam vendas com a informação digital e algumas viraram cafeteria."],
+   ["Qual é hoje o principal desafio das cidades, segundo a reportagem estudada?","Migrar para um cenário menos dependente de energia fóssil, com uso eficiente, fontes renováveis e redução a zero das emissões de gases do efeito estufa."]]},
+
+ {id:"mapa", nome:"Mapa conceitual", sub:"completar o esquema", tipo:"mapa",
+  centro:"O TRABALHO NA CIDADE E NO CAMPO",
+  ramos:[{t:"NO CAMPO", f:["Agricultura: ______________ e ______________","Pecuária: criação de ______________","Extrativismo: ______, ______ e ______"],
+          g:["de subsistência e comercial","animais com fim econômico","vegetal, animal e mineral"]},
+         {t:"NA CIDADE", f:["______________: transforma a matéria-prima","______________: vende à população","______________: banco, escola, transporte"],
+          g:["Indústria","Comércio","Serviços"]},
+         {t:"O QUE MUDOU", f:["Sumiram ou encolheram: ______________","Nasceram: indústrias de ______________","Desafio de hoje: ______________"],
+          g:["orelhão e banca de jornal","tecnologia de ponta","transição energética"]}]}
+]
+};
+
+/* ---------- tela ---------- */
+var folhaGabarito = false;
+function iniFolhas(){
+  const lista = FOLHAS[matAtual] || [];
+  document.getElementById("jogoBox").innerHTML = `<div class="card ouro">
+    <h3>🖨️ Folhas para imprimir</h3>
+    <p class="sub">Atividades para responder <b>escrevendo à mão</b>. Escrever obriga a recuperar da memória — é isso que fixa.</p>
+    <div class="escolha">
+      <button class="${!folhaGabarito?'on':''}" onclick="folhaGabarito=false;iniFolhas()">Folha da aluna</button>
+      <button class="${folhaGabarito?'on':''}" onclick="folhaGabarito=true;iniFolhas()">Com gabarito</button>
+    </div>
+    <p class="sub" style="margin-top:8px">${folhaGabarito?"O gabarito sai em cinza, para quem corrige.":"Sai em branco, para preencher."}</p>
+  </div>` +
+  lista.map(function(f){
+    return `<div class="card"><h3>${f.nome}</h3><p class="sub">${f.sub}</p>
+      <button class="btn sec" onclick="imprimirFolhaTipo('${f.id}')">🖨️ Imprimir esta folha</button></div>`;
+  }).join("") +
+  `<div class="card salvia"><button class="btn" onclick="imprimirFolhaTipo('todas')">🖨️ Imprimir o caderno completo</button>
+   <p class="sub">Sai tudo de uma vez, uma atividade por página.</p></div>`;
+}
+
+function linhasEmBranco(n){
+  let s = ""; for(let i=0;i<n;i++) s += '<div class="flin"></div>'; return s;
+}
+function gab(txt){ return folhaGabarito ? `<div class="fgab">${txt}</div>` : ""; }
+
+function montarFolha(f){
+  let h = `<div class="ffolha"><h1>${f.nome} — ${matAtual}</h1>
+    <p class="fdata">Nome: ______________________________   Data: ____ / ____ / ______</p>`;
+
+  if(f.tipo==="lacunas"){
+    h += `<p class="finstr">Complete cada frase com a palavra que falta.</p><ol class="flista">` +
+      f.itens.map(function(i){ return `<li>${i[0]}${gab("→ "+i[1])}</li>`; }).join("") + `</ol>`;
+  }
+  else if(f.tipo==="ligue"){
+    const dir = f.itens.map(function(x,i){ return {t:x[1], n:i+1}; }).slice().sort(function(a,b){ return a.t.localeCompare(b.t); });
+    h += `<p class="finstr">Escreva na linha o número da definição correspondente.</p>
+      <table class="fligue"><tr><th>Conceito</th><th>nº</th><th>Definições</th></tr>` +
+      f.itens.map(function(x,i){
+        const d = dir[i];
+        return `<tr><td><b>${x[0]}</b></td><td class="fnum2">${folhaGabarito?dir.findIndex(function(y){return y.t===x[1];})+1:"____"}</td>
+                <td>(${i+1}) ${d.t}</td></tr>`;
+      }).join("") + `</table>`;
+  }
+  else if(f.tipo==="certo"){
+    h += `<p class="finstr">Escreva <b>C</b> para certo ou <b>E</b> para errado. Se for errado, corrija na linha de baixo.</p><ol class="flista">` +
+      f.itens.map(function(i){
+        return `<li><span class="fcx">___</span> ${i[0]}<div class="flin"></div>${gab((i[1]?"CERTO":"ERRADO")+" — "+i[2])}</li>`;
+      }).join("") + `</ol>`;
+  }
+  else if(f.tipo==="numere"){
+    h += `<p class="finstr">${f.enunciado}</p><ol class="flista fnum3">` +
+      f.lista.map(function(x){ return `<li>${x}</li>`; }).join("") + `</ol>
+      <div class="fsoma">` + f.linhas.map(function(l){
+        return `<div><b>${l[0]}:</b> ${folhaGabarito? l[1] : "____ + ____ + ____ = ____"}</div>`;
+      }).join("") + `</div>`;
+  }
+  else if(f.tipo==="tabela"){
+    h += `<p class="finstr">${f.instr || "Complete a tabela comparando as duas colunas."}</p>
+      <table class="ftab"><tr>` + f.cols.map(function(c){ return `<th>${c}</th>`; }).join("") + `</tr>` +
+      f.linhas.map(function(l){
+        return `<tr><td class="frot">${l[0]}</td>` + l.slice(1).map(function(x){
+          return `<td>${folhaGabarito?x:""}</td>`; }).join("") + `</tr>`;
+      }).join("") + `</table>`;
+  }
+  else if(f.tipo==="aberta"){
+    h += `<p class="finstr">Responda com suas palavras, em frases completas.</p><ol class="flista">` +
+      f.itens.map(function(i){ return `<li>${i[0]}${linhasEmBranco(f.linhas)}${gab(i[1])}</li>`; }).join("") + `</ol>`;
+  }
+  else if(f.tipo==="mapa"){
+    h += `<p class="finstr">Complete o mapa conceitual preenchendo as lacunas.</p>
+      <div class="fmapa"><div class="fcentro">${f.centro}</div>` +
+      f.ramos.map(function(r){
+        return `<div class="framo"><b>${r.t}</b><ul>` +
+          r.f.map(function(x,i){ return `<li>${x}${folhaGabarito?` <span class="fgabin">(${r.g[i]})</span>`:""}</li>`; }).join("") +
+          `</ul></div>`;
+      }).join("") + `</div>`;
+  }
+  return h + `<p class="frodape">Confira as respostas no aplicativo, em Treinar → ${matAtual}.</p></div>`;
+}
+
+function imprimirFolhaTipo(id){
+  const lista = FOLHAS[matAtual] || [];
+  const alvo = id==="todas" ? lista : lista.filter(function(f){ return f.id===id; });
+  document.getElementById("folhaImpressa").innerHTML = alvo.map(montarFolha).join("");
+  window.print();
+}
+
+
+/* ============================================================
+   INGLÊS — refeito a partir do material real (Units 3 e 4)
+   Unit 3 "Our Community": jobs, job responsibilities,
+     Past Progressive (statements, questions, + simple past),
+     apartment / floor / neighborhood / skyscraper
+   Unit 4 "Future Travel": future transport, Will (statements e
+     questions), question words, direction words e verbos de direção
+   ============================================================ */
+
+/* ---- ícones novos ---- */
+ICONES.architect='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M8 50h48" stroke="#8A9BC0" stroke-width="3" stroke-linecap="round"/><path d="M14 50V26l18-12 18 12v24z" fill="#DCE4F2" stroke="#5A6E9A" stroke-width="2.4" stroke-linejoin="round"/><rect x="27" y="36" width="10" height="14" fill="#3F5285"/><rect x="19" y="30" width="7" height="7" fill="#fff" stroke="#5A6E9A" stroke-width="1.4"/><rect x="38" y="30" width="7" height="7" fill="#fff" stroke="#5A6E9A" stroke-width="1.4"/><path d="M6 18l12 8" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/><path d="M4 14l6 2-2 6z" fill="#D9A441"/>';
+ICONES.baker='<circle cx="32" cy="32" r="31" fill="#FDF5EE"/><path d="M13 56c0-11 9-16 19-16s19 5 19 16z" fill="#E8C27A"/><circle cx="32" cy="33" r="10" fill="#F7E2CB"/><path d="M20 24c-5 0-8-4-8-8s4-7 8-6c1-5 6-8 12-8s11 3 12 8c4-1 8 2 8 6s-3 8-8 8z" fill="#fff" stroke="#CDBCA9" stroke-width="1.6"/><rect x="20" y="22" width="24" height="5" fill="#fff" stroke="#CDBCA9" stroke-width="1.6"/><circle cx="27" cy="34" r="1.8" fill="#43302A"/><circle cx="37" cy="34" r="1.8" fill="#43302A"/><ellipse cx="32" cy="52" rx="13" ry="6" fill="#C98F45" stroke="#96682F" stroke-width="1.6"/><path d="M24 50l4-4M31 49l4-4M38 50l3-4" stroke="#96682F" stroke-width="1.6" stroke-linecap="round"/>';
+ICONES.barber='<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><path d="M14 50c8-6 12-9 18-9s10 3 18 9" fill="none" stroke="#CDBCA9" stroke-width="0"/><circle cx="32" cy="30" r="12" fill="#F7E2CB"/><path d="M20 26c0-8 5-13 12-13s12 5 12 13c-4-3-8-4-12-4s-8 1-12 4z" fill="#43302A"/><circle cx="27" cy="31" r="1.8" fill="#43302A"/><circle cx="37" cy="31" r="1.8" fill="#43302A"/><path d="M10 54l16-10M22 54L10 46" stroke="#8A9BC0" stroke-width="3" stroke-linecap="round"/><circle cx="9" cy="44" r="3.4" fill="none" stroke="#8A9BC0" stroke-width="2.4"/><circle cx="9" cy="56" r="3.4" fill="none" stroke="#8A9BC0" stroke-width="2.4"/>';
+ICONES.journalist='<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><rect x="8" y="16" width="40" height="34" rx="3" fill="#FDF5EE" stroke="#8A6F63" stroke-width="2"/><rect x="13" y="21" width="18" height="10" rx="1.5" fill="#CDBCA9"/><path d="M35 22h9M35 27h9M13 36h31M13 41h31M13 46h20" stroke="#8A6F63" stroke-width="2" stroke-linecap="round"/><rect x="44" y="10" width="8" height="16" rx="4" fill="#43302A"/><path d="M48 26v12" stroke="#43302A" stroke-width="3"/>';
+ICONES.librarian='<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><rect x="8" y="14" width="48" height="8" rx="2" fill="#8A6F63"/><g><rect x="12" y="22" width="7" height="18" fill="#8E2A3C"/><rect x="21" y="22" width="6" height="18" fill="#3F5285"/><rect x="29" y="22" width="8" height="18" fill="#D9A441"/><rect x="39" y="22" width="6" height="18" fill="#5C7F63"/><rect x="47" y="22" width="7" height="18" fill="#8B6FC0"/></g><rect x="8" y="40" width="48" height="7" rx="2" fill="#8A6F63"/><path d="M20 54h24" stroke="#5A4034" stroke-width="3" stroke-linecap="round"/>';
+ICONES.mayor='<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M32 6l4 8 9 1-6 7 2 9-9-4-9 4 2-9-6-7 9-1z" fill="#D9A441" stroke="#A8761E" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 58c0-10 9-15 19-15s19 5 19 15z" fill="#3F5285"/><circle cx="32" cy="38" r="9" fill="#F7E2CB"/><circle cx="28" cy="38" r="1.6" fill="#43302A"/><circle cx="36" cy="38" r="1.6" fill="#43302A"/><path d="M32 47l-4 11h8z" fill="#fff"/><path d="M32 47l-5 4 5 5 5-5z" fill="#8E2A3C"/>';
+ICONES.photographer='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="8" y="22" width="48" height="28" rx="5" fill="#43302A"/><rect x="20" y="16" width="14" height="7" rx="2" fill="#43302A"/><circle cx="32" cy="36" r="11" fill="#5A6E9A" stroke="#2A3860" stroke-width="2"/><circle cx="32" cy="36" r="5.5" fill="#DCE4F2"/><circle cx="47" cy="28" r="2.6" fill="#D9A441"/>';
+ICONES.skyscraper='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="8" y="30" width="13" height="26" fill="#5A6E9A"/><rect x="24" y="8" width="16" height="48" fill="#3F5285"/><rect x="43" y="24" width="13" height="32" fill="#5A6E9A"/><g fill="#FBEFD6"><rect x="11" y="34" width="3.5" height="3.5"/><rect x="16" y="34" width="3.5" height="3.5"/><rect x="11" y="42" width="3.5" height="3.5"/><rect x="27" y="14" width="4" height="4"/><rect x="33" y="14" width="4" height="4"/><rect x="27" y="24" width="4" height="4"/><rect x="33" y="24" width="4" height="4"/><rect x="27" y="34" width="4" height="4"/><rect x="33" y="34" width="4" height="4"/><rect x="46" y="30" width="3.5" height="3.5"/><rect x="51" y="30" width="3.5" height="3.5"/><rect x="46" y="38" width="3.5" height="3.5"/></g>';
+ICONES.neighborhood='<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M6 52h52" stroke="#8A6F63" stroke-width="3" stroke-linecap="round"/><path d="M8 52V34l10-8 10 8v18z" fill="#D2718A" stroke="#9E4459" stroke-width="2" stroke-linejoin="round"/><path d="M30 52V28l11-9 11 9v24z" fill="#86A98C" stroke="#5C7F63" stroke-width="2" stroke-linejoin="round"/><rect x="14" y="40" width="8" height="12" fill="#FBEFD6"/><rect x="37" y="36" width="8" height="16" fill="#FBEFD6"/><circle cx="41" cy="26" r="0" fill="none"/>';
+ICONES.monorail='<circle cx="32" cy="32" r="31" fill="#EEE7F8"/><rect x="6" y="18" width="46" height="20" rx="10" fill="#8B6FC0" stroke="#5E4790" stroke-width="2"/><rect x="12" y="23" width="10" height="9" rx="2" fill="#EFE9FA"/><rect x="25" y="23" width="10" height="9" rx="2" fill="#EFE9FA"/><path d="M46 24c4 2 6 5 6 8" stroke="#EFE9FA" stroke-width="2.4" fill="none" stroke-linecap="round"/><rect x="4" y="42" width="56" height="6" rx="3" fill="#8A9BC0"/><path d="M28 38v4" stroke="#5E4790" stroke-width="4"/><path d="M14 48v8M46 48v8" stroke="#8A9BC0" stroke-width="4" stroke-linecap="round"/>';
+ICONES.highspeedtrain='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M10 40V28c0-6 9-12 22-12h20v24z" fill="#3F5285" stroke="#2A3860" stroke-width="2" stroke-linejoin="round"/><path d="M18 28c2-4 8-7 14-7h6v8H16z" fill="#DCE4F2"/><rect x="42" y="21" width="9" height="8" rx="2" fill="#DCE4F2"/><path d="M8 46h44" stroke="#8A9BC0" stroke-width="4" stroke-linecap="round"/><path d="M4 20h10M2 27h9M4 34h8" stroke="#9BB8CC" stroke-width="3" stroke-linecap="round"/>';
+ICONES.supersonicjet='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M12 38l30-16c6-3 12-4 14-2s0 7-4 11L26 52z" fill="#DCE4F2" stroke="#5A6E9A" stroke-width="2" stroke-linejoin="round"/><path d="M24 30l-14-2 6 9M34 42l-2 12 10-7" fill="#8A9BC0" stroke="#5A6E9A" stroke-width="1.6" stroke-linejoin="round"/><circle cx="46" cy="26" r="2.4" fill="#3F5285"/><path d="M4 46h12M2 54h16" stroke="#D2718A" stroke-width="3" stroke-linecap="round"/>';
+ICONES.jetpack='<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><circle cx="32" cy="16" r="7" fill="#F7E2CB" stroke="#C79A73" stroke-width="1.6"/><path d="M26 24h12l3 16H23z" fill="#D2718A" stroke="#9E4459" stroke-width="2" stroke-linejoin="round"/><rect x="14" y="22" width="9" height="20" rx="4.5" fill="#8A9BC0" stroke="#5A6E9A" stroke-width="1.8"/><rect x="41" y="22" width="9" height="20" rx="4.5" fill="#8A9BC0" stroke="#5A6E9A" stroke-width="1.8"/><path d="M18.5 44c2 4 2 8 0 12-2-4-2-8 0-12zM45.5 44c2 4 2 8 0 12-2-4-2-8 0-12z" fill="#D9A441"/><path d="M26 42l-2 14M38 42l2 14" stroke="#9E4459" stroke-width="3" stroke-linecap="round"/>';
+ICONES.hoverboard='<circle cx="32" cy="32" r="31" fill="#EEE7F8"/><path d="M10 34c0-3 5-5 22-5s22 2 22 5-5 5-22 5-22-2-22-5z" fill="#8B6FC0" stroke="#5E4790" stroke-width="2"/><path d="M16 40c0 3 3 5 6 5s6-2 6-5M36 40c0 3 3 5 6 5s6-2 6-5" stroke="#5E4790" stroke-width="2.4" fill="none"/><path d="M8 50h14M42 50h14M18 56h28" stroke="#B49BD4" stroke-width="3.4" stroke-linecap="round"/><path d="M30 29V16M24 20l6-6 6 6" stroke="#5E4790" stroke-width="0" fill="none"/>';
+ICONES.spaceship='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M32 6c7 7 10 16 10 26v10H22V32c0-10 3-19 10-26z" fill="#DCE4F2" stroke="#5A6E9A" stroke-width="2" stroke-linejoin="round"/><circle cx="32" cy="26" r="5.5" fill="#5E9CC4" stroke="#3F5285" stroke-width="1.6"/><path d="M22 34l-8 14h8zM42 34l8 14h-8z" fill="#8E2A3C" stroke="#6B1B29" stroke-width="1.6" stroke-linejoin="round"/><path d="M26 42h12v6H26z" fill="#8A9BC0"/><path d="M32 48c3 4 3 8 0 12-3-4-3-8 0-12z" fill="#D9A441"/>';
+ICONES.tuktuk='<circle cx="32" cy="32" r="31" fill="#FBEFD6"/><path d="M18 42V24c0-5 4-8 9-8h8c7 0 13 6 13 13v13z" fill="#D9A441" stroke="#A8761E" stroke-width="2" stroke-linejoin="round"/><path d="M24 22h10v9H22z" fill="#FDF5EE"/><path d="M38 22h4c3 2 4 5 4 9h-8z" fill="#FDF5EE"/><circle cx="22" cy="47" r="6" fill="#43302A"/><circle cx="44" cy="47" r="6" fill="#43302A"/><circle cx="22" cy="47" r="2.2" fill="#CDBCA9"/><circle cx="44" cy="47" r="2.2" fill="#CDBCA9"/>';
+ICONES.watertaxi='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><path d="M10 40h44l-6 10H16z" fill="#D9A441" stroke="#A8761E" stroke-width="2" stroke-linejoin="round"/><rect x="20" y="24" width="24" height="16" rx="3" fill="#FDF5EE" stroke="#8A6F63" stroke-width="2"/><rect x="24" y="28" width="7" height="7" fill="#CFE3F5"/><rect x="34" y="28" width="7" height="7" fill="#CFE3F5"/><path d="M4 54c6 0 6-4 12-4s6 4 12 4 6-4 12-4 6 4 12 4" stroke="#5E9CC4" stroke-width="4" fill="none" stroke-linecap="round"/>';
+ICONES.up='<circle cx="32" cy="32" r="31" fill="#E4EFE5"/><path d="M32 56V22" stroke="#4F7040" stroke-width="7" stroke-linecap="round"/><path d="M32 8l14 16H18z" fill="#4F7040"/>';
+ICONES.down='<circle cx="32" cy="32" r="31" fill="#FBE4EA"/><path d="M32 8v34" stroke="#9E4459" stroke-width="7" stroke-linecap="round"/><path d="M32 56L18 40h28z" fill="#9E4459"/>';
+ICONES.over='<circle cx="32" cy="32" r="31" fill="#EEE7F8"/><path d="M8 46c0-16 11-24 24-24s24 8 24 24" fill="none" stroke="#5E4790" stroke-width="6" stroke-linecap="round"/><path d="M56 46l-5-10h10z" fill="#5E4790"/><rect x="24" y="44" width="16" height="14" rx="2" fill="#D9A441" stroke="#A8761E" stroke-width="2"/>';
+ICONES.through='<circle cx="32" cy="32" r="31" fill="#F6E6D8"/><path d="M14 50V30a18 18 0 0 1 36 0v20z" fill="#CDBCA9" stroke="#8A6F63" stroke-width="2" stroke-linejoin="round"/><path d="M24 50V34a8 8 0 0 1 16 0v16z" fill="#43302A"/><path d="M4 42h50" stroke="#D2718A" stroke-width="5" stroke-linecap="round"/><path d="M60 42l-12-6v12z" fill="#D2718A"/>';
+ICONES.into='<circle cx="32" cy="32" r="31" fill="#E4E9F6"/><rect x="30" y="12" width="26" height="40" rx="3" fill="#DCE4F2" stroke="#5A6E9A" stroke-width="2"/><path d="M30 12v40" stroke="#5A6E9A" stroke-width="2"/><path d="M4 32h24" stroke="#3F5285" stroke-width="6" stroke-linecap="round"/><path d="M34 32l-12-8v16z" fill="#3F5285"/>';
+
+/* ---- conteúdo cobrado ---- */
+MATERIAS["Inglês"].conteudo = "Unit 3 “Our Community”: jobs e job responsibilities, Past Progressive (afirmativa, negativa, perguntas e com Simple Past) · Unit 4 “Future Travel”: transportes do futuro, Will (afirmativa, negativa e perguntas), question words e direction words";
+
+/* ============================================================
+   QUIZ — a ordem tem que bater com TRAD_ING
+   ============================================================ */
+QUIZ["Inglês"] = [
+ {p:"Para formar o <b>past progressive</b>, usamos:",a:["was ou were + verbo com -ing","will + verbo","do ou does + verbo"],c:0,e:"Regra do livro: <i>Use <b>was</b> or <b>were</b> with the verb + ing.</i> Serve para uma ação que <b>estava acontecendo</b> no passado."},
+ {p:"“Yesterday at 8 p.m., I ______ my homework in the yard.”",a:["was doing","were doing","am doing"],c:0,e:"<b>I / he / she / it → was</b>. <i>I was doing</i> = eu estava fazendo. <i>yard</i> = quintal."},
+ {p:"“They ______ dinner when I arrived.”",a:["was eating","were eating","will eat"],c:1,e:"<b>You / we / they → were</b>. <i>They were eating</i> = eles estavam jantando."},
+ {p:"Negativa: “She ______ her guitar.” (ela NÃO estava tocando)",a:["wasn't playing","weren't playing","don't play"],c:0,e:"<b>wasn't</b> = was not. Sujeito <i>she</i> → was → <b>wasn't playing</b>."},
+ {p:"Negativa: “You ______ TV.” (você NÃO estava assistindo)",a:["wasn't watching","weren't watching","didn't watching"],c:1,e:"<b>You</b> sempre pede <b>were</b>, mesmo para uma pessoa só. Negativa: <b>weren't watching</b>."},
+ {p:"Pergunta: “______ he buying some bread?”",a:["Was","Were","Did"],c:0,e:"Pergunta no past progressive: <b>Was/Were + sujeito + verbo-ing?</b> Com <i>he</i> → <b>Was he buying…?</b>"},
+ {p:"“Were the students watching Hilda?” — resposta curta afirmativa:",a:["Yes, they were.","Yes, they was.","Yes, they did."],c:0,e:"A resposta curta repete o auxiliar da pergunta: <i>Were…?</i> → <b>Yes, they were.</b> / <b>No, they weren't.</b>"},
+ {p:"“Was he buying some bread?” — resposta curta negativa:",a:["No, he didn't.","No, he wasn't.","No, he weren't."],c:1,e:"<i>Was…?</i> → <b>No, he wasn't.</b> Nunca misture com <i>didn't</i>, que é do simple past."},
+ {p:"“What ______ she doing? She was baking cupcakes.”",a:["was","were","did"],c:0,e:"Pergunta com <i>wh-</i>: <b>What + was/were + sujeito + verbo-ing?</b> Com <i>she</i> → <b>was</b>."},
+ {p:"“Where were the students standing?”",a:["They were standing in the kitchen.","They stand in the kitchen.","They will stand in the kitchen."],c:0,e:"A resposta longa mantém o mesmo tempo verbal da pergunta: <b>were standing</b>."},
+ {p:"“When we ______ an architect, she ______ houses.”",a:["met / was designing","were meeting / designed","meet / designs"],c:0,e:"Regra do livro: a ação <b>curta</b> que interrompe vai no <b>simple past</b> (<i>met</i>); a ação que já <b>estava em andamento</b> vai no <b>past progressive</b> (<i>was designing</i>)."},
+ {p:"“When we visited the barbershop, the barbers ______ hair.” (o que já estava acontecendo)",a:["cut","were cutting","will cut"],c:1,e:"<i>visited</i> = simple past, a ação curta. <b>were cutting</b> = o que já estava acontecendo quando chegamos."},
+ {p:"An <b>architect</b>…",a:["designs houses","puts out fires","interviews people"],c:0,e:"<b>architect</b> = arquiteto(a). <i>design houses</i> = projetar casas."},
+ {p:"A <b>librarian</b>…",a:["cuts hair","puts away books","brings food"],c:1,e:"<b>librarian</b> = bibliotecário(a). <i>put away books</i> = guardar os livros no lugar."},
+ {p:"A <b>journalist</b>…",a:["interviews people","uses ovens","designs houses"],c:0,e:"<b>journalist</b> = jornalista. <i>interview people</i> = entrevistar pessoas."},
+ {p:"A <b>baker</b>…",a:["takes care of people","uses ovens","cuts hair"],c:1,e:"<b>baker</b> = padeiro(a). <i>use ovens</i> = usar fornos. <i>oven</i> = forno."},
+ {p:"A <b>waiter</b>…",a:["brings food","puts out fires","puts away books"],c:0,e:"<b>waiter</b> = garçom. <i>bring food</i> = trazer a comida."},
+ {p:"“You will need <b>a good camera</b>.” — que profissão é essa?",a:["photographer","firefighter","mayor"],c:0,e:"<b>photographer</b> = fotógrafo(a). <i>camera</i> = câmera."},
+ {p:"Quem é o <b>chefe da cidade</b>, eleito pelas pessoas?",a:["the barber","the mayor","the nurse"],c:1,e:"<b>mayor</b> = prefeito(a). Aparece no texto <i>The Mayor's Speech</i>. <i>speech</i> = discurso."},
+ {p:"O que é um <b>skyscraper</b>?",a:["um prédio muito alto","um bairro","um andar"],c:0,e:"<b>skyscraper</b> = arranha-céu. <i>apartment</i> = apartamento · <i>floor</i> = andar · <i>neighborhood</i> = bairro."},
+ {p:"“A big spaceship ______ us to Mars.”",a:["will take","will to take","takes will"],c:0,e:"Regra do livro: <b>will + verbo no infinitivo SEM to</b>. <i>will take</i> = vai levar."},
+ {p:"“There ______ any restaurants on Mars.” (não vai haver)",a:["won't be","willn't be","will not to be"],c:0,e:"<b>won't</b> = will not. “willn't” não existe. <i>There will be…</i> = vai haver."},
+ {p:"A forma curta de <b>we will</b> é:",a:["we'll","wewill","we're"],c:0,e:"Look!: <i>we'll = we will</i> e <i>won't = will not</i>. <i>we're</i> é <b>we are</b> — coisa diferente."},
+ {p:"“______ more people drive electric cars?” — “Yes, they will.”",a:["Do","Will","Are"],c:1,e:"Pergunta com will: <b>Will + sujeito + verbo?</b> Resposta curta: <b>Yes, they will.</b> / <b>No, they won't.</b>"},
+ {p:"“______ will students go to school?” — “They will go on hoverboards.”",a:["How","Who","When"],c:0,e:"<b>How</b> pergunta o <i>meio</i>. As question words do livro: <b>How, Who, When, Where</b>."},
+ {p:"Qual palavra pergunta sobre <b>lugar</b>?",a:["When","Where","Who"],c:1,e:"<b>Where</b> = onde · <b>When</b> = quando · <b>Who</b> = quem · <b>How</b> = como."},
+ {p:"Um trem que anda sobre <b>um único trilho</b> é um:",a:["monorail","hoverboard","jetpack"],c:0,e:"<b>monorail</b> = monotrilho. <i>mono</i> = um · <i>rail</i> = trilho."},
+ {p:"Um <b>supersonic jet</b> é:",a:["um avião mais rápido que o som","um trem que flutua","uma prancha voadora"],c:0,e:"<b>supersonic jet</b> = jato supersônico. <i>high-speed train</i> = trem de alta velocidade."},
+ {p:"Você coloca nas costas para voar sozinho:",a:["a jetpack","a spaceship","a monorail"],c:0,e:"<b>jetpack</b> = mochila a jato. <b>spaceship</b> = nave espacial."},
+ {p:"Um carro <b>self-driving</b> é um carro que:",a:["voa","dirige sozinho","funciona com ímã"],c:1,e:"<b>self-driving</b> = autônomo, dirige sozinho. <b>electric</b> = elétrico · <b>magnetic</b> = magnético · <b>flying</b> = voador."},
+ {p:"“Sophia put on her jetpack and flew ______ into the sky.”",a:["up","down","through"],c:0,e:"<b>up</b> = para cima. Os verbos que mais aparecem com direção são <b>go, turn e fly</b>."},
+ {p:"“She went ______ roads and houses.” (por cima de)",a:["into","over","up"],c:1,e:"<b>over</b> = por cima de. <i>go over / fly over / walk over</i>."},
+ {p:"“Sophia turned ______ and flew down to the playground.” (à direita)",a:["left","right","straight"],c:1,e:"<b>right</b> = direita · <b>left</b> = esquerda. <i>playground</i> = parquinho."},
+ {p:"“Go ______ the tunnel.” (por dentro, atravessando)",a:["through","over","down"],c:0,e:"<b>through</b> = através, por dentro. <i>into</i> = para dentro de · <i>over</i> = por cima."},
+ {p:"“Go ______ ahead and then turn left.”",a:["straight","between","around"],c:0,e:"<b>Go straight ahead</b> = siga em frente."},
+ {p:"Quais são os três verbos que mais aparecem junto com as palavras de direção?",a:["go, turn, fly","be, have, do","eat, drink, sleep"],c:0,e:"O livro diz: <i>We often use these verbs with direction words: <b>go, turn, fly</b></i>. Ex.: <i>go through, turn right, fly up</i>."},
+ {p:"“You will need <b>a uniform and good shoes</b>.” — que profissão é essa?",a:["nurse","architect","journalist"],c:0,e:"<b>nurse</b> = enfermeiro(a). <i>uniform</i> = uniforme · <i>shoes</i> = sapatos."},
+ {p:"“You will need <b>strong arms</b>.” — que profissão é essa?",a:["baker","firefighter","librarian"],c:1,e:"<b>firefighter</b> = bombeiro(a). <i>strong arms</i> = braços fortes."},
+ {p:"“You will need <b>a computer and a notebook</b>.” — que profissão é essa?",a:["journalist","barber","waiter"],c:0,e:"<b>journalist</b> = jornalista. <i>notebook</i> = caderno de anotações."},
+ {p:"A <b>firefighter</b>…",a:["puts out fires","puts away books","brings food"],c:0,e:"<b>put out fires</b> = apagar incêndios."},
+ {p:"A <b>nurse</b>…",a:["designs houses","takes care of people","interviews people"],c:1,e:"<b>take care of people</b> = cuidar das pessoas."},
+ {p:"Um <b>táxi</b> que anda na água é um:",a:["water taxi","motorcycle taxi","tuk-tuk"],c:0,e:"<b>water taxi</b> = táxi aquático. <i>motorcycle taxi</i> = mototáxi · <i>tuk-tuk</i> = veículo de três rodas · <i>bamboo raft</i> = balsa de bambu."}
+];
+
+/* tradução da frase inteira — mesma ordem do QUIZ acima */
+TRAD_ING.length = 0;
+[
+"Para formar o past progressive, usamos:",
+"“Ontem às 20h, eu ______ minha lição no quintal.”",
+"“Eles ______ jantando quando eu cheguei.”",
+"Negativa: “Ela ______ o violão.” (ela NÃO estava tocando)",
+"Negativa: “Você ______ TV.” (você NÃO estava assistindo)",
+"Pergunta: “______ ele comprando pão?”",
+"“Os alunos estavam observando a Hilda?” — resposta curta afirmativa:",
+"“Ele estava comprando pão?” — resposta curta negativa:",
+"“O que ela ______ fazendo? Ela estava assando cupcakes.”",
+"“Onde os alunos estavam de pé?”",
+"“Quando nós ______ uma arquiteta, ela ______ casas.”",
+"“Quando visitamos a barbearia, os barbeiros ______ cabelo.”",
+"Um arquiteto…",
+"Um(a) bibliotecário(a)…",
+"Um(a) jornalista…",
+"Um(a) padeiro(a)…",
+"Um garçom…",
+"“Você vai precisar de uma boa câmera.” — que profissão é essa?",
+"Quem é o chefe da cidade, eleito pelas pessoas?",
+"O que é um arranha-céu?",
+"“Uma grande nave espacial ______ a gente até Marte.”",
+"“______ restaurantes em Marte.” (não vai haver)",
+"A forma curta de “we will” é:",
+"“______ mais pessoas vão dirigir carros elétricos?” — “Sim, vão.”",
+"“______ os alunos vão para a escola?” — “Eles vão de hoverboard.”",
+"Qual palavra pergunta sobre lugar?",
+"Um trem que anda sobre um único trilho é um:",
+"Um jato supersônico é:",
+"Você coloca nas costas para voar sozinho:",
+"Um carro self-driving é um carro que:",
+"“Sophia vestiu a mochila a jato e voou ______, em direção ao céu.”",
+"“Ela passou ______ estradas e casas.” (por cima de)",
+"“Sophia virou ______ e voou para baixo até o parquinho.” (à direita)",
+"“Vá ______ o túnel.” (por dentro, atravessando)",
+"“Siga ______ e depois vire à esquerda.” (em frente)",
+"Quais são os três verbos que mais aparecem junto com as palavras de direção?",
+"“Você vai precisar de um uniforme e sapatos bons.” — que profissão é essa?",
+"“Você vai precisar de braços fortes.” — que profissão é essa?",
+"“Você vai precisar de um computador e um caderno.” — que profissão é essa?",
+"Um bombeiro…",
+"Um(a) enfermeiro(a)…",
+"Um táxi que anda na água é um:"
+].forEach(function(t){ TRAD_ING.push(t); });
+
+/* ============================================================
+   JOGO DA MEMÓRIA — figura ↔ palavra e profissão ↔ responsabilidade
+   ============================================================ */
+MEMORIA2["Inglês"] = [
+ {a:"fig:architect",   b:"architect<br>designs houses",        ex:"<b>architect</b> = arquiteto(a) · <i>design houses</i> = projetar casas."},
+ {a:"fig:baker",       b:"baker<br>uses ovens",                ex:"<b>baker</b> = padeiro(a) · <i>use ovens</i> = usar fornos."},
+ {a:"fig:barber",      b:"barber<br>cuts hair",                ex:"<b>barber</b> = barbeiro(a) · <i>cut hair</i> = cortar cabelo."},
+ {a:"fig:journalist",  b:"journalist<br>interviews people",    ex:"<b>journalist</b> = jornalista · <i>interview people</i> = entrevistar pessoas."},
+ {a:"fig:librarian",   b:"librarian<br>puts away books",       ex:"<b>librarian</b> = bibliotecário(a) · <i>put away books</i> = guardar os livros."},
+ {a:"fig:firefighter", b:"firefighter<br>puts out fires",      ex:"<b>firefighter</b> = bombeiro(a) · <i>put out fires</i> = apagar incêndios."},
+ {a:"fig:nurse",       b:"nurse<br>takes care of people",      ex:"<b>nurse</b> = enfermeiro(a) · <i>take care of people</i> = cuidar das pessoas."},
+ {a:"fig:waiter",      b:"waiter<br>brings food",              ex:"<b>waiter</b> = garçom · <i>bring food</i> = trazer a comida."},
+ {a:"fig:photographer",b:"photographer",                       ex:"<b>photographer</b> = fotógrafo(a). <i>You will need a good camera.</i>"},
+ {a:"fig:mayor",       b:"mayor",                              ex:"<b>mayor</b> = prefeito(a), o chefe da cidade. Texto: <i>The Mayor's Speech</i>."},
+ {a:"fig:skyscraper",  b:"skyscraper",                         ex:"<b>skyscraper</b> = arranha-céu. <i>apartment</i> = apartamento · <i>floor</i> = andar."},
+ {a:"fig:neighborhood",b:"neighborhood",                       ex:"<b>neighborhood</b> = bairro, a vizinhança onde a comunidade vive."},
+ {a:"fig:monorail",    b:"monorail",                           ex:"<b>monorail</b> = monotrilho, o trem de um trilho só."},
+ {a:"fig:hoverboard",  b:"hoverboard",                         ex:"<b>hoverboard</b> = prancha que flutua. <i>Students will go on hoverboards.</i>"},
+ {a:"fig:jetpack",     b:"jetpack",                            ex:"<b>jetpack</b> = mochila a jato. <i>Sophia put on her jetpack.</i>"},
+ {a:"fig:spaceship",   b:"spaceship",                          ex:"<b>spaceship</b> = nave espacial. <i>A big spaceship will take us to Mars.</i>"},
+ {a:"fig:supersonicjet",b:"supersonic jet",                    ex:"<b>supersonic jet</b> = jato supersônico, mais rápido que o som."},
+ {a:"fig:highspeedtrain",b:"high-speed train",                 ex:"<b>high-speed train</b> = trem de alta velocidade."},
+ {a:"fig:tuktuk",      b:"tuk-tuk",                            ex:"<b>tuk-tuk</b> — veículo de três rodas, do capítulo de transporte pelo mundo."},
+ {a:"fig:watertaxi",   b:"water taxi",                         ex:"<b>water taxi</b> = táxi aquático. Também: <i>bamboo raft</i> e <i>motorcycle taxi</i>."},
+ {a:"fig:up",          b:"fly up",                             ex:"<b>fly up</b> = voar para cima. <i>Sophia flew up into the sky.</i>"},
+ {a:"fig:down",        b:"fly down",                           ex:"<b>fly down</b> = voar para baixo."},
+ {a:"fig:over",        b:"go over",                            ex:"<b>go over</b> = passar por cima. <i>She went over roads and houses.</i>"},
+ {a:"fig:through",     b:"go through",                         ex:"<b>go through</b> = atravessar por dentro."},
+ {a:"was / were + verbo-ing", b:"past progressive",            ex:"<i>I was doing</i> · <i>They were eating</i> — o que estava acontecendo."},
+ {a:"wasn't",          b:"was not",                            ex:"Para I, he, she, it. <i>She wasn't playing her guitar.</i>"},
+ {a:"weren't",         b:"were not",                           ex:"Para you, we, they. <i>You weren't watching TV.</i>"},
+ {a:"won't",           b:"will not",                           ex:"Forma curta irregular. “willn't” não existe."},
+ {a:"we'll",           b:"we will",                            ex:"Look!: <i>we'll = we will</i>."}
+];
+
+/* ============================================================
+   CRUZADINHA — charadas
+   ============================================================ */
+CRUZADA2["Inglês"] = [
+ ["ARCHITECT","Em inglês: eu projeto as casas e os prédios antes de alguém construir"],
+ ["LIBRARIAN","Em inglês: trabalho entre estantes e guardo os livros no lugar certo"],
+ ["JOURNALIST","Em inglês: entrevisto pessoas e escrevo a notícia"],
+ ["BAKER","Em inglês: acordo cedo, uso o forno e faço o pão"],
+ ["BARBER","Em inglês: se o cabelo está grande, é a mim que você procura"],
+ ["MAYOR","Em inglês: sou o chefe da cidade e faço discursos"],
+ ["WAITER","Em inglês: no restaurante, sou eu que levo a comida até a mesa"],
+ ["JETPACK","Em inglês: me prenda nas costas e você decola sozinho"],
+ ["MONORAIL","Em inglês: sou um trem e só preciso de um trilho"],
+ ["HOVERBOARD","Em inglês: sou uma prancha que flutua sem tocar o chão"],
+ ["SPACESHIP","Em inglês: levo gente até Marte"],
+ ["SKYSCRAPER","Em inglês: sou tão alto que parece que arranho o céu"],
+ ["THROUGH","Go ___ the tunnel: por dentro, atravessando"],
+ ["STRAIGHT","Go ___ ahead: quando ninguém precisa virar"],
+ ["MAGNETIC","Em inglês: adjetivo de quem funciona com ímã"]
+];
+
+/* ============================================================
+   ASSOCIAÇÃO — figura ↔ palavra
+   ============================================================ */
+ASSOC2["Inglês"] = [
+ {f:"architect",     t:"architect",         ex:"<b>architect</b> — designs houses."},
+ {f:"baker",         t:"baker",             ex:"<b>baker</b> — uses ovens."},
+ {f:"barber",        t:"barber",            ex:"<b>barber</b> — cuts hair."},
+ {f:"journalist",    t:"journalist",        ex:"<b>journalist</b> — interviews people."},
+ {f:"librarian",     t:"librarian",         ex:"<b>librarian</b> — puts away books."},
+ {f:"mayor",         t:"mayor",             ex:"<b>mayor</b> = prefeito(a)."},
+ {f:"photographer",  t:"photographer",      ex:"<b>photographer</b> — you will need a good camera."},
+ {f:"waiter",        t:"waiter",            ex:"<b>waiter</b> — brings food."},
+ {f:"monorail",      t:"monorail",          ex:"<b>monorail</b> = monotrilho."},
+ {f:"hoverboard",    t:"hoverboard",        ex:"<b>hoverboard</b> = prancha flutuante."},
+ {f:"jetpack",       t:"jetpack",           ex:"<b>jetpack</b> = mochila a jato."},
+ {f:"spaceship",     t:"spaceship",         ex:"<b>spaceship</b> = nave espacial."},
+ {f:"supersonicjet", t:"supersonic jet",    ex:"<b>supersonic jet</b> = jato supersônico."},
+ {f:"highspeedtrain",t:"high-speed train",  ex:"<b>high-speed train</b> = trem de alta velocidade."},
+ {f:"selfdriving",   t:"self-driving car",  ex:"<b>self-driving car</b> = carro autônomo."},
+ {f:"electriccar",   t:"electric car",      ex:"<b>electric car</b> = carro elétrico."},
+ {f:"skyscraper",    t:"skyscraper",        ex:"<b>skyscraper</b> = arranha-céu."},
+ {f:"neighborhood",  t:"neighborhood",      ex:"<b>neighborhood</b> = bairro, a vizinhança."},
+ {f:"up",            t:"fly up",            ex:"<b>fly up</b> = voar para cima."},
+ {f:"down",          t:"fly down",          ex:"<b>fly down</b> = voar para baixo."},
+ {f:"over",          t:"go over",           ex:"<b>go over</b> = passar por cima."},
+ {f:"through",       t:"go through",        ex:"<b>go through</b> = atravessar por dentro."},
+ {f:"into",          t:"go into",           ex:"<b>go into</b> = entrar em."},
+ {f:"straight",      t:"go straight ahead", ex:"<b>go straight ahead</b> = siga em frente."},
+ {f:"left",          t:"turn left",         ex:"<b>turn left</b> = vire à esquerda."},
+ {f:"right",         t:"turn right",        ex:"<b>turn right</b> = vire à direita."},
+ {f:"tuktuk",        t:"tuk-tuk",           ex:"<b>tuk-tuk</b> — transporte de três rodas, comum na Ásia."},
+ {f:"watertaxi",     t:"water taxi",        ex:"<b>water taxi</b> = táxi aquático."}
+];
+
+/* ============================================================
+   LISTENING
+   ============================================================ */
+OUVIR.length = 0;
+[
+ {n:1, txt:"architect",    fig:"architect",    op:["architect","journalist","barber"],        ex:"<b>architect</b> = arquiteto(a)."},
+ {n:1, txt:"baker",        fig:"baker",        op:["baker","barber","waiter"],                ex:"<b>baker</b> = padeiro(a). Cuidado: <i>baker</i> e <i>barber</i> têm som parecido."},
+ {n:1, txt:"barber",       fig:"barber",       op:["barber","baker","builder"],               ex:"<b>barber</b> = barbeiro(a)."},
+ {n:1, txt:"librarian",    fig:"librarian",    op:["librarian","journalist","mayor"],         ex:"<b>librarian</b> = bibliotecário(a)."},
+ {n:1, txt:"mayor",        fig:"mayor",        op:["mayor","waiter","nurse"],                  ex:"<b>mayor</b> = prefeito(a)."},
+ {n:1, txt:"photographer", fig:"photographer", op:["photographer","firefighter","waiter"],    ex:"<b>photographer</b> = fotógrafo(a)."},
+ {n:1, txt:"waiter",       fig:"waiter",       op:["waiter","water","writer"],                ex:"<b>waiter</b> = garçom. <i>water</i> = água — repare na diferença."},
+ {n:1, txt:"nurse",        fig:"nurse",        op:["nurse","niece","news"],                   ex:"<b>nurse</b> = enfermeiro(a)."},
+ {n:2, txt:"monorail",     fig:"monorail",     op:["monorail","motorcycle","memorial"],       ex:"<b>monorail</b> = monotrilho."},
+ {n:2, txt:"hoverboard",   fig:"hoverboard",   op:["hoverboard","skateboard","surfboard"],    ex:"<b>hoverboard</b> = prancha flutuante."},
+ {n:2, txt:"jetpack",      fig:"jetpack",      op:["jetpack","backpack","jet plane"],         ex:"<b>jetpack</b> = mochila a jato."},
+ {n:2, txt:"spaceship",    fig:"spaceship",    op:["spaceship","supersonic jet","high-speed train"],   ex:"<b>spaceship</b> = nave espacial."},
+ {n:2, txt:"skyscraper",   fig:"skyscraper",   op:["skyscraper","sky garden","scraper"],      ex:"<b>skyscraper</b> = arranha-céu."},
+ {n:2, txt:"neighborhood", fig:"neighborhood", op:["neighborhood","neighbor","skyscraper"],     ex:"<b>neighborhood</b> = bairro."},
+ {n:2, txt:"through",      fig:"through",      op:["through","three","true"],                 ex:"<b>through</b> = por dentro, atravessando. O “gh” é mudo: som de “thru”."},
+ {n:2, txt:"won't",        fig:null,           op:["won't","want","went"],                    ex:"<b>won't</b> = will not. Som de “ôunt”."},
+ {n:3, txt:"She was baking cupcakes in the kitchen.", fig:"baker", op:["She was baking cupcakes in the kitchen.","She bakes cupcakes in the kitchen.","She will bake cupcakes in the kitchen."], ex:"<b>was baking</b> = estava assando — past progressive."},
+ {n:3, txt:"They were eating dinner.", fig:"waiter", op:["They were eating dinner.","They are eating dinner.","They ate dinner."], ex:"<b>were eating</b> = estavam jantando."},
+ {n:3, txt:"Was he buying some bread?", fig:"baker", op:["Was he buying some bread?","Did he buy some bread?","Will he buy some bread?"], ex:"Pergunta no past progressive: <b>Was + sujeito + verbo-ing?</b>"},
+ {n:3, txt:"When we met an architect, she was designing houses.", fig:"architect", op:["When we met an architect, she was designing houses.","When we meet an architect, she designs houses.","When we met an architect, she designed houses."], ex:"Simple past (<i>met</i>) interrompendo o past progressive (<i>was designing</i>)."},
+ {n:3, txt:"A big spaceship will take us to Mars.", fig:"spaceship", op:["A big spaceship will take us to Mars.","A big spaceship took us to Mars.","A big spaceship takes us to Mars."], ex:"<b>will take</b> = vai levar. Will + verbo sem <i>to</i>."},
+ {n:3, txt:"There won't be any restaurants on Mars.", fig:"spaceship", op:["There won't be any restaurants on Mars.","There will be many restaurants on Mars.","There aren't any restaurants on Mars."], ex:"<b>won't be</b> = não vai haver."},
+ {n:3, txt:"Sophia turned right and flew down to the playground.", fig:"down", op:["Sophia turned right and flew down to the playground.","Sophia turned left and flew up to the playground.","Sophia turned right and walked down to the playground."], ex:"<i>turn right</i> = vire à direita · <i>fly down</i> = voar para baixo."},
+ {n:3, txt:"She went over roads and houses.", fig:"over", op:["She went over roads and houses.","She went through roads and houses.","She went into roads and houses."], ex:"<b>over</b> = por cima de."}
+].forEach(function(x){ OUVIR.push(x); });
+
+/* ============================================================
+   SPEAKING
+   ============================================================ */
+FALAR.length = 0;
+[
+ {n:1, txt:"architect",    fig:"architect",    pt:"arquiteto(a)"},
+ {n:1, txt:"baker",        fig:"baker",        pt:"padeiro(a)"},
+ {n:1, txt:"barber",       fig:"barber",       pt:"barbeiro(a)"},
+ {n:1, txt:"librarian",    fig:"librarian",    pt:"bibliotecário(a)"},
+ {n:1, txt:"mayor",        fig:"mayor",        pt:"prefeito(a)"},
+ {n:1, txt:"journalist",   fig:"journalist",   pt:"jornalista"},
+ {n:1, txt:"photographer", fig:"photographer", pt:"fotógrafo(a)"},
+ {n:1, txt:"waiter",       fig:"waiter",       pt:"garçom"},
+ {n:2, txt:"monorail",     fig:"monorail",     pt:"monotrilho"},
+ {n:2, txt:"hoverboard",   fig:"hoverboard",   pt:"prancha flutuante"},
+ {n:2, txt:"jetpack",      fig:"jetpack",      pt:"mochila a jato"},
+ {n:2, txt:"spaceship",    fig:"spaceship",    pt:"nave espacial"},
+ {n:2, txt:"supersonic jet", fig:"supersonicjet", pt:"jato supersônico"},
+ {n:2, txt:"skyscraper",   fig:"skyscraper",   pt:"arranha-céu"},
+ {n:2, txt:"turn right",   fig:"right",        pt:"vire à direita"},
+ {n:2, txt:"go straight ahead", fig:"straight",pt:"siga em frente"},
+ {n:3, txt:"An architect designs houses.", fig:"architect", pt:"Um arquiteto projeta casas."},
+ {n:3, txt:"A librarian puts away books.", fig:"librarian", pt:"Um bibliotecário guarda os livros."},
+ {n:3, txt:"I was doing my homework in the yard.", fig:null, pt:"Eu estava fazendo minha lição no quintal."},
+ {n:3, txt:"They were eating dinner.", fig:"waiter", pt:"Eles estavam jantando."},
+ {n:3, txt:"She wasn't playing her guitar.", fig:null, pt:"Ela não estava tocando violão."},
+ {n:3, txt:"What was she doing?", fig:null, pt:"O que ela estava fazendo?"},
+ {n:3, txt:"A big spaceship will take us to Mars.", fig:"spaceship", pt:"Uma grande nave espacial vai nos levar a Marte."},
+ {n:3, txt:"Sophia flew up into the sky.", fig:"up", pt:"Sophia voou para cima, em direção ao céu."}
+].forEach(function(x){ FALAR.push(x); });
+
+/* ============================================================
+   CENTRAL DE DÚVIDAS
+   ============================================================ */
+AJUDA["Inglês"] = [
+ {id:"pastprog", nome:"Past Progressive — o que estava acontecendo",
+  glos:[["past progressive","tempo do que ESTAVA acontecendo no passado"],
+        ["was","estava — auxiliar de I, he, she, it"],
+        ["were","estava / estavam — auxiliar de you, we, they"],
+        ["wasn't","was not"],["weren't","were not"],
+        ["-ing","terminação do verbo: do → doing, eat → eating"]],
+  passos:["Regra do livro: <b>use was or were with the verb + ing</b>.",
+          "<b>I, he, she, it → was</b> · <b>you, we, they → were</b>.",
+          "Afirmativa: sujeito + was/were + verbo-ing.",
+          "Negativa: sujeito + <b>wasn't / weren't</b> + verbo-ing."],
+  ex:"I <b>was doing</b> my homework in the yard.<br>She <b>wasn't playing</b> her guitar.<br>You <b>weren't watching</b> TV.<br>They <b>were eating</b> dinner.",
+  mapa:{c:"Past Progressive",r:[{t:"Quem usa was",f:["I","he","she","it"]},{t:"Quem usa were",f:["you","we","they"]},{t:"Negativa",f:["wasn't + -ing","weren't + -ing"]},{t:"Sentido",f:["ação em andamento","no meio de acontecer"]}]},
+  busca:"past progressive was were verb ing for kids"},
+
+ {id:"pastprogq", nome:"Past Progressive — perguntas e respostas",
+  glos:[["Was…?","Estava…? (I, he, she, it)"],["Were…?","Estavam…? (you, we, they)"],
+        ["What","o quê"],["Where","onde"]],
+  passos:["Pergunta de sim/não: <b>Was/Were + sujeito + verbo-ing?</b>",
+          "Resposta curta repete o auxiliar: Yes, he <b>was</b>. / No, he <b>wasn't</b>.",
+          "Pergunta com wh-: <b>What/Where + was/were + sujeito + verbo-ing?</b>",
+          "A resposta longa mantém o mesmo tempo: <i>She was baking cupcakes.</i>"],
+  ex:"<b>Was</b> he <b>buying</b> some bread? — No, he <b>wasn't</b>.<br><b>Were</b> the students <b>watching</b> Hilda? — Yes, they <b>were</b>.<br><b>What was</b> she <b>doing</b>? — She <b>was baking</b> cupcakes.<br><b>Where were</b> the students <b>standing</b>? — They <b>were standing</b> in the kitchen.",
+  mapa:{c:"Perguntas",r:[{t:"Sim ou não",f:["Was he buying…?","Were they watching…?"]},{t:"Resposta curta",f:["Yes, he was.","No, they weren't."]},{t:"Com wh-",f:["What was she doing?","Where were they standing?"]}]},
+  busca:"past progressive questions short answers english kids"},
+
+ {id:"pastmix", nome:"Past Progressive + Simple Past",
+  glos:[["simple past","passado da ação curta, que já terminou"],
+        ["when","quando — costuma introduzir a ação curta"],
+        ["met","passado de meet (encontrar)"],["visited","passado de visit (visitar)"]],
+  passos:["Duas ações no passado: uma já <b>estava rolando</b>, a outra <b>chegou e interrompeu</b>.",
+          "A que estava rolando → <b>past progressive</b> (was/were + -ing).",
+          "A que interrompeu → <b>simple past</b>.",
+          "Truque para a prova: sublinhe a ação em andamento — é a que tem <b>-ing</b>."],
+  ex:"When we <b>met</b> an architect, she <b>was designing</b> houses.<br>When we <b>visited</b> the barbershop, the barbers <b>were cutting</b> hair.",
+  mapa:{c:"Duas ações",r:[{t:"Já estava acontecendo",f:["was designing","were cutting","past progressive"]},{t:"Chegou e cortou",f:["met","visited","simple past"]},{t:"Palavra-chave",f:["when"]}]},
+  busca:"past progressive with simple past when english kids"},
+
+ {id:"jobs", nome:"Jobs — profissões e responsabilidades",
+  glos:[["architect","arquiteto(a) — designs houses"],["baker","padeiro(a) — uses ovens"],
+        ["barber","barbeiro(a) — cuts hair"],["firefighter","bombeiro(a) — puts out fires"],
+        ["journalist","jornalista — interviews people"],["librarian","bibliotecário(a) — puts away books"],
+        ["mayor","prefeito(a) — chefe da cidade"],["nurse","enfermeiro(a) — takes care of people"],
+        ["photographer","fotógrafo(a) — needs a good camera"],["waiter","garçom — brings food"],
+        ["apartment","apartamento"],["floor","andar"],["neighborhood","bairro"],["skyscraper","arranha-céu"]],
+  passos:["Decore em <b>pares</b>: profissão + o que ela faz. É assim que a prova cobra.",
+          "Na 3ª pessoa (he / she), o verbo ganha -s: <i>cut → cuts</i>, <i>design → designs</i>.",
+          "“You will need…” indica o material da profissão: <i>a good camera</i> → photographer."],
+  ex:"An architect <b>designs houses</b>. · A baker <b>uses ovens</b>. · A librarian <b>puts away books</b>. · A waiter <b>brings food</b>.",
+  mapa:{c:"Jobs",r:[{t:"Constrói e cria",f:["architect — designs houses","baker — uses ovens"]},{t:"Cuida das pessoas",f:["nurse — takes care of people","firefighter — puts out fires"]},{t:"Informa e organiza",f:["journalist — interviews people","librarian — puts away books"]},{t:"Atende",f:["waiter — brings food","barber — cuts hair"]}]},
+  busca:"jobs and responsibilities english kids architect librarian"},
+
+ {id:"will", nome:"Will — falar do futuro",
+  glos:[["will","vai / irá"],["won't","will not"],["we'll","we will"],
+        ["How","como"],["Who","quem"],["When","quando"],["Where","onde"]],
+  passos:["Afirmativa: sujeito + <b>will</b> + verbo no infinitivo <b>sem to</b>.",
+          "Negativa: sujeito + <b>won't</b> + verbo.",
+          "Pergunta: <b>Will</b> + sujeito + verbo? Resposta curta: Yes, they will. / No, they won't.",
+          "Com question word: <b>How/When/Where + will + sujeito + verbo?</b> Quando <b>Who</b> pergunta QUEM faz a ação, não vem outro sujeito: <i>Who will drive the car?</i>"],
+  ex:"A big spaceship <b>will take</b> us to Mars.<br>There <b>won't be</b> any restaurants on Mars.<br><b>Will</b> more people <b>drive</b> electric cars? — Yes, they <b>will</b>.<br><b>How will</b> students <b>go</b> to school? — They <b>will go</b> on hoverboards.",
+  mapa:{c:"Will",r:[{t:"Afirmativa",f:["will + verbo sem to","we'll = we will"]},{t:"Negativa",f:["won't = will not","nunca “willn't”"]},{t:"Pergunta",f:["Will + sujeito + verbo?","Yes, they will / No, they won't"]},{t:"Question words",f:["How","Who","When","Where"]}]},
+  busca:"will future statements questions english kids"},
+
+ {id:"transport", nome:"Future travel — transportes",
+  glos:[["monorail","monotrilho"],["hoverboard","prancha flutuante"],["supersonic jet","jato supersônico"],
+        ["jetpack","mochila a jato"],["high-speed train","trem de alta velocidade"],["spaceship","nave espacial"],
+        ["electric","elétrico"],["self-driving","autônomo, dirige sozinho"],["magnetic","magnético"],["flying","voador"],
+        ["bamboo raft","balsa de bambu"],["motorcycle taxi","mototáxi"],["tuk-tuk","tuk-tuk, veículo de três rodas"],["water taxi","táxi aquático"]],
+  passos:["Os adjetivos vêm <b>antes</b> do substantivo: <i>a self-driving car</i>, <i>an electric car</i>.",
+          "Para falar do futuro, junte com <b>will</b>: <i>Students will go on hoverboards.</i>",
+          "Do jeito que o livro usa: <i>Students will go <b>on</b> hoverboards.</i>"],
+  ex:"“<b>How will</b> students go to school?” — “Students <b>will go on hoverboards</b>.”",
+  mapa:{c:"Future travel",r:[{t:"Pelo ar",f:["supersonic jet","jetpack","spaceship","flying car"]},{t:"Pelo chão",f:["monorail","high-speed train","hoverboard"]},{t:"Como é o veículo",f:["electric","self-driving","magnetic","flying"]},{t:"Pelo mundo",f:["bamboo raft","motorcycle taxi","tuk-tuk","water taxi"]}]},
+  busca:"future transportation vocabulary english kids monorail hoverboard"},
+
+ {id:"directions", nome:"Directions — direções e verbos de movimento",
+  glos:[["up","para cima"],["down","para baixo"],["into","para dentro de"],["over","por cima de"],
+        ["through","por dentro, atravessando"],["left","esquerda"],["right","direita"],["straight ahead","em frente"]],
+  passos:["O livro diz: os verbos que mais aparecem com direção são <b>go, turn e fly</b>.",
+          "A ordem é: <b>verbo + palavra de direção</b>: fly <b>up</b>, turn <b>right</b>, go <b>through</b>.",
+          "Cuidado com o trio parecido: <b>over</b> = por cima · <b>through</b> = por dentro · <b>into</b> = para dentro."],
+  ex:"Sophia put on her jetpack and <b>flew up</b> into the sky.<br>She <b>went over</b> roads and houses.<br>Sophia <b>turned right</b> and <b>flew down</b> to the playground.<br>Outros: go through · jump down · climb up · walk over · go into · run up · fly over.",
+  mapa:{c:"Directions",r:[{t:"Verbos",f:["go","turn","fly"]},{t:"Vertical",f:["up = para cima","down = para baixo"]},{t:"Atravessar",f:["over = por cima","through = por dentro","into = para dentro"]},{t:"Virar",f:["turn left","turn right","go straight ahead"]}]},
+  busca:"direction words up down over through english kids"}
+];
+
+/* ---- roteamento das perguntas para a ajuda ---- */
+ROTAS["Inglês"] = [
+ ["pastmix",  /when we|simple past|interromp/i],
+ ["pastprogq",/he buying|watching hilda|resposta curta|where were|what ______ she|standing/i],
+ ["pastprog", /past progressive|yesterday|homework|yard|dinner|negativa|guitar|\bTV\b/i],
+ ["directions",/\bup\b|\bdown\b|through|\bover\b|\binto\b|straight|turn|\bleft\b|\bright\b|climb|jump|playground|tunnel|roads|\bsky\b|dire[çc]/i],
+ ["jobs",     /camera|profiss|chefe da cidade|architect|librarian|journalist|baker|waiter|barber|nurse|firefighter|photographer|mayor|skyscraper/i],
+ ["will",     /\bwill\b|won.t|we will|to mars|restaurants|pergunta sobre|forma curta/i],
+ ["transport",/monorail|hoverboard|jetpack|spaceship|supersonic|high-speed|self-driving|trilho|costas|magnetic|el[eé]tric|t[aá]xi/i],
+ ["jobs",     /./]
+];
+
+/* ---- dicionário de toque-para-traduzir ---- */
+Object.assign(DIC, {
+"past progressive":"tempo do que estava acontecendo","simple past":"passado simples, ação já terminada",
+"was doing":"estava fazendo","were doing":"estavam fazendo","were eating":"estavam jantando / comendo",
+"wasn't playing":"não estava tocando","weren't watching":"não estava assistindo","was designing":"estava projetando",
+"were cutting":"estavam cortando","was baking":"estava assando","were standing":"estavam de pé",
+"put away books":"guardar os livros","put out fires":"apagar incêndios","take care of people":"cuidar das pessoas",
+"takes care of":"cuida de","bring food":"trazer a comida","brings food":"traz a comida",
+"cut hair":"cortar cabelo","cuts hair":"corta cabelo","design houses":"projetar casas","designs houses":"projeta casas",
+"interview people":"entrevistar pessoas","interviews people":"entrevista pessoas","use ovens":"usar fornos","uses ovens":"usa fornos",
+"you will need":"você vai precisar de","a good camera":"uma boa câmera","strong arms":"braços fortes",
+"straight ahead":"em frente","go straight":"siga em frente","turn left":"vire à esquerda","turn right":"vire à direita",
+"fly up":"voar para cima","fly down":"voar para baixo","go over":"passar por cima","go through":"atravessar por dentro",
+"go into":"entrar em","climb up":"subir escalando","jump down":"pular para baixo","walk over":"passar caminhando por cima",
+"run up":"subir correndo","fly over":"sobrevoar","will take":"vai levar","won't be":"não vai haver / não estará",
+"self-driving car":"carro que dirige sozinho","electric car":"carro elétrico","flying car":"carro voador",
+"high-speed train":"trem de alta velocidade","supersonic jet":"jato supersônico","water taxi":"táxi aquático",
+"motorcycle taxi":"mototáxi","bamboo raft":"balsa de bambu","in the future":"no futuro","will not":"não vai / não irá",
+
+"apartment":"apartamento","architect":"arquiteto(a)","arms":"braços","arrived":"chegou","away":"para longe / guardado",
+"baker":"padeiro(a)","baking":"assando","bamboo":"bambu","barber":"barbeiro(a)","barbers":"barbeiros",
+"barbershop":"barbearia","bread":"pão","bring":"trazer","brings":"traz","building":"prédio / construindo",
+"buying":"comprando","camera":"câmera","city":"cidade","climb":"subir escalando","community":"comunidade",
+"cupcakes":"cupcakes","cut":"cortar / cortou","cutting":"cortando","design":"projetar","designing":"projetando",
+"dinner":"jantar","doing":"fazendo","down":"para baixo","drive":"dirigir","eating":"comendo",
+"electric":"elétrico(a)","elected":"eleito(a)","flew":"voou","floor":"andar","fly":"voar","flying":"voando / voador",
+"guitar":"violão / guitarra","hair":"cabelo","head":"chefe / cabeça","high-speed":"de alta velocidade",
+"homework":"lição de casa","hoverboard":"prancha flutuante","houses":"casas","interview":"entrevistar",
+"interviews":"entrevista","interviewing":"entrevistando","into":"para dentro de","jetpack":"mochila a jato",
+"journalist":"jornalista","kitchen":"cozinha","librarian":"bibliotecário(a)","library":"biblioteca",
+"lunch":"almoço","magnetic":"magnético(a)","Mars":"Marte","mayor":"prefeito(a)","met":"encontrou / encontramos",
+"monorail":"monotrilho","neighborhood":"bairro","ovens":"fornos","over":"por cima de","photographer":"fotógrafo(a)",
+"playground":"parquinho","put":"colocar / pôr","raft":"balsa","restaurants":"restaurantes","roads":"estradas",
+"sky":"céu","skyscraper":"arranha-céu","spaceship":"nave espacial","speech":"discurso","standing":"de pé / em pé",
+"students":"alunos","supersonic":"supersônico(a)","through":"através / por dentro","tunnel":"túnel","tuk-tuk":"tuk-tuk",
+"uniform":"uniforme","up":"para cima","visited":"visitou / visitamos","waiter":"garçom","watching":"assistindo",
+"wasn't":"não estava (I/he/she/it)","weren't":"não estavam (you/we/they)","we'll":"we will — vamos / iremos",
+"yard":"quintal","yesterday":"ontem","was":"estava (auxiliar) / era","were":"estava, estavam (auxiliar) / eram",
+"shoes":"sapatos","computer":"computador","notebook":"caderno de anotações","ladder":"escada de mão",
+"roof":"telhado","bridge":"ponte","door":"porta","other":"outro(a)","side":"lado","leader":"líder"
+});
+
+/* ============================================================
+   FOLHAS PARA IMPRIMIR — Inglês
+   ============================================================ */
+FOLHAS["Inglês"] = [
+ {id:"pastprog", nome:"Past Progressive — complete", sub:"12 frases · was/were + verbo-ing", tipo:"lacunas",
+  itens:[
+   ["I ______________ (do) my homework in the yard.","was doing"],
+   ["She ______________ (not / play) her guitar.","wasn't playing"],
+   ["You ______________ (not / watch) TV.","weren't watching"],
+   ["They ______________ (eat) dinner.","were eating"],
+   ["______________ he buying some bread?","Was"],
+   ["______________ the students watching Hilda?","Were"],
+   ["What ______________ she doing? She ______________ (bake) cupcakes.","was / was baking"],
+   ["Where ______________ the students standing? They ______________ (stand) in the kitchen.","were / were standing"],
+   ["When we ______________ (meet) an architect, she ______________ (design) houses.","met / was designing"],
+   ["When we ______________ (visit) the barbershop, the barbers ______________ (cut) hair.","visited / were cutting"],
+   ["We ______________ (walk) in the neighborhood at 5 p.m.","were walking"],
+   ["The photographer ______________ (take) pictures when the mayor arrived.","was taking"]]},
+
+ {id:"jobs", nome:"Jobs and responsibilities", sub:"10 pares · profissão e o que faz", tipo:"ligue",
+  itens:[
+   ["architect","designs houses"],
+   ["baker","uses ovens"],
+   ["barber","cuts hair"],
+   ["firefighter","puts out fires"],
+   ["journalist","interviews people"],
+   ["librarian","puts away books"],
+   ["nurse","takes care of people"],
+   ["waiter","brings food"],
+   ["photographer","takes pictures — needs a good camera"],
+   ["mayor","is the leader of the city and gives speeches"]]},
+
+ {id:"will", nome:"Will — complete e transforme", sub:"12 frases · futuro com will", tipo:"lacunas",
+  itens:[
+   ["A big spaceship ______________ (take) us to Mars.","will take"],
+   ["There ______________ (not / be) any restaurants on Mars.","won't be"],
+   ["______________ eat pizza on the spaceship. (forma curta de “we will”)","We'll"],
+   ["______________ more people drive electric cars? — Yes, they ______________.","Will / will"],
+   ["______________ will students go to school? — They will go on hoverboards.","How"],
+   ["______________ will the monorail arrive? — At 8 o'clock.","When"],
+   ["______________ will drive the self-driving car? — Nobody.","Who"],
+   ["______________ will we live in the future? — In skyscrapers.","Where"],
+   ["People ______________ (travel) in supersonic jets.","will travel"],
+   ["Robots ______________ (not / need) a driver.","won't need"],
+   ["A escrita por extenso de <b>won't</b> é ______________.","will not"],
+   ["Depois de <i>will</i>, o verbo vem no infinitivo ______________ o “to”.","sem"]]},
+
+ {id:"directions", nome:"Direction words", sub:"10 frases · up, down, over, through, into…", tipo:"lacunas",
+  itens:[
+   ["Sophia put on her jetpack and flew ______________ into the sky.","up"],
+   ["She went ______________ roads and houses.","over"],
+   ["Sophia turned ______________ and flew down to the playground.","right"],
+   ["Go ______________ ahead and then turn left.","straight"],
+   ["The car went ______________ the tunnel and came out on the other side.","through"],
+   ["The cat jumped ______________ from the tree.","down"],
+   ["He climbed ______________ the ladder to the roof.","up"],
+   ["They walked ______________ the bridge.","over"],
+   ["She opened the door and went ______________ the building.","into"],
+   ["Os três verbos que mais aparecem com palavras de direção são ______________, ______________ e ______________.","go, turn, fly"]]},
+
+ {id:"certo", nome:"Right or wrong", sub:"10 afirmações · corrigir o que estiver errado", tipo:"certo",
+  itens:[
+   ["No past progressive, usamos <i>was</i> ou <i>were</i> + verbo com <i>-ing</i>.", true, "É exatamente a regra do livro."],
+   ["Com o sujeito <i>you</i>, usamos <i>was</i>.", false, "<i>You</i> sempre pede <b>were</b>, mesmo para uma pessoa só: <i>You weren't watching TV.</i>"],
+   ["A resposta curta de “Was he buying bread?” é “No, he didn't.”", false, "A resposta repete o auxiliar da pergunta: <b>No, he wasn't.</b>"],
+   ["Em “When we met an architect, she was designing houses”, <i>met</i> é a ação que interrompeu.", true, "Ação curta no simple past interrompendo a ação em andamento."],
+   ["A forma curta de <i>will not</i> é <i>willn't</i>.", false, "É <b>won't</b>. “willn't” não existe."],
+   ["Depois de <i>will</i>, o verbo vem com <i>to</i>.", false, "<i>Will</i> pede o infinitivo <b>sem</b> to: <i>will take</i>, não “will to take”."],
+   ["<i>we'll</i> é a forma curta de <i>we will</i>.", true, "Está no Look! do livro, junto com <i>won't = will not</i>."],
+   ["<i>through</i> quer dizer “por cima de”.", false, "<b>through</b> = por dentro, atravessando. Por cima de é <b>over</b>."],
+   ["Um <i>librarian</i> corta cabelo.", false, "<i>Librarian</i> <b>puts away books</b>. Quem corta cabelo é o <b>barber</b>."],
+   ["<i>Skyscraper</i> quer dizer arranha-céu.", true, "Da Lesson 5: apartment, floor, neighborhood, skyscraper."]]},
+
+ {id:"tabela", nome:"was × were × will", sub:"quadro de consulta para preencher", tipo:"tabela",
+  instr:"Complete o quadro com os auxiliares e as formas negativas.",
+  cols:["Sujeito","Past progressive (afirmativa)","Negativa"],
+  linhas:[["I","was + verbo-ing","wasn't + verbo-ing"],
+          ["he / she / it","was + verbo-ing","wasn't + verbo-ing"],
+          ["you","were + verbo-ing","weren't + verbo-ing"],
+          ["we / they","were + verbo-ing","weren't + verbo-ing"],
+          ["qualquer sujeito com will","will + verbo sem to","won't + verbo sem to"]]},
+
+ {id:"aberta", nome:"Write in English", sub:"8 frases para escrever", tipo:"aberta", linhas:2,
+  itens:[
+   ["Escreva em inglês: “Eu estava fazendo minha lição no quintal.”","I was doing my homework in the yard."],
+   ["Escreva em inglês: “Eles estavam jantando.”","They were eating dinner."],
+   ["Escreva em inglês: “Ela não estava tocando o violão dela.”","She wasn't playing her guitar."],
+   ["Transforme em pergunta: “He was buying some bread.”","Was he buying some bread?"],
+   ["Responda: “Were the students watching Hilda?” (sim)","Yes, they were."],
+   ["Escreva em inglês: “Quando visitamos a barbearia, os barbeiros estavam cortando cabelo.”","When we visited the barbershop, the barbers were cutting hair."],
+   ["Escreva em inglês: “Não vai haver restaurantes em Marte.”","There won't be any restaurants on Mars."],
+   ["Responda em inglês: “How will students go to school?”","They will go on hoverboards. (ou outra resposta com will + verbo)"]]},
+
+ {id:"mapa", nome:"Mapa conceitual", sub:"completar o esquema das Units 3 e 4", tipo:"mapa",
+  centro:"UNIT 3 “OUR COMMUNITY” + UNIT 4 “FUTURE TRAVEL”",
+  ramos:[{t:"PAST PROGRESSIVE", f:["I / he / she / it → ____________ + verbo-ing","you / we / they → ____________ + verbo-ing","Negativas: ____________ e ____________","Pergunta: ____________ + sujeito + verbo-ing?"],
+          g:["was","were","wasn't / weren't","Was ou Were"]},
+         {t:"JOBS", f:["____________ designs houses","____________ puts away books","____________ interviews people","____________ brings food"],
+          g:["An architect","A librarian","A journalist","A waiter"]},
+         {t:"WILL", f:["Afirmativa: will + verbo ____________","Negativa: ____________","Question words: ____, ____, ____, ____"],
+          g:["sem to","won't","How, Who, When, Where"]},
+         {t:"DIRECTIONS", f:["Verbos: ____________, ____________, ____________","Para cima / para baixo: ____________ / ____________","Por cima / por dentro: ____________ / ____________"],
+          g:["go, turn, fly","up / down","over / through"]}]}
+];
+
 
 /* ---------- INÍCIO ---------- */
 function iniciar(){
