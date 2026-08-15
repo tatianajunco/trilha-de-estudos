@@ -14,10 +14,24 @@ Instalável na tela de início do celular e funcional sem internet depois da pri
 - **Aulas** — grade do trimestre por dia e semana, com atalho para treinar a matéria do horário
 - **Tarefas** — calendário mensal com marcação de provas, lista do dia e aviso do que ficou para trás
 - **Plano diário** com prática distribuída até a última prova
+- **Revisão guiada** (Português): diagnóstico curto → mapa 🟢🟡🔴 por habilidade → treino em
+  missões começando pelo que está mais fraco → simulado sem pistas → mapa final comparando
+  o começo com o agora. No treino, o erro é tratado em duas etapas — pista, depois
+  microexplicação e uma questão equivalente — e a habilidade errada volta algumas atividades
+  depois com outro exemplo
 - **Quizzes** com explicação obrigatória do erro e tentativas ilimitadas
 - **Jogo da memória** com figuras desenhadas, **cruzadinha** com charadas e **associação de imagens**
-- **Folhas para imprimir** (Geografia e Inglês): lacunas, ligue as colunas, certo ou errado,
-  tabela comparativa, questões dissertativas e mapa conceitual — com versão gabarito
+- **Tabuada sem decoreba** (Matemática): dez caminhos de raciocínio no lugar da memória bruta
+  (×10 põe um zero, ×5 é metade do ×10, ×9 é tirar um grupo, ×4 é dobrar duas vezes…),
+  digitação livre no teclado numérico, erro tratado em duas etapas — primeiro o caminho, depois
+  a resposta com a família de fatos — e mapa colorido das 45 contas por estado
+  (não treinada / em treino / pegando / firme)
+- **Treino da divisão pela tabuada**, com a dica ancorada na tabelinha do divisor
+  (a mesma técnica do guia impresso) em vez de entregar o quociente
+- **Régua de evolução**: quanto de cada matéria já foi treinado pelo menos uma vez, por atividade
+  e no total, mais o mapa por habilidade de Português e o mapa da tabuada
+- **Folhas para imprimir** (Português, Matemática, Geografia e Inglês): lacunas, ligue as colunas,
+  certo ou errado, tabela comparativa, questões dissertativas e mapa conceitual — com versão gabarito
 - **No papel** (Matemática): problemas para resolver escrevendo, com conferência automática
   da resposta, resolução passo a passo e folha para imprimir
 - **Listening e Speaking** em inglês, com voz do próprio aparelho e reconhecimento de fala
@@ -25,6 +39,12 @@ Instalável na tela de início do celular e funcional sem internet depois da pri
 - **Central de dúvidas** por assunto: glossário, passo a passo, mapa mental e busca de vídeo
 - **Tradução no toque**: qualquer palavra sublinhada mostra o significado, offline
 - **Painel de acompanhamento** para o adulto, com registro de onde o estudo travou
+- **Navegação**: botão ‹ de voltar no cabeçalho, barra de ação fixa que traz o botão
+  principal para a base da tela quando ele ficaria fora do campo de visão, e rolagem
+  automática até a atividade e até a explicação do erro
+- **Sorteio sem repetição**: cada matéria e atividade guarda o que já saiu; uma pergunta só
+  volta a aparecer quando o banco inteiro tiver sido usado
+- **Rosetas por dia treinado** — conta qualquer atividade respondida, não só o bloco marcado
 - Dois temas, claro e escuro
 
 Nenhum dado sai do aparelho. O nome de quem estuda é digitado nos Ajustes e fica salvo apenas
