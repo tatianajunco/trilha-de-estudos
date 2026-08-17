@@ -6956,6 +6956,645 @@ function tabMapa(){
 }
 
 
+
+/* ============================================================
+   HISTÓRIA — 5º ano · 2º trimestre
+   Capítulo 3 — Cultura e religião dos povos antigos
+   Reconstruído a partir das fotos do livro (p.52-74) e do
+   roteiro de estudos da professora:
+     · Relação entre cultura e religião (p.53 a 60)
+     · Calendários e formas de marcação do tempo (p.65 a 72)
+   Tudo o que está aqui sai dessas páginas. Nada foi inventado.
+   ============================================================ */
+
+MATERIAS["História"].conteudo = "Capítulo 3 — Cultura e religião dos povos antigos · relação entre cultura e religião (p.53-60) · calendários e marcação do tempo (p.65-72)";
+
+/* ---------- ícones ---------- */
+ICONES.sol='<circle cx="32" cy="32" r="31" fill="#FDF1DC"/><circle cx="32" cy="32" r="12" fill="#E9A93C" stroke="#B87A22" stroke-width="2"/><g stroke="#B87A22" stroke-width="2.6" stroke-linecap="round"><path d="M32 8v6M32 50v6M8 32h6M50 32h6M15 15l4 4M45 45l4 4M49 15l-4 4M19 45l-4 4"/></g>';
+ICONES.templosol='<circle cx="32" cy="32" r="31" fill="#EFE6DA"/><path d="M12 48h40" stroke="#7B5B3A" stroke-width="3" stroke-linecap="round"/><path d="M16 48V28h32v20" fill="#C9A87C" stroke="#7B5B3A" stroke-width="2"/><path d="M14 28l18-12 18 12" fill="#A8814F" stroke="#7B5B3A" stroke-width="2" stroke-linejoin="round"/><rect x="27" y="36" width="10" height="12" fill="#6B4A2C"/><circle cx="32" cy="24" r="4" fill="#E9A93C" stroke="#B87A22" stroke-width="1.6"/>';
+ICONES.montanha='<circle cx="32" cy="32" r="31" fill="#E4EFE6"/><path d="M8 48l14-22 8 12 6-9 20 19z" fill="#8CAE92" stroke="#4F7357" stroke-width="2" stroke-linejoin="round"/><path d="M22 26l5 8h-10z" fill="#F2F6F2"/><path d="M6 48h52" stroke="#4F7357" stroke-width="2.6" stroke-linecap="round"/>';
+ICONES.ife='<circle cx="32" cy="32" r="31" fill="#F3E9DE"/><path d="M32 12c8 0 12 6 12 14 0 9-5 16-12 16s-12-7-12-16c0-8 4-14 12-14z" fill="#9A6B3F" stroke="#5E401F" stroke-width="2"/><g stroke="#5E401F" stroke-width="1.4"><path d="M24 22h16M24 27h16M24 32h16M24 37h16"/></g><path d="M20 52c2-6 6-9 12-9s10 3 12 9z" fill="#B98A55" stroke="#5E401F" stroke-width="2" stroke-linejoin="round"/>';
+ICONES.africa='<circle cx="32" cy="32" r="31" fill="#EAF0E4"/><path d="M22 10h20l4 10-4 10 4 8-6 10-4 14-6-2-2-10-8-8-2-14 4-8z" fill="#9DBE7E" stroke="#5A7A3E" stroke-width="2" stroke-linejoin="round"/><circle cx="26" cy="30" r="3.4" fill="#B0403F"/>';
+ICONES.livrosagrado='<circle cx="32" cy="32" r="31" fill="#EFEAF6"/><rect x="10" y="20" width="8" height="24" rx="4" fill="#8B6FC0" stroke="#5E4790" stroke-width="2"/><rect x="46" y="20" width="8" height="24" rx="4" fill="#8B6FC0" stroke="#5E4790" stroke-width="2"/><rect x="16" y="22" width="32" height="20" fill="#F6F2FC" stroke="#5E4790" stroke-width="2"/><g stroke="#8B6FC0" stroke-width="1.6"><path d="M21 28h22M21 32h22M21 36h16"/></g>';
+ICONES.caaba='<circle cx="32" cy="32" r="31" fill="#E7EDE9"/><rect x="20" y="20" width="24" height="26" fill="#3A4A42" stroke="#22302A" stroke-width="2"/><path d="M20 28h24" stroke="#D9B764" stroke-width="3"/><path d="M14 46h36" stroke="#22302A" stroke-width="2.6" stroke-linecap="round"/>';
+ICONES.calendario='<circle cx="32" cy="32" r="31" fill="#FBE9EC"/><rect x="12" y="16" width="40" height="34" rx="3" fill="#FFF" stroke="#B02A45" stroke-width="2"/><rect x="12" y="16" width="40" height="9" fill="#D2718A" stroke="#B02A45" stroke-width="2"/><path d="M22 12v8M42 12v8" stroke="#B02A45" stroke-width="3" stroke-linecap="round"/><g fill="#D2718A"><rect x="18" y="30" width="6" height="5"/><rect x="29" y="30" width="6" height="5"/><rect x="40" y="30" width="6" height="5"/><rect x="18" y="39" width="6" height="5"/><rect x="29" y="39" width="6" height="5"/></g>';
+ICONES.lua='<circle cx="32" cy="32" r="31" fill="#E7EAF6"/><circle cx="32" cy="32" r="16" fill="#F2F4FC" stroke="#4A5591" stroke-width="2"/><path d="M32 16a16 16 0 000 32z" fill="#4A5591"/><circle cx="16" cy="16" r="2" fill="#4A5591"/><circle cx="50" cy="18" r="1.6" fill="#4A5591"/><circle cx="48" cy="48" r="2" fill="#4A5591"/>';
+ICONES.estrelas='<circle cx="32" cy="32" r="31" fill="#E5E8F5"/><g stroke="#4A5591" stroke-width="1.6"><path d="M18 20l12 8 6-12 12 16-16 12-14-10z"/></g><g fill="#3F4C86"><circle cx="18" cy="20" r="3.2"/><circle cx="30" cy="28" r="2.6"/><circle cx="36" cy="16" r="2.6"/><circle cx="48" cy="32" r="3.2"/><circle cx="32" cy="44" r="2.6"/><circle cx="18" cy="34" r="2.4"/></g>';
+ICONES.relogiosol='<circle cx="32" cy="32" r="31" fill="#FDF1DC"/><path d="M10 46h44" stroke="#8A6A3E" stroke-width="3" stroke-linecap="round"/><path d="M14 46a18 18 0 0136 0z" fill="#E7D3AE" stroke="#8A6A3E" stroke-width="2"/><path d="M32 46V22l10 24z" fill="#8A6A3E"/><g stroke="#8A6A3E" stroke-width="1.4"><path d="M20 42l-3-2M26 36l-2-3M32 33v-3M40 36l2-3M45 42l3-2"/></g>';
+ICONES.ampulheta='<circle cx="32" cy="32" r="31" fill="#F6EEE4"/><path d="M18 12h28M18 52h28" stroke="#7B5B3A" stroke-width="3" stroke-linecap="round"/><path d="M22 12c0 10 10 14 10 20s-10 10-10 20h20c0-10-10-14-10-20s10-10 10-20z" fill="#F9F5EF" stroke="#7B5B3A" stroke-width="2" stroke-linejoin="round"/><path d="M24 14h16c0 7-8 12-8 12s-8-5-8-12z" fill="#E0A94B"/><path d="M26 50h12c0-4-6-7-6-7s-6 3-6 7z" fill="#E0A94B"/>';
+ICONES.relogiomec='<circle cx="32" cy="32" r="31" fill="#EDEDE6"/><path d="M32 8v6" stroke="#5C5C52" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="36" r="19" fill="#F7F7F2" stroke="#5C5C52" stroke-width="2.6"/><circle cx="32" cy="36" r="15" fill="none" stroke="#B7B7A8" stroke-width="1.4"/><path d="M32 36V25M32 36l9 6" stroke="#3E3E36" stroke-width="2.6" stroke-linecap="round"/><circle cx="32" cy="36" r="2" fill="#3E3E36"/>';
+ICONES.relogiodig='<circle cx="32" cy="32" r="31" fill="#E4EEF3"/><rect x="10" y="20" width="44" height="24" rx="4" fill="#22323A" stroke="#0F1D23" stroke-width="2"/><g fill="#5FD3B2"><rect x="16" y="27" width="4" height="10"/><rect x="22" y="27" width="4" height="10"/><rect x="38" y="27" width="4" height="10"/><rect x="44" y="27" width="4" height="10"/></g><g fill="#5FD3B2"><circle cx="32" cy="29" r="1.8"/><circle cx="32" cy="35" r="1.8"/></g>';
+ICONES.milho='<circle cx="32" cy="32" r="31" fill="#F5F0DC"/><path d="M32 12c7 0 11 8 11 18s-4 20-11 20-11-10-11-20 4-18 11-18z" fill="#E4C24B" stroke="#8A6A22" stroke-width="2"/><g stroke="#8A6A22" stroke-width="1.3"><path d="M26 20v26M32 17v32M38 20v26M23 28h18M23 36h18M23 44h18"/></g><path d="M21 30c-6-4-9-2-9-2s2 10 9 12z" fill="#8CAE5B" stroke="#4F7325" stroke-width="1.8" stroke-linejoin="round"/>';
+ICONES.roda='<circle cx="32" cy="32" r="31" fill="#EFE7DE"/><circle cx="32" cy="32" r="19" fill="#C9A87C" stroke="#6B4A2C" stroke-width="2.6"/><circle cx="32" cy="32" r="6" fill="#8A6440" stroke="#6B4A2C" stroke-width="2"/><g stroke="#6B4A2C" stroke-width="2.2"><path d="M32 13v13M32 38v13M13 32h13M38 32h13"/></g>';
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+QUIZ["História"] = [
+
+ /* ---------- CULTURA E RELIGIÃO (p.53) ---------- */
+ {p:"<b>Monoteísmo</b> é a crença em:",a:["Um único deus","Vários deuses","Nenhum deus"],c:0,e:"<b>Mono</b> quer dizer um só. Monoteísmo = crença em <b>um único deus</b>. Judaísmo, Cristianismo e Islamismo são monoteístas."},
+ {p:"<b>Politeísmo</b> é a crença em:",a:["Vários deuses","Um único deus","Só na natureza"],c:0,e:"<b>Poli</b> quer dizer muitos. Politeísmo = crença em <b>vários deuses</b>. Os incas eram politeístas."},
+ {p:"O que é um <b>panteão</b>?",a:["O templo onde vivem os deuses; o conjunto de deuses de uma religião","Um livro sagrado","Uma festa religiosa"],c:0,e:"É a palavra do glossário da p.53: <b>panteão</b> é o templo onde vivem os deuses e também o conjunto de deuses de uma determinada religião."},
+ {p:"Em <b>muitas</b> sociedades do passado, a religião e a cultura estavam:",a:["Conectadas, e influenciavam o modo de viver e pensar dos povos","Totalmente separadas uma da outra","Proibidas"],c:0,e:"É a primeira frase do capítulo: em muitas sociedades do passado, religião e cultura estavam <b>conectadas</b> e influenciavam os modos de viver e pensar."},
+ {p:"Nas religiões politeístas antigas, cada deus costumava ser responsável por:",a:["Algum elemento da natureza, como o Sol, o mar ou o céu","Uma cidade diferente","Um dia da semana"],c:0,e:"O livro diz: havia um panteão de deuses, cada qual responsável pela criação de algum elemento da natureza (Sol, mar, céu etc.)."},
+ {p:"O que aconteceu com as religiões que nasceram nas sociedades do passado?",a:["Muitas ainda hoje fazem parte da vida de muitas pessoas","Todas desapareceram com o tempo","Só existem em museus"],c:0,e:"Muitas religiões monoteístas e politeístas do passado <b>continuam vivas</b> hoje. Essa é uma das afirmações do 'Para praticar'."},
+ {p:"O <b>Budismo</b> é uma religião que tem como prática:",a:["A meditação","O sacrifício de animais","A construção de pirâmides"],c:0,e:"Legenda da foto do Grande Buda, em Lantau, Hong Kong: o Budismo é uma religião que tem a <b>meditação</b> como prática."},
+ {p:"Qual é o livro sagrado do <b>Islamismo</b>?",a:["O Alcorão","A Torá","A Bíblia"],c:0,e:"Legenda da foto da Caaba: o livro sagrado do Islamismo é o <b>Alcorão</b>."},
+ {p:"A <b>Caaba</b>, símbolo da religião muçulmana, fica em:",a:["Meca, na Arábia Saudita","Jerusalém, em Israel","Roma, na Itália"],c:0,e:"A Caaba fica em <b>Meca, Arábia Saudita</b>. Dentro dela fica guardada a Pedra Negra, considerada sagrada pelos seguidores."},
+ {p:"A <b>Capela Sistina</b>, com a obra <i>A criação de Adão</i>, fica:",a:["No Vaticano, em Roma, na Itália","Em Jerusalém","No Egito"],c:0,e:"A Capela Sistina fica no <b>Vaticano</b>, em Roma, na Itália."},
+ {p:"Quem pintou <i>A criação de Adão</i> e <i>O juízo final</i>, na Capela Sistina?",a:["Michelangelo","Papa Gregório XIII","Santos Dumont"],c:0,e:"<b>Michelangelo</b> (1475-1564) foi arquiteto, escultor, pintor e poeta. Suas obras-primas se relacionam à temática cristã."},
+
+ /* ---------- OS INCAS (p.54-56) ---------- */
+ {p:"Em que região da América viveu a sociedade <b>inca</b>?",a:["Na parte sul do continente americano, em áreas hoje do Peru","No México","No sul do Brasil"],c:0,e:"Os incas se desenvolveram na <b>Cordilheira dos Andes</b>, em áreas que hoje pertencem ao <b>Peru</b>."},
+ {p:"A sociedade inca se desenvolveu entre os séculos:",a:["XIII e XV","V e VI","XIX e XX"],c:0,e:"O livro diz: entre os séculos <b>XIII e XV</b>. Em números: entre os anos 1201 e 1500."},
+ {p:"Além do Peru, o império inca alcançou terras hoje pertencentes a:",a:["Equador, Bolívia, Colômbia, Chile e Argentina","Brasil e Paraguai","México e Guatemala"],c:0,e:"Está no glossário da p.54: de lá os incas conquistaram um vasto império, alcançando <b>Equador, Bolívia, Colômbia, Chile e Argentina</b>."},
+ {p:"O império inca chegou ao fim no século XVI, por causa da:",a:["Invasão da América por conquistadores espanhóis","Falta de água","Mudança de religião"],c:0,e:"O império inca acabou no <b>século XVI</b>, após a invasão da América pelos <b>conquistadores espanhóis</b>, que começaram a chegar no continente no século XV."},
+ {p:"A religiosidade dos incas era marcada pela adoração de:",a:["Elementos da natureza, como o sol, a lua, o raio e a terra","Um único Deus","Nenhuma divindade"],c:0,e:"Os incas adoravam <b>vários elementos da natureza</b>: o sol, a lua, o raio e a terra. Por isso eram politeístas."},
+ {p:"Qual era o nome do <b>deus do Sol</b> dos antigos incas?",a:["Apu Inti, ou simplesmente Inti","Olorum","Oxalá"],c:0,e:"<b>Apu Inti</b>, ou simplesmente <b>Inti</b>, era o deus do Sol e a divindade mais importante para os incas."},
+ {p:"O que as pessoas ofereciam ao deus Inti?",a:["Oferendas de ouro e prata","Livros","Roupas"],c:0,e:"Inti era adorado em muitos santuários, recebendo <b>oferendas de ouro e prata</b>. Os incas também realizavam sacrifícios a ele."},
+ {p:"No glossário, <b>sacrifício</b> é:",a:["Oferecer aos deuses alimentos, a vida de animais ou de humanos, objetos etc. durante um ritual","Rezar em silêncio","Construir um templo"],c:0,e:"É a definição exata da p.54. No sistema de valores inca, todo benefício alcançado deveria ser retribuído com algum tipo de sacrifício."},
+ {p:"Por que os incas faziam sacrifícios?",a:["Para retribuir, com gratidão, os benefícios que acreditavam receber","Para castigar inimigos","Para festejar o ano-novo"],c:0,e:"No sistema de valores da religião inca, <b>todos os benefícios alcançados deveriam ser retribuídos</b> com algum tipo de sacrifício, que expressava a gratidão dos homens."},
+ {p:"O <b>Templo do Sol</b>, em Machu Picchu, foi construído por volta de:",a:["1450","1911","1582"],c:0,e:"Pesquisadores acreditam que o Templo do Sol foi construído por volta de <b>1450</b>. 1911 é o ano em que as ruínas foram encontradas."},
+ {p:"Além de local de adoração, para que mais servia o Templo do Sol?",a:["Como observatório astronômico","Como escola","Como mercado"],c:0,e:"De lá era possível acompanhar a movimentação do Sol e da Terra — funcionava como <b>observatório astronômico</b>."},
+ {p:"Como os incas sabiam, pelo Templo do Sol, que o <b>verão</b> ia começar?",a:["Os raios de Sol entravam pelas janelas do templo","Contavam os dias num caderno","Perguntavam aos espanhóis"],c:0,e:"No início do solstício de verão, <b>os raios de Sol entravam pelas janelas</b>, indicando o começo da estação."},
+ {p:"As ruínas da cidade de <b>Machu Picchu</b> foram encontradas por arqueólogos em:",a:["1911","1450","1582"],c:0,e:"Arqueólogos encontraram as ruínas em <b>1911</b> e, desde então, o local recebe muitos visitantes e turistas."},
+ {p:"O <b>solstício de verão</b> corresponde ao:",a:["Dia em que se inicia o verão","Dia mais frio do ano","Meio do inverno"],c:0,e:"Quadro 'Relembrando...': o solstício de verão é o dia em que <b>se inicia o verão</b>."},
+ {p:"No <b>Hemisfério Sul</b>, o solstício de verão acontece entre os dias:",a:["20 e 21 de dezembro","21 e 22 de junho","1 e 2 de janeiro"],c:0,e:"No Hemisfério Sul (onde fica o Brasil), entre <b>20 e 21 de dezembro</b>. No Hemisfério Norte, entre 21 e 22 de junho."},
+ {p:"No dia em que começa o verão, podemos observar:",a:["O dia mais longo do ano naquele hemisfério","A noite mais longa do ano","Um eclipse"],c:0,e:"No dia em que se inicia o verão observa-se o <b>dia mais longo do ano</b> no hemisfério correspondente."},
+ {p:"E o <b>solstício de inverno</b>, segundo a tirinha da p.64, marca:",a:["O início do inverno, com a noite mais longa do ano","O fim do inverno","O meio do verão"],c:0,e:"A tirinha diz: o solstício de inverno marca o início oficial dessa estação, e é quando temos a <b>noite mais longa do ano</b>."},
+
+ /* ---------- COSMOGONIAS E OS IORUBÁS (p.56-59) ---------- */
+ {p:"O que é uma <b>cosmogonia</b>?",a:["História que conta sobre a origem do mundo e dos seres vivos","Um mapa do céu","Um tipo de calendário"],c:0,e:"Definição do glossário da p.57: <b>cosmogonia</b> são histórias que contam sobre a origem do mundo e dos seres vivos."},
+ {p:"As duas narrativas de criação do mundo lidas no capítulo são de origem:",a:["Iorubá e judaico-cristã","Grega e romana","Inca e egípcia"],c:0,e:"A primeira é de origem <b>iorubá</b>; a segunda, <b>judaico-cristã</b>."},
+ {p:"Cada cosmogonia apresenta elementos:",a:["Da cultura e da história do povo que a criou","Iguais em todos os povos","Inventados por um só autor"],c:0,e:"O livro diz que cada narrativa apresenta elementos da <b>cultura e da história dos povos que a desenvolveram</b>."},
+ {p:"Na narrativa iorubá, quem é o <b>Ser Supremo</b> que já habitava a eternidade?",a:["Olorum","Oxalá","Inti"],c:0,e:"<b>Olorum</b>, o Ser Supremo, já habitava a eternidade e vivia só."},
+ {p:"Por que <b>Olorum</b> decidiu criar o mundo?",a:["Cansou-se de tanto nada e da mesmice, e quis ver algo diferente a cada instante","Para castigar os homens","Porque outro deus pediu"],c:0,e:"Ele vivia só, tudo à sua volta era igual, sem diversidade e sem movimento. Cansou-se <b>de tanta mesmice</b> e quis um mundo onde seu olhar pousasse a cada instante numa coisa diferente."},
+ {p:"O que Olorum criou para governarem o mundo em seu nome?",a:["Os orixás","Os pajés","Os faraós"],c:0,e:"Olorum criou os <b>orixás</b> e atribuiu a cada um deles um de seus poderes."},
+ {p:"Quem é <b>Oxalá</b> na narrativa iorubá?",a:["O filho mais velho de Olorum, encarregado de criar a Terra e o firmamento","Um rei da Nigéria","O deus do Sol dos incas"],c:0,e:"<b>Oxalá</b>, o filho mais velho de Olorum, recebeu o encargo de criar a Terra e o firmamento."},
+ {p:"O que Olorum entregou a Oxalá antes de mandá-lo criar o mundo?",a:["O saco da Criação","Uma coroa de ouro","Um calendário"],c:0,e:"Olorum entregou-lhe o <b>saco da Criação</b>, que continha toda a matéria necessária, e disse: 'Vá e crie.'"},
+ {p:"Segundo a crença iorubá, <b>Ifé</b> é:",a:["O local onde teve início a criação do mundo","Um deus da chuva","Um livro sagrado"],c:0,e:"Para os iorubás, <b>Ifé</b> é o local onde começou a criação do mundo. É a cidade sagrada desse povo."},
+ {p:"Atualmente, Ifé é uma cidade de qual país?",a:["Nigéria","Egito","Peru"],c:0,e:"Hoje Ifé é uma cidade da <b>Nigéria</b>, no continente africano."},
+ {p:"O povo <b>iorubá</b> começou a se desenvolver:",a:["Há 2 mil anos, no continente africano","Há 500 anos, na América","Há 10 mil anos, na Europa"],c:0,e:"O livro diz: o povo iorubá começou a se desenvolver <b>há 2 mil anos no continente africano</b>."},
+ {p:"As duas histórias de criação lidas no capítulo são chamadas de:",a:["Mitos fundadores","Notícias","Biografias"],c:0,e:"O livro diz: as histórias lidas anteriormente são <b>mitos fundadores</b> de duas religiões."},
+ {p:"Na narrativa judaico-cristã, a primeira coisa que Deus fez foi:",a:["Transformar a escuridão em luz","Criar os animais","Criar Adão"],c:0,e:"'No começo, não existia nada... a não ser Deus. Deus transformou a <b>escuridão em luz</b>.'"},
+ {p:"Na narrativa judaico-cristã, quem Deus criou por <b>último</b>?",a:["Os seres humanos","Os peixes","O Sol e a Lua"],c:0,e:"'Quando Deus terminou de criar todas as coisas, ele criou os <b>seres humanos</b>.' Primeiro Adão, depois Eva."},
+ {p:"Na narrativa judaico-cristã, como se chamava o lugar especial onde Adão e Eva viviam?",a:["Jardim do Éden","Ifé","Machu Picchu"],c:0,e:"Adão e Eva viviam em um lugar especial chamado <b>Jardim do Éden</b>."},
+
+ /* ---------- RELIGIÕES MONOTEÍSTAS (p.60-63) ---------- */
+ {p:"A narrativa judaico-cristã da criação está presente em quais livros sagrados?",a:["A Torá e o Antigo Testamento da Bíblia Cristã","O Alcorão e a Torá","Só na Bíblia"],c:0,e:"Ela está na <b>Torá</b> (Judaísmo) e no <b>Antigo Testamento da Bíblia Cristã</b> (Cristianismo)."},
+ {p:"A <b>Torá</b> é o livro sagrado de qual religião?",a:["Judaísmo","Cristianismo","Islamismo"],c:0,e:"A Torá é o livro sagrado da religião <b>judaica</b>."},
+ {p:"Há quanto tempo teve origem o <b>Judaísmo</b>, segundo o livro?",a:["Há mais de 5 mil anos","Há mais de 2 mil anos","Há 500 anos"],c:0,e:"O Judaísmo teve origem <b>há mais de 5 mil anos</b> e foi uma das primeiras religiões monoteístas de que se tem conhecimento."},
+ {p:"Há quanto tempo teve origem o <b>Cristianismo</b>, segundo o livro?",a:["Há mais de 2 mil anos","Há mais de 5 mil anos","Há 1500 anos"],c:0,e:"O Cristianismo teve origem <b>há mais de 2 mil anos</b> e também mantém a crença em um único Deus."},
+ {p:"Qual religião é <b>mais antiga</b>: o Judaísmo ou o Cristianismo?",a:["O Judaísmo","O Cristianismo","Têm a mesma idade"],c:0,e:"O <b>Judaísmo</b>: mais de 5 mil anos, contra mais de 2 mil anos do Cristianismo."},
+ {p:"Judaísmo e Cristianismo tiveram origem:",a:["Na mesma região do mundo","Em continentes diferentes","Ao mesmo tempo"],c:0,e:"Ambas as religiões <b>tiveram origem na mesma região do mundo</b> e, por motivos diferentes, consideram Jerusalém uma cidade sagrada."},
+ {p:"Qual cidade é considerada sagrada por <b>três</b> religiões monoteístas?",a:["Jerusalém","Meca","Roma"],c:0,e:"<b>Jerusalém</b> é sagrada para as religiões judaica, cristã e islâmica."},
+ {p:"Na foto de Jerusalém aparecem o Muro das Lamentações, a Cúpula Dourada e:",a:["A Mesquita de Al-Aqsa","A Caaba","A Capela Sistina"],c:0,e:"Ao fundo aparece a <b>Mesquita de Al-Aqsa</b>. O local é considerado sagrado pelas religiões judaica, cristã e islâmica."},
+ {p:"Qual é uma <b>semelhança</b> entre o Cristianismo e o Judaísmo?",a:["Os dois são monoteístas e consideram Jerusalém sagrada","Os dois usam o Alcorão","Os dois nasceram na América"],c:0,e:"Ambos creem em <b>um único Deus</b>, nasceram na mesma região, consideram Jerusalém sagrada e compartilham a narrativa da criação (Torá e Antigo Testamento)."},
+ {p:"“Todas as religiões que tiveram origem no passado desapareceram com o tempo.” Essa frase é:",a:["Falsa","Verdadeira","Verdadeira só para as politeístas"],c:0,e:"É <b>falsa</b>. Muitas religiões antigas continuam vivas hoje — Judaísmo, Cristianismo, Islamismo, Budismo e as religiões de matriz iorubá."},
+ {p:"“As religiões do passado acreditavam no mesmo Deus.” Essa frase é:",a:["Falsa","Verdadeira","Verdadeira só na África"],c:0,e:"É <b>falsa</b>. Havia religiões monoteístas e politeístas, com deuses e crenças bem diferentes."},
+
+ /* ---------- O TEMPO NATURAL E O CALENDÁRIO SUYÁ (p.64-67) ---------- */
+ {p:"A passagem do tempo pode ser observada de duas maneiras:",a:["Natural e cultural","Rápida e lenta","Certa e errada"],c:0,e:"O tempo é fundamental para a organização da vida em sociedade e sua passagem pode ser observada de maneira <b>natural</b> ou <b>cultural</b>."},
+ {p:"Qual destes é um exemplo de marcar o tempo de modo <b>natural</b>?",a:["Observar as fases de desenvolvimento de uma planta","Olhar o relógio digital","Marcar no celular"],c:0,e:"Observar a natureza — plantas, estações, fases da Lua, manhã e noite — é marcar o tempo de modo <b>natural</b>. Relógio e calendário são modos culturais."},
+ {p:"O que os povos do passado usavam como uma espécie de <b>bússola ou agenda</b>?",a:["O Sol, as estrelas, os astros e as constelações","Mapas de papel","Sinos das igrejas"],c:0,e:"Povos de todo o mundo sempre usaram a movimentação do Sol, das estrelas, dos astros e das <b>constelações</b> assim."},
+ {p:"A observação do tempo natural foi importante principalmente para:",a:["A elaboração dos primeiros calendários","A invenção do celular","A construção de estradas"],c:0,e:"A observação do tempo natural foi <b>extremamente importante para a elaboração dos primeiros calendários</b> do passado."},
+ {p:"O povo <b>Suyá</b> marca em seu calendário as épocas de:",a:["Estiagem, plantio, colheita e reprodução dos animais","Guerras e tratados","Feriados nacionais"],c:0,e:"O calendário Suyá marca <b>estiagem, plantio, colheita e reprodução dos animais</b>, entre outros fatores importantes para a sobrevivência do grupo."},
+ {p:"No glossário, <b>estiagem</b> quer dizer:",a:["Falta de chuvas; período seco","Época de cheias","Tempo de neve"],c:0,e:"<b>Estiagem</b>: falta de chuvas; período seco."},
+ {p:"Os grupos indígenas elaboraram seus calendários relacionando:",a:["O movimento dos planetas no céu com os fenômenos da natureza","O número de pessoas do grupo","O tamanho das aldeias"],c:0,e:"Eles relacionavam <b>o movimento dos planetas no céu</b> com o que acontecia na natureza ao longo do ano."},
+ {p:"Além do plantio e da colheita, o céu determinava para o povo Suyá:",a:["O tempo das festas religiosas e dos procedimentos dos pajés","O horário das aulas","O preço dos alimentos"],c:0,e:"O céu determinava também o tempo das <b>festas religiosas</b> e dos procedimentos feitos pelos <b>pajés</b> para proteção e cura dos integrantes do grupo."},
+
+ /* ---------- UNIDADES DE TEMPO E CALENDÁRIO GREGORIANO (p.68-71) ---------- */
+ {p:"Um <b>dia</b> tem:",a:["24 horas","12 horas","30 horas"],c:0,e:"Quadro da p.68: dia = <b>24 horas</b>."},
+ {p:"Os meses do calendário gregoriano variam entre:",a:["28 e 31 dias","30 e 31 dias","28 e 30 dias"],c:0,e:"Mês: <b>28, 29, 30 ou 31 dias</b>. Fevereiro tem 28, ou 29 no ano bissexto."},
+ {p:"Um <b>ano</b> tem:",a:["365 ou 366 dias, e 12 meses","300 dias e 10 meses","400 dias e 12 meses"],c:0,e:"Ano: <b>365 ou 366 dias</b>; 12 meses. O ano de 366 dias é o bissexto."},
+ {p:"Uma <b>década</b> corresponde a:",a:["10 anos","100 anos","1000 anos"],c:0,e:"Década = <b>10 anos</b>."},
+ {p:"Um <b>século</b> corresponde a:",a:["100 anos","90 anos","10 anos"],c:0,e:"Século = <b>100 anos</b>. Cuidado: a afirmação 'um século corresponde a 90 anos' é <b>incorreta</b> — é uma das frases para corrigir na p.70."},
+ {p:"Um <b>milênio</b> corresponde a:",a:["1000 anos","100 anos","10 000 anos"],c:0,e:"Milênio = <b>1000 anos</b>."},
+ {p:"Qual calendário é utilizado no Brasil?",a:["O gregoriano","O muçulmano","O chinês"],c:0,e:"No Brasil e em vários países do mundo o calendário utilizado é o <b>gregoriano</b>."},
+ {p:"Quem criou o calendário gregoriano, e em que ano?",a:["O Papa Gregório XIII, em 1582","Júlio César, em 1500","O Papa Gregório XIII, em 1450"],c:0,e:"Foi criado pelo <b>Papa Gregório XIII em 1582</b>. Ele foi chefe da Igreja Católica entre 1572 e 1585."},
+ {p:"O calendário gregoriano se baseia em qual marco para contar os anos?",a:["O nascimento de Jesus Cristo","A criação da roda","A fundação de Roma"],c:0,e:"Esse calendário se baseia no <b>nascimento de Jesus Cristo</b> para a contagem dos anos."},
+ {p:"O calendário gregoriano divide o tempo em:",a:["Dia, mês, ano, década, século e milênio","Só em dias e anos","Estações e luas"],c:0,e:"São as seis divisões citadas na p.69."},
+ {p:"A sigla <b>a.C.</b> significa:",a:["Antes de Cristo","Ano corrente","Ano da criação"],c:0,e:"<b>a.C.</b> = antes de Cristo. <b>d.C.</b> = depois de Cristo."},
+ {p:"A invenção da roda data de cerca de <b>3500 a.C.</b> Isso quer dizer que aconteceu:",a:["Cerca de 3500 anos antes do nascimento de Cristo","No ano 3500 da nossa contagem","Depois do nascimento de Cristo"],c:0,e:"Tudo que vem com <b>a.C.</b> aconteceu antes do nascimento de Cristo. Essa data pôde ser afirmada por causa de uma placa de argila encontrada na Suméria, Mesopotâmia."},
+ {p:"Por que a chegada do automóvel ao Brasil, em <b>1891</b>, não vem com a sigla d.C.?",a:["Porque no Brasil usamos o gregoriano e só sinalizamos o que veio antes de Cristo","Porque o ano é muito recente","Porque a data está errada"],c:0,e:"É a explicação da caixinha da p.69: como usamos o calendário gregoriano, <b>só são sinalizados os eventos anteriores ao nascimento de Cristo</b>. O automóvel era de Alberto Santos Dumont."},
+ {p:"Entre um evento de <b>500 a.C.</b> e outro de <b>200 a.C.</b>, qual é o mais antigo?",a:["O de 500 a.C.","O de 200 a.C.","São da mesma época"],c:0,e:"Nas datas <b>a.C. a contagem é ao contrário</b>: quanto maior o número, mais antigo. 500 a.C. veio antes de 200 a.C."},
+ {p:"O ano de <b>1582</b> pertence a qual século?",a:["Século XVI","Século XV","Século XVII"],c:0,e:"Regra: tire os dois últimos algarismos (15) e some 1 → <b>século 16</b>, que se escreve XVI. Só não some 1 quando o ano termina em 00."},
+ {p:"Os incas viveram entre os <b>séculos XIII e XV</b>. Em números, isso é entre:",a:["1201 e 1500","1300 e 1500","1213 e 1215"],c:0,e:"Século XIII vai de 1201 a 1300; século XV vai de 1401 a 1500. Por isso: de <b>1201 a 1500</b>."},
+
+ /* ---------- INSTRUMENTOS PARA MEDIR O TEMPO (p.71-73) ---------- */
+ {p:"Qual foi, provavelmente, o <b>primeiro</b> instrumento criado para medir a passagem do tempo?",a:["O relógio de sol","A ampulheta","O relógio mecânico"],c:0,e:"É a frase do resumo da p.74: é provável que o primeiro instrumento criado para medir o tempo tenha sido o <b>relógio de sol</b>."},
+ {p:"Como funciona o <b>relógio de sol</b>?",a:["Pela sombra que o Sol projeta sobre o mostrador","Pela areia que escoa","Por engrenagens"],c:0,e:"A passagem do tempo é medida pela <b>posição da sombra</b> projetada pelo Sol, que varia ao longo do dia."},
+ {p:"Segundo o livro, o mais antigo relógio de sol conhecido foi construído:",a:["Por volta de 3500 a.C., no Egito","Em 1350, na Europa","Em 1582, em Roma"],c:0,e:"É a data que o livro traz: por volta de <b>3500 a.C. no Egito</b>. É essa a resposta esperada na prova."},
+ {p:"O <b>relógio de areia</b> também é conhecido como:",a:["Ampulheta","Cronômetro","Pêndulo"],c:0,e:"O relógio de areia também é chamado de <b>ampulheta</b>."},
+ {p:"Como é formada a ampulheta?",a:["Por dois vasos em forma de cone separados por uma pequena abertura","Por um mostrador e dois ponteiros","Por um visor eletrônico"],c:0,e:"Dois vasos em forma de <b>cone</b>, ligados por uma pequena abertura por onde passa a areia."},
+ {p:"A ampulheta serve para medir principalmente:",a:["Pequenos intervalos de tempo, geralmente minutos","Séculos","A duração de um ano"],c:0,e:"O tempo é medido pela quantidade de areia que escoa. Serve para <b>pequenos intervalos</b>, geralmente minutos."},
+ {p:"Com qual invenção as pessoas passaram a “dizer as horas” de forma mais precisa?",a:["O relógio mecânico","O relógio de sol","O calendário"],c:0,e:"Foi com a criação dos <b>relógios mecânicos</b> que se passou a dizer as horas de forma mais precisa."},
+ {p:"Onde e quando foram criados os relógios <b>mecânicos</b>?",a:["Na Europa, aproximadamente em 1350","No Egito, em 3500 a.C.","No Peru, em 1450"],c:0,e:"Foram criados na <b>Europa, aproximadamente em 1350</b>."},
+ {p:"Por volta de <b>1500</b>, já era comum encontrar relógios:",a:["Em torres de igreja de diferentes cidades","No pulso das pessoas","Dentro dos celulares"],c:0,e:"Por volta de 1500 já havia relógios em <b>torres de igreja</b>. Nessa época também surgiu o relógio de bolso."},
+ {p:"Em <b>1800</b>, por que os relógios se tornaram populares?",a:["Porque eram usados para organizar o trabalho nas fábricas","Porque ficaram baratos","Porque a Igreja mandou"],c:0,e:"Em 1800 eles se tornaram populares para <b>organizar o trabalho nas fábricas</b>. Depois vieram os relógios de pulso."},
+ {p:"O <b>relógio digital</b> mostra as horas:",a:["Em um visor, de forma eletrônica","Com dois ponteiros","Pela sombra do Sol"],c:0,e:"No relógio digital as horas aparecem num <b>visor eletrônico</b>. Ele está em computadores, micro-ondas e celulares."},
+ {p:"Coloque em ordem, do mais antigo para o mais novo:",a:["Relógio de sol → ampulheta → mecânico → digital","Digital → mecânico → ampulheta → de sol","Ampulheta → de sol → digital → mecânico"],c:0,e:"É a ordem em que o livro apresenta: relógio de <b>sol</b>, de <b>areia</b> (ampulheta), <b>mecânico</b> e <b>digital</b>."},
+ {p:"“Atualmente, todas as pessoas organizam suas atividades observando apenas os ciclos da natureza.” Essa frase é:",a:["Falsa","Verdadeira","Verdadeira no campo"],c:0,e:"É <b>falsa</b>. Hoje usamos calendários e relógios — instrumentos culturais — junto com a observação da natureza."},
+ {p:"“O tempo cronológico variava conforme as necessidades e os interesses das sociedades.” Essa frase é:",a:["Verdadeira","Falsa","Só vale para os incas"],c:0,e:"É <b>verdadeira</b>: cada sociedade criou seu jeito de marcar o tempo conforme aquilo de que precisava."},
+
+ /* ---------- POR QUE MEDIR O TEMPO · OUTROS CALENDÁRIOS · FERIADOS ---------- */
+ {p:"Desde os primeiros grupos humanos existia a preocupação em <b>medir a passagem do tempo</b>. Por quais motivos?",a:["Religiosos, agrícolas ou para estudar os fenômenos celestes","Só para marcar aniversários","Para cobrar impostos"],c:0,e:"É a frase do resumo da p.74: por motivos <b>religiosos, agrícolas ou para estudar os fenômenos celestes</b> — uma forma antiga de astronomia."},
+ {p:"Estudar os <b>fenômenos celestes</b> é uma forma antiga de:",a:["Astronomia","Geografia","Matemática"],c:0,e:"O livro diz, entre parênteses: estudar os fenômenos celestes é <b>uma forma antiga de astronomia</b>."},
+ {p:"O que descobriram os <b>arqueólogos</b> sobre a medição do tempo?",a:["Que ela preocupa os seres humanos desde os primeiros grupos humanos","Que ela começou com os incas","Que ela começou em 1582"],c:0,e:"As descobertas arqueológicas indicam que a preocupação em medir o tempo existe <b>desde os primeiros grupos humanos</b>."},
+ {p:"Além do gregoriano, quais outros calendários o livro pede para pesquisar?",a:["O chinês, o do Egito Antigo e o muçulmano","O inca, o iorubá e o grego","Só o chinês"],c:0,e:"São os três do quadro da p.69: <b>calendário chinês, calendário do Egito Antigo e calendário muçulmano</b>. Cada povo conta os anos a partir de um marco diferente."},
+ {p:"Por que, em calendários diferentes, estamos em <b>anos diferentes</b>?",a:["Porque cada calendário escolhe um marco inicial diferente para começar a contagem","Porque uns têm mais meses","Porque uns são mais novos"],c:0,e:"O gregoriano conta a partir do <b>nascimento de Jesus Cristo</b>. Outros calendários partem de outro acontecimento — por isso o ano muda."},
+ {p:"Os chineses comemoram a chegada do ano-novo deles no mês de:",a:["Fevereiro","Janeiro","Dezembro"],c:0,e:"É a pergunta do Marcos, na p.53: o ano-novo chinês chega em <b>fevereiro</b>, porque o calendário chinês é diferente do gregoriano."},
+ {p:"O feriado do dia <b>25 de dezembro</b> mostra que, no Brasil, o calendário:",a:["Recebeu influência da religião","Não tem nada a ver com religião","Foi criado pelos incas"],c:0,e:"Vários feriados do calendário brasileiro são <b>religiosos</b> — é a influência da religião sobre o calendário, uma das perguntas da p.69."},
+ {p:"Segundo o calendário do povo Suyá, o que aparece desenhado em cada mês?",a:["O que acontece na natureza e o que o grupo faz naquele mês","Os feriados nacionais","Os nomes dos pajés"],c:0,e:"No calendário Suyá aparecem milho, peixe, abacaxi, pescaria, tempo de queimada — <b>os fenômenos da natureza e as atividades do grupo</b> em cada mês."},
+ {p:"O <b>relógio de pulso</b> apareceu:",a:["Depois de 1800, quando os relógios já eram populares","Antes do relógio de sol","Junto com a ampulheta"],c:0,e:"Em 1800 os relógios se tornaram populares nas fábricas e, <b>com o passar do tempo</b>, foram criados os relógios de pulso."}
+];
+
+/* ============================================================
+   JOGO DA MEMÓRIA
+   ============================================================ */
+MEMORIA2["História"] = [
+ {a:"fig:sol",         b:"Inti — o deus do Sol dos incas", ex:"Era a divindade mais importante para os incas."},
+ {a:"fig:templosol",   b:"Templo do Sol",                  ex:"Construído por volta de 1450, em Machu Picchu."},
+ {a:"fig:montanha",    b:"Cordilheira dos Andes",          ex:"Onde a sociedade inca se desenvolveu, em áreas hoje do Peru."},
+ {a:"fig:ife",         b:"Ifé — cidade sagrada dos iorubás", ex:"Onde teve início a criação do mundo, segundo os iorubás. Hoje fica na Nigéria."},
+ {a:"fig:africa",      b:"Nigéria — país onde fica Ifé",   ex:"Fica no continente africano."},
+ {a:"fig:livrosagrado",b:"Torá",                           ex:"Livro sagrado da religião judaica."},
+ {a:"fig:caaba",       b:"Caaba",                          ex:"Símbolo da religião muçulmana, em Meca, na Arábia Saudita."},
+ {a:"fig:calendario",  b:"calendário gregoriano",          ex:"Criado pelo Papa Gregório XIII em 1582."},
+ {a:"fig:lua",         b:"fases da Lua",                   ex:"Uma das formas de marcar o tempo de modo natural."},
+ {a:"fig:estrelas",    b:"constelações",                   ex:"Serviam de bússola e de agenda para os povos do passado."},
+ {a:"fig:relogiosol",  b:"relógio de sol",                 ex:"Marca o tempo pela sombra que o Sol projeta no mostrador."},
+ {a:"fig:ampulheta",   b:"ampulheta",                      ex:"O relógio de areia. Mede pequenos intervalos, geralmente minutos."},
+ {a:"fig:relogiomec",  b:"relógio mecânico",               ex:"Criado na Europa por volta de 1350."},
+ {a:"fig:relogiodig",  b:"relógio digital",                ex:"Mostra as horas num visor eletrônico."},
+ {a:"fig:milho",       b:"calendário do povo Suyá",        ex:"Marca estiagem, plantio, colheita e reprodução dos animais."},
+ {a:"fig:roda",        b:"invenção da roda — 3500 a.C.",   ex:"Datada por uma placa de argila achada na Suméria, Mesopotâmia."},
+ {a:"monoteísmo",      b:"crença em um único deus",        ex:"Judaísmo, Cristianismo e Islamismo."},
+ {a:"politeísmo",      b:"crença em vários deuses",        ex:"Era o caso dos incas."},
+ {a:"panteão",         b:"conjunto de deuses de uma religião", ex:"Também: o templo onde vivem os deuses."},
+ {a:"cosmogonia",      b:"história sobre a origem do mundo", ex:"Cada povo criou a sua."},
+ {a:"Olorum",          b:"o Ser Supremo dos iorubás",      ex:"Criou os orixás e mandou Oxalá criar a Terra."},
+ {a:"Oxalá",           b:"o filho mais velho de Olorum",   ex:"Recebeu o saco da Criação."},
+ {a:"orixás",          b:"governam o mundo em nome de Olorum", ex:"Cada um recebeu um poder de Olorum."},
+ {a:"sacrifício",      b:"oferenda aos deuses num ritual", ex:"Alimentos, a vida de animais ou de humanos, objetos."},
+ {a:"estiagem",        b:"falta de chuvas; período seco",  ex:"Marcada no calendário do povo Suyá."},
+ {a:"solstício de verão", b:"o dia em que começa o verão", ex:"No Hemisfério Sul, entre 20 e 21 de dezembro."},
+ {a:"Jerusalém",       b:"sagrada para três religiões",    ex:"Judaica, cristã e islâmica."},
+ {a:"Alcorão",         b:"livro sagrado do Islamismo",     ex:"A Caaba, em Meca, é símbolo dessa religião."},
+ {a:"século",          b:"100 anos",                       ex:"Década: 10 anos. Milênio: 1000 anos."},
+ {a:"a.C.",            b:"antes de Cristo",                ex:"d.C. quer dizer depois de Cristo."}
+];
+
+/* ============================================================
+   CRUZADINHA
+   ============================================================ */
+CRUZADA2["História"] = [
+ ["MONOTEISMO","Sou a crença em um único deus"],
+ ["POLITEISMO","Sou a crença em vários deuses"],
+ ["PANTEAO","Sou o conjunto de deuses de uma religião, e também o templo onde eles vivem"],
+ ["COSMOGONIA","Sou a história que conta como o mundo e os seres vivos surgiram"],
+ ["INTI","Era eu o deus do Sol dos incas"],
+ ["INCA","Sociedade da América que construiu um templo para o Sol"],
+ ["ANDES","Cordilheira onde os incas se desenvolveram"],
+ ["SACRIFICIO","Ofereço aos deuses alimentos, animais ou objetos num ritual"],
+ ["SOLSTICIO","Marco o dia em que começa o verão ou o inverno"],
+ ["OLORUM","Sou o Ser Supremo dos iorubás e criei os orixás"],
+ ["OXALA","Sou o filho mais velho de Olorum e recebi o saco da Criação"],
+ ["ORIXAS","Governamos o mundo em nome de Olorum"],
+ ["IFE","Cidade sagrada dos iorubás, hoje na Nigéria"],
+ ["NIGERIA","País africano onde fica a cidade de Ifé"],
+ ["TORA","Sou o livro sagrado da religião judaica"],
+ ["BIBLIA","Sou o livro sagrado do Cristianismo"],
+ ["ALCORAO","Sou o livro sagrado do Islamismo"],
+ ["JERUSALEM","Cidade sagrada para três religiões monoteístas"],
+ ["JUDAISMO","Religião monoteísta que teve origem há mais de 5 mil anos"],
+ ["GREGORIANO","Sou o calendário usado no Brasil"],
+ ["ESTIAGEM","Sou a falta de chuvas, o período seco"],
+ ["SUYA","Povo indígena que marca no calendário o plantio e a colheita"],
+ ["PAJE","Cuido da proteção e da cura no meu grupo"],
+ ["AMPULHETA","Meço o tempo com areia que escoa de cima para baixo"],
+ ["SECULO","Valho 100 anos"],
+ ["MILENIO","Valho 1000 anos"],
+ ["DECADA","Valho 10 anos"],
+ ["CONSTELACOES","Somos conjuntos de estrelas que formam desenhos no céu e servíamos de bússola e de agenda"]
+];
+
+/* ============================================================
+   ASSOCIAÇÃO
+   ============================================================ */
+ASSOC2["História"] = [
+ {f:"sol",         t:"Inti, o deus do Sol",       ex:"A divindade mais importante dos incas."},
+ {f:"templosol",   t:"Templo do Sol",             ex:"Adoração ao Sol e observatório astronômico, em Machu Picchu."},
+ {f:"montanha",    t:"Cordilheira dos Andes",     ex:"Onde os incas se desenvolveram."},
+ {f:"ife",         t:"escultura de um rei de Ifé", ex:"Ifé é a cidade sagrada dos iorubás, hoje na Nigéria."},
+ {f:"africa",      t:"continente africano",       ex:"Onde o povo iorubá começou a se desenvolver há 2 mil anos."},
+ {f:"livrosagrado",t:"Torá",                      ex:"Livro sagrado do Judaísmo."},
+ {f:"caaba",       t:"Caaba, em Meca",            ex:"Símbolo da religião muçulmana."},
+ {f:"calendario",  t:"calendário gregoriano",     ex:"Usado no Brasil, criado em 1582."},
+ {f:"lua",         t:"fases da Lua",              ex:"Tempo natural."},
+ {f:"estrelas",    t:"constelações",              ex:"Bússola e agenda dos povos antigos."},
+ {f:"relogiosol",  t:"relógio de sol",            ex:"Funciona pela sombra do Sol."},
+ {f:"ampulheta",   t:"relógio de areia",          ex:"Também chamado de ampulheta."},
+ {f:"relogiomec",  t:"relógio mecânico",          ex:"Europa, por volta de 1350."},
+ {f:"relogiodig",  t:"relógio digital",           ex:"Visor eletrônico."},
+ {f:"milho",       t:"calendário do povo Suyá",   ex:"Plantio, colheita, estiagem."},
+ {f:"roda",        t:"invenção da roda",          ex:"Cerca de 3500 a.C. A data vem de uma placa de argila achada na Suméria."}
+];
+
+/* ============================================================
+   CENTRAL DE DÚVIDAS
+   ============================================================ */
+AJUDA["História"] = [
+
+ {id:"culturarel", nome:"Cultura e religião dos povos antigos",
+  glos:[["Monoteísmo","A crença em um único deus."],
+        ["Politeísmo","A crença em vários deuses."],
+        ["Panteão","O templo onde vivem os deuses; também o conjunto de deuses de uma religião."],
+        ["Mito fundador","A história que explica como uma religião ou um povo começou."]],
+  passos:["Em muitas sociedades do passado, <b>religião e cultura estavam conectadas</b>: elas influenciavam o modo de viver e de pensar dos povos.",
+          "Em algumas culturas acreditava-se em <b>um único Deus</b> (monoteísmo).",
+          "Em outras havia um <b>panteão</b> de deuses, cada um responsável por um elemento da natureza — o Sol, o mar, o céu (politeísmo).",
+          "Muitas dessas religiões <b>não desapareceram</b>: ainda hoje fazem parte da vida de muitas pessoas."],
+  ex:"<b>Monoteístas:</b> Judaísmo (Torá) · Cristianismo (Bíblia) · Islamismo (Alcorão)<br><b>Politeístas:</b> os incas, que adoravam o sol, a lua, o raio e a terra<br><b>Budismo:</b> religião que tem a meditação como prática<br><b>Capela Sistina:</b> no Vaticano, em Roma; Michelangelo pintou ali <i>A criação de Adão</i> e <i>O juízo final</i>",
+  mapa:{c:"Cultura e religião",r:[{t:"Monoteísmo",f:["um único deus","Judaísmo, Cristianismo, Islamismo"]},{t:"Politeísmo",f:["vários deuses","cada um cuida de um elemento da natureza"]},{t:"Panteão",f:["templo dos deuses","conjunto de deuses"]},{t:"Hoje",f:["muitas continuam vivas","todas merecem respeito"]}]},
+  busca:"monoteísmo politeísmo povos antigos 5 ano"},
+
+ {id:"incas", nome:"Os incas e o Templo do Sol",
+  glos:[["Inca","Sociedade que se desenvolveu na Cordilheira dos Andes, em áreas hoje do Peru."],
+        ["Inti","Apu Inti, o deus do Sol — a divindade mais importante dos incas."],
+        ["Sacrifício","Oferecer aos deuses alimentos, a vida de animais ou de humanos, objetos etc. durante um ritual."],
+        ["Observatório astronômico","Lugar de onde se observa o movimento do Sol, da Terra e dos astros."]],
+  passos:["Os incas se desenvolveram entre os <b>séculos XIII e XV</b>, na parte sul da América, em áreas hoje pertencentes ao <b>Peru</b>.",
+          "O império deles chegou a <b>Equador, Bolívia, Colômbia, Chile e Argentina</b>, e acabou no <b>século XVI</b>, com a invasão dos conquistadores espanhóis.",
+          "Eles adoravam <b>elementos da natureza</b>: o sol, a lua, o raio e a terra. O mais importante era o Sol — o deus <b>Inti</b>.",
+          "Todo benefício recebido devia ser retribuído com um <b>sacrifício</b>, que expressava gratidão. Havia rituais com sacrifícios, inclusive de humanos.",
+          "O <b>Templo do Sol</b>, em Machu Picchu, foi construído por volta de <b>1450</b>. Servia para adoração e oferendas ao Sol — e também como <b>observatório astronômico</b>.",
+          "Atenção à frase do resumo do livro: o <b>Sol</b> era <b>uma das</b> divindades mais importantes para a sociedade inca; e <b>Inti</b>, o deus do Sol, era <b>a</b> divindade mais importante."],
+  ex:"<b>1450</b> — construção do Templo do Sol<br><b>1911</b> — arqueólogos encontram as ruínas de Machu Picchu<br>Os raios de Sol entravam pelas janelas do templo e indicavam o início do <b>solstício de verão</b><br>A Inti se ofereciam <b>ouro e prata</b>",
+  mapa:{c:"Os incas",r:[{t:"Onde e quando",f:["Andes, hoje Peru","séculos XIII a XV","fim no século XVI"]},{t:"Religião",f:["politeísta","sol, lua, raio, terra","Inti é o mais importante"]},{t:"Templo do Sol",f:["por volta de 1450","adoração e oferendas","observatório astronômico"]},{t:"Machu Picchu",f:["ruínas achadas em 1911"]}]},
+  busca:"incas templo do sol Machu Picchu Inti 5 ano"},
+
+ {id:"solsticio", nome:"Solstício: quando a estação começa",
+  glos:[["Solstício de verão","O dia em que se inicia o verão."],
+        ["Solstício de inverno","O dia em que se inicia o inverno."],
+        ["Hemisfério","Metade da Terra. O Brasil fica no Hemisfério Sul."]],
+  passos:["O <b>solstício de verão</b> é o dia em que o verão começa.",
+          "No <b>Hemisfério Norte</b>, acontece entre <b>21 e 22 de junho</b>.",
+          "No <b>Hemisfério Sul</b> — onde fica o Brasil —, acontece entre <b>20 e 21 de dezembro</b>.",
+          "Nesse dia observa-se o <b>dia mais longo do ano</b> naquele hemisfério.",
+          "Já o <b>solstício de inverno</b> marca o início do inverno e traz a <b>noite mais longa</b> do ano."],
+  ex:"Os incas percebiam o solstício de verão porque, nesse dia, <b>os raios de Sol entravam pelas janelas</b> do Templo do Sol.<br>Verão no Sul: 20-21 de dezembro · Verão no Norte: 21-22 de junho",
+  mapa:{c:"Solstício",r:[{t:"De verão",f:["começa o verão","dia mais longo"]},{t:"De inverno",f:["começa o inverno","noite mais longa"]},{t:"No Sul",f:["verão: 20-21 de dezembro"]},{t:"No Norte",f:["verão: 21-22 de junho"]}]},
+  busca:"solstício de verão hemisfério sul 5 ano"},
+
+ {id:"cosmogonias", nome:"Cosmogonias: as histórias de origem",
+  glos:[["Cosmogonia","História que conta sobre a origem do mundo e dos seres vivos."],
+        ["Mito fundador","Narrativa que está na base de uma religião."],
+        ["Firmamento","O céu."]],
+  passos:["Cada povo criou a sua maneira de explicar como o mundo começou. Essas histórias se chamam <b>cosmogonias</b>.",
+          "Cada uma delas mostra elementos da <b>cultura e da história</b> do povo que a criou.",
+          "O capítulo traz duas: uma de origem <b>iorubá</b> e outra de origem <b>judaico-cristã</b>.",
+          "As duas são <b>mitos fundadores</b> de religiões — não são notícias nem explicações da ciência."],
+  ex:"<b>Iorubá:</b> Olorum, o Ser Supremo, cansou-se da mesmice e decidiu criar um mundo. Criou os <b>orixás</b> e entregou a <b>Oxalá</b>, seu filho mais velho, o <b>saco da Criação</b>, dizendo: “Vá e crie.”<br><b>Judaico-cristã:</b> Deus transformou a escuridão em luz e criou a Terra, o Sol, a Lua, os planetas, as estrelas, os mares, os peixes, os animais e, por último, os <b>seres humanos</b>: Adão e depois Eva, no <b>Jardim do Éden</b>.",
+  mapa:{c:"Cosmogonias",r:[{t:"O que é",f:["história da origem do mundo","e dos seres vivos"]},{t:"Iorubá",f:["Olorum","orixás","Oxalá","saco da Criação"]},{t:"Judaico-cristã",f:["luz primeiro","seres humanos por último","Adão e Eva","Jardim do Éden"]},{t:"Em comum",f:["explicam o começo de tudo","são mitos fundadores"]}]},
+  busca:"cosmogonia mito de criação iorubá judaico-cristã 5 ano"},
+
+ {id:"iorubas", nome:"Os iorubás e a cidade de Ifé",
+  glos:[["Iorubá","Povo que começou a se desenvolver há 2 mil anos no continente africano."],
+        ["Olorum","O Ser Supremo, que já habitava a eternidade."],
+        ["Orixás","Criados por Olorum para governar o mundo em seu nome."],
+        ["Oxalá","O filho mais velho de Olorum, encarregado de criar a Terra."],
+        ["Ifé","O local onde, para os iorubás, teve início a criação do mundo."]],
+  passos:["Olorum vivia só, e tudo à sua volta era igual — <b>sem diversidade e sem movimento</b>.",
+          "Ele se cansou <b>de tanto nada, de tanta mesmice</b>, e quis um mundo onde seu olhar pousasse a cada instante numa coisa diferente.",
+          "Criou os <b>orixás</b> e deu a cada um deles um de seus poderes.",
+          "Entregou a <b>Oxalá</b>, o filho mais velho, o <b>saco da Criação</b>, com toda a matéria necessária, e disse: “Vá e crie.”",
+          "<b>Segundo a crença iorubá</b>, Ifé é o local onde a criação do mundo começou. Hoje é uma cidade da <b>Nigéria</b>."],
+  ex:"O povo iorubá começou a se desenvolver <b>há 2 mil anos</b>, no continente africano.<br>A escultura de bronze do livro é de um <b>antigo rei de Ifé</b>.<br>No mapa da África, a <b>Nigéria</b> fica no oeste do continente.",
+  mapa:{c:"Iorubás",r:[{t:"Quem",f:["povo africano","há 2 mil anos"]},{t:"Olorum",f:["Ser Supremo","criou os orixás"]},{t:"Oxalá",f:["filho mais velho","saco da Criação"]},{t:"Ifé",f:["onde o mundo começou","hoje na Nigéria"]}]},
+  busca:"iorubá Olorum Oxalá orixás Ifé Nigéria 5 ano"},
+
+ {id:"monoteistas", nome:"Judaísmo, Cristianismo e Islamismo",
+  glos:[["Torá","Livro sagrado da religião judaica."],
+        ["Bíblia Cristã","Livro sagrado do Cristianismo; o Antigo Testamento traz a narrativa da criação."],
+        ["Alcorão","Livro sagrado do Islamismo."],
+        ["Intolerância religiosa","Não respeitar a religião do outro."]],
+  passos:["O <b>Judaísmo</b> teve origem <b>há mais de 5 mil anos</b> e foi uma das primeiras religiões monoteístas de que se tem conhecimento.",
+          "O <b>Cristianismo</b> teve origem <b>há mais de 2 mil anos</b> e também crê em um único Deus.",
+          "As duas nasceram <b>na mesma região do mundo</b> e, por motivos diferentes, consideram <b>Jerusalém</b> uma cidade sagrada.",
+          "O <b>Islamismo</b> é a terceira religião monoteísta que considera Jerusalém sagrada. Seu livro é o <b>Alcorão</b>.",
+          "Todas merecem ser <b>reconhecidas e respeitadas</b> — é isso que o capítulo defende ao falar de intolerância religiosa."],
+  ex:"<b>Judaísmo</b> — Torá — mais de 5 mil anos<br><b>Cristianismo</b> — Bíblia — mais de 2 mil anos<br><b>Islamismo</b> — Alcorão — Caaba, em Meca, na Arábia Saudita<br>Em Jerusalém ficam o <b>Muro das Lamentações</b>, a <b>Cúpula Dourada</b> e a <b>Mesquita de Al-Aqsa</b>",
+  mapa:{c:"Monoteístas",r:[{t:"Judaísmo",f:["Torá","mais de 5 mil anos"]},{t:"Cristianismo",f:["Bíblia","mais de 2 mil anos"]},{t:"Islamismo",f:["Alcorão","Caaba, em Meca"]},{t:"Jerusalém",f:["sagrada para as três"]}]},
+  busca:"judaísmo cristianismo islamismo Jerusalém 5 ano"},
+
+ {id:"temponatural", nome:"O tempo natural e o calendário Suyá",
+  glos:[["Tempo natural","A passagem do tempo observada na natureza."],
+        ["Tempo cultural","A passagem do tempo marcada por calendários e relógios."],
+        ["Constelação","Conjunto de estrelas que forma um desenho no céu."],
+        ["Estiagem","Falta de chuvas; período seco."],
+        ["Pajé","Quem cuida da proteção e da cura no grupo indígena."]],
+  passos:["A passagem do tempo pode ser observada de maneira <b>natural</b> ou <b>cultural</b>.",
+          "Povos de todo o mundo usaram o <b>Sol, as estrelas, os astros e as constelações</b> como uma espécie de <b>bússola ou agenda</b>.",
+          "Foi assim que nasceram os <b>primeiros calendários</b>.",
+          "O povo <b>Suyá</b> relaciona o movimento dos planetas no céu com os fenômenos da natureza e usa um calendário circular. É um povo que existe hoje.",
+          "Nele estão marcadas as épocas de <b>estiagem, plantio, colheita e reprodução dos animais</b> — e também as festas religiosas e os procedimentos dos <b>pajés</b>."],
+  ex:"<b>Natural:</b> manhã, tarde e noite · as estações do ano · as fases da Lua · o crescimento de uma planta<br><b>Cultural:</b> relógio · calendário<br>O calendário Suyá é <b>circular</b>, com os 12 meses e o que acontece em cada um.",
+  mapa:{c:"Marcar o tempo",r:[{t:"Natural",f:["Sol e estrelas","estações","fases da Lua"]},{t:"Cultural",f:["calendário","relógio"]},{t:"Povo Suyá",f:["estiagem","plantio e colheita","reprodução dos animais","festas e pajés"]}]},
+  busca:"tempo natural calendário indígena povo Suyá 5 ano"},
+
+ {id:"gregoriano", nome:"O calendário gregoriano, a.C. e d.C.",
+  glos:[["Calendário gregoriano","O calendário usado no Brasil e em vários países."],
+        ["a.C.","Antes de Cristo."],
+        ["d.C.","Depois de Cristo."],
+        ["Marco inicial","O ponto de onde se começa a contar o tempo."]],
+  passos:["O calendário gregoriano foi criado pelo <b>Papa Gregório XIII, em 1582</b>.",
+          "Ele se baseia no <b>nascimento de Jesus Cristo</b> para contar os anos.",
+          "Divide o tempo em <b>dia, mês, ano, década, século e milênio</b>.",
+          "Datas <b>a.C.</b> aconteceram antes do nascimento de Cristo; <b>d.C.</b>, depois.",
+          "No Brasil só se escreve <b>a.C.</b>, porque tudo o que não tem sigla já se entende como depois de Cristo.",
+          "Cuidado com a contagem: nas datas <b>a.C.</b>, quanto <b>maior o número, mais antiga</b> é a data."],
+  ex:"A invenção da roda: cerca de <b>3500 a.C.</b> — sabe-se disso por uma placa de argila achada na Suméria, na Mesopotâmia<br>A chegada do automóvel ao Brasil: <b>1891</b>, com Alberto Santos Dumont<br>500 a.C. é <b>mais antigo</b> que 200 a.C.",
+  mapa:{c:"Gregoriano",r:[{t:"Quem e quando",f:["Papa Gregório XIII","1582"]},{t:"Marco",f:["nascimento de Cristo"]},{t:"Divide em",f:["dia, mês, ano","década, século, milênio"]},{t:"Siglas",f:["a.C. antes de Cristo","d.C. depois de Cristo"]}]},
+  busca:"calendário gregoriano papa Gregório XIII a.C. d.C. 5 ano"},
+
+ {id:"unidades", nome:"Dia, década, século e milênio",
+  glos:[["Década","10 anos."],["Século","100 anos."],["Milênio","1000 anos."],
+        ["Ano bissexto","O ano de 366 dias, que acontece de 4 em 4 anos."]],
+  passos:["<b>Dia</b> = 24 horas · <b>Mês</b> = 28, 29, 30 ou 31 dias · <b>Ano</b> = 365 ou 366 dias e 12 meses.",
+          "<b>Década</b> = 10 anos · <b>Século</b> = 100 anos · <b>Milênio</b> = 1000 anos.",
+          "Para saber o <b>século</b> de um ano: tape os dois últimos algarismos e some 1.",
+          "Só <b>não</b> se soma 1 quando o ano termina em <b>00</b> — 1500 é o último ano do século XV.",
+          "Os séculos se escrevem em algarismos romanos: X = 10, V = 5, I = 1."],
+  ex:"1582 → tape o 82, sobra 15, some 1 → <b>século XVI</b><br>1911 → 19 + 1 → <b>século XX</b><br>1450 → 14 + 1 → <b>século XV</b><br>1500 → termina em 00 → <b>século XV</b> (não soma)<br>Século XIII = de 1201 a 1300",
+  mapa:{c:"Unidades de tempo",r:[{t:"Dia",f:["24 horas"]},{t:"Mês",f:["28, 29, 30 ou 31 dias"]},{t:"Ano",f:["365 ou 366 dias","12 meses"]},{t:"Grandes",f:["década 10","século 100","milênio 1000"]}]},
+  busca:"década século milênio como identificar o século 5 ano"},
+
+ {id:"relogios", nome:"Instrumentos para medir o tempo",
+  glos:[["Relógio de sol","Marca o tempo pela sombra que o Sol projeta no mostrador."],
+        ["Ampulheta","O relógio de areia."],
+        ["Relógio mecânico","O que funciona por engrenagens; passou a dizer as horas com precisão."],
+        ["Relógio digital","Mostra as horas num visor eletrônico."]],
+  passos:["<b>Relógio de sol</b> — provavelmente o primeiro instrumento criado para medir o tempo. Funciona pela <b>sombra</b> projetada pelo Sol, que muda de posição ao longo do dia. Segundo o livro, o mais antigo conhecido é de cerca de <b>3500 a.C., no Egito</b>.",
+          "<b>Relógio de areia (ampulheta)</b> — dois vasos em forma de cone ligados por uma pequena abertura. Mede <b>pequenos intervalos</b>, geralmente minutos.",
+          "<b>Relógio mecânico</b> — criado na <b>Europa, por volta de 1350</b>. Foi com ele que se passou a “dizer as horas” com precisão. Por volta de <b>1500</b> já havia relógios em torres de igreja, e surgiu o <b>relógio de bolso</b>.",
+          "Em <b>1800</b> os relógios ficaram populares para organizar o <b>trabalho nas fábricas</b>. Depois vieram os de <b>pulso</b>.",
+          "<b>Relógio digital</b> — visor eletrônico. Está em computadores, micro-ondas e celulares."],
+  ex:"Ordem no tempo: <b>relógio de sol → ampulheta → mecânico → digital</b><br>3500 a.C. Egito · 1350 Europa · 1500 torres de igreja e relógio de bolso · 1800 fábricas · hoje digital",
+  mapa:{c:"Medir o tempo",r:[{t:"De sol",f:["sombra do Sol","3500 a.C., Egito"]},{t:"De areia",f:["ampulheta","minutos"]},{t:"Mecânico",f:["Europa, 1350","torres de igreja em 1500"]},{t:"Digital",f:["visor eletrônico","celular e micro-ondas"]}]},
+  busca:"relógio de sol ampulheta relógio mecânico digital história 5 ano"}
+];
+
+/* ---- roteamento das perguntas para a ajuda ---- */
+ROTAS["História"] = [
+ /* específicas primeiro */
+ ["culturarel",  /capela sistina|michelangelo/i],
+ ["unidades",    /pertence a qual s[eé]culo|em n[uú]meros, isso|^um dia tem|^um ano tem|^uma d[eé]cada|^um s[eé]culo|^um mil[eê]nio|meses do calend[aá]rio|bissexto/i],
+ ["solsticio",   /solst[ií]cio|hemisf[eé]rio|dia mais longo|noite mais longa|come[çc]a o ver[aã]o/i],
+ ["incas",       /inca|inti|templo do sol|machu picchu|andes|sacrif[ií]cio|espanh[oó]|1450|1911|ouro e prata|raio e a terra/i],
+ ["iorubas",     /iorub[aá]|olorum|oxal[aá]|orix[aá]|\bif[eé]|nig[eé]ria|saco da cria/i],
+ ["monoteistas", /torá|b[ií]blia|alcor[aã]o|juda[ií]smo|cristianismo|islamismo|jerusal[eé]m|al-aqsa|5 mil anos|2 mil anos|semelhan|caaba|meca|mu[çc]ulman|monote[ií]sta|sagrada por tr[eê]s|livros? sagrados?/i],
+ ["cosmogonias", /cosmogonia|narrativa|mito fundador|escurid[aã]o em luz|ad[aã]o|[eé]den|por [uú]ltimo|origem do mundo|duas hist[oó]rias/i],
+ ["temponatural",/suy[aá]|estiagem|paj[eé]|constela|tempo natural|modo natural|b[uú]ssola|agenda|ind[ií]gena|fases da lua|duas maneiras|ciclos da natureza|tempo cronol[oó]gico|primeiros calend|planta/i],
+ ["unidades",    /d[eé]cada|s[eé]culo|mil[eê]nio|24 horas|365/i],
+ ["gregoriano",  /gregoriano|greg[oó]rio|a\.c\.|d\.c\.|1582|roda|autom[oó]vel|1891|marco|utilizado no brasil/i],
+ ["relogios",    /rel[oó]gio|ampulheta|areia|mec[aâ]nico|digital|sombra|1350|1800|f[aá]bricas|instrumento|dizer as horas|coloque em ordem/i],
+ ["culturarel",  /./]
+];
+
+/* ============================================================
+   FOLHAS PARA IMPRIMIR
+   ============================================================ */
+FOLHAS["História"] = [
+
+ {id:"culturarel", nome:"Cultura e religião dos povos antigos", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["A crença em um único deus chama-se ______________.","monoteísmo"],
+   ["A crença em vários deuses chama-se ______________.","politeísmo"],
+   ["O templo onde vivem os deuses, ou o conjunto de deuses de uma religião, é o ______________.","panteão"],
+   ["Em muitas sociedades do passado, religião e cultura estavam ______________ e influenciavam o modo de viver dos povos.","conectadas (ou ligadas / unidas)"],
+   ["Nas religiões politeístas, cada deus costumava ser responsável por um elemento da ______________.","natureza"],
+   ["O livro sagrado do Islamismo é o ______________.","Alcorão"],
+   ["A Caaba, símbolo da religião muçulmana, fica na cidade de ______________.","Meca (na Arábia Saudita)"],
+   ["A religião que tem a meditação como prática é o ______________.","Budismo"],
+   ["A Capela Sistina fica no Vaticano, em ______________, na Itália.","Roma"],
+   ["O artista que pintou A criação de Adão foi ______________.","Michelangelo"],
+   ["Muitas religiões do passado ainda ______________ fazem parte da vida de muitas pessoas.","hoje"],
+   ["Escreva duas religiões monoteístas: ______________ e ______________.","Judaísmo, Cristianismo (ou Islamismo)"]]},
+
+ {id:"incas", nome:"Os incas e o Templo do Sol", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["A sociedade inca se desenvolveu na Cordilheira dos ______________.","Andes"],
+   ["Os incas viveram em áreas que hoje pertencem ao ______________.","Peru"],
+   ["Eles se desenvolveram entre os séculos ______________ e ______________.","XIII e XV"],
+   ["O império inca chegou ao fim no século ______________, com a invasão dos ______________.","XVI / conquistadores espanhóis"],
+   ["Os incas adoravam elementos da natureza: o sol, a lua, o ______________ e a terra.","raio"],
+   ["O deus do Sol dos incas chamava-se ______________.","Inti (Apu Inti)"],
+   ["A ele se ofereciam ______________ e ______________.","ouro e prata"],
+   ["Oferecer aos deuses alimentos, animais ou objetos num ritual chama-se ______________.","sacrifício"],
+   ["O Templo do Sol foi construído por volta do ano ______________.","1450"],
+   ["Além de local de adoração, o Templo do Sol servia como ______________.","observatório astronômico"],
+   ["Complete como está no resumo do livro: o Sol era ______________ divindades mais importantes para a sociedade inca.","uma das"],
+   ["Os incas sabiam que o verão ia começar porque os raios de Sol entravam pelas ______________ do templo.","janelas"],
+   ["As ruínas de Machu Picchu foram encontradas por arqueólogos em ______________.","1911"]]},
+
+ {id:"cosmo", nome:"Cosmogonias: as duas narrativas", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["As histórias que contam sobre a origem do mundo e dos seres vivos chamam-se ______________.","cosmogonias"],
+   ["As duas narrativas do capítulo são de origem ______________ e ______________.","iorubá / judaico-cristã"],
+   ["O Ser Supremo dos iorubás chama-se ______________.","Olorum"],
+   ["Ele decidiu criar o mundo porque se cansou de tanto nada e de tanta ______________.","mesmice"],
+   ["Ele criou os ______________ para governarem o mundo em seu nome.","orixás"],
+   ["O filho mais velho de Olorum, encarregado de criar a Terra, chama-se ______________.","Oxalá"],
+   ["Olorum entregou a ele o ______________, com toda a matéria da criação.","saco da Criação"],
+   ["Para os iorubás, a criação do mundo começou na cidade de ______________.","Ifé"],
+   ["Hoje essa cidade fica no país chamado ______________.","Nigéria"],
+   ["Na narrativa judaico-cristã, a primeira coisa que Deus fez foi transformar a escuridão em ______________.","luz"],
+   ["O que Deus criou por último foram os ______________.","seres humanos"],
+   ["Na narrativa judaico-cristã, Adão e Eva viviam num lugar chamado ______________.","Jardim do Éden"]]},
+
+ {id:"compara", nome:"Comparando as duas narrativas de origem", sub:"tabela para completar", tipo:"tabela",
+  instr:"Complete a tabela comparando as duas cosmogonias estudadas no capítulo.",
+  cols:["","Narrativa iorubá","Narrativa judaico-cristã"],
+  linhas:[["Quem cria o mundo","Olorum, o Ser Supremo","Deus"],
+          ["Quem executa a criação","Oxalá, o filho mais velho","O próprio Deus"],
+          ["Por que o mundo foi criado","Olorum cansou-se da mesmice","Não é explicado na narrativa"],
+          ["O que foi criado primeiro","Os orixás","A luz"],
+          ["Lugar sagrado da origem","Ifé, hoje na Nigéria","Jardim do Éden"],
+          ["Onde a narrativa está registrada","Tradição sagrada iorubá, passada de boca em boca e registrada por Reginaldo Prandi","Livros sagrados Torá e Antigo Testamento da Bíblia Cristã"],
+          ["Povo / religião","Iorubá","Judaísmo e Cristianismo"]]},
+
+ {id:"monoteistas", nome:"As religiões monoteístas", sub:"10 itens · completar", tipo:"lacunas",
+  itens:[
+   ["O livro sagrado da religião judaica é a ______________.","Torá"],
+   ["A narrativa da criação também está no ______________ da Bíblia Cristã.","Antigo Testamento"],
+   ["O Judaísmo teve origem há mais de ______________ anos.","5 mil"],
+   ["O Cristianismo teve origem há mais de ______________ anos.","2 mil"],
+   ["A religião mais antiga das duas é o ______________.","Judaísmo"],
+   ["As duas tiveram origem na ______________ região do mundo.","mesma"],
+   ["A cidade considerada sagrada pelas duas — e também pelo Islamismo — é ______________.","Jerusalém"],
+   ["Em Jerusalém ficam o Muro das ______________, a Cúpula Dourada e a Mesquita de Al-Aqsa.","Lamentações"],
+   ["Escreva uma semelhança entre Cristianismo e Judaísmo: ______________","ambos creem em um único Deus (ou: consideram Jerusalém sagrada; nasceram na mesma região)"],
+   ["Não respeitar a religião do outro chama-se intolerância ______________.","religiosa"]]},
+
+ {id:"tempnat", nome:"O tempo natural e o povo Suyá", sub:"10 itens · completar", tipo:"lacunas",
+  itens:[
+   ["A passagem do tempo pode ser observada de maneira ______________ ou ______________.","natural / cultural"],
+   ["Os povos do passado usavam o Sol, as estrelas e as ______________ como bússola ou agenda.","constelações (ou os astros)"],
+   ["A observação do tempo natural foi importante para a elaboração dos primeiros ______________.","calendários"],
+   ["Desde os primeiros grupos humanos, media-se o tempo por motivos ______________, ______________ ou para estudar os ______________.","religiosos, agrícolas, fenômenos celestes"],
+   ["Marcar o tempo pelas fases da Lua é um exemplo de tempo ______________.","natural"],
+   ["Marcar o tempo pelo relógio e pelo calendário é um exemplo de tempo ______________.","cultural"],
+   ["O povo indígena cujo calendário aparece no livro é o povo ______________.","Suyá"],
+   ["No glossário, estiagem quer dizer ______________.","falta de chuvas; período seco"],
+   ["No calendário Suyá estão marcadas as épocas de estiagem, plantio, ______________ e reprodução dos animais.","colheita"],
+   ["O céu determinava também o tempo das festas ______________ do grupo.","religiosas"],
+   ["Quem faz os procedimentos de proteção e cura no grupo indígena é o ______________.","pajé"]]},
+
+ {id:"gregoriano", nome:"O calendário gregoriano", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["O calendário utilizado no Brasil é o ______________.","gregoriano"],
+   ["Ele foi criado pelo Papa ______________ no ano de ______________.","Gregório XIII / 1582"],
+   ["Esse calendário se baseia no ______________ para a contagem dos anos.","nascimento de Jesus Cristo"],
+   ["Ele divide o tempo em dia, mês, ano, ______________, ______________ e ______________.","década, século e milênio"],
+   ["A sigla a.C. significa ______________.","antes de Cristo"],
+   ["A sigla d.C. significa ______________.","depois de Cristo"],
+   ["A invenção da roda data de cerca de ______________.","3500 a.C."],
+   ["Sabe-se disso por uma placa de argila encontrada na região da ______________, na Mesopotâmia.","Suméria"],
+   ["A chegada do automóvel ao Brasil se deu em ______________, com Alberto Santos Dumont.","1891"],
+   ["Essa data não leva a sigla d.C. porque, no Brasil, só sinalizamos o que veio ______________ de Cristo.","antes"],
+   ["Entre 500 a.C. e 200 a.C., o mais antigo é ______________.","500 a.C."],
+   ["Os países que seguem o calendário gregoriano consideram o nascimento de Cristo como ______________ para a contagem do tempo.","marco inicial"],
+   ["Além do gregoriano, cite três calendários: ______________, ______________ e ______________.","chinês, do Egito Antigo e muçulmano"],
+   ["Os chineses comemoram o ano-novo deles no mês de ______________.","fevereiro"],
+   ["O feriado de 25 de dezembro mostra a influência da ______________ sobre o calendário brasileiro.","religião"]]},
+
+ {id:"unidades", nome:"Unidades de tempo e séculos", sub:"tabela para completar", tipo:"tabela",
+  instr:"Complete o valor de cada unidade e, depois, o século de cada ano. Para achar o século: tape os dois últimos algarismos e some 1 (só não some quando o ano termina em 00).",
+  cols:["Unidade ou ano","Quanto vale / qual século","Confira"],
+  linhas:[["Dia","24 horas","é o tempo de uma volta da Terra em torno dela mesma"],
+          ["Mês","28, 29, 30 ou 31 dias","fevereiro tem 28, ou 29 no ano bissexto"],
+          ["Ano","365 ou 366 dias (12 meses)","366 no ano bissexto, de 4 em 4 anos"],
+          ["Década","10 anos","dez"],
+          ["Século","100 anos","cem — não são 90"],
+          ["Milênio","1000 anos","mil"],
+          ["Ano 1450","século XV","14 + 1"],
+          ["Ano 1500","século XV","termina em 00"],
+          ["Ano 1582","século XVI","15 + 1"],
+          ["Ano 1800","século XVIII","termina em 00 — não soma"],
+          ["Ano 1891","século XIX","18 + 1"],
+          ["Ano 1911","século XX","19 + 1"],
+          ["Ano 2026","século XXI","20 + 1"]]},
+
+ {id:"relogios", nome:"Instrumentos para medir o tempo", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["Provavelmente o primeiro instrumento criado para medir o tempo foi o ______________.","relógio de sol"],
+   ["Ele funciona pela ______________ que o Sol projeta sobre o mostrador.","sombra"],
+   ["Segundo o livro, o mais antigo conhecido é de cerca de ______________, no ______________.","3500 a.C. / Egito"],
+   ["O relógio de areia também é chamado de ______________.","ampulheta"],
+   ["Ele é formado por dois vasos em forma de ______________ separados por uma pequena abertura.","cone"],
+   ["Ele mede pequenos intervalos de tempo, geralmente ______________.","minutos"],
+   ["Foi com a criação dos relógios ______________ que se passou a dizer as horas com precisão.","mecânicos"],
+   ["Esses relógios foram criados na ______________, aproximadamente em ______________.","Europa / 1350"],
+   ["Por volta de 1500 já era comum encontrar relógios em ______________ de igreja.","torres"],
+   ["Nessa mesma época foi criado o relógio de ______________.","bolso"],
+   ["Em 1800 os relógios se tornaram populares para organizar o trabalho nas ______________.","fábricas"],
+   ["O relógio ______________ mostra as horas num visor eletrônico.","digital"]]},
+
+ {id:"linha", nome:"Linha do tempo do capítulo", sub:"ordenar 8 acontecimentos", tipo:"lacunas",
+  instr:"Numere de 1 a 8, do mais antigo para o mais recente. Depois confira com o gabarito.",
+  itens:[
+   ["(____) Criação do calendário gregoriano pelo Papa Gregório XIII","6 — 1582"],
+   ["(____) Invenção da roda","1 — cerca de 3500 a.C."],
+   ["(____) Construção do Templo do Sol pelos incas","4 — por volta de 1450"],
+   ["(____) Criação dos relógios mecânicos na Europa","3 — aproximadamente 1350"],
+   ["(____) Relógios comuns em torres de igreja e criação do relógio de bolso","5 — por volta de 1500"],
+   ["(____) Início do povo iorubá no continente africano","2 — há 2 mil anos"],
+   ["(____) Chegada do automóvel ao Brasil","7 — 1891"],
+   ["(____) Descoberta das ruínas de Machu Picchu","8 — 1911"]]},
+
+ {id:"certo", nome:"Certo ou errado", sub:"14 afirmações · corrigir o que estiver errado", tipo:"certo",
+  itens:[
+   ["Monoteísmo é a crença em vários deuses.", false, "Ao contrário: monoteísmo é a crença em <b>um único</b> deus. Politeísmo é a crença em vários."],
+   ["Panteão é o templo onde vivem os deuses e também o conjunto de deuses de uma religião.", true, "É a definição do glossário da p.53."],
+   ["Todas as religiões que tiveram origem no passado desapareceram com o tempo.", false, "Muitas continuam vivas hoje: Judaísmo, Cristianismo, Islamismo, Budismo e as religiões de matriz iorubá."],
+   ["Há religiões politeístas e monoteístas, e todas merecem ser reconhecidas e respeitadas.", true, "É uma das afirmações verdadeiras do 'Para praticar'."],
+   ["As religiões do passado acreditavam no mesmo Deus.", false, "Havia crenças bem diferentes — umas em um único deus, outras em vários."],
+   ["O Sol era considerado uma divindade pela civilização inca.", true, "O deus do Sol era Inti, a divindade mais importante para os incas."],
+   ["O Templo do Sol servia apenas para rezar.", false, "Servia para adoração e oferendas <b>e também</b> como observatório astronômico."],
+   ["Os incas viviam na Europa.", false, "Viviam na <b>América</b>, na Cordilheira dos Andes, em áreas hoje do Peru."],
+   ["Cosmogonia é a história que conta sobre a origem do mundo e dos seres vivos.", true, "É a definição exata do glossário da p.57."],
+   ["Ifé é uma cidade sagrada dos iorubás e fica hoje na Nigéria.", true, "Para os iorubás, foi ali que a criação do mundo começou."],
+   ["O Cristianismo é mais antigo que o Judaísmo.", false, "É o contrário: Judaísmo, mais de 5 mil anos; Cristianismo, mais de 2 mil anos."],
+   ["Um século corresponde a 90 anos.", false, "Um século corresponde a <b>100 anos</b>. Essa é uma das frases para corrigir na p.70."],
+   ["Um ano não corresponde a 365 dias.", false, "Na p.70 essa é uma das frases para corrigir: o certo é que um ano <b>corresponde</b> a 365 dias — ou 366, no ano bissexto."],
+   ["Observar as fases de desenvolvimento de uma planta é uma maneira de constatar a passagem do tempo de modo natural.", true, "É uma das afirmativas corretas do 'Para praticar' da p.73."]]},
+
+ {id:"aberta", nome:"Questões para responder", sub:"8 questões · escrever com suas palavras", tipo:"aberta", linhas:3,
+  itens:[
+   ["Qual é a relação entre o Sol e o deus Inti para a sociedade inca?","Inti era o deus do Sol. Como os incas adoravam elementos da natureza, o Sol era visto como divindade — a mais importante delas."],
+   ["Qual é a importância do Sol para a vida dos seres vivos?","O Sol mantém a vida na Terra: dá luz e calor, controla a temperatura e permite que as plantas cresçam."],
+   ["Que relação existe entre o Sol e o início do solstício de verão? Como os incas sabiam disso?","O solstício de verão é o dia em que o verão começa. Os incas percebiam porque, nesse dia, os raios de Sol entravam pelas janelas do Templo do Sol."],
+   ["Por que Olorum decidiu criar o mundo?","Porque vivia só e tudo à sua volta era igual. Cansou-se de tanto nada e de tanta mesmice, e quis um mundo onde seu olhar pousasse a cada instante numa coisa diferente."],
+   ["Cite duas semelhanças entre o Cristianismo e o Judaísmo.","Os dois são monoteístas (creem em um único Deus); nasceram na mesma região do mundo; consideram Jerusalém uma cidade sagrada; compartilham a mesma narrativa da criação (Torá e Antigo Testamento)."],
+   ["Explique com suas palavras o que é um calendário.","É um instrumento criado pelas sociedades para organizar e marcar a passagem do tempo — dias, meses e anos — a partir da observação da natureza e das necessidades do grupo."],
+   ["Antes da criação dos calendários e dos relógios, de que maneiras os povos do passado marcavam a passagem do tempo?","Observando a natureza: o movimento do Sol, das estrelas, dos astros e das constelações; as estações do ano; as fases da Lua; o crescimento das plantas; as épocas de chuva e de seca."],
+   ["Como as pessoas faziam para observar a passagem do tempo em um relógio de sol?","Olhavam a sombra projetada pelo Sol sobre o mostrador. Como o Sol muda de posição ao longo do dia, a sombra se move e indica a hora."]]},
+
+ {id:"mapa", nome:"Mapa conceitual — cultura e religião", sub:"completar o esquema", tipo:"mapa",
+  centro:"CULTURA E RELIGIÃO",
+  ramos:[{t:"DOIS TIPOS DE CRENÇA", f:["______________: crença em um único deus","______________: crença em vários deuses"],
+          g:["Monoteísmo","Politeísmo"]},
+         {t:"OS INCAS", f:["Deus do Sol: ______________","Templo do Sol, por volta de ______________","Serviu também como ______________"],
+          g:["Inti","1450","observatório astronômico"]},
+         {t:"OS IORUBÁS", f:["Ser Supremo: ______________","Filho mais velho: ______________","Cidade sagrada: ______________"],
+          g:["Olorum","Oxalá","Ifé"]},
+         {t:"MONOTEÍSTAS", f:["Judaísmo — livro ______________","Cristianismo — livro ______________","Islamismo — livro ______________","Cidade sagrada das três: ______________"],
+          g:["Torá","Bíblia","Alcorão","Jerusalém"]}]},
+
+ {id:"mapatempo", nome:"Mapa conceitual — marcação do tempo", sub:"completar o esquema", tipo:"mapa",
+  centro:"MARCAR O TEMPO",
+  ramos:[{t:"TEMPO NATURAL", f:["Observando o ______________ e as estrelas","As ______________ do ano","As fases da ______________"],
+          g:["Sol","estações","Lua"]},
+         {t:"TEMPO CULTURAL", f:["______________ e relógios criados pelas sociedades"],
+          g:["Calendários"]},
+         {t:"CALENDÁRIO GREGORIANO", f:["Criado pelo Papa ______________ em ______________","Marco: o ______________"],
+          g:["Gregório XIII","1582","nascimento de Jesus Cristo"]},
+         {t:"INSTRUMENTOS", f:["Relógio de ______________ — o primeiro","______________ — mede minutos com areia","Relógio ______________ — Europa, 1350","Relógio ______________ — visor eletrônico"],
+          g:["sol","Ampulheta","mecânico","digital"]}]}
+];
+
+/* ---- toque para traduzir ---- */
+Object.assign(DIC_EXTRA["História"], {
+ "monoteísmo":"a crença em um único deus","monoteístas":"que creem em um único deus","monoteísta":"que crê em um único deus",
+ "politeísmo":"a crença em vários deuses","politeístas":"que creem em vários deuses",
+ "panteão":"o templo onde vivem os deuses; o conjunto de deuses de uma religião",
+ "cosmogonia":"história que conta a origem do mundo e dos seres vivos","cosmogonias":"histórias sobre a origem do mundo",
+ "sacrifício":"oferecer aos deuses alimentos, animais ou objetos num ritual",
+ "estiagem":"falta de chuvas; período seco",
+ "pajé":"quem cuida da proteção e da cura no grupo indígena","pajés":"quem cuida da proteção e da cura no grupo indígena",
+ "solstício":"o dia em que começa o verão ou o inverno",
+ "hemisfério":"metade da Terra; o Brasil fica no Hemisfério Sul",
+ "constelações":"conjuntos de estrelas que formam desenhos no céu","constelação":"conjunto de estrelas que forma um desenho no céu",
+ "firmamento":"o céu",
+ "orixás":"na religião iorubá, divindades criadas por Olorum para governar o mundo em seu nome","orixá":"na religião iorubá, divindade criada por Olorum",
+ "iorubá":"povo africano que começou a se desenvolver há 2 mil anos","iorubás":"povo africano; sua cidade sagrada é Ifé",
+ "inca":"povo que viveu nos Andes, em áreas hoje do Peru","incas":"povo que viveu nos Andes, em áreas hoje do Peru",
+ "arqueólogos":"cientistas que estudam o passado pelos objetos e ruínas que sobraram",
+ "astronômico":"que tem a ver com a observação dos astros",
+ "gregoriano":"o calendário usado no Brasil, criado em 1582",
+ "milênio":"1000 anos","século":"100 anos","década":"10 anos",
+ "ampulheta":"o relógio de areia","mostrador":"a face do relógio, onde se lê a hora",
+ "bissexto":"o ano de 366 dias, que acontece de 4 em 4 anos",
+ "intolerância":"não respeitar quem pensa ou crê diferente",
+ "mesquita":"templo da religião islâmica","Torá":"livro sagrado da religião judaica","Alcorão":"livro sagrado do Islamismo",
+ "oferendas":"presentes oferecidos a uma divindade","divindade":"um deus ou uma deusa",
+ "ruínas":"o que restou de construções antigas",
+ "mesmice":"tudo sempre igual, sem novidade"
+});
+
+
 /* ============================================================
    RÉGUA DE EVOLUÇÃO — todas as matérias
    Mostra, para cada matéria: quanto do banco de exercícios já
