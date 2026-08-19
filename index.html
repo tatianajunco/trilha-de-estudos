@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Trilha de Estudos">
-<meta name="description" content="Trilha de estudos para a semana de provas.">
+<meta name="description" content="Trilha de estudos — treino diário, sem internet.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
@@ -174,7 +174,7 @@ section.tela.on{display:block}
 .roseta.ganha{opacity:1;filter:none;animation:pop .45s cubic-bezier(.34,1.6,.64,1)}
 @keyframes pop{0%{transform:scale(.5) rotate(-14deg)}100%{transform:none}}
 .roseta svg{width:60px;height:74px}
-.roseta b{display:block;font-size:.76rem;line-height:1.25;margin-top:-4px}
+.roseta > b:first-of-type{display:block;font-size:.76rem;line-height:1.25;margin-top:-4px}
 .roseta span{display:block;font-size:.66rem;color:var(--dim);line-height:1.25}
 
 /* ---------- QUIZ (área limpa de propósito) ---------- */
@@ -275,7 +275,7 @@ section.tela.on{display:block}
 /* ---------- REVISÃO GUIADA ---------- */
 .revfases{display:grid;gap:8px;margin:10px 0}
 .revfase{background:var(--card2);border:2px solid var(--line);border-radius:14px;padding:10px 12px}
-.revfase b{display:block;font-size:.92rem}
+.revfase > b:first-child{display:block;font-size:.92rem}
 .revfase span{font-size:.82rem;color:var(--dim);line-height:1.45}
 .revtopo{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .revlin{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 13px;border-radius:14px;
@@ -570,13 +570,25 @@ table.grade td span{font-weight:700}
 .ajconteudo{margin-top:12px;min-height:120px}
 .glos .gitem{background:var(--card2);border:2px solid var(--line);border-left:6px solid var(--lav);
   border-radius:14px;padding:11px 13px;margin-bottom:9px}
-.glos .gitem b{display:block;color:var(--bordo);font-size:.98rem}
+.glos .gitem > b:first-child{display:block;color:var(--bordo);font-size:.98rem}
 .glos .gitem span{font-size:.9rem;color:var(--txt)}
 ol.passos{padding-left:22px;margin:14px 0}
 ol.passos li{margin-bottom:10px;font-size:.93rem;line-height:1.5}
 ol.passos li::marker{color:var(--bordo);font-weight:800}
 .exemplo{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:14px;padding:13px;font-size:.93rem;line-height:1.6}
-.exemplo b{display:block;color:var(--couro);margin-bottom:5px}
+.exemplo > b:first-child{display:block;color:var(--couro);margin-bottom:5px}
+.inicio{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  text-align:center;padding:26px 6px 30px}
+.inicio .oi{font-size:1.75rem;font-weight:800;margin:0 0 6px;line-height:1.2}
+.inicio .sub{margin:0 0 28px;max-width:310px;font-size:1rem}
+.comecar{width:100%;max-width:330px;border:0;border-radius:26px;background:var(--rosa);color:#fff;
+  padding:26px 20px;box-shadow:0 6px 0 rgba(0,0,0,.10);cursor:pointer;display:block;font-family:inherit}
+.comecar .cbig{display:block;font-size:1.55rem;font-weight:800}
+.comecar .cmin{display:block;font-size:.95rem;opacity:.93;margin-top:6px}
+.comecar:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.10)}
+.linksuave{background:none;border:0;color:var(--sub);font:inherit;font-size:.92rem;
+  text-decoration:underline;margin-top:22px;cursor:pointer;padding:8px}
+#hojeExtra{margin-top:20px;width:100%;max-width:340px}
 .ajperg{background:var(--card2);border:2px dashed var(--line);border-radius:12px;padding:9px 12px;margin-bottom:10px;
   font-size:.9rem;line-height:1.45;color:var(--txt)}
 .ajperg span{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin-bottom:3px}
@@ -721,7 +733,7 @@ ul.lista li::marker{color:var(--rosa)}
     <button class="btnmenu" onclick="abrirMenu()" aria-label="Abrir menu">☰</button>
     <button class="btnvoltar" id="btnVoltar" onclick="voltar()" aria-label="Voltar para a tela anterior" style="display:none">‹</button>
     <svg class="mascote"><use href="#poni"/></svg>
-    <div class="logo">Trilha de <span>Estudos</span><small>Semana de provas</small></div>
+    <div class="logo">Trilha de <span>Estudos</span><small>meu treino</small></div>
     <div class="pill" id="pillDia">—</div>
     <div class="mini">
       <button onclick="alternarTema()">🌙 Tema</button>
@@ -741,45 +753,15 @@ ul.lista li::marker{color:var(--rosa)}
 
 <!-- ===== HOJE ===== -->
 <section class="tela on" id="t-hoje">
-  <div class="card destaque">
-    <h1 id="saudacao">Oi! Vamos começar?</h1>
+  <div class="inicio">
+    <p class="oi" id="saudacao">Oi!</p>
     <p class="sub" id="fraseDia"></p>
-    <div class="barra"><i id="barraDia" style="width:0%"></i></div>
-    <p class="sub" id="txtProgresso">0 de 0 blocos de hoje</p>
-    <button class="btn" onclick="comecarAgora()">🥕 Começar agora — leva 5 segundos</button>
-  </div>
-
-  <div class="card salvia" id="cardAulasHoje"></div>
-
-  <div class="card ouro">
-    <h2>🏁 Provas chegando</h2>
-    <div class="contagem" id="contagem"></div>
-  </div>
-
-  <div class="card lav" id="cardTarefasHoje"></div>
-
-  <div class="card salvia">
-    <h2>🐎 A trilha de hoje</h2>
-    <p class="sub" id="dicaOrdem">Você escolhe a ordem. Só não vale pular o dia inteiro.</p>
-    <div id="blocosHoje"></div>
-    <button class="btn sec" onclick="irPara('semana')">Ver o mapa da trilha inteira</button>
-  </div>
-
-  <div class="card rosa">
-    <h2>🤝 Meu combinado</h2>
-    <p class="sub">Combinado funciona melhor no formato <b>SE… ENTÃO…</b> — em crianças, d ≈ 0,43, e o formato contingente vence o "vou fazer às 15h" (0,43 contra 0,29).</p>
-    <label>SE… (o que acontece antes)</label>
-    <input type="text" id="seCampo" placeholder="Ex.: SE eu terminar o lanche da tarde">
-    <label>ENTÃO… (o que eu faço, exato)</label>
-    <input type="text" id="entaoCampo" placeholder="Ex.: ENTÃO abro a Trilha e faço 1 bloco de 12 min">
-    <button class="btn sec" onclick="salvarCombinado()">Guardar combinado</button>
-    <p class="sub" id="combinadoSalvo"></p>
-  </div>
-
-  <div class="card lav">
-    <h2>🎀 Minhas rosetas</h2>
-    <p class="sub">Rosetas se ganham por <b>aparecer e treinar</b> — nunca por acertar rápido. E não se perdem nunca.</p>
-    <div id="selos"></div>
+    <button class="comecar" onclick="comecarAgora()">
+      <span class="cbig">▶︎ Começar</span>
+      <span class="cmin" id="comecarDet"></span>
+    </button>
+    <button class="linksuave" onclick="irPara('estudar')">quero escolher eu mesma</button>
+    <div id="hojeExtra"></div>
   </div>
 </section>
 
@@ -802,7 +784,7 @@ ul.lista li::marker{color:var(--rosa)}
 <section class="tela" id="t-estudar">
   <div class="card ouro">
     <h1>🏇 Picadeiro</h1>
-    <p class="sub">Escolha a matéria e o tipo de treino. Nenhum deles marca tempo contra você.</p>
+    <p class="sub">Escolha a matéria. Depois escolha o treino.</p>
     <div class="escolha" id="escMateria"></div>
     <div class="escolha" id="escModo" style="margin-top:11px"></div>
   </div>
@@ -823,11 +805,11 @@ ul.lista li::marker{color:var(--rosa)}
       <button class="btn sec" onclick="zerarTimer()">Zerar</button>
     </div>
     <div class="escolha" style="margin-top:13px" id="escDuracao"></div>
-    <p class="sub" style="margin-top:12px">Travou? Faça só <b>2 minutos</b>. Montar é a parte difícil — depois o trote vai sozinho.</p>
+    <p class="sub" style="margin-top:12px">Dia cheio? Faça só <b>2 minutos</b>. Vale igual.</p>
   </div>
   <div class="card salvia">
-    <h3>🌿 Regra da pausa</h3>
-    <p class="sub">Pausa é levantar, beber água, andar. <b>Não é tela.</b> Trocar uma tela por outra não descansa a atenção.</p>
+    <h3>🌿 Como é a pausa</h3>
+    <p class="sub">Levantar, beber água, andar um pouco. <b>Sem tela.</b></p>
   </div>
 </section>
 
@@ -837,6 +819,24 @@ ul.lista li::marker{color:var(--rosa)}
     <h1>👩‍🌾 Painel do adulto</h1>
     <p class="sub">Para quem acompanha. Quem estuda também pode ver — não há nada escondido aqui.</p>
   </div>
+  <div class="card ouro">
+    <h2>🏁 Provas do trimestre</h2>
+    <p class="sub">Isto ficava na tela inicial da Helena, com contagem regressiva. Saiu de lá: contar dias para a prova é gatilho direto de ansiedade e não muda nada do que ela faz hoje.</p>
+    <div class="contagem" id="advProvas"></div>
+    <button class="btn sec" onclick="irPara('semana')">Ver o plano dia a dia</button>
+  </div>
+
+  <div class="card rosa">
+    <h2>🤝 O combinado</h2>
+    <p class="sub">Combinado no formato <b>SE… ENTÃO…</b> funciona melhor do que marcar horário (d = 0,43 contra 0,29 em crianças). Preencha <b>junto com ela</b> — e deixe ela ditar as palavras.</p>
+    <label for="seCampo">SE… (o que acontece antes)</label>
+    <input type="text" id="seCampo" placeholder="Ex.: SE eu terminar o lanche da tarde">
+    <label for="entaoCampo">ENTÃO… (o que eu faço, exato)</label>
+    <input type="text" id="entaoCampo" placeholder="Ex.: ENTÃO abro a Trilha e faço 1 bloco de 12 min">
+    <button class="btn sec" onclick="salvarCombinado()">Guardar combinado</button>
+    <p class="sub" id="combinadoSalvo"></p>
+  </div>
+
   <div class="card salvia"><h2>O que já foi feito</h2><div id="relAdulto"></div></div>
   <div class="card ouro">
     <h2>Como acompanhar sem estragar</h2>
@@ -894,7 +894,6 @@ ul.lista li::marker{color:var(--rosa)}
 
 <div class="rodape">
   <svg><use href="#ferradura"/></svg>
-  Feito para a semana de provas do 2º trimestre.<br>
   Funciona sem internet. Nenhum dado sai deste aparelho.
 </div>
 </div>
@@ -1453,10 +1452,10 @@ function fig(chave, tam){
 const FRASES = {
   inicio:["Vamos com calma. Errar aqui é de graça.","Sem pressa e sem cronômetro.","Você só precisa começar. O resto vem."],
   acerto:["Isso!","Boa!","Certinho.","Você pegou.","Mandou bem."],
-  erro:["Quase. Olha a explicação.","Ainda não — e tudo bem.","Esse é dos difíceis. Lê comigo.","Errou aqui pra acertar na prova."],
+  erro:["Quase. Olha a explicação.","Ainda não — e tudo bem.","Esse é dos difíceis. Lê comigo.","Aqui errar não custa nada. É pra isso que serve."],
   fimOtimo:["Você foi até o fim e ainda mandou muito bem. 🎀","Isso aí. Sentou, fez e terminou.","Nível dominado. Orgulho."],
   fimBom:["Terminou tudo. É isso que conta.","Você foi até o fim — essa é a parte difícil.","Boa. Cada volta fica mais fácil."],
-  fimTreino:["Terminar valendo mais que acertar. E você terminou.","Os erros de hoje são as questões certas da prova.","Difícil? Foi. Você fez mesmo assim."],
+  fimTreino:["Terminar vale mais que acertar. E você terminou.","O que você errou hoje já ficou mais fácil pra próxima.","Difícil? Foi. Você fez mesmo assim."],
   nivel:["🔓 Nível novo liberado!","🔓 Você destravou o próximo nível!","🔓 Subiu de nível!"]
 };
 function frase(k){ const l=FRASES[k]; return l[Math.floor(Math.random()*l.length)]; }
@@ -1737,8 +1736,8 @@ const PLANO = {
 "2026-08-16":[["Livre","folga"]],
 "2026-08-17":[["História","rev"],["Matemática","rev"]],
 "2026-08-18":[["Matemática","rev"],["Ciências","rec"]],
-"2026-08-19":[["Ciências","rev"],["Ciências","rev"]],
-"2026-08-20":[["Ciências","rev"],["Ciências","rev"]],
+"2026-08-19":[["Ciências","rev"],["Ciências","rec"]],
+"2026-08-20":[["Ciências","rec"],["Ciências","rev"]],
 "2026-08-21":[["Livre","fim"]]
 };
 
@@ -1755,7 +1754,7 @@ const SELOS = [
   {id:"d3", nome:"Trote Firme",       req:3,  txt:"3 dias de treino", cor:"#86A98C"},
   {id:"d7", nome:"Semana no Haras",   req:7,  txt:"7 dias de treino", cor:"#8E2A3C"},
   {id:"d14",nome:"Fita de Ouro",      req:14, txt:"Chegou à 1ª prova", cor:"#D9A441"},
-  {id:"d21",nome:"Campeã da Trilha",  req:21, txt:"Atravessou a semana de provas", cor:"#E2879B"}
+  {id:"d21",nome:"Campeã da Trilha",  req:21, txt:"21 dias de treino", cor:"#E2879B"}
 ];
 /* ============================================================
    LÓGICA
@@ -2100,7 +2099,7 @@ function renderJogo(){
   }
   if(modoAtual==="revisao" && matAtual!=="Português"){
     document.getElementById("jogoBox").innerHTML =
-      `<div class="card ouro"><h3>Só em Português</h3><p class="sub">A revisão guiada — com diagnóstico, missões e simulado — existe por enquanto só na matéria de <b>Português</b>.</p>
+      `<div class="card ouro"><h3>Só em Português</h3><p class="sub">A revisão guiada ainda mora só em <b>Português</b>.</p>
        <button class="btn" onclick="setMat('Português')">Ir para Português</button></div>`;
     return;
   }
@@ -2162,13 +2161,13 @@ function pintaQuiz(){
   const q=qLista[qIdx]; qRespondida=false;
   box.innerHTML=`<div class="card">
     ${barraNivel(matAtual,"quiz")}
-    <p class="sub">Pergunta ${qIdx+1} de ${qLista.length} · sem cronômetro, sem pontuação por velocidade</p>
+    <p class="sub">Pergunta ${qIdx+1} de ${qLista.length} · no seu ritmo</p>
     <div class="barra" style="margin-bottom:12px"><i style="width:${qIdx/qLista.length*100}%"></i></div>
     <h3 style="font-size:1.06rem;line-height:1.5">${q.p}</h3>
     <div id="alts" class="palco">${q.a.map((t,i)=>`<button class="alt" onclick="responder(${i})">${t}</button>`).join("")}</div>
     <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-      <button class="bsos" onclick="abrirPalavras()">❓ Não entendi</button>
-      <button class="bsos" onclick="duvidaDoQuiz()">🆘 Não entendi o assunto</button>
+      <button class="bsos" onclick="abrirPalavras()">💬 Não entendi a pergunta</button>
+      <button class="bsos" onclick="duvidaDoQuiz()">📖 Me explica o assunto</button>
       <button class="bsos" onclick="pularQuestao()">⏭️ Pular esta</button>
     </div>
     <p class="dicaw">Palavras com <i>pontinhos</i> podem ser tocadas para ver o significado.</p>
@@ -2414,7 +2413,7 @@ function pintaAssoc(){
       <div>${aEsq.map((x,k)=>`<button id="ae${k}" onclick="selE(${k})" style="width:100%;margin-bottom:8px"><span class="emo">${x.t}</span></button>`).join("")}</div>
       <div>${aDir.map((x,k)=>`<button id="ad${k}" onclick="selD(${k})" style="width:100%;margin-bottom:8px">${x.t}</button>`).join("")}</div>
     </div>
-    <p class="sub" id="aStatus">Acertos: 0 de ${aEsq.length}</p>
+    <p class="sub" id="aStatus">Pares formados: 0 de ${aEsq.length}</p>
     <button class="btn sec" onclick="iniAssoc()">Recomeçar</button></div>`;
 }
 function selE(k){
@@ -2428,7 +2427,7 @@ function selD(k){
   if(bd.classList.contains("ok")) return;
   if(aEsq[aSel].i===aDir[k].i){
     bd.classList.add("ok"); be.classList.add("ok"); be.classList.remove("sel"); aSel=null; aFeitos++;
-    document.getElementById("aStatus").textContent=`Acertos: ${aFeitos} de ${aEsq.length}`;
+    document.getElementById("aStatus").textContent=`Pares formados: ${aFeitos} de ${aEsq.length}`;
     if(aFeitos===aEsq.length) document.getElementById("aStatus").innerHTML="<b>Tudo associado.</b> Feche o app e tente repetir os pares de cabeça.";
   } else {
     bd.classList.add("no"); setTimeout(()=>bd.classList.remove("no"),600);
@@ -2436,7 +2435,7 @@ function selD(k){
 }
 
 /* ---------- PAINEL DO ADULTO ---------- */
-function renderAdulto(){
+function renderAdultoBase(){
   const dias={}; Object.keys(S.feitos).forEach(k=>{ if(S.feitos[k]){ const d=k.split("_")[0]; dias[d]=(dias[d]||0)+1; } });
   const ds=Object.keys(dias).sort();
   let t=`<table><tr><th>Dia</th><th>Blocos</th><th>Matérias previstas</th></tr>`;
@@ -3012,7 +3011,7 @@ function iniCruzada(){
   const v = CZ.ents.filter(function(e){ return e.dir === "V"; });
   document.getElementById("jogoBox").innerHTML = `<div class="card ouro">
     ${barraNivel(matAtual,"cruzada")}
-    <div class="czdica" id="czDica">Toque em uma casinha para ver a charada dela.</div>
+    <div class="czdica" id="czDica">Toque em um número da grade para ler a pista.</div>
     <div class="czdir" id="czDir"></div>
     <div class="cruz" style="grid-template-columns:repeat(${cols},var(--cw,30px))">${cells}</div>
     <p class="sub" style="text-align:center">Escreva <b>sem acento</b>. Pode conferir quantas vezes quiser.</p>
@@ -3042,7 +3041,7 @@ function czPintaDica(){
   if(!cx) return;
   var achadas = CZCEL ? czEntradasDe(CZCEL.r, CZCEL.c) : [];
   if(!achadas.length){
-    cx.innerHTML = "Toque em uma casinha para ver a charada dela.";
+    cx.innerHTML = "Toque em um número da grade para ler a pista.";
     if(bx) bx.innerHTML = "";
     czRealca(); return;
   }
@@ -3116,7 +3115,7 @@ function pintaAssoc(){
       <div>${aDir.map(function(o,k){
         return `<button id="ad${k}" onclick="selD(${k})"><span class="cartatxt">${o.x.t}</span></button>`; }).join("")}</div>
     </div>
-    <p class="sub" id="aStatus">Acertos: 0 de ${aEsq.length}</p>
+    <p class="sub" id="aStatus">Pares formados: 0 de ${aEsq.length}</p>
     <button class="btn sec" onclick="iniAssoc()">🔀 Recomeçar</button></div>`;
 }
 function selE(k){
@@ -3132,7 +3131,7 @@ function selD(k){ treinouHoje();
   if(aEsq[aSel].i === aDir[k].i){
     bd.classList.add("ok"); be.classList.add("ok"); be.classList.remove("sel"); aSel = null; aFeitos++;
     const st = document.getElementById("aStatus");
-    if(st) st.innerHTML = `Acertos: ${aFeitos} de ${aEsq.length} · <b style="color:var(--salvia)">${frase("acerto")}</b>`;
+    if(st) st.innerHTML = `Pares formados: ${aFeitos} de ${aEsq.length} · <b style="color:var(--salvia)">${frase("acerto")}</b>`;
     if(aFeitos === aEsq.length) setTimeout(fimAssoc, 650);
   } else {
     aErros++; aLista[aDir[k].i].errou = true;
@@ -3534,7 +3533,7 @@ function pintaPapel(){
     <p class="sub">Problema ${pIdx+1} de ${pLista.length}</p>
     <div class="problema">${q.t}</div>
     <div class="passoapasso">
-      <b>1.</b> Pegue papel e lápis. <b>2.</b> ${q.desenho} <b>3.</b> Faça a conta escrevendo. <b>4.</b> Só então volte aqui.
+      <b>1.</b> Pegue papel e lápis.<br><b>2.</b> ${q.desenho}<br><b>3.</b> Escreva a conta.<br><b>4.</b> Volte aqui.
     </div>
     <label for="pResp">Qual foi a sua resposta?</label>
     <input type="text" id="pResp" inputmode="text" placeholder="Ex.: 3/8  ·  10  ·  2 1/4" onkeydown="if(event.key==='Enter')conferirPapel()">
@@ -3737,7 +3736,7 @@ function renderAulas(){
         }).join("")}</tr>`;
       }).join("")}
     </table></div>
-    <p class="sub" style="margin-top:10px">As matérias com prova têm atividade no Picadeiro. As outras aparecem aqui só para você se organizar.</p>
+    <p class="sub" style="margin-top:10px">Onde aparecer <b>Treinar</b>, dá para praticar aquela aula. As outras ficam aqui só para você se organizar.</p>
   </div>`;
   document.getElementById("telaAulas").innerHTML = html;
 }
@@ -3781,7 +3780,7 @@ function renderTarefas(){
 
   let html = `<div class="card lav">
     <h1>✅ Minhas tarefas</h1>
-    <p class="sub">Anote o que precisa fazer e marque quando terminar. Fica salvo neste aparelho.</p>
+    <p class="sub">Anote o que você quer fazer. Marque quando terminar.</p>
   </div>`;
 
   if(atrasadas.length) html += `<div class="card ouro"><h3>⏰ Ficou para trás</h3>
@@ -3800,7 +3799,7 @@ function renderTarefas(){
 
   html += `<div class="card salvia">
     <h2>${rotuloData(diaTarefa)}</h2>
-    ${provaSel?`<div class="fb no"><b>Tem prova neste dia</b>Prova de <b>${provaSel.mat}</b>.</div>`:""}
+    ${provaSel?`<div class="fb"><b>Marcado neste dia</b>Prova de <b>${provaSel.mat}</b>.</div>`:""}
     ${ts.length ? ts.map(function(t){ return itemTarefa(t, false); }).join("")
                 : `<p class="sub">Nenhuma tarefa neste dia ainda.</p>`}
     <label>O que precisa fazer?</label>
@@ -5903,14 +5902,14 @@ function revIntro(){
   document.getElementById("jogoBox").innerHTML = `
   <div class="card lav">
     <h3>🎯 Revisão guiada</h3>
-    <p class="sub">Um caminho só seu, montado a partir do que você já sabe. São cinco missões e, no fim, um mapa dizendo exatamente o que revisar antes da prova.</p>
+    <p class="sub">Um caminho só seu, montado a partir do que você já sabe. São quatro etapas e, no fim, um mapa do que ainda vale revisar.</p>
     <div class="revfases">
-      <div class="revfase"><b>1. Descobrir</b><span>14 perguntas rápidas, sem dica. Serve só para saber onde você está.</span></div>
+      <div class="revfase"><b>1. Descobrir</b><span>14 perguntas curtas. Servem só para eu montar a sua trilha.</span></div>
       <div class="revfase"><b>2. Mapa da prova</b><span>O que já está dominado e o que precisa de treino.</span></div>
       <div class="revfase"><b>3. Missões</b><span>Treino começando pelo que está mais difícil.</span></div>
       <div class="revfase"><b>4. Desafio</b><span>Simulado misturando tudo, sem dica nenhuma.</span></div>
     </div>
-    <p class="sub">Errar aqui é de graça e é para acontecer: quando você erra, eu dou uma pista antes de dar a resposta.</p>
+    <p class="sub">Aqui não tem caneta vermelha. Em qualquer pergunta você pode pedir uma pista antes da resposta.</p>
     <button class="btn" onclick="revComecar()">${retomar ? "Recomeçar do zero" : "Começar"}</button>
     ${retomar ? `<button class="btn sec" onclick="revContinuar()">Continuar de onde parei</button>` : ""}
   </div>`;
@@ -6132,7 +6131,7 @@ function revSimuladoIntro(){
   var R = revS(); R.fase = "simIntro"; salvar();
   document.getElementById("jogoBox").innerHTML = `
     <div class="card ouro"><h3>🏅 Missão 5 — Desafio da Prova</h3>
-      <p class="sub">12 perguntas novas, misturando tudo. <b>Sem pista e sem tentar de novo</b> — igual à prova de verdade.</p>
+      <p class="sub">12 perguntas novas, misturando tudo. <b>Sem pista e sem tentar de novo</b>, para você ver sozinha o que já está firme.</p>
       <p class="sub">Não é para tirar nota. É para eu saber o que ainda precisa de revisão amanhã.</p>
       <button class="btn" onclick="revMontaSimulado()">Encarar o desafio</button>
       <button class="btn sec" onclick="revMontaTreino()">Treinar mais um pouco antes</button></div>`;
@@ -6185,7 +6184,7 @@ function revFim(){
       <p class="sub">A barra de cima é como você estava no começo. A de baixo é agora.</p></div>
     <div class="card">${linhas}</div>
     <div class="card salvia"><h3>✅ Você já domina</h3>
-      <p class="sub">${verde.length ? verde.join(" · ") : "Ainda nada nesta faixa — e tudo bem, faltam dias de prova."}</p></div>
+      <p class="sub">${verde.length ? verde.join(" · ") : "Ainda nada nesta faixa — e tudo bem, é só continuar treinando."}</p></div>
     <div class="card ouro"><h3>🔁 Vale revisar mais uma vez</h3>
       <p class="sub">${amarelo.length ? amarelo.join(" · ") : "Nada aqui."}</p></div>
     <div class="card rosa"><h3>⚠️ Prioridade antes da prova</h3>
@@ -6896,12 +6895,13 @@ function iniTabuada(){
   document.getElementById("jogoBox").innerHTML = `
    <div class="card lav">
      <h3>✖️ Tabuada sem decoreba</h3>
-     <p class="sub">Cada conta tem um caminho. Quando você esquece o resultado, o caminho te leva até ele — e é isso que a gente vai treinar.</p>
+     <p class="sub">Cada conta tem um caminho. O caminho é um jeito curto de chegar ao resultado. É ele que a gente vai treinar.</p>
      <div class="barra" style="margin:10px 0"><i style="width:${Math.round(100*firmes/todos.length)}%"></i></div>
      <p class="sub"><b>${firmes}</b> de ${todos.length} contas já estão firmes.</p>
    </div>
    <div class="card">
-     <button class="btn" onclick="tabTreinar()">🏇 Treinar as contas</button>
+     <button class="btn" onclick="tabTreinar()">🏇 Começar pelas contas</button>
+     <p class="sub" style="margin:10px 0 4px">Ou, se preferir:</p>
      <button class="btn sec" onclick="tabAprender()">💡 Aprender os caminhos</button>
      <button class="btn sec" onclick="tabDividir()">➗ Treinar a divisão</button>
      <button class="btn sec" onclick="tabMapa()">🗺️ Meu mapa da tabuada</button>
@@ -8817,6 +8817,174 @@ function pintaAjuda(){
 
 
 /* ============================================================
+   TELA INICIAL RECRIADA — uma decisão por vez
+   Medida da versão anterior: 3286 px de altura (≈8 rolagens) e
+   27 botões visíveis na abertura, com contagem regressiva para
+   a prova no primeiro parágrafo. Para TDAH isso é onde a criança
+   se perde; para TAG, o contador é o gatilho.
+   Agora: uma saudação, um botão, um link discreto. Nada mais.
+   O resto continua existindo, dentro do menu.
+   ============================================================ */
+
+/* ---------- o plano acaba em 21/08; a rotina não pode acabar ---------- */
+function materiaMenosTreinada(){
+  var mats = Object.keys(MATERIAS), melhor = null, menor = 999;
+  mats.forEach(function(m){
+    var pct = 0;
+    try{ pct = regDaMateria(m).media; }catch(e){ pct = 0; }
+    if(pct < menor){ menor = pct; melhor = m; }
+  });
+  return melhor || mats[0];
+}
+
+/* O que o botão "Começar" vai fazer hoje.
+   Devolve {mat, rotulo, k} — k é a chave do bloco do plano, se houver. */
+function sugestaoDeHoje(){
+  var d = dataAtiva(), bs = blocosDoDia(d), i;
+  for(i = 0; i < bs.length; i++){
+    if(bs[i][1] === "folga" || bs[i][1] === "fim") continue;
+    if(!S.feitos[d + "_" + i]) return {mat: bs[i][0], k: d + "_" + i, doPlano: true};
+  }
+  var temPlano = bs.length && bs[0][1] !== "folga" && bs[0][1] !== "fim";
+  return {mat: materiaMenosTreinada(), k: null, doPlano: false, tudoFeito: temPlano};
+}
+
+/* Começar abre a atividade direto. Sem passar por menu, sem escolher
+   modo. A revisão guiada é a porta quando existe; senão, o quiz. */
+function comecarAgora(){
+  var s = sugestaoDeHoje();
+  matAtual = MATERIAS[s.mat] ? s.mat : "Matemática";
+  modoAtual = "quiz";                /* o modo que existe em todas as matérias */
+  irPara("estudar");
+  _rolarJogo = true;
+  renderEscolhas(); renderJogo();
+}
+
+function renderHoje(){
+  var d = dataAtiva();
+  var pd = document.getElementById("pillDia"); if(pd) pd.innerHTML = rotuloData(d);
+
+  var sa = document.getElementById("saudacao");
+  if(sa) sa.textContent = S.nome ? ("Oi, " + S.nome) : "Vamos treinar?";
+
+  var s = sugestaoDeHoje();
+  var fr = document.getElementById("fraseDia");
+  if(fr){
+    fr.innerHTML = s.doPlano
+      ? "Hoje tem <b>" + s.mat + "</b>."
+      : (s.tudoFeito ? "Você já treinou hoje. Se quiser mais, é bônus — não é dever."
+                     : "Escolhi <b>" + s.mat + "</b> para hoje, que é a que você menos treinou.");
+  }
+  var det = document.getElementById("comecarDet");
+  if(det) det.textContent = s.mat + " · leva uns 10 minutos";
+
+  var ex = document.getElementById("hojeExtra");
+  if(ex){
+    var n = diasAtivos();
+    ex.innerHTML = n > 0
+      ? '<p class="sub" style="text-align:center">Você já treinou em <b>' + n + '</b> dia' + (n>1?'s':'') + '. ' +
+        '<button class="linksuave" style="margin:0" onclick="irPara(\'regua\')">ver minhas rosetas</button></p>'
+      : "";
+  }
+  montarAbas();
+}
+
+/* marcar() ainda é chamado por telas antigas; sem os blocos na home
+   ele só precisa guardar e não quebrar */
+function marcar(k){ S.feitos[k] = !S.feitos[k]; salvar(); renderHoje(); }
+
+/* ============================================================
+   MENU — dividido em "para você" e "para o adulto"
+   ============================================================ */
+MENU.length = 0;
+MENU.push(
+ {g:null, itens:[["hoje","🌤️","Hoje","o botão de começar"]]},
+ {g:"Para você", itens:[
+   ["estudar","🏇","Treinar","escolher a matéria e o jogo"],
+   ["timer","🐴","Trote","12 minutos de foco"],
+   ["tarefas","✅","Minhas tarefas","o que fazer e quando"],
+   ["aulas","📚","Minhas aulas","a grade da semana"],
+   ["regua","🎀","Meu progresso","rosetas e quanto já treinou"]]},
+ {g:"Para o adulto", itens:[
+   ["adulto","📋","Painel do adulto","combinados e acompanhamento"],
+   ["ajustes","⚙️","Ajustes","nome, blocos por dia, backup"]]}
+);
+
+function montarAbas(){
+  var el = document.getElementById("lateral"); if(!el) return;
+  el.innerHTML =
+    '<div class="mtopo"><svg><use href="#poni"/></svg>' +
+    '<div><b>Trilha de Estudos</b><small>' + (S.nome ? "de " + S.nome : "meu treino") + '</small></div>' +
+    '<button class="mfechar" onclick="fecharMenu()" aria-label="Fechar menu">✕</button></div>' +
+    MENU.map(function(bloco){
+      return '<div class="mgrupo">' + (bloco.g ? '<h4>' + bloco.g + '</h4>' : "") +
+        bloco.itens.map(function(it){
+          var b = selosMenu(it[0]);
+          return '<button class="mitem" id="ab-' + it[0] + '" onclick="irPara(\'' + it[0] + '\')">' +
+            '<span class="mic">' + it[1] + '</span>' +
+            '<span class="mtxt">' + it[2] + '<small>' + it[3] + '</small></span>' +
+            (b ? '<span class="mbad">' + b + '</span>' : "") + '</button>';
+        }).join("") + '</div>';
+    }).join("");
+}
+
+/* ============================================================
+   MEU PROGRESSO — rosetas primeiro, régua depois.
+   As rosetas saíram da tela inicial mas não do app: a responsável
+   registrou que ela gosta, e reforço por comparecimento (não por
+   acerto rápido) é justamente o que serve para TAG.
+   ============================================================ */
+function renderRegua(){
+  renderReguaBase();
+  var alvo = document.getElementById("telaRegua"); if(!alvo) return;
+  var n = diasAtivos();
+  var prox = SELOS.filter(function(s){ return n < s.req; })[0];
+  var topo = '<div class="card lav"><h2>🎀 Minhas rosetas</h2>' +
+    '<p class="sub">Roseta se ganha aparecendo e treinando. Uma vez sua, é sua para sempre.</p>' +
+    '<div class="rosetas">' + SELOS.map(function(s){
+      return '<div class="roseta ' + (n>=s.req?'ganha':'') + '" style="--rp:' + s.cor + '">' +
+             '<svg><use href="#roseta"/></svg><b>' + s.nome + '</b><span>' + s.txt + '</span></div>';
+    }).join("") + '</div>' +
+    '<p class="sub" style="margin-top:12px">Dias de treino até agora: <b>' + n + '</b>.' +
+    (prox ? ' Faltam <b>' + (prox.req - n) + '</b> para a roseta <b>' + prox.nome + '</b>.'
+          : ' Todas as rosetas conquistadas. 🏆') + '</p></div>';
+  alvo.innerHTML = topo + alvo.innerHTML;
+}
+function renderSelos(){ /* as rosetas agora moram em Meu progresso */ }
+
+/* ============================================================
+   PAINEL DO ADULTO — recebe o que saiu da tela da criança:
+   o calendário de provas e o combinado SE…ENTÃO.
+   ============================================================ */
+function renderAdulto(){
+  renderAdultoBase();
+  var pv = document.getElementById("advProvas");
+  if(pv){
+    var h = hojeISO();
+    pv.innerHTML = PROVAS.map(function(p){
+      var f = diasEntre(h, p.data);
+      return '<div class="prova ' + (f<0?'passou':'') + '" style="border-color:' + MATERIAS[p.mat].cor + '55">' +
+        '<div class="dia">' + p.dia + '</div>' +
+        '<div class="mat" style="color:' + MATERIAS[p.mat].cor + '">' + p.mat + '</div>' +
+        '<div class="falta">' + (f<0 ? "feita" : (f===0 ? "é hoje" : "faltam " + f + "d")) + '</div></div>';
+    }).join("");
+  }
+  var se = document.getElementById("seCampo"), en = document.getElementById("entaoCampo");
+  if(se) se.value = S.se || "";
+  if(en) en.value = S.entao || "";
+  var cs = document.getElementById("combinadoSalvo");
+  if(cs) cs.innerHTML = (S.se && S.entao)
+    ? 'Combinado ativo: <b>SE</b> ' + S.se + ' <b>ENTÃO</b> ' + S.entao : "";
+}
+function salvarCombinado(){
+  var se = document.getElementById("seCampo"), en = document.getElementById("entaoCampo");
+  S.se = se ? se.value.trim() : "";
+  S.entao = en ? en.value.trim() : "";
+  salvar(); renderAdulto();
+}
+
+
+/* ============================================================
    RÉGUA DE EVOLUÇÃO — todas as matérias
    Mostra, para cada matéria: quanto do banco de exercícios já
    foi treinado, o nível alcançado em cada atividade e, quando
@@ -8859,7 +9027,7 @@ function regBarra(pct, cor){
   return `<div class="regbar"><i style="width:${Math.max(pct,2)}%;background:${cor}"></i></div>`;
 }
 
-function renderRegua(){
+function renderReguaBase(){
   var mats = Object.keys(MATERIAS);
   var corpo = mats.map(function(mat){
     var d = regDaMateria(mat), cor = MATERIAS[mat].cor;
@@ -8874,7 +9042,7 @@ function renderRegua(){
     return `<div class="card" style="border-left:6px solid ${cor}">
       <div class="regtopo">
         <h3 style="color:${cor};font-size:1.05rem">${mat}</h3>
-        <span class="sub">${prova ? "prova " + rotuloCurto(prova.data) : ""}</span>
+        <span class="sub"></span>
       </div>
       <div class="regsomat">${regBarra(d.media, cor)}<b>${d.media}%</b></div>
       <p class="sub">do conteúdo já treinado pelo menos uma vez</p>
@@ -8909,10 +9077,10 @@ function renderRegua(){
   document.getElementById("telaRegua").innerHTML = `
     <div class="card destaque">
       <h1>📏 Régua de evolução</h1>
-      <p class="sub">Quanto de cada matéria você já treinou pelo menos uma vez. Não é nota — é o mapa de onde ainda não passou.</p>
+      <p class="sub">O mapa de onde você já passou em cada matéria.</p>
     </div>` + corpo + extra + `
     <div class="card">
-      <p class="sub">A barra sobe quando você vê uma pergunta <b>nova</b>. Refazer as mesmas não move a régua — mas ajuda a fixar, e é por isso que refazer continua valendo a pena.</p>
+      <p class="sub">A barra anda a cada pergunta <b>nova</b>. Repetir as que você já viu também vale — só não mexe na barra.</p>
     </div>`;
 }
 function abrirTabuada(){ matAtual = "Matemática"; modoAtual = "tabuada"; irPara("estudar"); _rolarJogo = true; renderEscolhas(); renderJogo(); }
