@@ -374,6 +374,11 @@ label{font-size:.85rem;color:var(--dim);display:block;margin:11px 0 4px;font-wei
 .gitem .mk{float:right;font-weight:900;color:var(--ouro);margin-left:8px}
 .gitem .mk.ok{color:var(--salvia)}
 .gitem.falhou{border-left-color:var(--ouro)}
+.czdir{margin:6px 0 2px;text-align:center;font-size:.86rem}
+.czb{border:1.5px solid #C9B8D9;background:#fff;color:#5B4A6B;border-radius:8px;padding:4px 10px;margin-left:6px;font-size:.86rem;font-weight:700}
+.czb.on{background:#8B6FC0;border-color:#8B6FC0;color:#fff}
+.cel.foco{background:#FFF6D8}
+.cel.atual{outline:2.5px solid #D9A441;outline-offset:-2px}
 .czdica{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:14px;padding:11px 13px;
   font-size:.9rem;line-height:1.45;margin-bottom:10px;min-height:44px}
 .czdica b{color:var(--couro)}
@@ -2057,7 +2062,7 @@ function zerarTimer(){ clearInterval(tick); rodando=false; emPausa=false; resta=
 
 /* ---------- TREINAR ---------- */
 let matAtual="Português", modoAtual="quiz";
-const MODOS=[["revisao","🎯 Revisão guiada"],["tabuada","✖️ Tabuada"],["quiz","Quiz"],["memoria","Memória"],["cruzada","Cruzadinha"],["assoc","Associação"],["papel","✏️ No papel"],["folhas","🖨️ Folhas"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
+const MODOS=[["revisao","🎯 Revisão guiada"],["tabuada","✖️ Tabuada"],["quiz","Quiz"],["cruzada","Cruzadinha"],["assoc","Associação"],["papel","✏️ No papel"],["folhas","🖨️ Folhas"],["listen","🔊 Ouvir"],["speak","🎤 Falar"],["duvida","🆘 Dúvida"]];
 function renderEscolhas(){
   document.getElementById("escMateria").innerHTML = Object.keys(MATERIAS).map(m=>
     `<button class="${matAtual===m?'on':''}" onclick="setMat('${m}')">${m}</button>`).join("");
@@ -2065,14 +2070,14 @@ function renderEscolhas(){
     `<button class="${modoAtual===id?'on':''}" onclick="setModo('${id}')">${n}</button>`).join("");
 }
 function setMat(m){ pararAudio(); matAtual=m; _rolarJogo=true; renderEscolhas(); renderJogo(); }
-function setModo(m){ pararAudio(); modoAtual=m; _rolarJogo=true; renderEscolhas(); renderJogo(); }
+function setModo(m){ pararAudio(); if(m==="memoria") m="cruzada"; modoAtual=m; _rolarJogo=true; renderEscolhas(); renderJogo(); }
 function abrirTreino(m){ if(MATERIAS[m]){matAtual=m;} modoAtual="quiz"; irPara("estudar"); _rolarJogo=true; renderEscolhas(); renderJogo(); }
 function renderJogo(){
   const cab = `<div class="card rosa"><h2 style="color:${MATERIAS[matAtual].cor}">🐎 ${matAtual}</h2>
     <p class="sub">${MATERIAS[matAtual].conteudo}</p></div>`;
   const alvo = document.getElementById("areaJogo");
   alvo.innerHTML = cab + '<div id="jogoBox"></div>';
-  const mapa = {quiz:iniQuiz, memoria:iniMemoria, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar, papel:iniPapel, folhas:iniFolhas, revisao:iniRevisao, tabuada:iniTabuada};
+  const mapa = {quiz:iniQuiz, memoria:iniCruzada, cruzada:iniCruzada, assoc:iniAssoc, duvida:iniDuvida, listen:iniListen, speak:iniFalar, papel:iniPapel, folhas:iniFolhas, revisao:iniRevisao, tabuada:iniTabuada};
   if(modoAtual==="tabuada" && matAtual!=="Matemática"){
     document.getElementById("jogoBox").innerHTML =
       `<div class="card ouro"><h3>Só em Matemática</h3><p class="sub">A tabuada por caminhos existe só na matéria de <b>Matemática</b>.</p>
@@ -2123,6 +2128,12 @@ function embaralha(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.f
 function iniQuiz(){ qLista=embaralha(QUIZ[matAtual]); qIdx=0; qAcertos=0; pintaQuiz(); }
 function pintaQuiz(){
   const box=document.getElementById("jogoBox");
+  if(!qLista.length){
+    box.innerHTML = `<div class="card ouro"><h3>Você pulou todas as perguntas desta rodada</h3>
+      <p class="sub">Se muitas perguntas estão vindo de um assunto que não é o seu, avise o adulto: elas ficam anotadas no painel de acompanhamento.</p>
+      <button class="btn" onclick="iniQuiz()">🔁 Sortear outra rodada</button></div>`;
+    return;
+  }
   if(qIdx>=qLista.length){ fimQuiz(); return; }
   if(false){
     const r=S.quiz[matAtual]||{melhor:0,vezes:0};
@@ -2144,6 +2155,7 @@ function pintaQuiz(){
     <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
       <button class="bsos" onclick="abrirPalavras()">🔤 O que quer dizer?</button>
       <button class="bsos" onclick="duvidaDoQuiz()">🆘 Não entendi o assunto</button>
+      <button class="bsos" onclick="pularQuestao()">⏭️ Pular esta</button>
     </div>
     <p class="dicaw">Palavras com <i>pontinhos</i> podem ser tocadas para ver o significado.</p>
     <div id="fbBox"></div></div>`;
@@ -2290,11 +2302,69 @@ function iniCruzada(){
       <div><h3>Verticais ↓</h3><ul class="dicas">${v.map(e=>`<li><b>${e.num}.</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></li>`).join("")}</ul></div>
     </div></div>`;
 }
+/* Navegação da cruzadinha.
+   O bug antigo: o cursor pulava para o próximo <input> na ordem do DOM
+   (linha por linha), então numa palavra VERTICAL ele andava para o lado
+   e a letra caía na palavra errada. Agora ele anda na direção da palavra. */
+var CZDIR = "H", CZCEL = null;
+
+function czInput(r, c){
+  return document.querySelector('.cel.ativa input[data-r="' + r + '"][data-c="' + c + '"]');
+}
+function czVizinha(r, c, dir, passo){
+  return czInput(r + (dir === "V" ? passo : 0), c + (dir === "H" ? passo : 0));
+}
+function czEntradasDe(r, c){
+  if(!CZ) return [];
+  return CZ.ents.filter(function(e){
+    if(e.dir === "H") return e.r === r && c >= e.c && c < e.c + e.w.length;
+    return e.c === c && r >= e.r && r < e.r + e.w.length;
+  });
+}
+function czEntradaAtual(){
+  if(!CZCEL) return null;
+  var es = czEntradasDe(CZCEL.r, CZCEL.c);
+  return es.filter(function(e){ return e.dir === CZDIR; })[0] || es[0] || null;
+}
+/* pinta de amarelo as casas da palavra que está sendo escrita */
+function czRealca(){
+  document.querySelectorAll(".cel.ativa").forEach(function(el){ el.classList.remove("foco","atual"); });
+  var e = czEntradaAtual(); if(!e) return;
+  for(var i = 0; i < e.w.length; i++){
+    var rr = e.dir === "V" ? e.r + i : e.r, cc = e.dir === "H" ? e.c + i : e.c;
+    var cel = document.getElementById("cel" + rr + "_" + cc);
+    if(cel) cel.classList.add("foco");
+  }
+  var atual = document.getElementById("cel" + CZCEL.r + "_" + CZCEL.c);
+  if(atual) atual.classList.add("atual");
+}
 function pulaCel(inp){
-  inp.value = inp.value.toUpperCase().replace(/[^A-Za-z]/g,"");
+  inp.value = inp.value.toUpperCase().replace(/[^A-Za-z]/g, "");
   if(!inp.value) return;
-  const all=[...document.querySelectorAll(".cel.ativa input")];
-  const i=all.indexOf(inp); if(i>-1 && all[i+1]) all[i+1].focus();
+  var r = +inp.dataset.r, c = +inp.dataset.c;
+  var e = czEntradaAtual();
+  /* não sai da palavra: para na última casa */
+  if(e){
+    var fim = e.dir === "H" ? (c >= e.c + e.w.length - 1) : (r >= e.r + e.w.length - 1);
+    if(fim) return;
+  }
+  var prox = czVizinha(r, c, CZDIR, 1);
+  if(prox) prox.focus();
+}
+function czTecla(ev, inp){
+  var r = +inp.dataset.r, c = +inp.dataset.c, el = null;
+  if(ev.key === "Backspace" && !inp.value){
+    el = czVizinha(r, c, CZDIR, -1);
+    if(el){ el.value = ""; el.focus(); ev.preventDefault(); }
+  } else if(ev.key === "ArrowRight"){ el = czVizinha(r,c,"H",1);  if(el){ CZDIR="H"; el.focus(); ev.preventDefault(); } }
+  else if(ev.key === "ArrowLeft"){  el = czVizinha(r,c,"H",-1); if(el){ CZDIR="H"; el.focus(); ev.preventDefault(); } }
+  else if(ev.key === "ArrowDown"){  el = czVizinha(r,c,"V",1);  if(el){ CZDIR="V"; el.focus(); ev.preventDefault(); } }
+  else if(ev.key === "ArrowUp"){    el = czVizinha(r,c,"V",-1); if(el){ CZDIR="V"; el.focus(); ev.preventDefault(); } }
+}
+function czTrocaDir(d){
+  CZDIR = d;
+  if(CZCEL){ var el = czInput(CZCEL.r, CZCEL.c); if(el) el.focus(); }
+  czPintaDica();
 }
 function conferirCruz(){
   let certas=0,total=0;
@@ -2387,6 +2457,16 @@ function renderAdulto(){
           return `<tr><td>${rot[k]||k}</td><td>${cp[k]}</td></tr>`;}).join("")}</table>
          <p class="sub" style="margin-top:8px">“Não soube começar” repetido é o sinal mais importante desta tela: indica lacuna de conteúdo, não falta de esforço. Sente junto nesse tópico.</p>`
       : `<p class="sub">Nenhum problema no papel registrado ainda.</p>`) +
+    (function(){
+      var mats = Object.keys((S.puladas)||{}).filter(function(m){ return puladasDe(m).length; });
+      if(!mats.length) return `<h3 style="margin-top:16px">Perguntas puladas</h3><p class="sub">Nenhuma pergunta pulada até agora.</p>`;
+      return `<h3 style="margin-top:16px">Perguntas puladas</h3>` +
+        mats.map(function(m){
+          return `<p style="margin:8px 0 4px"><b>${m}</b> <button class="btn sec" style="padding:4px 10px;font-size:.82rem" onclick="limparPuladas('${m}')">limpar</button></p>
+            <ul class="dicas">${puladasDe(m).map(function(t){ return `<li>${t}</li>`; }).join("")}</ul>`;
+        }).join("") +
+        `<p class="sub" style="margin-top:8px">Ela pulou estas por não reconhecer o assunto. Se alguma <b>não é</b> do conteúdo dela, me avise para eu tirar do banco — pular não conta como erro.</p>`;
+    })() +
     `<h3 style="margin-top:16px">Fotos das folhas</h3>` +
     (fts.length
       ? `<div class="fotoadulto">${fts.map(function(f){
@@ -2911,7 +2991,7 @@ function iniCruzada(){
     const k = r + "," + c;
     if(CZ.occ[k]){
       const num = CZ.numMap[k] ? `<span class="num">${CZ.numMap[k]}</span>` : "";
-      cells += `<div class="cel ativa" id="cel${r}_${c}">${num}<input maxlength="1" data-r="${r}" data-c="${c}" oninput="pulaCel(this)" onfocus="dicaDaCelula(${r},${c})"></div>`;
+      cells += `<div class="cel ativa" id="cel${r}_${c}">${num}<input maxlength="1" inputmode="latin" autocomplete="off" autocorrect="off" spellcheck="false" data-r="${r}" data-c="${c}" oninput="pulaCel(this)" onkeydown="czTecla(event,this)" onfocus="dicaDaCelula(${r},${c})"></div>`;
     } else cells += `<div class="cel"></div>`;
   }
   const h = CZ.ents.filter(function(e){ return e.dir === "H"; });
@@ -2919,6 +2999,7 @@ function iniCruzada(){
   document.getElementById("jogoBox").innerHTML = `<div class="card ouro">
     ${barraNivel(matAtual,"cruzada")}
     <div class="czdica" id="czDica">Toque em uma casinha para ver a charada dela.</div>
+    <div class="czdir" id="czDir"></div>
     <div class="cruz" style="grid-template-columns:repeat(${cols},var(--cw,30px))">${cells}</div>
     <p class="sub" style="text-align:center">Escreva <b>sem acento</b>. Pode conferir quantas vezes quiser.</p>
     <div class="linha"><button class="btn azulao" onclick="conferirCruz()">Conferir</button>
@@ -2933,17 +3014,37 @@ function iniCruzada(){
 }
 function dicaDaCelula(r, c){
   if(!CZ) return;
-  const achadas = CZ.ents.filter(function(e){
-    if(e.dir === "H") return e.r === r && c >= e.c && c < e.c + e.w.length;
-    return e.c === c && r >= e.r && r < e.r + e.w.length;
-  });
-  const cx = document.getElementById("czDica");
+  CZCEL = {r:r, c:c};
+  var achadas = czEntradasDe(r, c);
+  var temH = achadas.some(function(e){ return e.dir === "H"; });
+  var temV = achadas.some(function(e){ return e.dir === "V"; });
+  /* se a casa só tem uma direção possível, entra nela sozinho */
+  if(temH && !temV) CZDIR = "H";
+  else if(temV && !temH) CZDIR = "V";
+  czPintaDica();
+}
+function czPintaDica(){
+  var cx = document.getElementById("czDica"), bx = document.getElementById("czDir");
   if(!cx) return;
-  cx.innerHTML = achadas.length
-    ? achadas.map(function(e){
-        return `<div><b>${e.num} ${e.dir === "H" ? "→" : "↓"}</b> ${e.clue} <span class="sub">(${e.w.length} letras)</span></div>`;
-      }).join("")
-    : "Toque em uma casinha para ver a charada dela.";
+  var achadas = CZCEL ? czEntradasDe(CZCEL.r, CZCEL.c) : [];
+  if(!achadas.length){
+    cx.innerHTML = "Toque em uma casinha para ver a charada dela.";
+    if(bx) bx.innerHTML = "";
+    czRealca(); return;
+  }
+  var atual = achadas.filter(function(e){ return e.dir === CZDIR; })[0] || achadas[0];
+  CZDIR = atual.dir;
+  cx.innerHTML = `<div><b>${atual.num} ${atual.dir === "H" ? "→" : "↓"}</b> ${atual.clue} <span class="sub">(${atual.w.length} letras)</span></div>`;
+  if(bx){
+    if(achadas.length > 1){
+      bx.innerHTML = `<span class="sub">Esta casa cruza duas palavras. Estou escrevendo:</span>
+        <button class="czb ${CZDIR==="H"?"on":""}" onclick="czTrocaDir('H')">→ deitada</button>
+        <button class="czb ${CZDIR==="V"?"on":""}" onclick="czTrocaDir('V')">↓ em pé</button>`;
+    } else {
+      bx.innerHTML = `<span class="sub">Escrevendo a palavra <b>${CZDIR==="H"?"deitada →":"em pé ↓"}</b></span>`;
+    }
+  }
+  czRealca();
 }
 function conferirCruz(){ treinouHoje();
   let certas = 0, total = 0;
@@ -3038,13 +3139,42 @@ function fimAssoc(){
 /* ============================================================
    QUIZ — só o começo e o fim mudam
    ============================================================ */
+/* Embaralha as alternativas de uma pergunta sem tocar no banco original.
+   Sem isto, um bloco de perguntas escrito com a resposta sempre na
+   primeira posição ensina a chutar a primeira opção. */
+function embaralhaAlt(q){
+  if(!q || !q.a || q.a.length < 2) return q;
+  var idx = embaralha(q.a.map(function(_,i){ return i; }));
+  var copia = {}; for(var k in q) copia[k] = q[k];
+  copia.a = idx.map(function(i){ return q.a[i]; });
+  copia.c = idx.indexOf(q.c);
+  return copia;
+}
 function iniQuiz(){
   const nv = nivelDe(matAtual, "quiz");
   const qtd = NIVEIS.quiz[nv];
-  qLista = sorteia(matAtual + "|quiz", QUIZ[matAtual], qtd);
+  qLista = sorteia(matAtual + "|quiz", QUIZ[matAtual], qtd).map(embaralhaAlt);
   qIdx = 0; qAcertos = 0; ajCtx = null;
   pintaQuiz();
 }
+/* Pular a questão: não conta como acerto nem como erro, e fica registrada
+   para o adulto ver depois o que apareceu fora do assunto. */
+function pularQuestao(){
+  if(qRespondida) return;
+  var q = qLista[qIdx];
+  S.puladas = S.puladas || {};
+  var lista = S.puladas[matAtual] = S.puladas[matAtual] || [];
+  var txt = (q.p || "").replace(/<[^>]+>/g, "");
+  if(lista.indexOf(txt) < 0) lista.push(txt);
+  if(lista.length > 60) lista.shift();
+  salvar();
+  qLista.splice(qIdx, 1);          /* sai da rodada: não vira erro nem acerto */
+  pintaQuiz();
+  if(typeof rolarPara === "function") setTimeout(function(){ rolarPara(document.getElementById("areaJogo")); }, 40);
+}
+function puladasDe(mat){ return (S.puladas && S.puladas[mat]) || []; }
+function limparPuladas(mat){ if(S.puladas){ delete S.puladas[mat]; salvar(); } renderAdulto && renderAdulto(); }
+
 function fimQuiz(){
   const r = S.quiz[matAtual] || {melhor:0, vezes:0};
   r.vezes = (r.vezes || 0) + 1; r.melhor = Math.max(r.melhor || 0, qAcertos); r.total = qLista.length;
@@ -3052,7 +3182,7 @@ function fimQuiz(){
   document.getElementById("jogoBox").innerHTML = telaFim({
     titulo:"🏅 Volta completa!",
     total: qLista.length, acertos: qAcertos, modo:"quiz",
-    recomecar:"iniQuiz()", proximo:"memoria"
+    recomecar:"iniQuiz()", proximo:"cruzada"
   }) + `<div class="card"><p class="sub">Errar aqui é o objetivo: cada erro corrigido agora é uma questão a menos errada na prova. Refazer aumenta o efeito — de uma vez para três, o ganho quase dobra.</p></div>`;
   renderHoje();
 }
@@ -7639,6 +7769,889 @@ Object.assign(DIC_EXTRA["História"], {
 });
 
 
+
+/* ============================================================
+   CIÊNCIAS — 5º ano · prova 21/08
+   Fontes (só isto):
+     · Revisão da Prof.ª Eduarda (slides ClassApp)
+     · Cap. 3 "Os materiais e suas propriedades" — p.55-59 e 66-69
+     · Cap. 4 "Água e cobertura vegetal" — p.78-79 e 90-91
+   ============================================================ */
+
+MATERIAS["Ciências"].conteudo = "Cap. 3 — matéria, materiais e propriedades físicas (p.55-59, 66-69) · Cap. 4 — ciclo da água e cobertura vegetal (p.78-79, 90-91)";
+
+/* ---------- ícones ---------- */
+ICONES.gota='<circle cx="32" cy="32" r="31" fill="#E4F0F7"/><path d="M32 10c8 12 14 18 14 26a14 14 0 01-28 0c0-8 6-14 14-26z" fill="#63B3D9" stroke="#2E6C8E" stroke-width="2" stroke-linejoin="round"/><path d="M26 38a6 6 0 006 6" stroke="#EAF6FB" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+ICONES.nuvem='<circle cx="32" cy="32" r="31" fill="#EAF1F6"/><path d="M20 42a9 9 0 010-18 12 12 0 0123-3 8 8 0 011 21z" fill="#FFF" stroke="#5B7C90" stroke-width="2" stroke-linejoin="round"/><g stroke="#63B3D9" stroke-width="2.6" stroke-linecap="round"><path d="M24 48l-2 6M32 48l-2 6M40 48l-2 6"/></g>';
+ICONES.ima='<circle cx="32" cy="32" r="31" fill="#F6E9EA"/><path d="M18 40a14 14 0 0128 0v6H36v-6a4 4 0 00-8 0v6H18z" fill="#B0403F" stroke="#7A2726" stroke-width="2" stroke-linejoin="round"/><rect x="18" y="42" width="10" height="8" fill="#3F4C86"/><rect x="36" y="42" width="10" height="8" fill="#3F4C86"/>';
+ICONES.densidade='<circle cx="32" cy="32" r="31" fill="#FBF4E4"/><path d="M20 14h24v34a4 4 0 01-4 4H24a4 4 0 01-4-4z" fill="#FFF" stroke="#8A6A3E" stroke-width="2"/><path d="M20 30h24v18a4 4 0 01-4 4H24a4 4 0 01-4-4z" fill="#63B3D9"/><path d="M20 20h24v10H20z" fill="#E4C24B"/><circle cx="32" cy="44" r="4.5" fill="#8A5A2B" stroke="#5E3A18" stroke-width="1.6"/>';
+ICONES.elastico='<circle cx="32" cy="32" r="31" fill="#F1E9F6"/><ellipse cx="32" cy="32" rx="20" ry="9" fill="none" stroke="#8B6FC0" stroke-width="4"/><g stroke="#5E4790" stroke-width="2.4" stroke-linecap="round"><path d="M8 26v12M56 26v12"/></g>';
+ICONES.diamante='<circle cx="32" cy="32" r="31" fill="#E9F2F6"/><path d="M18 24h28l-14 26z" fill="#9FD3E8" stroke="#2E6C8E" stroke-width="2" stroke-linejoin="round"/><path d="M18 24l6-8h16l6 8" fill="#CDE9F3" stroke="#2E6C8E" stroke-width="2" stroke-linejoin="round"/><path d="M24 16l8 34 8-34M18 24h28" stroke="#2E6C8E" stroke-width="1.4" fill="none"/>';
+ICONES.panela='<circle cx="32" cy="32" r="31" fill="#EDEDE6"/><path d="M14 26h32v14a8 8 0 01-8 8H22a8 8 0 01-8-8z" fill="#9AA3A8" stroke="#4E585E" stroke-width="2" stroke-linejoin="round"/><path d="M46 30h8a4 4 0 010 8h-8" fill="#7B4A2C" stroke="#4E2E18" stroke-width="2"/><g stroke="#D9A441" stroke-width="2.6" stroke-linecap="round"><path d="M20 52l-2 4M32 52v4M44 52l2 4"/></g>';
+ICONES.fio='<circle cx="32" cy="32" r="31" fill="#F7EFE3"/><path d="M8 32h20" stroke="#D9A441" stroke-width="9" stroke-linecap="round"/><path d="M28 32h12" stroke="#B87A22" stroke-width="5" stroke-linecap="round"/><path d="M40 32h16" stroke="#B0403F" stroke-width="9" stroke-linecap="round"/><path d="M30 20v24" stroke="#5C5C52" stroke-width="1.6"/>';
+ICONES.sal='<circle cx="32" cy="32" r="31" fill="#EFF4F7"/><path d="M22 20h20l-4 26H26z" fill="#FFF" stroke="#5B7C90" stroke-width="2" stroke-linejoin="round"/><path d="M22 30h20" stroke="#5B7C90" stroke-width="1.6"/><g fill="#9FD3E8"><circle cx="28" cy="38" r="2"/><circle cx="34" cy="40" r="2"/><circle cx="31" cy="34" r="2"/></g>';
+ICONES.gelo='<circle cx="32" cy="32" r="31" fill="#E7F3F8"/><path d="M12 34h40v10a6 6 0 01-6 6H18a6 6 0 01-6-6z" fill="#9FD3E8" stroke="#2E6C8E" stroke-width="2" stroke-linejoin="round"/><rect x="20" y="20" width="14" height="14" rx="2" fill="#F2FAFD" stroke="#2E6C8E" stroke-width="2"/><rect x="34" y="24" width="12" height="10" rx="2" fill="#F2FAFD" stroke="#2E6C8E" stroke-width="2"/>';
+ICONES.matacilar='<circle cx="32" cy="32" r="31" fill="#E7F2E6"/><path d="M6 40c10-4 14 4 26 0s16 4 26 0v14H6z" fill="#7FA05F" stroke="#4B6B37" stroke-width="2" stroke-linejoin="round"/><path d="M22 44c8-3 12 3 20 0" stroke="#63B3D9" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="16" cy="28" r="9" fill="#5E8B45"/><circle cx="46" cy="26" r="8" fill="#5E8B45"/><path d="M16 34v8M46 32v8" stroke="#6B4A2C" stroke-width="2.6"/>';
+ICONES.erosao='<circle cx="32" cy="32" r="31" fill="#F6EBE0"/><path d="M6 46c8-2 12-14 22-14s16 12 24 12v10H6z" fill="#B98A55" stroke="#7B5B3A" stroke-width="2" stroke-linejoin="round"/><g stroke="#7B5B3A" stroke-width="2" stroke-linecap="round"><path d="M18 34l4 8M28 30l4 10M40 34l4 8"/></g><g stroke="#63B3D9" stroke-width="2.4" stroke-linecap="round"><path d="M14 12v8M26 10v8M38 12v8M50 10v8"/></g>';
+ICONES.assoreamento='<circle cx="32" cy="32" r="31" fill="#EFE6DA"/><path d="M8 30h48v10c0 6-6 10-24 10S8 46 8 40z" fill="#63B3D9" stroke="#2E6C8E" stroke-width="2" stroke-linejoin="round"/><path d="M10 44c8 4 36 4 44 0v-2c0 5-6 8-22 8s-22-3-22-8z" fill="#B98A55"/><path d="M14 44c6 3 30 3 36 0" stroke="#8A6A3E" stroke-width="3" fill="none"/>';
+ICONES.alagamento='<circle cx="32" cy="32" r="31" fill="#E4EEF5"/><path d="M18 26h12v18H18zM34 20h12v24H34z" fill="#C9A87C" stroke="#7B5B3A" stroke-width="2"/><path d="M6 42c6 0 6 4 12 4s6-4 12-4 6 4 12 4 6-4 12-4v12H6z" fill="#63B3D9" stroke="#2E6C8E" stroke-width="2" stroke-linejoin="round"/>';
+ICONES.folhaverde='<circle cx="32" cy="32" r="31" fill="#E8F3E4"/><path d="M46 14C26 14 14 26 14 46c0 0 4 4 8 4 18 0 26-14 26-32z" fill="#7FA05F" stroke="#4B6B37" stroke-width="2" stroke-linejoin="round"/><path d="M44 18C34 26 26 36 20 48" stroke="#4B6B37" stroke-width="2" fill="none" stroke-linecap="round"/>';
+ICONES.carvao='<circle cx="32" cy="32" r="31" fill="#EAE7E4"/><path d="M14 40l8-12 10 6 8-8 10 14-6 10H18z" fill="#3E3E3A" stroke="#22221F" stroke-width="2" stroke-linejoin="round"/><path d="M24 34l6 4M38 32l4 6" stroke="#6E6E68" stroke-width="1.8"/>';
+ICONES.madeira='<circle cx="32" cy="32" r="31" fill="#F5EADD"/><rect x="10" y="22" width="44" height="9" rx="2" fill="#C9A87C" stroke="#7B5B3A" stroke-width="2"/><rect x="10" y="33" width="44" height="9" rx="2" fill="#B98A55" stroke="#7B5B3A" stroke-width="2"/><g stroke="#8A6A3E" stroke-width="1.4"><path d="M18 22v9M34 22v9M44 33v9M24 33v9"/></g>';
+ICONES.aquifero='<circle cx="32" cy="32" r="31" fill="#EDE6DC"/><path d="M6 22h52v10H6z" fill="#7FA05F"/><path d="M6 32h52v12H6z" fill="#C9A87C"/><path d="M6 44h52v10H6z" fill="#63B3D9"/><g stroke="#2E6C8E" stroke-width="2.2" stroke-linecap="round"><path d="M18 34v8M32 34v8M46 34v8"/></g>';
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+QUIZ["Ciências"] = [
+
+ /* ---------- ⭐ REVISÃO DA PROFESSORA ---------- */
+ {p:"Segundo a revisão, o que é <b>matéria</b>?",a:["Tudo aquilo que possui uma determinada massa e ocupa um certo volume no espaço","Tudo o que a gente consegue ver","Só o que é sólido"],c:0,e:"É a definição que a professora escreveu no slide: matéria é tudo que <b>tem massa</b> e <b>ocupa volume</b> no espaço."},
+ {p:"Qual destes <b>não</b> é matéria?",a:["A luz","O ar","Uma pedra"],c:0,e:"Luz, calor e som <b>não têm massa nem volume</b> — por isso não são matéria. O ar é, porque tem massa e ocupa espaço."},
+ {p:"<b>Materiais renováveis</b> são aqueles que:",a:["Vêm de uma fonte que não se esgota, ou que pode ser sempre renovada","Duram para sempre depois de prontos","Podem ser reciclados"],c:0,e:"A palavra-chave é a <b>fonte</b>: se ela não se esgota (ou é sempre renovada), o material é renovável."},
+ {p:"<b>Materiais não renováveis</b> são aqueles que:",a:["São produzidos a partir de fontes que não se renovam, ou seja, que se esgotam","Não podem ser usados de novo","Vêm sempre de animais"],c:0,e:"A fonte deles <b>se esgota</b>: petróleo, gás natural, carvão mineral, rochas e metais."},
+ {p:"A fórmula da <b>densidade</b> é:",a:["Densidade = massa ÷ volume","Densidade = massa × volume","Densidade = volume ÷ massa"],c:0,e:"<b>d = m ÷ v</b>. Divide a massa pelo volume. É a fórmula do slide da professora e da p.66."},
+ {p:"Um pedaço de material tem massa de <b>50 g</b> e volume de <b>10 cm³</b>. Qual é a densidade dele?",a:["5 g/cm³","500 g/cm³","0,2 g/cm³"],c:0,e:"50 ÷ 10 = <b>5 g/cm³</b>. É o desafio que a professora passou: primeiro faça a divisão, depois compare com a água."},
+ {p:"A densidade da água é <b>1 g/cm³</b>. Um material de densidade <b>5 g/cm³</b>, pela regra, vai:",a:["Afundar, porque é mais denso que a água","Flutuar, porque é mais leve","Ficar parado no meio"],c:0,e:"A regra é a da p.66: o <b>mais denso vai para baixo</b>, o menos denso fica em cima. 5 é maior que 1, então afunda."},
+ {p:"Um material com densidade <b>0,9 g/cm³</b> colocado na água vai:",a:["Flutuar, porque é menos denso que a água","Afundar","Dissolver"],c:0,e:"0,9 é <b>menor</b> que 1 g/cm³, então flutua. É o caso do óleo, que fica por cima da água."},
+
+ /* ---------- MATÉRIA, CORPO, MASSA E VOLUME (p.55) ---------- */
+ {p:"O que é um <b>corpo</b>, segundo o livro?",a:["Uma parte delimitada da matéria; também pode ser chamado de objeto","Só o corpo de um ser vivo","Qualquer coisa pesada"],c:0,e:"Vários corpos diferentes podem ser feitos <b>do mesmo material</b> — por exemplo, taças e frascos feitos de vidro."},
+ {p:"A <b>massa</b> de um corpo está relacionada a:",a:["A quantidade de matéria que ele tem","O espaço que ele ocupa","A cor dele"],c:0,e:"Massa = quantidade de matéria. Mede-se em <b>kg, g ou t</b>, com uma <b>balança</b>."},
+ {p:"O <b>volume</b> é:",a:["O espaço ocupado pelo corpo","O peso do corpo","A dureza do corpo"],c:0,e:"Volume = espaço ocupado. Mede-se em <b>m³, cm³, L ou mL</b>."},
+ {p:"Qual instrumento se usa para medir a <b>massa</b>?",a:["A balança","A régua","O termômetro"],c:0,e:"A massa é medida por meio de uma <b>balança</b>, em quilogramas, gramas ou toneladas."},
+ {p:"Qual destas unidades mede <b>volume</b>?",a:["Mililitro (mL)","Grama (g)","Tonelada (t)"],c:0,e:"Volume: m³, cm³, L e mL. Massa: kg, g e t."},
+
+ /* ---------- DE ONDE VÊM OS MATERIAIS (p.56-57) ---------- */
+ {p:"Qual destes é um exemplo de material de fonte <b>não renovável</b>?",a:["O carvão mineral","A madeira","O algodão"],c:0,e:"Derivados do petróleo, gás natural, carvão mineral, rochas e metais vêm de fontes que <b>se esgotam</b>."},
+ {p:"O <b>açúcar</b>, obtido da cana-de-açúcar, é um material de fonte:",a:["Renovável","Não renovável","Artificial"],c:0,e:"A cana é uma planta que pode ser <b>colhida e cultivada de novo</b> — por isso a fonte é renovável."},
+ {p:"A <b>gasolina</b> é um material de fonte:",a:["Não renovável, porque vem do petróleo","Renovável","Animal"],c:0,e:"A gasolina é derivada do <b>petróleo</b>, que é uma fonte não renovável."},
+ {p:"O livro faz um alerta importante sobre os materiais renováveis. Qual é?",a:["A exploração intensa deles também pode causar desmatamento e outros problemas ambientais","Que eles acabam mais rápido que os outros","Que eles não podem ser reciclados"],c:0,e:"Ser renovável <b>não é o mesmo que ser inesgotável na prática</b>: explorar demais, mesmo o que se renova, causa dano ambiental."},
+ {p:"Couro, lã e seda são materiais de origem:",a:["Animal","Vegetal","Mineral"],c:0,e:"Origem <b>animal</b> = tudo que provém de seres vivos animais."},
+ {p:"Madeira, frutas e alimentos feitos de sementes são de origem:",a:["Vegetal","Animal","Mineral"],c:0,e:"Origem <b>vegetal</b> = tudo que vem de seres vivos vegetais."},
+ {p:"Petróleo, granito, mármore e fios de cobre são de origem:",a:["Mineral","Vegetal","Animal"],c:0,e:"Origem <b>mineral</b> = tudo que procede de minérios: rochas e metais."},
+ {p:"Um material <b>artificial</b> (ou sintético) é aquele que:",a:["Não vem de algo natural: é produzido em laboratório e/ou industrialmente","Vem direto da natureza","É feito só de metal"],c:0,e:"Os <b>plásticos</b> são o exemplo do livro. O couro sintético é outro."},
+ {p:"Por que os materiais sintéticos podem ser úteis para o meio ambiente?",a:["Podem substituir materiais naturais e evitar a escassez e a exploração de recursos naturais","Porque nunca poluem","Porque duram menos"],c:0,e:"É o argumento da p.57: o couro sintético, por exemplo, substitui o couro natural."},
+ {p:"Uma mesa de madeira é feita de material de origem:",a:["Vegetal e renovável","Mineral e não renovável","Artificial"],c:0,e:"Madeira vem de árvores — origem <b>vegetal</b> — e a fonte pode ser replantada, então é <b>renovável</b>."},
+
+ /* ---------- OS TIPOS DE MATERIAL (p.58-59) ---------- */
+ {p:"Quais são os cinco tipos de material usados na <b>coleta seletiva</b>?",a:["Papel, vidro, plástico, metal e orgânicos","Papel, madeira, água, vidro e ferro","Só plástico e metal"],c:0,e:"São os mais utilizados na fabricação dos objetos, e é por eles que o lixo é separado."},
+ {p:"O <b>papel</b> que conhecemos hoje teve origem:",a:["Na China","No Egito","Na Grécia"],c:0,e:"Era fabricado com cascas de árvores e trapos de tecidos, molhados e batidos até virar uma pasta."},
+ {p:"Como o papel era fabricado antigamente?",a:["A pasta era colocada em peneiras para escorrer a água e, ao secar, virava folha","Era cortado direto do tronco","Era derretido no fogo"],c:0,e:"Cascas de árvores e trapos de tecido eram batidos até formar pasta; peneira; secagem."},
+ {p:"O <b>vidro</b> é basicamente:",a:["Areia misturada com algumas substâncias químicas levadas ao fogo","Plástico derretido","Pedra moída"],c:0,e:"Alta temperatura. Há evidências de que foi descoberto pelos <b>fenícios</b>, numa fogueira em uma praia."},
+ {p:"Os <b>plásticos</b> são materiais formados por:",a:["Grandes moléculas, que podem ser naturais ou sintéticas","Areia e fogo","Metal derretido"],c:0,e:"Podem ser naturais (como a madeira ou o algodão) ou sintéticas, produzidas em laboratório."},
+ {p:"O <b>PET</b>, um tipo de plástico, é usado principalmente em:",a:["Garrafas de refrigerante","Panelas","Janelas"],c:0,e:"Já o <b>PVC</b> é o plástico duro, usado em pastas, forros e portas."},
+ {p:"Quais destes são metais <b>naturais</b>?",a:["Ferro, ouro, prata e zinco","Aço, latão e bronze","PET e PVC"],c:0,e:"Aço, aço inoxidável, latão e bronze são <b>fabricados</b> pela mistura de metais com outras substâncias."},
+ {p:"Os materiais <b>orgânicos</b> são aqueles que:",a:["Têm origem em matéria animal ou vegetal e contêm carbono","São feitos em laboratório","Vêm de rochas"],c:0,e:"Exemplos: frutas, flores, madeira e carne animal."},
+
+ /* ---------- PROPRIEDADES FÍSICAS (p.66, 68, 69) ---------- */
+ {p:"Para que servem as <b>propriedades físicas</b> da matéria?",a:["Para diferenciar os materiais e escolher o mais adequado para cada situação","Só para fazer experimentos","Para medir o tempo"],c:0,e:"É a frase de abertura da p.66. Cada propriedade ajuda a decidir qual material usar em cada caso."},
+ {p:"Ao misturar água e óleo, o óleo fica em cima. Por quê?",a:["Porque o óleo é menos denso que a água","Porque o óleo é mais quente","Porque o óleo é mais pesado"],c:0,e:"Água = 1 g/mL; óleo ≈ <b>0,9 g/mL</b>. O <b>mais denso fica embaixo</b>."},
+ {p:"Por que o <b>gelo boia</b> na água, se o gelo também é água?",a:["Porque a densidade da água varia com a temperatura: o gelo tem 0,92 g/mL e a água líquida, 1 g/mL","Porque o gelo é oco","Porque o gelo é mais leve que o ar"],c:0,e:"A densidade <b>varia com a temperatura</b>. Sendo menos denso que a água líquida, o gelo flutua."},
+ {p:"As densidades citadas no livro foram medidas a <b>25 °C</b>. Como se chama essa temperatura?",a:["Temperatura ambiente","Temperatura de fusão","Temperatura máxima"],c:0,e:"25 °C é a chamada <b>temperatura ambiente</b>."},
+ {p:"<b>Elasticidade</b> é a capacidade da matéria de:",a:["Se deformar e voltar ao estado inicial","Ser riscada por outro material","Conduzir calor"],c:0,e:"O exemplo do livro é o <b>elástico</b>: esticou, soltou, voltou ao que era."},
+ {p:"<b>Dureza</b> é a propriedade relacionada à capacidade de um material:",a:["De ser riscado por outro","De resistir a quedas","De dissolver na água"],c:0,e:"O <b>diamante</b> é o mineral mais duro encontrado na natureza: só outro diamante consegue riscá-lo."},
+ {p:"Qual é o mineral <b>mais duro</b> encontrado na natureza?",a:["O diamante","O ferro","O granito"],c:0,e:"Nada risca um diamante, a não ser outro diamante."},
+ {p:"<b>Resistência</b> — também chamada de tenacidade — é a capacidade de:",a:["Resistir a forças mecânicas, como impactos e quedas","Ser esticado e voltar","Conduzir eletricidade"],c:0,e:"Quanto mais resistente, mais difícil de quebrar. O exemplo do livro é o <b>capacete</b>."},
+ {p:"Outro nome para a propriedade <b>resistência</b> é:",a:["Tenacidade","Elasticidade","Densidade"],c:0,e:"O livro diz: “a resistência, chamada também de <b>tenacidade</b>”."},
+ {p:"<b>Condutibilidade térmica</b> tem a ver com a facilidade de transferir:",a:["Calor","Eletricidade","Som"],c:0,e:"Metais são <b>bons</b> condutores de calor; plásticos e madeira, <b>maus</b> condutores."},
+ {p:"Por que a maioria das panelas é de metal, mas o cabo é de plástico resistente ou madeira?",a:["O metal conduz bem o calor do fogo; o cabo não conduz, para a pessoa não se queimar","Porque é mais bonito","Porque o metal é mais barato"],c:0,e:"O plástico resistente do cabo chama-se <b>baquelite</b>. É a condutibilidade térmica aplicada na prática."},
+ {p:"<b>Condutibilidade elétrica</b> é a capacidade de conduzir:",a:["Corrente elétrica","Calor","Água"],c:0,e:"Materiais que conduzem são <b>condutores</b>; os que não conduzem são <b>isolantes</b>."},
+ {p:"Nos fios de energia elétrica, o metal de dentro e a capa de fora são, respectivamente:",a:["Cobre (condutor) e plástico (isolante)","Plástico (condutor) e cobre (isolante)","Ferro e vidro"],c:0,e:"A capa de plástico é <b>isolante</b> e protege as pessoas de choques elétricos."},
+ {p:"A <b>força magnética</b> é uma força de:",a:["Atração ou repulsão entre algum material de metal e ímãs","Empurrão do vento","Atração entre plásticos"],c:0,e:"É a propriedade usada nos ímãs de geladeira e na <b>separação magnética</b> de misturas."},
+ {p:"<b>Solubilidade</b> é a propriedade de um material:",a:["De se dissolver ou não em outro","De boiar na água","De ser riscado"],c:0,e:"Sal e açúcar se dissolvem em água: são <b>solúveis</b>. Areia e óleo não: são <b>insolúveis</b>."},
+ {p:"Qual destes é <b>insolúvel</b> em água?",a:["A areia","O sal de cozinha","O açúcar"],c:0,e:"Areia e óleo <b>não</b> se dissolvem em água. Sal e açúcar, sim."},
+ {p:"Quando dois materiais se dissolvem entre si, dizemos que são:",a:["Solúveis","Insolúveis","Isolantes"],c:0,e:"Os que não se dissolvem são chamados de <b>insolúveis</b>."},
+
+ /* ---------- HÁ ÁGUA POR TODA PARTE (p.78) ---------- */
+ {p:"A água cobre cerca de quanto da superfície do planeta Terra?",a:["70%","30%","97%"],c:0,e:"Cerca de <b>70%</b> da superfície da Terra é coberta por água."},
+ {p:"Quanto da água do planeta é <b>salgada</b>?",a:["Cerca de 97%","Cerca de 3%","Cerca de 70%"],c:0,e:"Cerca de <b>97% é salgada</b> e apenas <b>3% é doce</b>. Por isso a água doce é tão preciosa."},
+ {p:"Quanto da água do planeta é <b>doce</b>?",a:["Apenas 3%","70%","50%"],c:0,e:"Só <b>3%</b>. A água doce está nos rios, lagos e lençóis freáticos."},
+ {p:"Onde encontramos água <b>doce</b>?",a:["Nos rios, lagos e lençóis freáticos","Nos mares e oceanos","Só nas geleiras"],c:0,e:"A salgada fica nos <b>mares e oceanos</b>."},
+ {p:"O que é um <b>lençol freático</b>?",a:["Um reservatório de água que se acumula em camadas profundas do solo","Um rio subterrâneo de água salgada","Uma nuvem carregada"],c:0,e:"É a definição do glossário da p.78."},
+ {p:"Em quais três estados físicos a água é encontrada na natureza?",a:["Sólido, líquido e gasoso","Só líquido e gasoso","Quente, morno e frio"],c:0,e:"Ela muda de um estado para o outro de acordo com a <b>temperatura</b>."},
+ {p:"O que faz a água mudar de um estado físico para outro?",a:["A temperatura","A cor","O vento"],c:0,e:"Nos diferentes ambientes, ela muda de estado <b>de acordo com a temperatura</b>."},
+ {p:"O vapor de água é a água na forma:",a:["Gasosa","Líquida","Sólida"],c:0,e:"O gelo dos icebergs e do topo das montanhas é a forma <b>sólida</b>; oceanos, rios e lagos, a <b>líquida</b>."},
+ {p:"Outro nome para o <b>ciclo da água</b> é:",a:["Ciclo hidrológico","Ciclo do vapor","Ciclo das chuvas"],c:0,e:"É o movimento contínuo da água pela natureza."},
+ {p:"O ciclo da água é o movimento contínuo da água presente:",a:["Na hidrosfera, nos continentes, na atmosfera e nos seres vivos","Só nos oceanos","Só nas nuvens"],c:0,e:"Continentes = superfície terrestre, solo e rochas. E sim, a água também circula pelos <b>seres vivos</b>."},
+
+ /* ---------- AS ETAPAS DO CICLO (p.79) ---------- */
+ {p:"Com o aquecimento pela luz solar, a água líquida dos oceanos, rios e lagos vira vapor. Esse processo é a:",a:["Evaporação","Condensação","Precipitação"],c:0,e:"<b>Evaporação</b>: quem dá a energia é o <b>Sol</b>."},
+ {p:"A <b>transpiração</b> no ciclo da água é:",a:["A liberação de vapor de água na atmosfera por animais e plantas","A chuva caindo nas folhas","A água escorrendo no solo"],c:0,e:"Os seres vivos também devolvem água para a atmosfera."},
+ {p:"O vapor vira água líquida nas partes mais altas e frias da atmosfera. Esse processo é a:",a:["Condensação","Evaporação","Infiltração"],c:0,e:"<b>Condensação</b> — é assim que as nuvens se formam. Repare: aqui a água <b>esfria</b>."},
+ {p:"As gotículas ficam maiores, as nuvens ficam carregadas e a água cai. Esse processo é a:",a:["Precipitação","Transpiração","Evaporação"],c:0,e:"A <b>precipitação</b> pode ser líquida (chuva) ou sólida (<b>granizo ou neve</b>)."},
+ {p:"A precipitação pode acontecer na forma:",a:["Líquida, como chuva, ou sólida, como granizo ou neve","Só como chuva","Só como neve"],c:0,e:"Depende da temperatura na hora em que a água cai."},
+ {p:"A água da chuva que entra no solo e forma a água subterrânea passou pela:",a:["Infiltração","Condensação","Evaporação"],c:0,e:"A <b>infiltração</b> é o que reabastece os lençóis freáticos."},
+ {p:"Qual destes <b>não</b> é um caminho possível para a água da chuva, segundo o livro?",a:["Desaparecer para sempre","Ser absorvida pelas plantas","Congelar nos cumes das montanhas"],c:0,e:"A água nunca some: ela repõe o que evaporou, evapora de novo, congela, é absorvida pelas plantas, é bebida pelos animais ou se infiltra no solo."},
+ {p:"Coloque em ordem o caminho da água no ciclo:",a:["Evaporação → condensação → precipitação → infiltração","Precipitação → evaporação → infiltração → condensação","Condensação → infiltração → evaporação → precipitação"],c:0,e:"Sobe (evapora), esfria e vira nuvem (condensa), cai (precipita) e entra no solo (infiltra)."},
+
+ /* ---------- COBERTURA VEGETAL E A ÁGUA (p.90) ---------- */
+ {p:"As florestas às margens dos rios são conhecidas como:",a:["Matas ciliares","Matas de topo","Florestas urbanas"],c:0,e:"São fundamentais para o <b>abastecimento de água de boa qualidade</b> e para a <b>conservação dos rios</b>."},
+ {p:"Por que as matas às margens dos rios recebem o nome de <b>ciliares</b>?",a:["Porque, assim como os cílios protegem nossos olhos, elas protegem os rios","Porque ficam sempre fechadas","Porque têm folhas finas como cílios"],c:0,e:"É a comparação que o livro faz na p.90."},
+ {p:"Substituir as matas ciliares por lavouras pode causar:",a:["Contaminação dos rios pelos agrotóxicos usados nas plantações","Aumento da chuva","Mais peixes no rio"],c:0,e:"Sem a mata ciliar como <b>barreira natural</b>, a água da chuva carrega os agrotóxicos para o leito dos rios."},
+ {p:"Sem a mata ciliar, o que carrega os agrotóxicos até o rio?",a:["A água da chuva","O vento","Os animais"],c:0,e:"A mata ciliar funcionava como <b>barreira natural</b> entre a lavoura e o rio."},
+ {p:"A ausência de vegetação dificulta a infiltração da água. Por que isso é grave?",a:["Porque a infiltração é necessária para reabastecer os aquíferos e os lençóis freáticos","Porque deixa o solo mais bonito","Porque aumenta a evaporação dos oceanos"],c:0,e:"Sem infiltração, a reserva de água subterrânea não se repõe."},
+ {p:"Sem vegetação, o solo fica mais exposto aos raios solares. O que acontece?",a:["Ele perde mais água por evaporação","Ele fica mais úmido","Ele vira rocha"],c:0,e:"Desprotegido, o solo esquenta e a água que havia nele evapora mais depressa."},
+
+ /* ---------- COBERTURA VEGETAL E O SOLO (p.91) ---------- */
+ {p:"A remoção da cobertura vegetal expõe o solo à ação do vento e da chuva, causando:",a:["Erosão","Assoreamento","Evaporação"],c:0,e:"<b>Erosão</b> = desgaste dos solos e das rochas, com transporte de pequenos detritos de um lugar para outro."},
+ {p:"O que é <b>erosão</b>?",a:["O desgaste dos solos e das rochas, com transporte de detritos de um lugar para outro","O acúmulo de terra dentro do rio","A falta de chuva"],c:0,e:"É o primeiro passo: o solo, sem proteção, é levado pelo vento e pela chuva."},
+ {p:"Quando o solo erodido é carregado para dentro dos rios e lagos, acontece o:",a:["Assoreamento","Alagamento","Efeito estufa"],c:0,e:"<b>Assoreamento</b> = acúmulo de sedimentos (partículas de solo e rochas) em rios e lagos."},
+ {p:"O que é <b>assoreamento</b>?",a:["O acúmulo de sedimentos — partículas de solo e rochas — em rios e lagos","O desgaste das rochas pelo vento","A poluição do ar"],c:0,e:"É a consequência da erosão nas margens: o rio vai ficando raso e entupido de terra."},
+ {p:"Qual é a <b>ordem</b> correta dos acontecimentos?",a:["Remoção da vegetação → erosão → assoreamento","Assoreamento → erosão → remoção da vegetação","Erosão → remoção da vegetação → assoreamento"],c:0,e:"Tirou a mata, o solo fica exposto e é levado (<b>erosão</b>); a terra chega no rio e se acumula (<b>assoreamento</b>)."},
+ {p:"Por que as matas e florestas ajudam a conservar rios e lagos?",a:["Porque reduzem a quantidade de sedimentos transportados pela água das chuvas","Porque bebem a água do rio","Porque deixam a água mais fria"],c:0,e:"É mais uma razão para que o <b>desmatamento seja evitado</b>."},
+ {p:"A retirada da vegetação para construir ruas, casas e prédios aumenta o risco de:",a:["Alagamentos, porque diminui a área de absorção de água pelo solo","Terremotos","Secas nos oceanos"],c:0,e:"Com o solo coberto por asfalto e concreto, a água da chuva não tem por onde entrar e se acumula na rua."},
+ {p:"Por que é importante ter áreas com cobertura vegetal <b>nas cidades</b>?",a:["Para que a água das chuvas tenha como se infiltrar no solo","Para deixar a cidade mais bonita","Para diminuir o barulho"],c:0,e:"É exatamente a frase da p.91 — e é o que reduz os alagamentos."},
+ {p:"Qual é o papel das plantas e das algas na <b>qualidade do ar</b>?",a:["Produzem o oxigênio que respiramos e captam o gás carbônico","Produzem gás carbônico","Aumentam o efeito estufa"],c:0,e:"O gás carbônico é um dos poluentes ligados ao aumento do <b>efeito estufa</b>."},
+ {p:"O <b>efeito estufa</b> em excesso resulta em:",a:["Aumento da temperatura média do planeta Terra","Diminuição da temperatura do planeta","Aumento das chuvas de granizo"],c:0,e:"O gás carbônico, captado pelas plantas e algas, é um dos poluentes relacionados a esse aumento."},
+ {p:"Uma fazenda retirou toda a vegetação das margens de um rio. O que tende a acontecer com o <b>rio</b>?",a:["Ele recebe terra das margens e vai assoreando, com a água mais suja","Ele fica mais fundo e mais limpo","Ele desaparece em um dia"],c:0,e:"É o desafio que a professora passou: sem mata ciliar, vem erosão, assoreamento e contaminação."},
+
+ /* ---------- EXPERIMENTO “AFUNDA OU BOIA?” (p.67) ---------- */
+ {p:"No experimento “Afunda ou boia?”, quais objetos <b>boiam</b> na água?",a:["A bolinha de isopor e o pedaço de papelão","O prego e a pedra","Todos os quatro"],c:0,e:"Isopor e papelão são <b>menos densos</b> que a água. Prego e pedra são mais densos e afundam."},
+ {p:"No experimento “Afunda ou boia?”, quais objetos <b>afundam</b>?",a:["O prego e a pedra","A bolinha de isopor e o papelão","Nenhum deles"],c:0,e:"São mais densos que a água — e o <b>mais denso vai para baixo</b>."},
+ {p:"Por que alguns objetos boiam e outros afundam na água?",a:["Porque uns são menos densos que a água e outros são mais densos","Porque uns são maiores","Porque uns são mais coloridos"],c:0,e:"O que decide é a <b>densidade</b> comparada com a da água (1 g/mL) — não o tamanho nem o peso sozinho."},
+
+ /* ---------- HISTÓRIA DOS MATERIAIS (p.58-59) ---------- */
+ {p:"Quem inventou a <b>imprensa</b>, que permitiu a impressão de caracteres no papel?",a:["Johannes Gutenberg","Os fenícios","Um cientista chinês"],c:0,e:"O alemão <b>Johannes Gutenberg</b>, por volta de <b>1430</b>."},
+ {p:"A invenção da imprensa ocorreu por volta de que ano?",a:["1430","1830","1000"],c:0,e:"Por volta de <b>1430</b>. Antes disso, o papel já existia, mas os textos eram copiados à mão."},
+ {p:"Quem, segundo o livro, descobriu o <b>vidro</b>?",a:["Os fenícios, há milhares de anos","Os chineses","Os alemães"],c:0,e:"Há evidências de que foi descoberto pelos <b>fenícios</b>, enquanto faziam uma <b>fogueira em uma praia</b>."},
+ {p:"Onde os fenícios teriam descoberto o vidro?",a:["Fazendo uma fogueira em uma praia","Dentro de uma caverna","Num forno de pão"],c:0,e:"O calor do fogo sobre a <b>areia</b> da praia — é essa a origem contada na p.59."},
+ {p:"O <b>PVC</b>, o plástico duro, é usado para fazer:",a:["Pastas, forros e portas","Garrafas de refrigerante","Panelas"],c:0,e:"O <b>PET</b> é o das garrafas de refrigerante; o <b>PVC</b> é o plástico duro."},
+
+ /* ---------- PROPRIEDADES: BAQUELITE E SEPARAÇÃO MAGNÉTICA (p.68-69) ---------- */
+ {p:"Como se chama o plástico resistente usado no cabo das panelas?",a:["Baquelite","Isopor","PVC"],c:0,e:"O cabo é de <b>baquelite</b> ou de <b>madeira</b> — materiais que não conduzem bem o calor."},
+ {p:"A <b>separação magnética</b> usa ímãs para:",a:["Atrair objetos metálicos de dentro de uma mistura","Dissolver o sal na água","Esquentar os metais"],c:0,e:"É uma aplicação prática da <b>força magnética</b>, a mesma dos ímãs de geladeira."},
+
+ /* ---------- IMPACTO HUMANO DA DESTRUIÇÃO DA MATA CILIAR (p.90) ---------- */
+ {p:"Segundo o livro, a destruição das matas ciliares pode:",a:["Afetar o abastecimento de água, ameaçar a sobrevivência de milhares de pessoas e causar prejuízos aos ecossistemas","Melhorar a qualidade da água","Aumentar o número de peixes"],c:0,e:"É a frase da p.90. O impacto não é só do rio: é das <b>pessoas</b>, dos <b>animais</b> e das <b>plantas</b> que dependem dele."}
+];
+
+/* ============================================================
+   CRUZADINHA
+   ============================================================ */
+CRUZADA2["Ciências"] = [
+ ["MATERIA","Sou tudo o que tem massa e ocupa volume no espaço"],
+ ["MASSA","Sou a quantidade de matéria, medida na balança"],
+ ["VOLUME","Sou o espaço ocupado por um corpo"],
+ ["CORPO","Sou uma parte delimitada da matéria; também me chamam de objeto"],
+ ["BALANCA","Instrumento que mede a massa"],
+ ["DENSIDADE","Sou a massa dividida pelo volume"],
+ ["RENOVAVEL","Minha fonte não se esgota, ou pode ser sempre renovada"],
+ ["PETROLEO","Fonte não renovável de onde vem a gasolina"],
+ ["CARVAO","Sou mineral, sou preto e minha fonte se esgota"],
+ ["SINTETICO","Outro nome para o material artificial, feito em laboratório"],
+ ["PLASTICO","Sou formado por grandes moléculas; o PET e o PVC são meus tipos"],
+ ["VIDRO","Sou areia com outras substâncias, levada ao fogo"],
+ ["ORGANICO","Tenho origem animal ou vegetal e contenho carbono"],
+ ["ELASTICIDADE","Deformo e volto ao que era antes"],
+ ["DUREZA","Digo o quanto é difícil me riscar"],
+ ["DIAMANTE","Sou o mineral mais duro da natureza"],
+ ["TENACIDADE","Outro nome da resistência a impactos e quedas"],
+ ["CONDUTOR","Deixo a corrente elétrica passar por mim"],
+ ["ISOLANTE","Não deixo a corrente elétrica passar"],
+ ["COBRE","Metal usado por dentro dos fios elétricos"],
+ ["SOLUVEL","Eu me dissolvo em outro material"],
+ ["INSOLUVEL","Eu não me dissolvo, como a areia na água"],
+ ["MAGNETICA","Tipo de força que atrai ou repele entre metal e ímã"],
+ ["EVAPORACAO","O Sol me aquece e eu viro vapor"],
+ ["CONDENSACAO","Esfrio lá em cima e viro nuvem"],
+ ["PRECIPITACAO","Caio como chuva, granizo ou neve"],
+ ["INFILTRACAO","Entro no solo e viro água subterrânea"],
+ ["TRANSPIRACAO","Plantas e animais me soltam no ar"],
+ ["HIDROLOGICO","Outro nome do ciclo da água"],
+ ["FREATICO","Lençol de água guardado nas camadas fundas do solo"],
+ ["CILIAR","Mata que protege o rio como os cílios protegem o olho"],
+ ["EROSAO","Desgasto o solo e carrego os detritos embora"],
+ ["ASSOREAMENTO","Sou a terra que se acumula dentro do rio"],
+ ["DESMATAMENTO","Sou o que precisa ser evitado para conservar rios e lagos"],
+ ["ALAGAMENTO","Aconteço quando o solo não tem por onde absorver a chuva"],
+ ["FENICIOS","Povo que descobriu o vidro numa fogueira na praia"],
+ ["BAQUELITE","Plástico resistente do cabo da panela"],
+ ["GUTENBERG","Inventor da imprensa, por volta de 1430"],
+ ["OXIGENIO","Gás que as plantas e as algas produzem para nós"],
+ ["ESTUFA","Efeito que, em excesso, esquenta o planeta"]
+];
+
+/* ============================================================
+   ASSOCIAÇÃO
+   ============================================================ */
+ASSOC2["Ciências"] = [
+ {f:"balanca",      t:"mede a massa",              ex:"Massa é a quantidade de matéria: kg, g, t."},
+ {f:"densidade",    t:"densidade: o mais denso vai para baixo", ex:"Água 1 g/mL, óleo 0,9 g/mL. d = m ÷ v."},
+ {f:"gelo",         t:"o gelo boia",               ex:"Gelo 0,92 g/mL é menos denso que a água líquida, 1 g/mL."},
+ {f:"madeira",      t:"material renovável",        ex:"Vem de árvores, que podem ser replantadas."},
+ {f:"carvao",       t:"material não renovável",    ex:"Carvão mineral vem de fonte que se esgota."},
+ {f:"elastico",     t:"elasticidade",              ex:"Deforma e volta ao estado inicial."},
+ {f:"diamante",     t:"dureza",                    ex:"Só outro diamante risca um diamante."},
+ {f:"panela",       t:"condutibilidade térmica",   ex:"Metal conduz o calor; o cabo, não."},
+ {f:"fio",          t:"condutor e isolante",       ex:"Cobre por dentro conduz; plástico por fora isola."},
+ {f:"ima",          t:"força magnética",           ex:"Atração ou repulsão entre metal e ímã."},
+ {f:"sal",          t:"solúvel em água",           ex:"Sal e açúcar dissolvem; areia e óleo, não."},
+ {f:"gota",         t:"precipitação",              ex:"A água cai da nuvem como chuva, granizo ou neve."},
+ {f:"nuvem",        t:"condensação",               ex:"O vapor esfria lá em cima e vira nuvem."},
+ {f:"sol",          t:"evaporação",                ex:"O Sol aquece a água líquida e ela vira vapor."},
+ {f:"aquifero",     t:"infiltração",               ex:"A água entra no solo e reabastece o lençol freático."},
+ {f:"matacilar",    t:"mata ciliar",               ex:"Protege o rio como os cílios protegem o olho."},
+ {f:"erosao",       t:"erosão",                    ex:"Solo sem vegetação é levado pelo vento e pela chuva."},
+ {f:"assoreamento", t:"assoreamento",              ex:"A terra erodida se acumula dentro do rio."},
+ {f:"alagamento",   t:"alagamento",                ex:"Sem solo para absorver, a chuva se acumula na rua."},
+ {f:"folhaverde",   t:"produz oxigênio",           ex:"Plantas e algas captam gás carbônico e liberam oxigênio."}
+];
+
+/* ============================================================
+   CENTRAL DE DÚVIDAS
+   ============================================================ */
+AJUDA["Ciências"] = [
+
+ {id:"revisao", nome:"⭐ A revisão que a professora fez",
+  glos:[["Matéria","Tudo aquilo que possui uma determinada massa e ocupa um certo volume no espaço."],
+        ["Material renovável","Vem de uma fonte que não se esgota, ou pode ser sempre renovada."],
+        ["Material não renovável","É produzido a partir de fontes que não se renovam, ou seja, que se esgotam."],
+        ["Densidade","Massa dividida pelo volume."]],
+  passos:["<b>Matéria</b> = tem <b>massa</b> e ocupa <b>volume</b>. Luz, calor e som não são matéria.",
+          "<b>Renovável</b>: a fonte não acaba (madeira, cana-de-açúcar). <b>Não renovável</b>: a fonte se esgota (petróleo, carvão, metais).",
+          "<b>Densidade = massa ÷ volume.</b> É a fórmula que a professora passou.",
+          "Regra do flutua/afunda: se a densidade for <b>maior</b> que a da água (1 g/cm³) → <b>afunda</b>. Se for <b>menor</b> → <b>flutua</b>.",
+          "<b>Ciclo da água</b>: evaporação, condensação, precipitação, transpiração e infiltração.",
+          "<b>Cobertura vegetal</b>: tirar a vegetação → <b>erosão</b> → <b>assoreamento</b> dos rios. Nas cidades, sem vegetação a chuva não infiltra e vêm os alagamentos."],
+  ex:"<b>O desafio da professora:</b> massa 50 g, volume 10 cm³.<br>d = 50 ÷ 10 = <b>5 g/cm³</b>.<br>Comparando com a água (1 g/cm³): 5 é maior → pela regra, <b>afunda</b>.<br><span class=\"sub\">Faça sempre a divisão primeiro e só então compare com o 1.</span><br><div class=\"fb dica\" style=\"margin-top:8px\"><b>Atenção</b>Na prova o objeto pode ser chamado de <b>pedaço de madeira</b>. Responda pelo que <b>a conta</b> deu: 5 é maior que 1 → afunda. (Uma madeira de verdade boia, porque a densidade dela é perto de 0,5 — os números do desafio servem para treinar a regra, não para descrever a madeira.)</div>",
+  mapa:{c:"A revisão",r:[{t:"Matéria",f:["tem massa","ocupa volume"]},{t:"Fontes",f:["renovável: não acaba","não renovável: esgota"]},{t:"Densidade",f:["d = m ÷ v","maior que 1 afunda","menor que 1 flutua"]},{t:"Água e vegetação",f:["ciclo da água","erosão e assoreamento"]}]},
+  busca:"matéria densidade ciclo da água cobertura vegetal 5 ano"},
+
+ {id:"materia", nome:"Matéria, corpo, massa e volume",
+  glos:[["Matéria","Tudo o que tem massa e ocupa volume no espaço."],
+        ["Corpo","Uma parte delimitada da matéria; também chamado de objeto."],
+        ["Massa","A quantidade de matéria de um corpo."],
+        ["Volume","O espaço ocupado pelo corpo."]],
+  passos:["<b>Matéria</b> é tudo aquilo que possui uma determinada <b>massa</b> e ocupa um certo <b>volume</b> no espaço.",
+          "O que <b>não</b> tem massa nem volume — ondas de <b>luz</b>, <b>calor</b>, <b>som</b> — não é matéria.",
+          "<b>Corpo</b> é um pedaço delimitado da matéria. Vários corpos diferentes podem ser feitos do mesmo material.",
+          "A <b>massa</b> se mede em kg, g ou t, com uma <b>balança</b>.",
+          "O <b>volume</b> se mede em m³, cm³, L ou mL."],
+  ex:"Taças, frascos e copos são <b>corpos diferentes</b> feitos do mesmo material: o vidro.<br>313 g de cereais numa balança → isso é <b>massa</b>.<br>Água numa proveta de laboratório → isso é <b>volume</b>.",
+  mapa:{c:"Matéria",r:[{t:"É matéria",f:["tem massa","ocupa volume"]},{t:"Não é matéria",f:["luz","calor","som"]},{t:"Massa",f:["kg, g, t","balança"]},{t:"Volume",f:["m³, cm³","L, mL"]}]},
+  busca:"o que é matéria massa e volume 5 ano"},
+
+ {id:"fontes", nome:"De onde vêm os materiais",
+  glos:[["Renovável","A fonte não se esgota, ou pode ser sempre renovada."],
+        ["Não renovável","A fonte não se renova: acaba."],
+        ["Fonte natural","Material que vem direto da natureza: animal, vegetal ou mineral."],
+        ["Sintético","Material artificial, feito em laboratório ou na indústria."]],
+  passos:["<b>Renováveis</b>: feitos a partir de plantas que podem ser colhidas e cultivadas de novo, por exemplo.",
+          "<b>Cuidado:</b> mesmo sendo renovável, a exploração intensa pode causar <b>desmatamento</b> e outros problemas ambientais.",
+          "<b>Não renováveis</b>: derivados do petróleo, gás natural, carvão mineral, rochas e metais.",
+          "Os materiais <b>naturais</b> se dividem em três origens: <b>animal</b> (couro, lã, seda), <b>vegetal</b> (madeira, frutas, sementes) e <b>mineral</b> (petróleo, granito, mármore, cobre).",
+          "Os materiais <b>artificiais (sintéticos)</b> são feitos em laboratório ou na indústria — os plásticos são o exemplo. Podem substituir materiais naturais e evitar a escassez."],
+  ex:"São <b>duas perguntas diferentes</b>, e todo material responde às duas.<br><b>1) A fonte acaba?</b> <b>Renovável</b>: açúcar (da cana), madeira, algodão. <b>Não renovável</b>: gasolina (do petróleo), carvão mineral, metais.<br><b>2) Veio da natureza ou foi feito?</b> <b>Natural</b>: animal, vegetal ou mineral. <b>Artificial (sintético)</b>: plástico, couro sintético, viscose.<br>Exemplo juntando as duas: o <b>plástico</b> é <b>artificial</b> <u>e</u> <b>não renovável</b>, porque vem do petróleo.",
+  mapa:{c:"Origem dos materiais",r:[{t:"Renovável",f:["fonte não acaba","cana, madeira"]},{t:"Não renovável",f:["fonte se esgota","petróleo, carvão, metais"]},{t:"Naturais",f:["animal","vegetal","mineral"]},{t:"Artificiais",f:["sintéticos","plásticos"]}]},
+  busca:"materiais renováveis e não renováveis 5 ano"},
+
+ {id:"tipos", nome:"Os cinco tipos de material",
+  glos:[["Coleta seletiva","Separar o lixo pelo tipo de material."],
+        ["PET","Plástico das garrafas de refrigerante."],
+        ["PVC","Plástico duro: pastas, forros, portas."]],
+  passos:["Os cinco tipos mais usados — e que dão nome às lixeiras da coleta seletiva — são <b>papel, vidro, plástico, metal</b> e <b>orgânicos</b>.",
+          "<b>Papel</b>: origem na China. Cascas de árvores e trapos de tecido eram molhados e batidos até virar pasta, escorridos em peneiras e secos.",
+          "<b>Vidro</b>: basicamente <b>areia</b> misturada com substâncias químicas e levada ao fogo. Descoberto pelos fenícios, numa fogueira em uma praia.",
+          "<b>Plástico</b>: grandes moléculas, naturais ou sintéticas. <b>PET</b> nas garrafas; <b>PVC</b> no plástico duro.",
+          "<b>Metal</b>: naturais (ferro, ouro, prata, zinco) ou fabricados por mistura (aço, aço inoxidável, latão, bronze).",
+          "<b>Orgânico</b>: origem animal ou vegetal, contém <b>carbono</b> — frutas, flores, madeira, carne."],
+  ex:"A invenção da <b>imprensa</b>, por volta de 1430, por Johannes Gutenberg, permitiu a impressão de caracteres no papel.",
+  mapa:{c:"Tipos de material",r:[{t:"Papel",f:["China","cascas e trapos"]},{t:"Vidro",f:["areia + fogo","fenícios"]},{t:"Plástico",f:["PET e PVC"]},{t:"Metal e orgânico",f:["ferro, ouro, aço","frutas, madeira, carne"]}]},
+  busca:"papel vidro plástico metal orgânico coleta seletiva 5 ano"},
+
+ {id:"densidade", nome:"Densidade: flutua ou afunda?",
+  glos:[["Densidade","O quociente entre a massa e o volume de um corpo."],
+        ["Temperatura ambiente","Cerca de 25 °C."],
+        ["Insolúveis","Materiais que não se dissolvem em outro, como a areia e o óleo na água."]],
+  passos:["A fórmula é <b>d = m ÷ v</b>: densidade é massa <b>dividida</b> pelo volume.",
+          "A unidade mais usada é <b>g/mL</b> (ou g/cm³).",
+          "Ao misturar dois materiais insolúveis, o <b>mais denso fica embaixo</b> e o menos denso, em cima.",
+          "A densidade da <b>água é 1 g/mL</b>; a do <b>óleo</b>, cerca de 0,9 g/mL — por isso o óleo fica por cima.",
+          "A densidade <b>muda com a temperatura</b>: o gelo (água sólida) tem 0,92 g/mL e por isso boia na água líquida, que tem 1 g/mL.",
+          "Para responder “flutua ou afunda”: <b>1º</b> faça a divisão; <b>2º</b> compare com 1 g/mL. Maior que 1 → afunda. Menor que 1 → flutua."],
+  ex:"Massa 50 g, volume 10 cm³ → 50 ÷ 10 = <b>5 g/cm³</b> → maior que 1 → <b>afunda</b>.<br>Massa 10 g, volume 50 cm³ → 10 ÷ 50 = <b>0,2 g/cm³</b> → menor que 1 → <b>flutua</b>.<br>Óleo 0,9 → flutua · Gelo 0,92 → flutua",
+  mapa:{c:"Densidade",r:[{t:"Fórmula",f:["d = m ÷ v","massa dividida pelo volume"]},{t:"Água",f:["1 g/mL","é a régua da comparação"]},{t:"Maior que 1",f:["afunda"]},{t:"Menor que 1",f:["flutua","óleo 0,9 · gelo 0,92"]}]},
+  busca:"densidade massa volume flutua ou afunda 5 ano"},
+
+ {id:"propriedades", nome:"As outras propriedades físicas",
+  glos:[["Elasticidade","Capacidade de se deformar e voltar ao estado inicial."],
+        ["Dureza","Capacidade de um material de ser riscado por outro."],
+        ["Resistência (tenacidade)","Capacidade de resistir a impactos e quedas."],
+        ["Condutibilidade","Facilidade de deixar passar calor ou eletricidade."],
+        ["Solubilidade","Propriedade de se dissolver ou não em outro material."]],
+  passos:["As propriedades físicas servem para <b>diferenciar os materiais</b> e escolher o mais adequado para cada uso.",
+          "<b>Elasticidade</b>: o elástico estica e volta. Algumas roupas também.",
+          "<b>Dureza</b>: quem risca quem. O <b>diamante</b> é o mineral mais duro; só outro diamante o risca.",
+          "<b>Resistência</b>, ou <b>tenacidade</b>: aguentar impactos e quedas — é a propriedade do <b>capacete</b>.",
+          "<b>Condutibilidade térmica</b>: metais conduzem bem o calor; plásticos e madeira, não. Por isso a panela é de metal e o cabo é de baquelite ou madeira.",
+          "<b>Condutibilidade elétrica</b>: o <b>cobre</b> é condutor; o <b>plástico</b> da capa é isolante.",
+          "<b>Força magnética</b>: atração ou repulsão entre metal e ímã. É o princípio da separação magnética.",
+          "<b>Solubilidade</b>: sal e açúcar são <b>solúveis</b> em água; areia e óleo são <b>insolúveis</b>."],
+  ex:"Dureza é <b>riscar</b>. Resistência é <b>quebrar</b>. Não confunda: o vidro é duro, mas pouco resistente — risca difícil, quebra fácil.",
+  mapa:{c:"Propriedades",r:[{t:"Elasticidade",f:["deforma e volta"]},{t:"Dureza x resistência",f:["riscar x quebrar","diamante x capacete"]},{t:"Condutibilidade",f:["térmica: calor","elétrica: cobre e plástico"]},{t:"Solubilidade",f:["solúvel: sal e açúcar","insolúvel: areia e óleo"]}]},
+  busca:"propriedades físicas dureza elasticidade condutibilidade solubilidade 5 ano"},
+
+ {id:"agua", nome:"Há água por toda parte",
+  glos:[["Lençol freático","Reservatório de água que se acumula em camadas profundas do solo."],
+        ["Hidrosfera","Toda a água do planeta."],
+        ["Ciclo hidrológico","Outro nome do ciclo da água."]],
+  passos:["A água cobre cerca de <b>70%</b> da superfície da Terra.",
+          "Cerca de <b>97%</b> de toda a água do planeta é <b>salgada</b> (mares e oceanos) e apenas <b>3%</b> é <b>doce</b> (rios, lagos e lençóis freáticos).",
+          "Ela aparece em três estados: <b>sólido, líquido e gasoso</b> — e muda de um para o outro conforme a <b>temperatura</b>.",
+          "O <b>ciclo da água</b> (ou ciclo hidrológico) é o movimento contínuo da água na <b>hidrosfera</b>, nos <b>continentes</b>, na <b>atmosfera</b> e nos <b>seres vivos</b>."],
+  ex:"<b>Sólida:</b> gelo dos icebergs e do topo das montanhas<br><b>Líquida:</b> oceanos, rios e lagos<br><b>Gasosa:</b> o vapor de água no ar<br>Guarde os números: <b>70% da superfície · 97% salgada · 3% doce</b>",
+  mapa:{c:"A água na Terra",r:[{t:"Quanto",f:["70% da superfície"]},{t:"Que tipo",f:["97% salgada","3% doce"]},{t:"Estados",f:["sólido, líquido, gasoso","muda com a temperatura"]},{t:"Onde circula",f:["hidrosfera","continentes","atmosfera","seres vivos"]}]},
+  busca:"água doce e salgada estados físicos ciclo hidrológico 5 ano"},
+
+ {id:"ciclo", nome:"As cinco etapas do ciclo da água",
+  glos:[["Evaporação","A água líquida vira vapor com o calor do Sol."],
+        ["Transpiração","Animais e plantas liberam vapor de água no ar."],
+        ["Condensação","O vapor esfria lá em cima e vira água líquida."],
+        ["Precipitação","A água cai: chuva, granizo ou neve."],
+        ["Infiltração","A água entra no solo e forma a água subterrânea."]],
+  passos:["<b>Evaporação</b>: o <b>Sol</b> aquece a água dos oceanos, rios e lagos e ela vira vapor.",
+          "<b>Transpiração</b>: animais e plantas também soltam vapor de água na atmosfera.",
+          "<b>Condensação</b>: nas partes mais altas e <b>frias</b> da atmosfera, o vapor volta a ser água líquida — é assim que a nuvem se forma.",
+          "<b>Precipitação</b>: as gotículas crescem, a nuvem fica carregada e a água cai — <b>líquida</b> (chuva) ou <b>sólida</b> (granizo, neve).",
+          "<b>Infiltração</b>: parte da água da chuva entra no solo e vira <b>água subterrânea</b>."],
+  ex:"Truque para não trocar: <b>evapora</b> porque <b>esquenta</b> · <b>condensa</b> porque <b>esfria</b>.<br>Depois de cair, a água pode: repor o que evaporou · evaporar de novo · congelar nos cumes e geleiras · ser absorvida pelas plantas · ser bebida pelos animais · infiltrar no solo.",
+  mapa:{c:"Ciclo da água",r:[{t:"Sobe",f:["evaporação (Sol)","transpiração (seres vivos)"]},{t:"Esfria",f:["condensação","forma a nuvem"]},{t:"Cai",f:["precipitação","chuva, granizo, neve"]},{t:"Entra",f:["infiltração","água subterrânea"]}]},
+  busca:"etapas do ciclo da água evaporação condensação precipitação infiltração 5 ano"},
+
+ {id:"ciliar", nome:"Mata ciliar e a qualidade da água",
+  glos:[["Mata ciliar","Floresta às margens dos rios."],
+        ["Aquífero","Reserva de água subterrânea."],
+        ["Agrotóxico","Veneno usado nas lavouras."]],
+  passos:["As florestas às margens dos rios se chamam <b>matas ciliares</b>: assim como os <b>cílios</b> protegem os olhos, elas protegem os rios.",
+          "Elas são fundamentais para o <b>abastecimento de água de boa qualidade</b> e para a <b>conservação dos rios</b>.",
+          "Se a mata ciliar é substituída por lavoura, a água da chuva carrega os <b>agrotóxicos</b> para dentro do rio — é a <b>contaminação</b>.",
+          "Sem vegetação, a água tem mais dificuldade de <b>infiltrar</b> no solo, e os <b>aquíferos</b> e <b>lençóis freáticos</b> deixam de ser reabastecidos.",
+          "E o solo, desprotegido, fica exposto aos raios solares e perde mais água por <b>evaporação</b>."],
+  ex:"A destruição das matas ciliares pode <b>ameaçar a sobrevivência de milhares de pessoas</b> e causar prejuízos aos ecossistemas — é o que diz a p.90.",
+  mapa:{c:"Mata ciliar",r:[{t:"O que é",f:["floresta na margem do rio","protege como os cílios"]},{t:"Serve para",f:["água de boa qualidade","conservar os rios"]},{t:"Se tirar",f:["agrotóxico chega no rio","menos infiltração","mais evaporação"]}]},
+  busca:"mata ciliar contaminação dos rios agrotóxicos 5 ano"},
+
+ {id:"erosao", nome:"Erosão, assoreamento e alagamento",
+  glos:[["Erosão","Desgaste do solo e das rochas, com transporte de detritos."],
+        ["Assoreamento","Acúmulo de sedimentos em rios e lagos."],
+        ["Sedimentos","Partículas de solo e rochas."],
+        ["Efeito estufa","Aquecimento que o gás carbônico e outros gases causam quando ficam em excesso na atmosfera."]],
+  passos:["Tirar a cobertura vegetal <b>expõe o solo</b> à ação do vento e da chuva.",
+          "Isso causa a <b>erosão</b>: o desgaste dos solos e das rochas, com transporte de detritos de um lugar para outro.",
+          "Quando a erosão acontece na margem de um rio, a chuva leva esse solo para dentro dele: é o <b>assoreamento</b>, o acúmulo de sedimentos no rio ou no lago.",
+          "Por isso o <b>desmatamento deve ser evitado</b>: matas e florestas seguram os sedimentos e conservam os rios.",
+          "Nas <b>cidades</b>, tirar a vegetação para construir aumenta o risco de <b>alagamentos</b>, porque diminui a área por onde a água entra no solo.",
+          "As plantas e as algas ainda produzem o <b>oxigênio</b> que respiramos e captam o <b>gás carbônico</b>, ligado ao aumento do <b>efeito estufa</b>."],
+  ex:"A ordem é sempre esta: <b>tirou a mata → erosão → assoreamento</b>.<br>Erosão é o solo <b>saindo</b>. Assoreamento é o solo <b>chegando</b> no rio.",
+  mapa:{c:"Solo sem vegetação",r:[{t:"1º",f:["solo exposto ao vento e à chuva"]},{t:"2º",f:["erosão","o solo é levado"]},{t:"3º",f:["assoreamento","sedimentos no rio"]},{t:"Na cidade",f:["menos absorção","alagamentos"]}]},
+  busca:"erosão assoreamento desmatamento alagamento 5 ano"}
+];
+
+/* ---- roteamento ---- */
+ROTAS["Ciências"] = [
+ ["revisao",     /segundo a revis[aã]o/i],
+ ["densidade",   /densidade|d = m|flutuar|afundar|boia|g\/cm|g\/ml|mais denso|menos denso|0,9|25 °c|temperatura ambiente|50 g|[oó]leo fica em cima/i],
+ ["propriedades",/elasticidade|dureza|diamante|resist[eê]ncia|tenacidade|condutibilidade|condutor|isolante|magn[eé]tica|separa[çc][aã]o magn[eé]tica|solubilidade|sol[uú]ve|insol[uú]ve|panela|baquelite|fios de energia|propriedades f[ií]sicas|se dissolvem entre si|mineral mais duro/i],
+ ["ciliar",      /ciliar|agrot[oó]xico|aqu[ií]fero|barreira natural|raios solares|abastecimento|florestas [aà]s margens|aus[eê]ncia de vegeta[çc][aã]o|dificulta a infiltra|ecossistema/i],
+ ["erosao",      /eros[aã]o|assoreamento|desmatamento|alagamento|sedimento|efeito estufa|oxig[eê]nio|g[aá]s carb[oô]nico|cobertura vegetal|qualidade do ar|plantas e (as )?algas|matas e florestas ajudam|ordem correta dos acontecimentos|retirada da vegeta[çc][aã]o|retirou toda a vegeta[çc][aã]o|constru[ií]r ruas|solo erodido/i],
+ ["agua",        /70%|97%|3%|len[çc]ol|fre[aá]tico|hidrol[oó]gico|hidrosfera|estados? f[ií]sicos?|vapor de [aá]gua|movimento cont[ií]nuo|[aá]gua doce|salgada|superf[ií]cie do planeta|mudar de um estado|[aá]gua do planeta|outro nome para o ciclo/i],
+ ["ciclo",       /evapora|condensa|precipita|transpira|infiltra|granizo|neve|nuvens? (ficam )?carregadas?|ordem o caminho da [aá]gua|caminho poss[ií]vel para a [aá]gua|vira vapor|[aá]gua l[ií]quida nas partes|a [aá]gua cai|[aá]gua subterr[aâ]nea/i],
+ ["materia",     /o que [eé] mat[eé]ria|n[aã]o [eé] mat[eé]ria|o que [eé] um corpo|a massa de um corpo|o volume [eé]|medir a massa|unidades? mede volume|quantidade de mat[eé]ria|espa[çc]o ocupado|balan[çc]a|mililitro/i],
+ ["tipos",       /coleta seletiva|papel que conhecemos|papel era fabricado|fabricado o papel|vidro|pl[aá]stico|pet\b|pvc|metais|met[aá]lico|org[aâ]nico|imprensa|gutenberg|fen[ií]cio|cinco tipos/i],
+ ["fontes",      /renov[aá]ve|petr[oó]leo|carv[aã]o|gasolina|couro|l[aã] e seda|origem (animal|vegetal|mineral)|s[aã]o de origem|[eé] de origem|artificial|sint[eé]tico|fonte|granito|m[aá]rmore|mesa de madeira/i],
+ ["revisao",     /./]
+];
+
+/* ============================================================
+   FOLHAS PARA IMPRIMIR
+   ============================================================ */
+FOLHAS["Ciências"] = [
+
+ {id:"revisao", nome:"⭐ A revisão da professora", sub:"12 itens · o essencial da aula", tipo:"lacunas",
+  instr:"São os pontos que a professora revisou. Se for estudar só uma folha, é esta.",
+  itens:[
+   ["Matéria é tudo aquilo que possui uma determinada ______________ e ocupa um certo ______________ no espaço.","massa / volume"],
+   ["Luz, calor e som ______________ são matéria, porque não têm massa nem volume.","não"],
+   ["Materiais ______________ vêm de uma fonte que não se esgota, ou pode ser sempre renovada.","renováveis"],
+   ["Materiais ______________ são produzidos a partir de fontes que se esgotam.","não renováveis"],
+   ["Escreva dois materiais renováveis: ______________ e ______________","madeira e cana-de-açúcar (ou algodão)"],
+   ["Escreva dois materiais não renováveis: ______________ e ______________","petróleo e carvão mineral (ou metais)"],
+   ["A fórmula da densidade é: densidade = ______________ ÷ ______________","massa / volume"],
+   ["Um corpo de massa 50 g e volume 10 cm³ tem densidade de ______________","5 g/cm³ (50 ÷ 10)"],
+   ["A densidade da água é ______________ g/cm³.","1"],
+   ["Se a densidade do material for MAIOR que a da água, ele ______________; se for MENOR, ele ______________.","afunda / flutua"],
+   ["As cinco etapas do ciclo da água são: ______________, ______________, ______________, ______________ e ______________.","evaporação, transpiração, condensação, precipitação e infiltração (em qualquer ordem)"],
+   ["Tirar a cobertura vegetal causa ______________ do solo e, depois, ______________ dos rios.","erosão / assoreamento"]]},
+
+ {id:"materia", nome:"Matéria, corpo, massa e volume", sub:"10 itens · completar", tipo:"lacunas",
+  itens:[
+   ["Matéria é tudo o que tem ______________ e ocupa ______________ no espaço.","massa / volume"],
+   ["Três coisas que NÃO são matéria: ______________, ______________ e ______________.","luz, calor e som"],
+   ["______________ é uma parte delimitada da matéria; também pode ser chamado de objeto.","Corpo"],
+   ["Vários corpos diferentes podem ser feitos do mesmo ______________ — por exemplo, o vidro.","material"],
+   ["No experimento “Afunda ou boia?”, boiam o ______________ e o ______________; afundam o ______________ e a ______________.","isopor / papelão / prego / pedra"],
+   ["A massa está relacionada à quantidade de ______________ de um corpo.","matéria"],
+   ["A massa é medida com uma ______________.","balança"],
+   ["Três unidades de massa: ______________, ______________ e ______________.","kg (quilograma), g (grama) e t (tonelada)"],
+   ["O volume é o ______________ ocupado pelo corpo.","espaço"],
+   ["Três unidades de volume: ______________, ______________ e ______________.","m³, cm³ e L (ou mL)"],
+   ["Uma garrafa de 2 L de refrigerante: o 2 L indica o ______________ dela.","volume"]]},
+
+ {id:"fontes", nome:"De onde vêm os materiais", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["Materiais ______________ vêm de fonte que não se esgota.","renováveis"],
+   ["Materiais ______________ vêm de fontes que se esgotam.","não renováveis"],
+   ["O açúcar vem da ______________, uma fonte renovável.","cana-de-açúcar"],
+   ["A gasolina vem do ______________, uma fonte não renovável.","petróleo"],
+   ["Cite três fontes não renováveis citadas no livro: ______________","três entre: derivados do petróleo, gás natural, carvão mineral, rochas e metais"],
+   ["Alerta do livro: explorar demais um recurso renovável pode causar ______________.","desmatamento (e outros problemas ambientais)"],
+   ["Couro, lã e seda são de origem ______________.","animal"],
+   ["Madeira, frutas e sementes são de origem ______________.","vegetal"],
+   ["Petróleo, granito, mármore e cobre são de origem ______________.","mineral"],
+   ["Material produzido em laboratório ou na indústria é de fonte ______________, também chamado de ______________.","artificial / sintético"],
+   ["O exemplo de material sintético dado pelo livro é o ______________.","plástico"],
+   ["O couro ______________ pode evitar a escassez e a exploração de recursos naturais.","sintético"],
+   ["Atenção: são duas perguntas diferentes. O plástico é ______________ (natural ou artificial?) e ______________ (renovável ou não renovável?).","artificial / não renovável — vem do petróleo"]]},
+
+ {id:"tipos", nome:"Os cinco tipos de material", sub:"tabela para completar", tipo:"tabela",
+  instr:"Complete a tabela com o que o livro diz sobre cada tipo de material.",
+  cols:["Material","De que é feito / de onde vem","Um exemplo de objeto"],
+  linhas:[["Papel","Cascas de árvores e trapos de tecido, batidos até virar pasta (origem na China)","Folha de sulfite, caderno, caixa"],
+          ["Vidro","Areia misturada com substâncias químicas, levada ao fogo (descoberto pelos fenícios)","Janela, copo, vaso"],
+          ["Plástico","Grandes moléculas, naturais ou sintéticas","Garrafa PET, pasta de PVC"],
+          ["Metal","Naturais (ferro, ouro, prata, zinco) ou fabricados (aço, latão, bronze)","Lata, joia, talher"],
+          ["Orgânico","Matéria animal ou vegetal; contém carbono","Fruta, flor, madeira, carne"]]},
+
+ {id:"historia", nome:"A história dos materiais", sub:"8 itens · nomes e datas", tipo:"lacunas",
+  itens:[
+   ["O papel que conhecemos hoje teve origem na ______________.","China"],
+   ["Era feito de cascas de árvores e ______________ de tecidos, batidos até virar uma pasta.","trapos"],
+   ["A pasta era colocada em ______________ para escorrer a água.","peneiras"],
+   ["A invenção da ______________ ocorreu por volta de ______________.","imprensa / 1430"],
+   ["Ela foi obra do alemão ______________.","Johannes Gutenberg"],
+   ["O vidro foi descoberto pelos ______________, enquanto faziam uma ______________ em uma praia.","fenícios / fogueira"],
+   ["O plástico das garrafas de refrigerante é o ______________.","PET"],
+   ["O plástico duro das pastas, forros e portas é o ______________.","PVC"]]},
+
+ {id:"densidade", nome:"Densidade — calcule e responda", sub:"10 itens · faça a conta antes de responder", tipo:"lacunas",
+  instr:"Use sempre <b>densidade = massa ÷ volume</b>. Depois compare com a densidade da água, que é 1 g/cm³: <b>maior que 1 afunda, menor que 1 flutua</b>. (1 g/cm³ é a mesma coisa que 1 g/mL.)",
+  itens:[
+   ["Massa 50 g e volume 10 cm³ → densidade = ______________","5 g/cm³"],
+   ["Esse material, na água, vai ______________","afundar (5 é maior que 1)"],
+   ["Massa 10 g e volume 50 cm³ → densidade = ______________","0,2 g/cm³"],
+   ["Esse material, na água, vai ______________","flutuar (0,2 é menor que 1)"],
+   ["Massa 30 g e volume 30 cm³ → densidade = ______________","1 g/cm³ — igual à da água: não afunda nem boia, fica equilibrado"],
+   ["Massa 100 g e volume 20 cm³ → densidade = ______________","5 g/cm³"],
+   ["A densidade da água é ______________ e a do óleo é cerca de ______________","1 g/mL / 0,9 g/mL"],
+   ["Numa mistura de água e óleo, quem fica em cima é o ______________, porque é ______________ denso.","óleo / menos"],
+   ["No experimento do livro, o isopor e o papelão ______________, e o prego e a pedra ______________.","boiam / afundam"],
+   ["A densidade do gelo é ______________, por isso ele ______________ na água líquida.","0,92 g/mL / boia"],
+   ["As densidades do livro foram medidas a 25 °C, chamada de temperatura ______________.","ambiente"]]},
+
+ {id:"propriedades", nome:"As propriedades físicas", sub:"ligue as colunas", tipo:"ligue",
+  instr:"Ligue cada propriedade à situação em que ela aparece.",
+  itens:[["Elasticidade","O elástico estica e volta ao que era"],
+         ["Dureza","Só outro diamante consegue riscar um diamante"],
+         ["Resistência (tenacidade)","O capacete protege a cabeça de um impacto"],
+         ["Condutibilidade térmica","A panela é de metal e o cabo, de madeira"],
+         ["Condutibilidade elétrica","O fio é de cobre por dentro e de plástico por fora"],
+         ["Força magnética","O ímã de geladeira gruda na porta"],
+         ["Solubilidade","O sal se dissolve na água; a areia, não"],
+         ["Densidade","O óleo fica por cima da água porque é menos denso"]]},
+
+ {id:"agua", nome:"Há água por toda parte", sub:"10 itens · completar", tipo:"lacunas",
+  itens:[
+   ["A água cobre cerca de ______________ da superfície do planeta Terra.","70%"],
+   ["Cerca de ______________ da água do planeta é salgada.","97%"],
+   ["Apenas ______________ da água do planeta é doce.","3%"],
+   ["A água doce é encontrada nos ______________, nos ______________ e nos lençóis freáticos.","rios / lagos"],
+   ["A água salgada é encontrada nos ______________ e nos ______________.","mares / oceanos"],
+   ["Lençol freático é o reservatório de água que se acumula em camadas ______________ do solo.","profundas"],
+   ["Os três estados físicos da água são: ______________, ______________ e ______________.","sólido, líquido e gasoso"],
+   ["A água muda de um estado para o outro de acordo com a ______________.","temperatura"],
+   ["Outro nome para o ciclo da água é ciclo ______________.","hidrológico"],
+   ["O ciclo da água acontece na hidrosfera, nos ______________, na ______________ e nos ______________.","continentes / atmosfera / seres vivos"]]},
+
+ {id:"ciclo", nome:"As etapas do ciclo da água", sub:"10 itens · nomear cada processo", tipo:"lacunas",
+  instr:"Escreva o nome do processo em cada frase. Truque: evapora porque esquenta, condensa porque esfria.",
+  itens:[
+   ["Com o calor do Sol, a água dos oceanos, rios e lagos vira vapor: ______________","evaporação"],
+   ["Animais e plantas liberam vapor de água na atmosfera: ______________","transpiração"],
+   ["Nas partes altas e frias, o vapor volta a ser água líquida: ______________","condensação"],
+   ["As gotículas crescem, a nuvem fica carregada e a água cai: ______________","precipitação"],
+   ["A água da chuva entra no solo e forma a água subterrânea: ______________","infiltração"],
+   ["A precipitação pode ser líquida, como a ______________, ou sólida, como o ______________ e a ______________.","chuva / granizo / neve"],
+   ["Coloque em ordem: precipitação, evaporação, condensação, infiltração → ______________","evaporação, condensação, precipitação, infiltração"],
+   ["Qual etapa depende do calor do Sol? ______________","a evaporação"],
+   ["Qual etapa depende do frio das partes altas da atmosfera? ______________","a condensação"],
+   ["Qual etapa reabastece os lençóis freáticos? ______________","a infiltração"]]},
+
+ {id:"ciliar", nome:"Mata ciliar e cobertura vegetal", sub:"12 itens · completar", tipo:"lacunas",
+  itens:[
+   ["As florestas às margens dos rios são chamadas de matas ______________.","ciliares"],
+   ["Elas recebem esse nome porque protegem o rio como os ______________ protegem nossos olhos.","cílios"],
+   ["Elas são fundamentais para o abastecimento de água de boa ______________ e para a ______________ dos rios.","qualidade / conservação"],
+   ["Substituir a mata ciliar por lavoura pode causar a ______________ dos rios por agrotóxicos.","contaminação"],
+   ["Sem a mata ciliar como barreira natural, quem carrega o agrotóxico até o rio é a ______________.","água da chuva"],
+   ["Sem vegetação, fica mais difícil a ______________ da água no solo.","infiltração"],
+   ["Esse processo é necessário para reabastecer os ______________ e os lençóis ______________.","aquíferos / freáticos"],
+   ["A remoção da cobertura vegetal expõe o solo à ação do ______________ e da ______________.","vento / chuva"],
+   ["Esse desgaste do solo e das rochas chama-se ______________.","erosão"],
+   ["Quando esse solo é carregado para dentro do rio, acontece o ______________.","assoreamento"],
+   ["Nas cidades, tirar a vegetação para construir aumenta o risco de ______________.","alagamentos"],
+   ["As plantas e as algas produzem o ______________ que respiramos e captam o ______________.","oxigênio / gás carbônico"],
+   ["A destruição das matas ciliares pode ameaçar a sobrevivência de milhares de ______________ e causar prejuízos aos ______________.","pessoas / ecossistemas"]]},
+
+ {id:"certo", nome:"Certo ou errado", sub:"14 afirmações · corrigir o que estiver errado", tipo:"certo",
+  itens:[
+   ["A luz e o som são exemplos de matéria.", false, "Não são: matéria precisa ter <b>massa</b> e ocupar <b>volume</b>. Luz, calor e som não têm."],
+   ["Matéria é tudo aquilo que possui massa e ocupa volume no espaço.", true, "É a definição do livro e do slide da professora."],
+   ["Materiais renováveis vêm de fontes que se esgotam.", false, "É o contrário: a fonte dos renováveis <b>não se esgota</b>, ou pode ser sempre renovada."],
+   ["Como o material é renovável, pode ser explorado à vontade sem causar dano.", false, "O livro alerta: a exploração intensa, mesmo de recursos renováveis, pode causar <b>desmatamento</b> e outros problemas."],
+   ["A densidade é a massa dividida pelo volume.", true, "d = m ÷ v."],
+   ["Um material mais denso que a água flutua nela.", false, "Ao contrário: o <b>mais denso vai para baixo</b>. Só flutua quem é menos denso que a água."],
+   ["O gelo boia porque é menos denso que a água líquida.", true, "Gelo 0,92 g/mL contra 1 g/mL da água líquida."],
+   ["Dureza e resistência são a mesma coisa.", false, "<b>Dureza</b> é ser riscado; <b>resistência</b> (tenacidade) é aguentar impactos. O vidro é duro e pouco resistente."],
+   ["O plástico da capa dos fios é isolante.", true, "O cobre por dentro é condutor; o plástico por fora protege de choques."],
+   ["A areia é solúvel em água.", false, "A areia é <b>insolúvel</b>. Solúveis são o sal e o açúcar."],
+   ["A maior parte da água do planeta é doce.", false, "Cerca de <b>97% é salgada</b>; apenas 3% é doce."],
+   ["Na condensação, o vapor de água esfria e vira água líquida.", true, "É assim que as nuvens se formam."],
+   ["O assoreamento acontece antes da erosão.", false, "A ordem é: remoção da vegetação → <b>erosão</b> → <b>assoreamento</b>."],
+   ["Áreas com cobertura vegetal nas cidades ajudam a evitar alagamentos.", true, "Elas dão à água da chuva por onde se infiltrar no solo."],
+   ["O cabo da panela é feito de baquelite ou madeira porque esses materiais conduzem bem o calor.", false, "É o contrário: eles <b>não</b> conduzem bem o calor, e é justamente por isso que a pessoa não se queima."]]},
+
+ {id:"aberta", nome:"Questões para responder", sub:"8 questões · escrever com suas palavras", tipo:"aberta", linhas:3,
+  itens:[
+   ["Um pedaço de material tem massa de 50 g e ocupa 10 cm³. Calcule a densidade e diga se ele flutua ou afunda na água. Explique.","50 ÷ 10 = 5 g/cm³. Como 5 é maior que a densidade da água (1 g/cm³), ele afunda — o mais denso vai para baixo."],
+   ["Explique por que o gelo boia na água, mesmo sendo feito de água.","Porque a densidade muda com a temperatura. A água líquida tem 1 g/mL e o gelo, 0,92 g/mL. Sendo menos denso, ele flutua."],
+   ["Por que a panela é feita de metal, mas o cabo é de madeira ou plástico resistente?","Por causa da condutibilidade térmica: o metal conduz bem o calor do fogo para cozinhar, e o cabo não conduz, para a pessoa não se queimar."],
+   ["Explique com suas palavras o que é o ciclo da água.","É o movimento contínuo da água na natureza: ela evapora com o calor do Sol, condensa e forma nuvens, precipita como chuva, granizo ou neve, e infiltra no solo — recomeçando sempre."],
+   ["Por que as matas às margens dos rios são chamadas de matas ciliares?","Porque protegem os rios do mesmo jeito que os cílios protegem nossos olhos."],
+   ["Uma fazenda retirou toda a vegetação das margens de um rio. Que problemas podem surgir ao longo do tempo?","O solo fica exposto ao vento e à chuva e sofre erosão; essa terra é carregada para dentro do rio, causando assoreamento; sem a barreira da mata, agrotóxicos das lavouras chegam à água; a infiltração diminui e os lençóis freáticos deixam de ser reabastecidos. Animais e plantas perdem abrigo e as pessoas perdem água de boa qualidade."],
+   ["Por que é importante haver áreas com cobertura vegetal nas cidades?","Para que a água das chuvas tenha como se infiltrar no solo. Sem isso, a área de absorção diminui e aumenta o risco de alagamentos."],
+   ["Qual é a diferença entre erosão e assoreamento?","Erosão é o solo sendo desgastado e levado de um lugar para outro. Assoreamento é esse solo chegando e se acumulando dentro dos rios e lagos. Um vem depois do outro."]]},
+
+ {id:"mapa", nome:"Mapa conceitual — matéria e materiais", sub:"completar o esquema", tipo:"mapa",
+  centro:"MATÉRIA E MATERIAIS",
+  ramos:[{t:"O QUE É MATÉRIA", f:["Tem ______________","Ocupa ______________","Não é matéria: ______________, calor e som"],
+          g:["massa","volume","luz"]},
+         {t:"DE ONDE VÊM", f:["______________: a fonte não se esgota","______________: a fonte se esgota","Naturais: animal, vegetal e ______________","Artificiais, ou ______________"],
+          g:["Renováveis","Não renováveis","mineral","sintéticos"]},
+         {t:"DENSIDADE", f:["Fórmula: d = ______________ ÷ ______________","Maior que 1 g/cm³ → ______________","Menor que 1 g/cm³ → ______________"],
+          g:["massa","volume","afunda","flutua"]},
+         {t:"OUTRAS PROPRIEDADES", f:["______________: estica e volta","______________: ser riscado","______________: dissolver ou não"],
+          g:["Elasticidade","Dureza","Solubilidade"]}]},
+
+ {id:"mapaagua", nome:"Mapa conceitual — água e cobertura vegetal", sub:"completar o esquema", tipo:"mapa",
+  centro:"ÁGUA E VEGETAÇÃO",
+  ramos:[{t:"A ÁGUA NA TERRA", f:["Cobre ______________ da superfície","______________ é salgada","______________ é doce"],
+          g:["70%","97%","3%"]},
+         {t:"CICLO DA ÁGUA", f:["______________: o Sol aquece e vira vapor","______________: esfria e vira nuvem","______________: cai como chuva","______________: entra no solo"],
+          g:["Evaporação","Condensação","Precipitação","Infiltração"]},
+         {t:"MATA CILIAR", f:["Protege o rio como os ______________ protegem o olho","Sem ela, chegam ______________ no rio"],
+          g:["cílios","agrotóxicos"]},
+         {t:"SOLO SEM VEGETAÇÃO", f:["1º: ______________ do solo","2º: ______________ do rio","Na cidade: ______________"],
+          g:["erosão","assoreamento","alagamentos"]}]}
+];
+
+/* ---- toque para traduzir ---- */
+Object.assign(DIC_EXTRA["Ciências"], {
+ "matéria":"tudo o que tem massa e ocupa volume no espaço",
+ "massa":"a quantidade de matéria de um corpo","volume":"o espaço ocupado por um corpo",
+ "corpo":"uma parte delimitada da matéria; um objeto",
+ "densidade":"a massa dividida pelo volume","denso":"que tem muita massa em pouco volume",
+ "renovável":"que vem de uma fonte que não se esgota","renováveis":"que vêm de fontes que não se esgotam",
+ "sintético":"feito em laboratório ou na indústria","sintéticas":"feitas em laboratório",
+ "minério":"rocha de onde se tira metal","minérios":"rochas de onde se tiram metais",
+ "elasticidade":"capacidade de esticar e voltar ao que era",
+ "dureza":"o quanto é difícil riscar um material",
+ "tenacidade":"outro nome da resistência a impactos",
+ "condutibilidade":"facilidade de deixar passar calor ou eletricidade",
+ "condutor":"deixa a corrente elétrica passar","isolante":"não deixa a corrente elétrica passar",
+ "baquelite":"um plástico resistente ao calor, usado em cabos de panela",
+ "solubilidade":"a propriedade de se dissolver ou não em outro material",
+ "solúvel":"que se dissolve","insolúveis":"que não se dissolvem","insolúvel":"que não se dissolve",
+ "magnética":"que tem a ver com a força dos ímãs",
+ "hidrosfera":"toda a água do planeta","atmosfera":"a camada de ar que envolve a Terra",
+ "freático":"lençol de água guardado nas camadas fundas do solo",
+ "aquíferos":"reservas de água subterrânea","aquífero":"reserva de água subterrânea",
+ "evaporação":"a água líquida virando vapor com o calor",
+ "condensação":"o vapor esfriando e virando água líquida",
+ "precipitação":"a água caindo como chuva, granizo ou neve",
+ "infiltração":"a água entrando no solo",
+ "transpiração":"o vapor de água que plantas e animais soltam no ar",
+ "granizo":"chuva de pedras de gelo",
+ "ciliar":"mata que protege a margem do rio","ciliares":"matas que protegem as margens dos rios",
+ "agrotóxicos":"venenos usados nas lavouras","agrotóxico":"veneno usado nas lavouras",
+ "erosão":"o desgaste do solo, que é levado pelo vento e pela chuva",
+ "assoreamento":"o acúmulo de terra e areia dentro dos rios e lagos",
+ "sedimentos":"partículas de solo e de rochas",
+ "desmatamento":"a retirada da vegetação","alagamentos":"quando a água da chuva se acumula e alaga",
+ "efeito estufa":"aquecimento do planeta causado por certos gases",
+ "gás carbônico":"gás que as plantas captam e que aumenta o efeito estufa",
+ "ecossistemas":"conjuntos de seres vivos e do ambiente onde vivem",
+ "escassez":"falta de alguma coisa","detritos":"pedacinhos soltos de solo e rocha"
+});
+
+
+
+/* ============================================================
+   MATEMÁTICA — reformulado a partir da revisão do prof. Gustavo
+   "Atividade Avaliativa — Revisão de Prova · Conteúdo: Frações"
+   Os 12 formatos que ele cobra:
+     1 numerador/denominador · 2 escrever a fração da situação
+     3 representar por desenho · 4 descobrir a fração
+     5 escrever como se lê (avos) · 6 misto em algarismos
+     7 misto por extenso · 8 encontre e corrija o erro
+     9 simplificar até irredutível · 10 fração de uma quantidade
+     11 problemas · 12 completar equivalentes
+   Foco extra nos dois erros reais da folha da Helena:
+     · leitura com "avos" — ela escreve "nove E vinte avos"
+     · problema de dois passos com dinheiro — ela multiplicou antes
+       de dividir e usou o numerador como divisor
+   ============================================================ */
+
+MATERIAS["Matemática"].conteudo = "Frações — numerador e denominador · representar e descobrir a fração · ler por extenso (avos) · número misto · simplificar até a irredutível · frações equivalentes · fração de uma quantidade e problemas";
+
+/* ---- palavras novas para o toque-para-traduzir ---- */
+Object.assign(DIC_EXTRA["Matemática"], {
+ "irredutível":"a fração que já não dá mais para simplificar",
+ "redutível":"a fração que ainda dá para simplificar",
+ "simplificar":"dividir o de cima e o de baixo pelo mesmo número, para deixar a fração menor",
+ "avos":"como se lê o número de baixo quando ele é 11 ou maior",
+ "misto":"um número inteiro grudado numa fração, como 3 2/5",
+ "extenso":"escrito com palavras, não com algarismos"
+});
+
+/* ============================================================
+   PERGUNTAS NOVAS — nos formatos exatos da revisão
+   ============================================================ */
+QUIZ["Matemática"].push(
+
+ /* ---------- 1 · NOMEAR OS TERMOS (questão 1 da revisão) ---------- */
+ {p:"O número que indica <b>quantas partes foram consideradas</b> é chamado de:",a:["Numerador","Denominador","Inteiro"],c:0,e:"O <b>numerador</b> fica em <b>cima</b> e diz quantas partes você pegou."},
+ {p:"O número que indica <b>em quantas partes iguais o inteiro foi dividido</b> é chamado de:",a:["Denominador","Numerador","Misto"],c:0,e:"O <b>denominador</b> fica <b>embaixo</b> e diz em quantas partes o inteiro foi cortado."},
+ {p:"Na fração <b>4/7</b>, o número <b>4</b> representa o:",a:["Numerador","Denominador","Inteiro"],c:0,e:"Está em cima → <b>numerador</b>. Truque: <b>d</b>enominador fica em<b>b</b>aixo, como o <b>d</b> de <b>d</b>ebaixo."},
+ {p:"Na fração <b>4/7</b>, o número <b>7</b> representa o:",a:["Denominador","Numerador","Resto"],c:0,e:"Está embaixo → <b>denominador</b>. Ele foi quem cortou o inteiro em 7 partes."},
+
+ /* ---------- 2 · ESCREVER A FRAÇÃO DA SITUAÇÃO ---------- */
+ {p:"Uma barra de chocolate foi dividida em <b>12 pedaços iguais</b> e Ana comeu <b>5</b>. Que fração ela comeu?",a:["5/12","12/5","5/7"],c:0,e:"Embaixo vai o <b>total</b> de pedaços (12); em cima, a <b>parte</b> comida (5)."},
+ {p:"Numa caixa há <b>15 lápis</b>, dos quais <b>9 são azuis</b>. Que fração representa os azuis?",a:["9/15","15/9","9/6"],c:0,e:"Parte em cima (9), total embaixo (15). Regra fixa: <b>em cima a parte, embaixo o total</b>."},
+ {p:"Uma bandeja tem <b>20 brigadeiros</b> e <b>13 foram comidos</b>. Que fração foi consumida?",a:["13/20","20/13","7/20"],c:0,e:"13 comidos de um total de 20 → <b>13/20</b>. (7/20 seria a fração dos que <b>sobraram</b>.)"},
+ {p:"Numa turma de <b>25 alunos</b>, <b>8 usam óculos</b>. Que fração <b>não</b> usa óculos?",a:["17/25","8/25","25/17"],c:0,e:"Cuidado com a pegadinha: a pergunta é dos que <b>não</b> usam. 25 − 8 = 17 → <b>17/25</b>."},
+
+ /* ---------- 4 · DESCOBRIR A FRAÇÃO ---------- */
+ {p:"O <b>denominador é 9</b> e o <b>numerador é 4</b>. Qual é a fração?",a:["4/9","9/4","4/13"],c:0,e:"Numerador em cima, denominador embaixo: <b>4/9</b>. Leia a ordem com calma — a frase começa pelo denominador de propósito."},
+ {p:"O inteiro foi dividido em <b>7 partes iguais</b> e <b>6 foram pintadas</b>. Qual é a fração?",a:["6/7","7/6","6/13"],c:0,e:"Total de partes embaixo (7), pintadas em cima (6)."},
+ {p:"Foram escolhidos <b>3 objetos</b> de um grupo com <b>11 objetos</b>. Qual é a fração?",a:["3/11","11/3","3/8"],c:0,e:"<b>3/11</b>. Lê-se “três onze avos”."},
+
+ /* ---------- 5 · ESCREVER COMO SE LÊ — o erro do “e” ---------- */
+ {p:"Como se lê a fração <b>9/20</b>?",a:["Nove vinte avos","Nove e vinte avos","Nove vintes"],c:0,e:"De 11 em diante usa-se <b>avos</b> — e <b>sem o “e”</b>. O “e” só aparece em número misto: 3 2/5 = três inteiros <b>e</b> dois quintos."},
+ {p:"Como se lê a fração <b>11/12</b>?",a:["Onze doze avos","Onze e doze avos","Onze doze"],c:0,e:"<b>Onze doze avos</b>. Sem “e”. Fração pura não leva “e” no meio."},
+ {p:"Como se lê a fração <b>7/10</b>?",a:["Sete décimos","Sete dez avos","Sete e décimos"],c:0,e:"O <b>10</b> tem nome próprio: <b>décimos</b>. O “avos” só começa no <b>11</b>."},
+ {p:"Em qual destas frações se usa a palavra <b>avos</b>?",a:["3/14","3/9","3/10"],c:0,e:"<b>Avos</b> vale para denominador <b>11 ou maior</b>. Até 10 cada um tem nome: meios, terços, quartos, quintos, sextos, sétimos, oitavos, nonos, décimos."},
+ {p:"Quando é que a leitura de uma fração leva a palavra <b>“e”</b>?",a:["Só quando é número misto, entre o inteiro e a fração","Sempre que o denominador passa de 10","Nunca"],c:0,e:"4 3/8 = quatro inteiros <b>e</b> três oitavos. Já 9/20 é “nove vinte avos”, <b>sem</b> “e”."},
+
+ /* ---------- 6 e 7 · NÚMERO MISTO NOS DOIS SENTIDOS ---------- */
+ {p:"<b>Três inteiros e dois quintos</b> em algarismos é:",a:["3 2/5","32/5","3/25"],c:0,e:"O inteiro fica na frente e a fração ao lado: <b>3 2/5</b>."},
+ {p:"<b>Seis inteiros e um quarto</b> em algarismos é:",a:["6 1/4","61/4","6/14"],c:0,e:"<b>6 1/4</b>."},
+ {p:"Como se escreve <b>4 3/8</b> por extenso?",a:["Quatro inteiros e três oitavos","Quatro e três oitavos avos","Quarenta e três oitavos"],c:0,e:"No misto sempre entra a palavra <b>inteiros</b> e o <b>e</b>."},
+ {p:"Como se escreve <b>1 5/6</b> por extenso?",a:["Um inteiro e cinco sextos","Um e cinco seis avos","Quinze sextos"],c:0,e:"Repare no singular: <b>um inteiro</b>, não “um inteiros”."},
+
+ /* ---------- 8 · ENCONTRE E CORRIJA O ERRO ---------- */
+ {p:"Lucas afirmou que, na fração <b>5/8</b>, o número 5 é o denominador. Qual é a correção?",a:["O 5 é o numerador; o denominador é o 8","Está certo","O 5 é o inteiro"],c:0,e:"Quem está em cima é o <b>numerador</b>. Numa questão de “corrija o erro”, escreva a frase certa inteira, não só a palavra."},
+ {p:"Marina disse que <b>6/12</b> já é uma fração irredutível. Qual é a correção?",a:["Não é: dá para simplificar até 1/2","Está certa","Não é: dá para simplificar até 2/3"],c:0,e:"6 e 12 dividem por 6 → <b>1/2</b>. Uma resposta completa diz que ela é <b>redutível</b> <u>e</u> mostra a irredutível: 1/2."},
+ {p:"Pedro disse que <b>3/9</b> é irredutível. O que responder?",a:["Não é: 3/9 simplifica para 1/3","Está certo","Não é: simplifica para 1/2"],c:0,e:"Dividindo os dois por 3: <b>1/3</b>. Só é irredutível quando <b>nenhum número</b> divide os dois."},
+ {p:"Qual destas frações <b>já é</b> irredutível?",a:["5/9","6/8","10/15"],c:0,e:"5 e 9 não têm divisor comum. Já 6/8 vira 3/4 e 10/15 vira 2/3."},
+
+ /* ---------- 9 · SIMPLIFICAR ATÉ A IRREDUTÍVEL ---------- */
+ {p:"O que é uma fração <b>irredutível</b>?",a:["Aquela que já não dá mais para simplificar","Aquela que é maior que 1","Aquela que tem denominador grande"],c:0,e:"É a fração no seu <b>menor tamanho</b>: nenhum número (a não ser o 1) divide o de cima e o de baixo ao mesmo tempo."},
+ {p:"Simplifique <b>10/15</b> até a irredutível:",a:["2/3","5/3","1/3"],c:0,e:"10 ÷ 5 = 2 e 15 ÷ 5 = 3 → <b>2/3</b>. Divida <b>os dois</b> pelo mesmo número."},
+ {p:"Simplifique <b>12/18</b> até a irredutível:",a:["2/3","6/9","4/6"],c:0,e:"12 ÷ 6 = 2 e 18 ÷ 6 = 3 → <b>2/3</b>. Cuidado: 6/9 e 4/6 são equivalentes, mas <b>ainda dá para simplificar</b>."},
+ {p:"Simplifique <b>16/24</b> até a irredutível:",a:["2/3","8/12","4/6"],c:0,e:"16 ÷ 8 = 2 e 24 ÷ 8 = 3 → <b>2/3</b>. Se não achar o número grande de uma vez, vá dividindo por 2 até travar."},
+ {p:"Ao simplificar, por que <b>4/6</b> ainda não é a resposta final de 16/24?",a:["Porque 4 e 6 ainda dividem por 2","Porque 4/6 é maior que 16/24","Porque o denominador ficou par"],c:0,e:"Irredutível significa <b>até o fim</b>: 4/6 ÷ 2 = <b>2/3</b>. Sempre confira se ainda dá para dividir."},
+
+ /* ---------- 10 · FRAÇÃO DE UMA QUANTIDADE ---------- */
+ {p:"Quanto é <b>1/3 de 90</b>?",a:["30","27","270"],c:0,e:"90 ÷ 3 = <b>30</b>. Com numerador 1, basta dividir."},
+ {p:"Quanto é <b>2/5 de 150</b>?",a:["60","75","300"],c:0,e:"Passo 1: 150 ÷ 5 = 30. Passo 2: 30 × 2 = <b>60</b>. <b>Divide primeiro, multiplica depois.</b>"},
+ {p:"Quanto é <b>3/8 de 64</b>?",a:["24","21","192"],c:0,e:"64 ÷ 8 = 8; 8 × 3 = <b>24</b>. Quem multiplica primeiro chega em 192 — e erra."},
+ {p:"Na conta “fração de uma quantidade”, qual é a <b>ordem certa</b>?",a:["Primeiro dividir pelo de baixo, depois multiplicar pelo de cima","Primeiro multiplicar pelo de cima, depois dividir pelo de baixo","Tanto faz a ordem"],c:0,e:"Divida pelo <b>denominador</b> para achar uma parte; multiplique pelo <b>numerador</b> para juntar as partes. Trocar a ordem é o erro mais comum da turma."},
+ {p:"Por qual número se <b>divide</b> primeiro em “3/8 de 240”?",a:["Por 8, o de baixo","Por 3, o de cima","Por 240"],c:0,e:"Sempre pelo <b>denominador</b>. 240 ÷ 8 = 30, e depois 30 × 3 = 90."},
+
+ /* ---------- 11 · PROBLEMAS DE DOIS PASSOS ---------- */
+ {p:"Uma biblioteca tem <b>180 livros</b> e <b>2/6</b> foram emprestados. Quantos livros saíram?",a:["60 livros","540 livros","30 livros"],c:0,e:"180 ÷ 6 = 30; 30 × 2 = <b>60</b>."},
+ {p:"Camila guardou <b>R$ 240</b> e usou <b>3/8</b> para um presente. Quanto ela <b>gastou</b>?",a:["R$ 90","R$ 720","R$ 80"],c:0,e:"240 ÷ <b>8</b> = 30; 30 × 3 = <b>R$ 90</b>. Erro comum: multiplicar 240 × 3 = 720 — isso dá mais do que ela tinha, o que já mostra que está errado."},
+ {p:"Camila tinha <b>R$ 240</b> e gastou <b>R$ 90</b>. Quanto <b>restou</b>?",a:["R$ 150","R$ 210","R$ 330"],c:0,e:"240 − 90 = <b>R$ 150</b>. Quando o problema pede “quanto restou”, ainda falta uma <b>subtração</b> depois da fração."},
+ {p:"Num problema de dinheiro, o resultado deu <b>maior</b> do que a pessoa tinha. O que isso indica?",a:["Que a conta está errada — provavelmente multiplicou antes de dividir","Que ela ficou devendo","Que a fração era maior que 1"],c:0,e:"Uma fração menor que 1 <b>sempre</b> dá um pedaço <b>menor</b> que o total. Esse é o melhor jeito de conferir sozinha."},
+ {q:1,p:"Uma escola tem <b>120 alunos</b> e <b>3/4</b> foram ao passeio. Quantos <b>não</b> foram?",a:["30 alunos","90 alunos","40 alunos"],c:0,e:"Foram: 120 ÷ 4 = 30, 30 × 3 = 90. Não foram: 120 − 90 = <b>30</b>. Leia até o fim: a pergunta é dos que <b>não</b> foram."},
+
+ /* ---------- 12 · COMPLETAR EQUIVALENTES ---------- */
+ {p:"Complete: <b>8/6 = ___/30</b>",a:["40","24","10"],c:0,e:"De 6 para 30 multiplicou por <b>5</b>. Faça o mesmo em cima: 8 × 5 = <b>40</b>."},
+ {p:"Complete: <b>6/12 = 24/___</b>",a:["48","36","24"],c:0,e:"De 6 para 24 multiplicou por <b>4</b>. Embaixo: 12 × 4 = <b>48</b>."},
+ {p:"Complete: <b>1/2 = ___/100</b>",a:["50","20","2"],c:0,e:"De 2 para 100 multiplicou por <b>50</b>. Em cima: 1 × 50 = <b>50</b>."},
+ {p:"Complete: <b>30/45 = 60/___</b>",a:["90","75","60"],c:0,e:"De 30 para 60 multiplicou por <b>2</b>. Embaixo: 45 × 2 = <b>90</b>."},
+ {p:"Para achar uma fração equivalente, o que se faz?",a:["Multiplica ou divide o de cima e o de baixo pelo mesmo número","Multiplica só o de cima","Soma o mesmo número nos dois"],c:0,e:"<b>O que faz em cima, faz embaixo.</b> Somar não vale: 1/2 e 2/3 não são equivalentes."}
+);
+
+/* ---- cruzadinha: palavras da revisão que faltavam ---- */
+CRUZADA2["Matemática"].push(
+ ["IRREDUTIVEL","Sou a fração que já não dá mais para simplificar"],
+ ["REDUTIVEL","Ainda dá para me simplificar"],
+ ["SIMPLIFICAR","Dividir o de cima e o de baixo pelo mesmo número"],
+ ["AVOS","Assim se lê o número de baixo de 11 em diante"],
+ ["EXTENSO","Escrito com palavras, e não com algarismos"]
+);
+
+/* ---- carta de ajuda nova: simplificar até a irredutível ---- */
+AJUDA["Matemática"].push({
+  id:"irredutivel", nome:"Simplificar até a fração irredutível",
+  glos:[["Simplificar","Dividir o de cima e o de baixo pelo mesmo número."],
+        ["Fração irredutível","A que já não dá mais para simplificar."],
+        ["Fração redutível","A que ainda dá para simplificar."]],
+  passos:["Procure um número que divida <b>o de cima e o de baixo</b> ao mesmo tempo.",
+          "Divida os dois por esse número.",
+          "<b>Pergunte de novo:</b> ainda dá para dividir? Se der, divida outra vez.",
+          "Quando não der mais, chegou na <b>irredutível</b>.",
+          "Se não enxergar o número grande de uma vez, vá dividindo <b>por 2</b> enquanto os dois forem pares; depois tente 3, depois 5."],
+  ex:"10/15 → ÷5 → <b>2/3</b><br>12/18 → ÷6 → <b>2/3</b> &nbsp;(ou ÷2 → 6/9 → ÷3 → 2/3)<br>16/24 → ÷2 → 8/12 → ÷2 → 4/6 → ÷2 → <b>2/3</b><br>6/12 → ÷6 → <b>1/2</b><br><b>Já irredutíveis:</b> 2/3 · 1/2 · 5/9 · 3/11",
+  mapa:{c:"Irredutível",r:[{t:"O que é",f:["não dá mais para simplificar"]},{t:"Como chegar",f:["divide os dois","pelo mesmo número","repete até travar"]},{t:"Se travar",f:["vá dividindo por 2","depois 3, depois 5"]},{t:"Confira",f:["ainda dá para dividir?","se der, não acabou"]}]},
+  busca:"simplificar fração irredutível 5 ano"
+});
+
+ROTAS["Matemática"].unshift(
+ ["irredutivel", /irredut[ií]vel|redut[ií]vel|simplifique .* at[eé]|at[eé] a irredut|ainda n[aã]o [eé] a resposta final/i],
+ ["misto",      /n[uú]mero misto|inteiros? e .+ em algarismos|\d+ \d+\/\d+/i],
+ ["quant",      /\d+\/\d+ de \d|fra[çc][aã]o de uma quantidade|se divide primeiro|quantos livros sa[ií]|quanto ela gastou|maior do que a pessoa tinha|quantos n[aã]o foram|quanto restou/i],
+ ["ler",        /como se l[eê]|palavra avos|leva a palavra|por extenso|leitura de uma fra|na fra[çc][aã]o \d+\/\d+, o n[uú]mero \d+|indica quantas partes|indica em quantas partes|que fra[çc][aã]o (ela|representa|foi|n[aã]o)|qual [ée] a fra[çc][aã]o\?/i]
+);
+
+/* ============================================================
+   FOLHAS NO FORMATO DA REVISÃO
+   ============================================================ */
+FOLHAS["Matemática"].unshift(
+
+ {id:"revisao", nome:"⭐ No formato da revisão do professor", sub:"14 itens · os tipos que caem na prova", tipo:"lacunas",
+  instr:"Cada item é de um tipo que apareceu na revisão. Faça sem consultar e confira no fim.",
+  itens:[
+   ["O número que indica quantas partes foram consideradas chama-se ______________.","numerador"],
+   ["O número que indica em quantas partes iguais o inteiro foi dividido chama-se ______________.","denominador"],
+   ["Uma pizza foi dividida em 8 fatias e 3 foram comidas. Fração comida: ______________","3/8"],
+   ["Numa caixa de 15 lápis, 9 são azuis. Fração dos azuis: ______________","9/15"],
+   ["O denominador é 9 e o numerador é 4. A fração é ______________","4/9"],
+   ["Escreva como se lê 9/20: ______________","nove vinte avos (sem “e”)"],
+   ["Escreva como se lê 11/12: ______________","onze doze avos (sem “e”)"],
+   ["Escreva como se lê 7/10: ______________","sete décimos"],
+   ["Três inteiros e dois quintos em algarismos: ______________","3 2/5"],
+   ["Escreva 4 3/8 por extenso: ______________","quatro inteiros e três oitavos"],
+   ["Simplifique 10/15 até a irredutível: ______________","2/3"],
+   ["Simplifique 16/24 até a irredutível: ______________","2/3"],
+   ["Calcule 3/8 de 64 = ______________","24 (64 ÷ 8 = 8; 8 × 3 = 24)"],
+   ["Complete: 1/2 = ______/100","50"]]},
+
+ {id:"leitura", nome:"Escrever como se lê — e a armadilha do “e”", sub:"12 itens · frações e mistos", tipo:"lacunas",
+  instr:"Regra: até o denominador 10, cada um tem nome próprio. De <b>11 em diante</b>, use <b>avos</b>. E atenção: <b>fração pura não leva “e”</b> — o “e” só aparece no número misto.",
+  itens:[
+   ["2/3 lê-se ______________","dois terços"],
+   ["5/6 lê-se ______________","cinco sextos"],
+   ["7/10 lê-se ______________","sete décimos"],
+   ["9/20 lê-se ______________","nove vinte avos"],
+   ["11/12 lê-se ______________","onze doze avos"],
+   ["3/14 lê-se ______________","três quatorze avos"],
+   ["5/100 lê-se ______________","cinco centésimos"],
+   ["7/1000 lê-se ______________","sete milésimos"],
+   ["4 3/8 lê-se ______________","quatro inteiros e três oitavos"],
+   ["1 5/6 lê-se ______________","um inteiro e cinco sextos"],
+   ["“Seis inteiros e um quarto” em algarismos: ______________","6 1/4"],
+   ["Em qual dos dois casos entra a palavra “e”: fração pura ou número misto? ______________","só no número misto"]]},
+
+ {id:"irredutivel", nome:"Simplificar até a irredutível", sub:"12 itens · mostrar o caminho", tipo:"lacunas",
+  instr:"Simplifique <b>até o fim</b>. Depois pergunte sempre: ainda dá para dividir? Se der, não acabou.",
+  itens:[
+   ["10/15 = ______________","2/3 (÷5)"],
+   ["12/18 = ______________","2/3 (÷6)"],
+   ["16/24 = ______________","2/3 (÷8)"],
+   ["6/12 = ______________","1/2 (÷6)"],
+   ["20/50 = ______________","2/5 (÷10)"],
+   ["24/36 = ______________","2/3 (÷12)"],
+   ["9/27 = ______________","1/3 (÷9)"],
+   ["14/21 = ______________","2/3 (÷7)"],
+   ["Marina disse que 6/12 já é irredutível. Correção: ______________","não é: é redutível e simplifica para 1/2"],
+   ["Pedro disse que 3/9 já é irredutível. Correção: ______________","não é: simplifica para 1/3"],
+   ["Escreva uma fração que JÁ é irredutível: ______________","2/3, 1/2, 5/9, 3/11 (qualquer uma sem divisor comum)"],
+   ["Como saber que chegou na irredutível? ______________","quando nenhum número, além do 1, divide o de cima e o de baixo"]]},
+
+ {id:"quantprob", nome:"Fração de uma quantidade e problemas", sub:"12 itens · dividir primeiro, multiplicar depois", tipo:"lacunas",
+  instr:"Regra de ouro: <b>divide pelo de baixo, multiplica pelo de cima</b>. Se o resultado der maior que o total, a conta está errada.",
+  itens:[
+   ["1/3 de 90 = ______________","30"],
+   ["2/5 de 150 = ______________","60"],
+   ["3/8 de 64 = ______________","24"],
+   ["2/6 de 180 = ______________","60"],
+   ["3/8 de 240 = ______________","90"],
+   ["1/4 de 100 = ______________","25"],
+   ["Uma biblioteca tem 180 livros e 2/6 foram emprestados. Quantos saíram? ______________","60 livros"],
+   ["Camila guardou R$ 240 e usou 3/8 num presente. Quanto gastou? ______________","R$ 90"],
+   ["E quanto restou para ela? ______________","R$ 150 (240 − 90)"],
+   ["Numa turma de 120 alunos, 3/4 foram ao passeio. Quantos foram? ______________","90 alunos"],
+   ["E quantos NÃO foram? ______________","30 alunos (120 − 90)"],
+   ["Por qual número se divide primeiro em “3/8 de 240”? ______________","por 8, o denominador"]]},
+
+ {id:"equivrev", nome:"Completar as equivalentes", sub:"12 itens · o que faz em cima, faz embaixo", tipo:"lacunas",
+  instr:"Descubra por quanto o número foi multiplicado (ou dividido) e faça a mesma coisa do outro lado.",
+  itens:[
+   ["8/6 = ______/30","40 (×5)"],
+   ["6/12 = 24/______","48 (×4)"],
+   ["1/2 = ______/100","50 (×50)"],
+   ["30/45 = 60/______","90 (×2)"],
+   ["1/2 = ______/8","4 (×4)"],
+   ["2/3 = ______/12","8 (×4)"],
+   ["3/4 = 12/______","16 (×4)"],
+   ["2/7 = 6/______","21 (×3)"],
+   ["1/5 = ______/20","4 (×4)"],
+   ["10/20 = 1/______","2 (÷10)"],
+   ["Para achar uma equivalente eu multiplico ou divido ______________ pelo mesmo número.","os dois: o numerador e o denominador"],
+   ["Posso somar o mesmo número em cima e embaixo? ______________","não — 1/2 e 2/3 não são equivalentes"]]},
+
+ {id:"corrija", nome:"Encontre e corrija o erro", sub:"10 afirmações · escrever a frase certa", tipo:"certo",
+  itens:[
+   ["Na fração 5/8, o número 5 é o denominador.", false, "O 5 é o <b>numerador</b> (está em cima); o denominador é o <b>8</b>."],
+   ["A fração 6/12 já é irredutível.", false, "É <b>redutível</b>: dividindo os dois por 6, chega em <b>1/2</b>."],
+   ["Lê-se 9/20 como “nove e vinte avos”.", false, "Sem o “e”: <b>nove vinte avos</b>. O “e” só entra em número misto."],
+   ["Em 3/8 de 240, primeiro multiplico 240 por 3.", false, "Primeiro <b>divide pelo 8</b> (240 ÷ 8 = 30) e depois multiplica por 3 → 90. Multiplicar antes dá 720, mais do que ela tinha."],
+   ["O denominador indica em quantas partes iguais o inteiro foi dividido.", true, "É a definição exata."],
+   ["Para achar uma equivalente, basta multiplicar o numerador.", false, "Tem de multiplicar <b>os dois</b> pelo mesmo número."],
+   ["4 3/8 lê-se “quatro inteiros e três oitavos”.", true, "No número misto entram as palavras <b>inteiros</b> e <b>e</b>."],
+   ["16/24 simplificado dá 4/6.", false, "4/6 ainda é redutível: dividindo por 2 chega em <b>2/3</b>, que é a irredutível."],
+   ["Numa turma de 25 alunos, se 8 usam óculos, a fração dos que não usam é 8/25.", false, "São <b>17/25</b>: 25 − 8 = 17."],
+   ["1/3 de 90 é 30.", true, "90 ÷ 3 = 30."]]},
+
+ {id:"desenhar", nome:"Representar a fração com desenho", sub:"10 itens · pintar e escrever", tipo:"aberta", linhas:2,
+  itens:[
+   ["Desenhe uma barra dividida em 6 partes iguais e pinte 3/6. Depois escreva a fração simplificada.","3/6 = 1/2 — metade da barra pintada."],
+   ["Desenhe uma barra em 9 partes e pinte 5/9.","5 partes pintadas de 9. Não dá para simplificar: 5/9 é irredutível."],
+   ["Desenhe uma barra em 8 partes e pinte 7/8.","7 partes pintadas, 1 em branco. É quase o inteiro."],
+   ["Desenhe uma barra em 10 partes e pinte 2/10. Simplifique.","2/10 = 1/5."],
+   ["Desenhe um retângulo em 4 partes e pinte 4/4. Que número inteiro é esse?","4/4 = 1 inteiro — pinta tudo."],
+   ["Desenhe DUAS barras de 4 partes e pinte 5/4 no total. Escreva como número misto.","Uma barra inteira e mais 1 de 4 → 5/4 = 1 1/4."],
+   ["Desenhe uma pizza em 8 fatias e pinte 3/8. Quantas fatias sobraram?","3 pintadas, sobraram 5 → 5/8."],
+   ["Desenhe uma barra em 12 partes e pinte 6/12. Qual é a irredutível?","6/12 = 1/2."],
+   ["Sem desenhar: 3/6, 4/8 e 6/12 representam a mesma quantidade? Explique.","Sim — todas simplificam para 1/2. São frações equivalentes."],
+   ["Desenhe o que mostra que 2/3 é maior que 1/3.","Duas barras iguais cortadas em 3: uma com 2 partes pintadas e outra com 1. A de 2/3 tem mais pintado."]]},
+
+ {id:"mapafrac", nome:"Mapa conceitual — frações na revisão", sub:"completar o esquema", tipo:"mapa",
+  centro:"FRAÇÕES",
+  ramos:[{t:"OS DOIS NÚMEROS", f:["______________: em cima, quantas partes peguei","______________: embaixo, em quantas partes cortei"],
+          g:["Numerador","Denominador"]},
+         {t:"COMO SE LÊ", f:["Até 10: meios, terços, quartos… ______________","De 11 em diante: ______________","O “e” só aparece no ______________"],
+          g:["décimos","avos","número misto"]},
+         {t:"SIMPLIFICAR", f:["Divido ______________ pelo mesmo número","Repito até não dar mais","Chego na fração ______________"],
+          g:["os dois","irredutível"]},
+         {t:"FRAÇÃO DE QUANTIDADE", f:["Passo 1: ______________ pelo de baixo","Passo 2: ______________ pelo de cima","Se pedir quanto restou, ainda falta ______________"],
+          g:["dividir","multiplicar","subtrair"]}]}
+);
+
+
 /* ============================================================
    RÉGUA DE EVOLUÇÃO — todas as matérias
    Mostra, para cada matéria: quanto do banco de exercícios já
@@ -7651,7 +8664,6 @@ Object.assign(DIC_EXTRA["História"], {
 
 const REG_MODOS = [
  {id:"quiz",    nome:"Quiz",        banco:function(m){ return (typeof QUIZ!=="undefined" && QUIZ[m]) || null; }},
- {id:"memoria", nome:"Memória",     banco:function(m){ return (typeof MEMORIA2!=="undefined" && MEMORIA2[m]) || null; }},
  {id:"cruzada", nome:"Cruzadinha",  banco:function(m){ return (typeof CRUZADA2!=="undefined" && CRUZADA2[m]) || null; }},
  {id:"assoc",   nome:"Associação",  banco:function(m){ return (typeof ASSOC2!=="undefined" && ASSOC2[m]) || null; }}
 ];
