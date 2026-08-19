@@ -577,6 +577,20 @@ ol.passos li{margin-bottom:10px;font-size:.93rem;line-height:1.5}
 ol.passos li::marker{color:var(--bordo);font-weight:800}
 .exemplo{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:14px;padding:13px;font-size:.93rem;line-height:1.6}
 .exemplo b{display:block;color:var(--couro);margin-bottom:5px}
+.ajperg{background:var(--card2);border:2px dashed var(--line);border-radius:12px;padding:9px 12px;margin-bottom:10px;
+  font-size:.9rem;line-height:1.45;color:var(--txt)}
+.ajperg span{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin-bottom:3px}
+.ajpontos{display:flex;gap:6px;justify-content:center;margin:0 0 12px}
+.ajpontos i{width:34px;height:5px;border-radius:3px;background:var(--line)}
+.ajpontos i.on{background:var(--ouro)}
+.ajresp{background:var(--ouro-cl);border:2px solid var(--ouro);border-radius:14px;padding:13px;margin-bottom:12px}
+.ajresp > b:first-child{display:block;color:var(--couro);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.ajresp p{margin:0;font-size:1rem;line-height:1.55}
+.ajnav{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.ajnav .btn{margin:0}
+.ajnav .btn.ok{background:var(--salvia);color:#fff;border-color:var(--salvia)}
+.ajrodape{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+.ajrodape button{background:none;border:0;color:var(--sub);font:inherit;font-size:.82rem;text-decoration:underline;cursor:pointer;padding:2px}
 .btn.azulao{background:var(--lav);color:#fff;display:block;text-align:center;text-decoration:none}
 .btn.sec[href]{display:block;text-align:center;text-decoration:none;color:var(--txt)}
 /* mapa mental */
@@ -2153,7 +2167,7 @@ function pintaQuiz(){
     <h3 style="font-size:1.06rem;line-height:1.5">${q.p}</h3>
     <div id="alts" class="palco">${q.a.map((t,i)=>`<button class="alt" onclick="responder(${i})">${t}</button>`).join("")}</div>
     <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-      <button class="bsos" onclick="abrirPalavras()">🔤 O que quer dizer?</button>
+      <button class="bsos" onclick="abrirPalavras()">❓ Não entendi</button>
       <button class="bsos" onclick="duvidaDoQuiz()">🆘 Não entendi o assunto</button>
       <button class="bsos" onclick="pularQuestao()">⏭️ Pular esta</button>
     </div>
@@ -6445,22 +6459,22 @@ AJUDA["Matemática"] = [
  {id:"misto", nome:"Número misto",
   glos:[["Número misto","Parte inteira + fração, como 2 1/3."],
         ["Fração maior que 1","A que tem o de cima maior que o de baixo. Alguns livros chamam de <b>imprópria</b>."]],
-  passos:["De fração para misto: <b>divida</b> o de cima pelo de baixo.",
-          "O <b>quociente</b> vira o inteiro e o <b>resto</b> vira o novo numerador. O denominador não muda.",
-          "De misto para fração: multiplique o inteiro pelo denominador e <b>some</b> o numerador.",
-          "Somar frações <b>de mesmo denominador</b>: some só os de cima e mantenha o de baixo. 5/5 + 1/5 = 6/5, que é 1 1/5.",
-          "Confira sempre: o denominador é o mesmo nos dois lados."],
-  ex:"7/3 → 7 ÷ 3 = 2 e sobra 1 → <b>2 1/3</b><br>1 3/4 → 1 × 4 = 4, mais 3 = 7 → <b>7/4</b><br>12/4 → 12 ÷ 4 = 3, resto 0 → <b>3 inteiros</b>, sem fração.",
-  mapa:{c:"Número misto",r:[{t:"Fração → misto",f:["divide","quociente = inteiro","resto = numerador"]},{t:"Misto → fração",f:["inteiro × denominador","soma o numerador"]},{t:"Cuidado",f:["o denominador nunca muda"]}]},
+  passos:["Número misto é um <b>inteiro inteirinho</b> mais um pedaço. 2 1/3 são dois bolos inteiros e mais um terço de outro.",
+          "<b>Para ler em voz alta:</b> primeiro o inteiro, depois a palavra <b>e</b>, depois a fração. 1 5/6 = um inteiro <b>e</b> cinco sextos.",
+          "É o <b>único lugar</b> onde entra o “e”. Em fração sozinha, como 9/20, o “e” não existe.",
+          "<b>De fração para misto:</b> divida o de cima pelo de baixo. O resultado vira o inteiro, o que sobra vira o novo número de cima, e o de baixo não muda.",
+          "<b>De misto para fração:</b> multiplique o inteiro pelo de baixo e some o de cima. O de baixo continua igual."],
+  ex:"<b>Lendo:</b> 1 5/6 = um inteiro <b>e</b> cinco sextos · 3 2/5 = três inteiros <b>e</b> dois quintos<br><b>Fração → misto:</b> 7/3 → 7 ÷ 3 = 2 e sobra 1 → <b>2 1/3</b><br><b>Misto → fração:</b> 1 3/4 → 1 × 4 = 4, mais 3 = 7 → <b>7/4</b><br>12/4 → 12 ÷ 4 = 3 e não sobra nada → <b>3 inteiros</b>, sem fração.",
+  mapa:{c:"Número misto",r:[{t:"Como se lê",f:["inteiro + <b>e</b> + fração","1 5/6 = um inteiro e cinco sextos"]},{t:"Fração → misto",f:["divide o de cima pelo de baixo","resultado = inteiro","o que sobra = o novo de cima"]},{t:"Misto → fração",f:["inteiro × o de baixo","soma o de cima"]},{t:"Cuidado",f:["o número de baixo nunca muda"]}]},
   busca:"número misto fração imprópria 5 ano"},
 
  {id:"equiv", nome:"Frações equivalentes",
   glos:[["Equivalente","Mesma quantidade escrita com outros números."],
         ["Simplificar","Deixar a fração com os menores números possíveis."]],
   passos:["Multiplique <b>os dois</b> números pelo mesmo valor, ou divida <b>os dois</b> pelo mesmo valor.",
-          "O valor tem de ser diferente de zero.",
-          "Se você mexer só em um dos dois, a fração <b>muda de valor</b> — esse é o erro mais comum.",
-          "Para simplificar até o fim, continue dividindo enquanto der."],
+          "Esse número pode ser qualquer um, menos o zero.",
+          "Mexa sempre nos <b>dois</b> juntos. Se mexer só num, a fração vira outra quantidade: 1/2 não é a mesma coisa que 1/4.",
+          "Para deixar bem pequena, continue dividindo até não dar mais. Exemplo: 16/24 → 8/12 → 4/6 → 2/3."],
   ex:"1/2 = 2/4 = 4/8 (×2 e ×2 de novo)<br>12/20 = 6/10 = 3/5 (÷2 e ÷2)<br>2/3 = 8/12 (×4 em cima e embaixo)",
   mapa:{c:"Equivalentes",r:[{t:"Para aumentar",f:["× o mesmo número","em cima e embaixo"]},{t:"Para simplificar",f:["÷ o mesmo número","em cima e embaixo"]},{t:"Regra de ouro",f:["o que faz em cima, faz embaixo"]}]},
   busca:"frações equivalentes simplificar 5 ano"},
@@ -6470,7 +6484,7 @@ AJUDA["Matemática"] = [
         ["Mesmo numerador","Mesma quantidade de pedaços, de tamanhos diferentes."]],
   passos:["Se o de <b>baixo</b> for igual: ganha quem tem o de <b>cima</b> maior.",
           "Se o de <b>cima</b> for igual: ganha quem tem o de <b>baixo</b> menor.",
-          "Se nada for igual, transforme numa equivalente até os denominadores ficarem iguais.",
+          "Se os dois forem diferentes, troque uma delas por outra que vale o mesmo, até o número de baixo ficar igual. Exemplo: para comparar 1/2 e 2/3, use 3/6 e 4/6.",
           "Sempre dá para conferir desenhando duas barras do mesmo tamanho."],
   ex:"3/5 > 2/5 — mesmos pedaços, ela pegou mais<br>1/3 > 1/4 — cortar em 3 dá fatias maiores que cortar em 4<br>8/2 > 1 · 1/2 < 1 · 7/7 = 1",
   mapa:{c:"Comparar",r:[{t:"Baixo igual",f:["maior em cima vence"]},{t:"Cima igual",f:["menor embaixo vence"]},{t:"Pegadinha",f:["denominador maior = pedaço menor"]}]},
@@ -6480,8 +6494,8 @@ AJUDA["Matemática"] = [
   glos:[["Fração de uma quantidade","Um pedaço de um total: 3/4 de 12 ovos."]],
   passos:["Passo 1: <b>divida</b> o total pelo número de <b>baixo</b> — isso dá o tamanho de uma parte.",
           "Passo 2: <b>multiplique</b> pelo número de <b>cima</b> — isso junta as partes que você quer.",
-          "Se o numerador for 1, o passo 2 nem é preciso.",
-          "Desenhe a barra dividida: ver as partes evita errar o passo."],
+          "Se o número de cima for <b>1</b>, você já terminou no passo 1. Exemplo: 1/4 de 12 → 12 ÷ 4 = 3.",
+          "Se ajudar, desenhe uma barra cortada nas partes. Ver o desenho deixa a conta mais fácil."],
   ex:"1/4 de 12 ovos → 12 ÷ 4 = <b>3 ovos</b><br>3/4 de 12 ovos → 12 ÷ 4 = 3, depois 3 × 3 = <b>9 ovos</b><br>3/5 de 40 → 40 ÷ 5 = 8, depois 8 × 3 = <b>24</b><br>1/3 de hora → 60 ÷ 3 = <b>20 minutos</b>",
   mapa:{c:"Fração de quantidade",r:[{t:"Passo 1",f:["divide pelo de baixo","= tamanho de uma parte"]},{t:"Passo 2",f:["multiplica pelo de cima","= as partes que quero"]},{t:"Medidas",f:["1 h = 60 min","1 m = 100 cm","1 kg = 1000 g","1 L = 1000 mL"]}]},
   busca:"fração de uma quantidade 5 ano"},
@@ -6489,12 +6503,13 @@ AJUDA["Matemática"] = [
  {id:"mult", nome:"Multiplicação",
   glos:[["Fator","Cada número que se multiplica."],["Produto","O resultado."],
         ["Parcelas iguais","Somar o mesmo número várias vezes."]],
-  passos:["Multiplicar é somar parcelas iguais: 15 × 128 é somar 128 quinze vezes.",
-          "No algoritmo, quebre o número de baixo: primeiro as unidades, depois as dezenas.",
-          "Com números <b>inteiros</b>, multiplicar por <b>10</b> é acrescentar um zero; por 100, dois zeros. (Com vírgula a regra é outra, mas isso é para depois.)",
-          "Some os resultados parciais alinhando as ordens."],
-  ex:"128 × 15<br>128 × 5 = 640<br>128 × 10 = 1280<br>640 + 1280 = <b>1920</b><br>Quebrar assim é mais seguro do que decorar o algoritmo inteiro.",
-  mapa:{c:"Multiplicação",r:[{t:"Termos",f:["fator × fator","= produto"]},{t:"Ideias",f:["parcelas iguais","linhas × colunas","combinações","proporcionalidade"]},{t:"Truque",f:["quebre em ×10 e ×5","depois some"]}]},
+  passos:["Multiplicar é somar grupos do mesmo tamanho. 15 × 128 é somar 128 quinze vezes.",
+          "Conta grande fica mais fácil <b>quebrada em duas</b>. Exemplo: 15 é 10 + 5.",
+          "Multiplique por cada pedaço. 128 × 10 = 1280 · 128 × 5 = 640.",
+          "Some os dois resultados: 1280 + 640 = 1920.",
+          "Atalho: multiplicar um número inteiro por <b>10</b> é pôr um zero no fim. Por <b>100</b>, dois zeros."],
+  ex:"128 × 15<br>Quebra o 15 em 10 + 5<br>128 × 10 = 1280<br>128 × 5 = 640<br>1280 + 640 = <b>1920</b>",
+  mapa:{c:"Multiplicação",r:[{t:"Termos",f:["fator × fator","= produto"]},{t:"Ideias",f:["parcelas iguais","linhas × colunas","combinações","proporcionalidade"]},{t:"Truque",f:["quebre em ×10 e ×5","depois some os dois"]}]},
   busca:"multiplicação algoritmo 5 ano"},
 
  {id:"div", nome:"Divisão",
@@ -6511,17 +6526,17 @@ AJUDA["Matemática"] = [
 
  {id:"inversa", nome:"Operações inversas",
   glos:[["Operações inversas","Uma desfaz o que a outra faz."]],
-  passos:["Multiplicação e divisão são <b>inversas</b>: 6 × 7 = 42 e 42 ÷ 7 = 6.",
-          "Para conferir uma divisão: <b>quociente × divisor + resto = dividendo</b>.",
-          "Para conferir uma multiplicação: <b>produto ÷ um fator = o outro fator</b>.",
-          "Vale a pena conferir sempre — é o jeito de descobrir sozinha se errou."],
+  passos:["Multiplicação e divisão desfazem uma à outra. Se 6 × 7 = 42, então 42 ÷ 7 volta para o 6.",
+          "<b>Para conferir uma divisão:</b> pegue o resultado e multiplique pelo número que dividiu.",
+          "Depois some o que sobrou. Tem que dar o número do começo. Exemplo: 1367 ÷ 15 deu 91 e sobrou 2 → 91 × 15 = 1365 → 1365 + 2 = 1367 ✓",
+          "<b>Para conferir uma multiplicação:</b> divida o resultado por um dos dois números. Tem que dar o outro. Exemplo: 15 × 13 = 195 → 195 ÷ 13 = 15 ✓"],
   ex:"1367 ÷ 15 = 91, resto 2<br>Conferindo: 91 × 15 = 1365 · 1365 + 2 = <b>1367</b> ✓<br>15 × 13 = 195<br>Conferindo: 195 ÷ 13 = <b>15</b> ✓",
-  mapa:{c:"Conferir a conta",r:[{t:"Divisão",f:["quociente × divisor","+ resto","= dividendo"]},{t:"Multiplicação",f:["produto ÷ fator","= o outro fator"]}]},
+  mapa:{c:"Conferir a conta",r:[{t:"Divisão",f:["resultado × quem dividiu","+ o que sobrou","= o número do começo"]},{t:"Multiplicação",f:["resultado ÷ um número","= o outro número"]}]},
   busca:"operações inversas conferir divisão 5 ano"},
 
  {id:"divis", nome:"Divisibilidade por 2, 5 e 10",
-  glos:[["Divisível","Cabe certinho, sem sobrar resto."],["Múltiplo","Outra palavra para a mesma ideia."]],
-  passos:["Olhe apenas o <b>último algarismo</b> do número. Não precisa fazer conta.",
+  glos:[["Divisível","Cabe certinho, sem sobrar nada."],["Múltiplo","O mesmo, dito ao contrário: 10 é múltiplo de 5 porque 10 ÷ 5 = 2 e não sobra nada."],["Algarismo","Cada numerozinho que forma o número. Em 108 os algarismos são 1, 0 e 8."]],
+  passos:["Olhe só o <b>último numerozinho</b>, o que fica bem no fim. Em 108, é o <b>8</b>. Não precisa fazer conta nenhuma.",
           "Termina em 0, 2, 4, 6 ou 8 (é par) → divisível por <b>2</b>.",
           "Termina em 0 ou 5 → divisível por <b>5</b>.",
           "Termina em 0 → divisível por <b>10</b> (e também por 2 e por 5)."],
@@ -6536,7 +6551,7 @@ AJUDA["Matemática"] = [
   passos:["O número de <b>baixo</b> diz em quantas partes iguais cortar o pedaço de 0 até 1.",
           "O número de <b>cima</b> diz quantas marcas contar, começando do zero.",
           "Se o de cima for maior que o de baixo, a fração <b>passa do 1</b> e cai no pedaço seguinte.",
-          "Se o de cima for múltiplo do de baixo, ela cai <b>em cima</b> de um número inteiro."],
+          "Se o de cima dividido pelo de baixo der certinho, sem sobrar nada, a fração cai <b>em cima</b> de um número inteiro. Exemplo: 6/3, porque 6 ÷ 3 = 2."],
   ex:"De 0 a 1 em 3 partes: as marcas são 1/3, 2/3 e depois o 1 (que é 3/3)<br>4/3 fica <b>entre 1 e 2</b>, porque 4/3 = 1 1/3<br>6/3 cai <b>em cima do 2</b>, porque 6 ÷ 3 = 2<br>5/4 fica entre 1 e 2: é 1 1/4",
   mapa:{c:"Reta numérica",r:[{t:"O de baixo",f:["diz em quantas partes","cortar cada unidade"]},{t:"O de cima",f:["diz quantas marcas contar","a partir do zero"]},{t:"Passou do 1?",f:["cima maior que baixo","cai depois do 1"]},{t:"Cai no inteiro",f:["6/3 = 2","8/4 = 2","12/4 = 3"]}]},
   busca:"fração na reta numérica 5 ano"}
@@ -8513,7 +8528,8 @@ AJUDA["Matemática"].push({
           "Divida os dois por esse número.",
           "<b>Pergunte de novo:</b> ainda dá para dividir? Se der, divida outra vez.",
           "Quando não der mais, chegou na <b>irredutível</b>.",
-          "Se não enxergar o número grande de uma vez, vá dividindo <b>por 2</b> enquanto os dois forem pares; depois tente 3, depois 5."],
+          "Não achou o número de cara? Comece pelo <b>2</b>, enquanto os dois forem pares: 16/24 → 8/12 → 4/6 → 2/3.",
+          "Quando o 2 não der mais, tente o <b>3</b>. Depois o <b>5</b>."],
   ex:"10/15 → ÷5 → <b>2/3</b><br>12/18 → ÷6 → <b>2/3</b> &nbsp;(ou ÷2 → 6/9 → ÷3 → 2/3)<br>16/24 → ÷2 → 8/12 → ÷2 → 4/6 → ÷2 → <b>2/3</b><br>6/12 → ÷6 → <b>1/2</b><br><b>Já irredutíveis:</b> 2/3 · 1/2 · 5/9 · 3/11",
   mapa:{c:"Irredutível",r:[{t:"O que é",f:["não dá mais para simplificar"]},{t:"Como chegar",f:["divide os dois","pelo mesmo número","repete até travar"]},{t:"Se travar",f:["vá dividindo por 2","depois 3, depois 5"]},{t:"Confira",f:["ainda dá para dividir?","se der, não acabou"]}]},
   busca:"simplificar fração irredutível 5 ano"
@@ -8650,6 +8666,154 @@ FOLHAS["Matemática"].unshift(
          {t:"FRAÇÃO DE QUANTIDADE", f:["Passo 1: ______________ pelo de baixo","Passo 2: ______________ pelo de cima","Se pedir quanto restou, ainda falta ______________"],
           g:["dividir","multiplicar","subtrair"]}]}
 );
+
+
+/* ============================================================
+   "NÃO ENTENDI" — reestruturação da gaveta de ajuda
+   Problema medido na versão anterior: ao abrir, a criança via
+   17 botões (12 assuntos + 5 abas) antes de uma linha de ajuda,
+   e a aba que abria por padrão dizia "Nenhuma palavra catalogada
+   aqui". Para TDAH isso é um menu no lugar de uma resposta; para
+   TAG, o app respondendo "não sei" confirma o medo.
+   Agora: uma resposta por tela, no máximo dois botões, e o
+   caminho é sempre para a frente.
+   ============================================================ */
+
+/* o que cada assunto pede, em linguagem de criança + as duas
+   palavras que valem a pena aparecer sempre */
+(function(){
+ var P = {
+  ler:        ["Esta pergunta quer que você <b>leia ou escreva o nome</b> de uma fração — ou o contrário: ouvir o nome e escrever os números.",
+               [["Número de cima","quantas partes você pegou"],["Número de baixo","em quantos pedaços o inteiro foi cortado"]]],
+  tamanho:    ["Esta pergunta quer saber se a fração é <b>menor, igual ou maior que 1 inteiro</b>. Dá para responder só olhando os dois números.",
+               [["Menor que 1","o de cima é menor que o de baixo"],["Maior que 1","o de cima é maior que o de baixo"]]],
+  misto:      ["Esta pergunta mexe com <b>um inteiro grudado numa fração</b>, como 2 1/3. Ela quer que você troque de um jeito para o outro.",
+               [["Número misto","um inteiro + uma fração, tipo 2 1/3"],["Trocar","de 7/3 para 2 1/3, ou o contrário"]]],
+  equiv:      ["Esta pergunta quer <b>outra fração que vale a mesma coisa</b>. Você multiplica ou divide em cima e embaixo pelo mesmo número.",
+               [["Equivalente","muda os números, não muda a quantidade"],["Regra de ouro","o que faz em cima, faz embaixo"]]],
+  comp:       ["Esta pergunta quer saber <b>qual fração é maior</b>. Olhe primeiro se o número de baixo é igual nas duas.",
+               [["Mesmo de baixo","ganha quem tem o de cima maior"],["Mesmo de cima","ganha quem tem o de baixo menor"]]],
+  quant:      ["Esta pergunta quer <b>um pedaço de uma quantidade</b> — tipo quanto é 3/8 de 240. Primeiro divide, depois multiplica.",
+               [["1.º divide","pelo número de baixo"],["2.º multiplica","pelo número de cima"]]],
+  mult:       ["Esta pergunta é de <b>multiplicação</b>: juntar vários grupos do mesmo tamanho.",
+               [["Fator","cada número que você multiplica"],["Produto","o resultado"]]],
+  div:        ["Esta pergunta é de <b>divisão</b>: repartir em partes iguais, ou ver quantas vezes uma coisa cabe na outra.",
+               [["Repartir","sei em quantos grupos, quero o tamanho"],["Quantas vezes cabe","sei o tamanho, quero quantos grupos"]]],
+  inversa:    ["Esta pergunta quer que você <b>confira se a conta está certa</b>, fazendo a operação ao contrário.",
+               [["Conferir a divisão","resultado × divisor + resto"],["Conferir a multiplicação","resultado ÷ um número = o outro"]]],
+  divis:      ["Esta pergunta quer saber se um número <b>cabe certinho</b> em outro, sem sobrar nada. Olhe só o último algarismo.",
+               [["Divisível","cabe sem sobrar resto"],["Último algarismo","é só ele que decide"]]],
+  reta:       ["Esta pergunta quer saber <b>onde a fração fica na reta</b> — a régua dos números.",
+               [["De baixo","em quantas partes cortar"],["De cima","quantos risquinhos contar do zero"]]],
+  irredutivel:["Esta pergunta quer a fração <b>no menor tamanho possível</b>: dividir em cima e embaixo até não dar mais.",
+               [["Simplificar","dividir os dois pelo mesmo número"],["Irredutível","quando não dá mais para dividir"]]]
+ };
+ (AJUDA["Matemática"]||[]).forEach(function(c){
+   if(P[c.id]){ c.pede = P[c.id][0]; c.chave = P[c.id][1]; }
+ });
+})();
+
+/* ---------- estado próprio da gaveta nova ---------- */
+var ajPasso = "pede", ajLib = false;
+
+function abrirAjuda(mat, top, aba){
+  ajMat = AJUDA[mat] ? mat : "Matemática";
+  ajTop = top || (AJUDA[ajMat][0] && AJUDA[ajMat][0].id);
+  ajPasso = ({nesta:"pede", glos:"pede", passos:"faz", mapa:"mapa", video:"video"})[aba] || "pede";
+  ajLib = !ajCtx && !top;          /* sem pergunta e sem assunto → começa na lista */
+  document.getElementById("ajFundo").classList.add("on");
+  document.getElementById("ajGaveta").classList.add("on");
+  document.body.style.overflow = "hidden";
+  pintaAjuda();
+}
+function setAjTop(id){ ajTop = id; ajLib = false; ajPasso = "pede"; pintaAjuda(); }
+function setAjAba(a){ ajPasso = a; pintaAjuda(); }
+function ajIr(p){ ajPasso = p; pintaAjuda(); document.getElementById("ajCorpo").scrollTop = 0; }
+function ajLista(v){ ajLib = !!v; pintaAjuda(); document.getElementById("ajCorpo").scrollTop = 0; }
+
+/* o botão do quiz */
+function abrirPalavras(){
+  var q = qLista[qIdx]; if(!q) return;
+  ajCtx = {q:q, mat:matAtual, lista:palavrasDaPergunta(q, matAtual)};
+  abrirAjuda(matAtual, topicoDe(matAtual, q.p), "nesta");
+}
+
+function ajGlosHTML(t){
+  var itens = (ajCtx && ajCtx.lista && ajCtx.lista.length)
+      ? ajCtx.lista.slice(0,4).map(function(x){ return [x.t, x.d]; })
+      : (t.chave || (t.glos||[]).slice(0,2));
+  if(!itens.length) return "";
+  return '<div class="glos">' + itens.map(function(g){
+     return '<div class="gitem"><b>'+g[0]+'</b><span>'+g[1]+'</span></div>'; }).join("") + '</div>';
+}
+
+function pintaAjuda(){
+  var lista = AJUDA[ajMat] || [];
+  var t = lista.filter(function(x){ return x.id===ajTop; })[0] || lista[0];
+  if(!t) return;
+  var corpo = "", botoes = "";
+
+  if(ajLib){
+    corpo = '<p class="sub">Sobre o que é a dúvida?</p>' +
+      '<div class="escolha ajtopicos">' + lista.map(function(x){
+        return '<button class="'+(x.id===t.id?'on':'')+'" onclick="setAjTop(\''+x.id+'\')">'+x.nome+'</button>'; }).join("") +
+      '</div>';
+    botoes = '<button class="btn" onclick="ajLista(false)">↩︎ Voltar para a minha dúvida</button>';
+  }
+  else if(ajPasso === "pede"){
+    corpo = '<div class="ajresp"><b>O que esta pergunta está pedindo</b>' +
+              '<p>' + ((ajCtx && ajCtx.q && ajCtx.q.tr) ? ajCtx.q.tr : (t.pede || ("Esta pergunta é sobre <b>" + t.nome.charAt(0).toLowerCase() + t.nome.slice(1) + "</b>. Comece pelas palavras aqui embaixo — depois toque em <b>Me mostra como faz</b>."))) + '</p></div>' +
+            ajGlosHTML(t);
+    botoes = '<button class="btn" onclick="ajIr(\'faz\')">🧩 Me mostra como faz</button>' +
+             '<button class="btn ok" onclick="fecharAjuda()">✅ Já entendi, voltar</button>';
+  }
+  else if(ajPasso === "faz"){
+    corpo = '<div class="ajresp"><b>Como faz — um passo de cada vez</b></div>' +
+            '<ol class="passos">' + t.passos.map(function(p){ return '<li>'+p+'</li>'; }).join("") + '</ol>';
+    botoes = '<button class="btn" onclick="ajIr(\'exemplo\')">👀 Ver um exemplo resolvido</button>' +
+             '<button class="btn ok" onclick="fecharAjuda()">✅ Já entendi, voltar</button>';
+  }
+  else if(ajPasso === "exemplo"){
+    corpo = '<div class="exemplo"><b>Exemplo resolvido</b>' + t.ex + '</div>';
+    botoes = '<button class="btn" onclick="ajIr(\'mapa\')">🗺️ Ver o mapa do assunto</button>' +
+             '<button class="btn ok" onclick="fecharAjuda()">✅ Já entendi, voltar</button>';
+  }
+  else if(ajPasso === "mapa"){
+    corpo = mapaHTML(t.mapa) +
+      '<p class="sub" style="margin-top:10px">Tente redesenhar este mapa de cabeça num papel. Lembrar sozinha vale mais do que reler.</p>';
+    botoes = '<button class="btn ok" onclick="fecharAjuda()">✅ Já entendi, voltar</button>';
+  }
+  else { /* vídeo — só pela biblioteca, nunca no meio de uma pergunta */
+    var busca = encodeURIComponent(t.busca);
+    corpo = '<p class="sub">Isto abre uma busca no YouTube em outra aba. <b>Precisa de internet</b> e os resultados não são escolhidos por mim — vale ver com um adulto por perto.</p>' +
+      '<a class="btn azulao" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/results?search_query='+busca+'">▶️ Procurar vídeo sobre “'+t.nome+'”</a>';
+    botoes = '<button class="btn ok" onclick="fecharAjuda()">↩︎ Voltar</button>';
+  }
+
+  var trilha = ["pede","faz","exemplo"].indexOf(ajPasso);
+  var pontos = (!ajLib && trilha >= 0)
+    ? '<div class="ajpontos">' + ["pede","faz","exemplo"].map(function(p,i){
+        return '<i class="'+(i<=trilha?'on':'')+'"></i>'; }).join("") + '</div>' : '';
+
+  var pergunta = (ajCtx && ajCtx.q && !ajLib)
+    ? '<div class="ajperg"><span>a pergunta era</span>' + ajCtx.q.p + '</div>' : '';
+
+  document.getElementById("ajCorpo").innerHTML =
+    '<div class="ajtopo">' +
+      '<div><h2 style="margin:0">❓ Não entendi</h2><p class="sub" style="margin:2px 0 0">'+ajMat+' · '+t.nome+'</p></div>' +
+      '<button class="ajx" onclick="fecharAjuda()">✕</button>' +
+    '</div>' +
+    pergunta + pontos +
+    '<div class="ajconteudo">' + corpo + '</div>' +
+    '<div class="ajnav">' + botoes + '</div>' +
+    '<div class="ajrodape">' +
+      (ajLib ? '' : '<button onclick="ajLista(true)">📚 é outro assunto</button>') +
+      '<button onclick="anotarDuvida(\''+ajMat+'\',\''+t.id+'\')">📌 anotar para falar depois</button>' +
+      (ajLib ? '<button onclick="ajIr(\'video\')">▶️ vídeo</button>' : '') +
+    '</div>' +
+    '<div class="sub" id="ajAviso" style="text-align:center;margin-top:6px"></div>';
+  document.getElementById("ajCorpo").scrollTop = 0;
+}
 
 
 /* ============================================================

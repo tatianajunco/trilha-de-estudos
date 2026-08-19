@@ -1,5 +1,5 @@
 /* Trilha de Estudos — cache para funcionar sem internet depois da primeira abertura */
-var CACHE = "trilha-estudos-v18";
+var CACHE = "trilha-estudos-v19";
 var ARQUIVOS = ["./","./index.html","./manifest.webmanifest","./icon-180.png","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install", function(e){
